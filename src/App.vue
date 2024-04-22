@@ -1,26 +1,17 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+import NavBarVue from './components/common/NavBar.vue'
+import FooterComponentVue from './components/common/FooterComponent.vue'
+import MainViewVue from './components/view/MainView.vue'
 </script>
 
+<template>
+  <NavBarVue></NavBarVue>
+  <MainViewVue></MainViewVue>
+  <FooterComponentVue></FooterComponentVue>
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url('@/assets/css/nucleo-icons.css');
+@import url('@/assets/css/nucleo-svg.css');
+@import url('@/assets/css/soft-design-system.css');
 </style>
