@@ -1,13 +1,15 @@
 <script setup>
 import NavBarVue from './components/common/NavBar.vue'
 import FooterComponentVue from './components/common/FooterComponent.vue'
-import MainViewVue from './components/view/MainView.vue'
+// import router from './routes'
 </script>
 
 <template>
-  <NavBarVue></NavBarVue>
-  <MainViewVue></MainViewVue>
-  <FooterComponentVue></FooterComponentVue>
+  <div>
+    <NavBarVue></NavBarVue>
+    <router-view></router-view>
+    <FooterComponentVue></FooterComponentVue>
+  </div>
 </template>
 
 <style>

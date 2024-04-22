@@ -8,9 +8,9 @@
         >
           <div class="container-fluid px-0">
             <img src="@/assets/img/main/f_logo.png" style="width: 50px" />
-            <a
+            <router-link
+              to="/"
               class="navbar-brand font-weight-bolder ms-sm-3"
-              href="#"
               rel="tooltip"
               title="Designed and Coded by Creative Tim"
               data-placement="bottom"
@@ -22,7 +22,7 @@
               "
             >
               中央栄光教会
-            </a>
+            </router-link>
             <button
               class="navbar-toggler shadow-none ms-2"
               type="button"
@@ -56,15 +56,15 @@
                     aria-labelledby="dropdownMenuPages"
                   >
                     <div class="d-none d-lg-block">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/intro" class="dropdown-item border-radius-md">
                         <span class="ps-3">교회소개</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">예배 및 훈련시간</span>
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/paster" class="dropdown-item border-radius-md">
                         <span class="ps-3">목회자소개</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">교회약도</span>
                       </a>
@@ -73,9 +73,9 @@
                       </a>
                     </div>
                     <div class="d-lg-none">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/intro" class="dropdown-item border-radius-md">
                         <span class="ps-3">교회소개</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">예배 및 훈련시간</span>
                       </a>
@@ -108,9 +108,9 @@
                     aria-labelledby="dropdownMenuPages"
                   >
                     <div class="d-none d-lg-block">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/sermon" class="dropdown-item border-radius-md">
                         <span class="ps-3">설교</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">칼럼</span>
                       </a>
@@ -122,9 +122,9 @@
                       </a>
                     </div>
                     <div class="d-lg-none">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/sermon" class="dropdown-item border-radius-md">
                         <span class="ps-3">설교</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">칼럼</span>
                       </a>
@@ -157,12 +157,12 @@
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">예배/훈련시간</span>
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/jumokja" class="dropdown-item border-radius-md">
                         <span class="ps-3">주목자예배</span>
-                      </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      </router-link>
+                      <router-link to="/training" class="dropdown-item border-radius-md">
                         <span class="ps-3">훈련</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">중보기도</span>
                       </a>
@@ -200,9 +200,9 @@
                     aria-labelledby="dropdownMenuPages"
                   >
                     <div class="d-none d-lg-block">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/evangelize" class="dropdown-item border-radius-md">
                         <span class="ps-3">전도비전</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">4영리</span>
                       </a>
@@ -211,9 +211,9 @@
                       </a>
                     </div>
                     <div class="d-lg-none">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/evangelize" class="dropdown-item border-radius-md">
                         <span class="ps-3">전도비전</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">4영리</span>
                       </a>
@@ -240,12 +240,12 @@
                     aria-labelledby="dropdownMenuPages"
                   >
                     <div class="d-none d-lg-block">
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/schedule" class="dropdown-item border-radius-md">
                         <span class="ps-3">행사일정</span>
-                      </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      </router-link>
+                      <router-link to="/photo" class="dropdown-item border-radius-md">
                         <span class="ps-3">사진갤러리</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">주일학교자료실</span>
                       </a>
