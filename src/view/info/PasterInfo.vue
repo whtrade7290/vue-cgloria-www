@@ -97,7 +97,7 @@ const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', INFO)
-obj.value = INFO.find((info) => route.name === info.path)
+obj.value = INFO.find((o) => route.name === o.path)
 </script>
 
 <style lang="scss" scoped></style>

@@ -3,14 +3,14 @@ const INFO = [
   { title: '예배 및 훈련', icon: 'book', path: '' },
   { title: '목회자 소개', icon: 'attribution', path: 'paster' },
   { title: '교회 약도', icon: 'pin_drop', path: '' },
-  { title: '공지사항', icon: 'info', path: '' }
+  { title: '공지사항', icon: 'info', path: 'notice' }
 ]
 
 const SMALLGROUP = [
   { title: '설교', icon: 'church', path: 'sermon' },
-  { title: '칼럼', icon: 'book', path: '' },
-  { title: '금주의 성경말씀', icon: 'attribution', path: '' },
-  { title: '속회교재실', icon: 'pin_drop', path: '' }
+  { title: '칼럼', icon: 'book', path: 'column' },
+  { title: '금주의 성경말씀', icon: 'attribution', path: 'weekly' },
+  { title: '속회교재실', icon: 'pin_drop', path: 'small' }
 ]
 const WORSHIP = [
   { title: '예배/훈련시간', icon: 'church', path: '' },
@@ -25,13 +25,13 @@ const TESTIMONY = [
 ]
 const SCHOOL = [
   { title: '행사일정', icon: 'church', path: 'schedule' },
-  { title: '사진갤러리', icon: 'book', path: '' },
-  { title: '주일학교 자료실', icon: 'attribution', path: '' }
+  { title: '주일학교 사진갤러리', icon: 'book', path: 'school_photo' },
+  { title: '주일학교 자료실', icon: 'attribution', path: 'library' }
 ]
 const SOCIALIZE = [
-  { title: '자유게시판', icon: 'church', path: '' },
+  { title: '자유게시판', icon: 'church', path: 'free' },
   { title: '사진갤러리', icon: 'book', path: 'photo' },
-  { title: '간증게시판', icon: 'attribution', path: '' }
+  { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]
 
 export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE }

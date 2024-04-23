@@ -17,7 +17,7 @@ const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SCHOOL)
-obj.value = SCHOOL.find((info) => route.name === info.path)
+obj.value = SCHOOL.find((o) => route.name === o.path)
 
 const calendarOptions = ref({
   contentHeight: 'auto',

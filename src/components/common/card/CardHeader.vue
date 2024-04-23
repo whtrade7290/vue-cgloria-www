@@ -32,13 +32,12 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     default: ''
   }
 })
-console.log('props.title: ', props.title)
 </script>
 
 <style lang="scss" scoped></style>

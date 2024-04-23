@@ -280,7 +280,7 @@ const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SOCIALIZE)
-obj.value = SOCIALIZE.find((info) => route.name === info.path)
+obj.value = SOCIALIZE.find((o) => route.name === o.path)
 </script>
 
 <style lang="scss" scoped></style>

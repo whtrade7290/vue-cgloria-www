@@ -23,14 +23,12 @@
 import SideMenu from '@/components/common/SideMenu.vue'
 import CardHeader from '@/components/common/card/CardHeader.vue'
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     default: ''
   }
 })
-
-console.log('props.title1: ', props.title)
 </script>
 
 <style lang="scss" scoped></style>

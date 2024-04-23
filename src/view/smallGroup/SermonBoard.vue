@@ -231,7 +231,7 @@ const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SMALLGROUP)
-obj.value = SMALLGROUP.find((info) => route.name === info.path)
+obj.value = SMALLGROUP.find((o) => route.name === o.path)
 </script>
 
 <style lang="scss" scoped></style>
