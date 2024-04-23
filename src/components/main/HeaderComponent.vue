@@ -1,12 +1,16 @@
 <template>
   <header class="header-2">
-    <div class="page-header min-vh-75 relative back-img">
+    <div
+      class="page-header min-vh-75 relative"
+      :class="[isTraining ? 'training-img-effect' : 'main-back-img']"
+      :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
+    >
       <div class="container">
         <div class="row">
           <div class="col-lg-7mx-auto">
-            <h1 class="text-white pt-3 mt-n5">말씀과 동행하는 교회</h1>
+            <h1 class="text-white pt-3 mt-n5">{{ main_msg }}</h1>
             <p class="lead text-white mt-3">
-              말씀훈련을 통해 한 사람 한 사람을 예수님의 제자로 세우는 건강한 교회
+              {{ sub_msg }}
             </p>
           </div>
         </div>
@@ -41,10 +45,36 @@
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  main_msg: {
+    type: String,
+    default: ''
+  },
+  sub_msg: {
+    type: String,
+    default: ''
+  },
+  isTraining: {
+    type: Boolean,
+    default: false
+  },
+  imgUrl: {
+    type: String,
+    default: ''
+  }
+})
+
+console.log('props: ', props.imgUrl)
+</script>
 
 <style scoped>
-.back-img {
+.training-img-effect {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-size: cover;
+  background-blend-mode: multiply;
+}
+.main-back-img {
   background-image: url('@/assets/img/main/main01.jpg');
 }
 </style>

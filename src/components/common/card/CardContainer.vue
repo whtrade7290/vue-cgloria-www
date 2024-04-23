@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7 bg-gray-200">
+  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7" :class="[isTraining ? '' : 'bg-gray-200']">
     <div class="container">
       <div class="row">
         <SideMenu></SideMenu>
@@ -27,6 +27,10 @@ defineProps({
   title: {
     type: String,
     default: ''
+  },
+  isTraining: {
+    type: Boolean,
+    default: false
   }
 })
 </script>

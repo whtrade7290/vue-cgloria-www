@@ -77,13 +77,41 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+import Swal from 'sweetalert2'
+import { useRouter } from 'vue-router'
+
+const store = useStore()
+const router = useRouter()
 
 const username = ref('')
 const password = ref('')
 
-function login() {
-  console.log('username: ', username.value)
-  console.log('password: ', password.value)
+async function login() {
+  console.log('username.value: ', username.value)
+  console.log('password.value: ', password.value)
+  const response = await store.dispatch('LOGIN', {
+    username: username.value,
+    password: password.value
+  })
+  console.log('response: ', response)
+  if (response.status === 200 && sessionStorage.getItem(1)) {
+    Swal.fire({
+      title: '로그인 되었습니다.',
+      icon: 'success'
+    }).then(() => {
+      router.replace('/')
+      window.location.reload()
+    })
+  } else {
+    Swal.fire({
+      title: '로그인에 실패하였습니다.',
+      icon: 'error'
+    }).then(() => {
+      username.value = ''
+      password.value = ''
+    })
+  }
 }
 </script>
 

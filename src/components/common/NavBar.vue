@@ -303,13 +303,30 @@
                     </div>
                   </div>
                 </li>
-                <li class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
+                <li v-if="isLoggedIn" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
                   <router-link
                     to="/logIn"
                     class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                     >로그인</router-link
                   >
                 </li>
+                <template v-else>
+                  <li v-if="true" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
+                    <router-link
+                      to="/training/home"
+                      class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                      >나의 훈련</router-link
+                    >
+                  </li>
+                  <li class="nav-item my-auto ms-3 ms-lg-0">
+                    <a
+                      href="#"
+                      class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                      @click="logout"
+                      >로그아웃</a
+                    >
+                  </li>
+                </template>
               </ul>
             </div>
           </div>
@@ -322,6 +339,29 @@
 
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+// const route = useRoute()
+const router = useRouter()
+
+const isLoggedIn = computed(() => {
+  return !sessionStorage.getItem(1)
+})
+
+function logout() {
+  Swal.fire({
+    title: '로그아웃 하시겠습니까?.',
+    icon: 'question',
+    showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      sessionStorage.removeItem(1)
+      router.push('/')
+      window.location.reload()
+    }
+  })
+}
 </script>
 
 <style scoped></style>

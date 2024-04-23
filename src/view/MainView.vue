@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderComponent></HeaderComponent>
+    <HeaderComponent :imgUrl="imgUrl"></HeaderComponent>
     <WeeklySermon></WeeklySermon>
     <MainSectionOne></MainSectionOne>
     <MainSectionTwo></MainSectionTwo>
@@ -20,6 +20,8 @@ import MainSectionTraining from '@/components/main/MainSectionTraining.vue'
 import MainSectionJumokja from '@/components/main/MainSectionJumokja.vue'
 import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
 import MainSectionBrother from '@/components/main/MainSectionBrother.vue'
+
+const imgUrl = 'src/assets/img/main/main01.jpg'
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
