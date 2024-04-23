@@ -56,6 +56,7 @@ const store = useStore()
 const training = store.state.training[0]
 const trainingName = TRAINING.find((o) => o.no === training.training_type).name
 const trainingFullName = `${training.group_num}기 ${trainingName}`
+console.log()
 </script>
 
 <style scoped>
