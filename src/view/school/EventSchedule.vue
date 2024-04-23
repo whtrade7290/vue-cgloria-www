@@ -1,5 +1,5 @@
 <template>
-  <CardContainer>
+  <CardContainer :title="obj.title">
     <FullCalendar :options="calendarOptions" />
   </CardContainer>
 </template>
@@ -9,6 +9,15 @@ import { ref } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import CardContainer from '@/components/common/card/CardContainer.vue'
+import { useStore } from 'vuex'
+import { SCHOOL } from '@/data/sidemenu.js'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const store = useStore()
+const obj = ref(null)
+store.dispatch('FETCH_SIDEMENU', SCHOOL)
+obj.value = SCHOOL.find((info) => route.name === info.path)
 
 const calendarOptions = ref({
   contentHeight: 'auto',

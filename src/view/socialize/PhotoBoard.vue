@@ -1,5 +1,5 @@
 <template>
-  <CardContainer>
+  <CardContainer :title="obj.title">
     <div class="row">
       <div class="col-lg-3 col-sm-6" style="padding: 20px 30px 0 30px">
         <div class="card card-plain card-blog">
@@ -271,6 +271,16 @@
 
 <script setup>
 import CardContainer from '@/components/common/card/CardContainer.vue'
+import { useStore } from 'vuex'
+import { SOCIALIZE } from '@/data/sidemenu.js'
+import { useRoute } from 'vue-router'
+import { ref } from 'vue'
+
+const route = useRoute()
+const store = useStore()
+const obj = ref(null)
+store.dispatch('FETCH_SIDEMENU', SOCIALIZE)
+obj.value = SOCIALIZE.find((info) => route.name === info.path)
 </script>
 
 <style lang="scss" scoped></style>

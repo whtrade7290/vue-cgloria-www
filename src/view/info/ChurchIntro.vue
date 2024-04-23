@@ -1,5 +1,5 @@
 <template>
-  <CardContainer>
+  <CardContainer :title="obj.title">
     <div class="page-header min-vh-65" style="display: grid; padding-top: 20px">
       <div class="container" style="padding: 0 60px">
         <div class="row">
@@ -111,9 +111,16 @@
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { INFO } from '@/data/sidemenu.js'
+import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 
+const route = useRoute()
 const store = useStore()
+const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', INFO)
+obj.value = INFO.find((info) => route.name === info.path)
+
+console.log('obj: ', obj.value.title)
 </script>
 
 <style lang="scss" scoped></style>

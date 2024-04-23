@@ -243,7 +243,7 @@
                       <router-link to="/schedule" class="dropdown-item border-radius-md">
                         <span class="ps-3">행사일정</span>
                       </router-link>
-                      <router-link to="/photo" class="dropdown-item border-radius-md">
+                      <router-link class="dropdown-item border-radius-md">
                         <span class="ps-3">사진갤러리</span>
                       </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
@@ -283,9 +283,9 @@
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">자유게시판</span>
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/photo" class="dropdown-item border-radius-md">
                         <span class="ps-3">사진갤러리</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">간증게시판</span>
                       </a>
@@ -294,9 +294,9 @@
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">자유게시판</span>
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <router-link to="/photo" class="dropdown-item border-radius-md">
                         <span class="ps-3">사진갤러리</span>
-                      </a>
+                      </router-link>
                       <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">간증게시판</span>
                       </a>

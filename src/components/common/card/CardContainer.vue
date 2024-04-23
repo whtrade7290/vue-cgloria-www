@@ -5,7 +5,7 @@
         <SideMenu></SideMenu>
         <div class="col-lg-10">
           <div class="card shadow-lg mb-5">
-            <CardHeader></CardHeader>
+            <CardHeader :title="title"></CardHeader>
             <div class="card card-calendar">
               <div class="card-body p-3">
                 <!-- 내용 -->
@@ -23,7 +23,14 @@
 import SideMenu from '@/components/common/SideMenu.vue'
 import CardHeader from '@/components/common/card/CardHeader.vue'
 
-console.log('excute')
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  }
+})
+
+console.log('props.title1: ', props.title)
 </script>
 
 <style lang="scss" scoped></style>

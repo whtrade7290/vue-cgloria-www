@@ -1,5 +1,5 @@
 <template>
-  <CardContainer>
+  <CardContainer :title="obj.title">
     <div class="table-responsive p-0">
       <table class="table align-items-center justify-content-center mb-3">
         <thead>
@@ -222,6 +222,16 @@
 
 <script setup>
 import CardContainer from '@/components/common/card/CardContainer.vue'
+import { useStore } from 'vuex'
+import { SMALLGROUP } from '@/data/sidemenu.js'
+import { useRoute } from 'vue-router'
+import { ref } from 'vue'
+
+const route = useRoute()
+const store = useStore()
+const obj = ref(null)
+store.dispatch('FETCH_SIDEMENU', SMALLGROUP)
+obj.value = SMALLGROUP.find((info) => route.name === info.path)
 </script>
 
 <style lang="scss" scoped></style>
