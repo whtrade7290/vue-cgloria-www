@@ -37,9 +37,11 @@ const props = defineProps({
     default: ''
   }
 })
-store.dispatch('FETCH_BOARDLIST', props.called)
-
-console.log(store.state.dataList)
+store.dispatch('FETCH_BOARDLIST', {
+  name: props.called,
+  startRow: 0,
+  pageSize: 100
+})
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,27 +1,43 @@
 import { createStore } from 'vuex'
-import { getBoardList, requestLogin, getTrainingData } from '@/api/index'
+import {
+  getBoardList,
+  requestLogin,
+  getTrainingData,
+  getTrainingBoardList,
+  getBoardCount
+} from '@/api/index'
 
 export default createStore({
   state: {
     sidemenu: {},
     dataList: [],
-    training: {}
+    training: {},
+    count: 0
   },
   getters: {},
   actions: {
     FETCH_SIDEMENU({ commit }, sidemenu) {
       commit('SET_SIDEMENU', sidemenu)
     },
-    async FETCH_BOARDLIST({ commit }, name) {
-      const res = await getBoardList(name)
-      console.log('res: ', res)
+    async FETCH_BOARDLIST({ commit }, obj) {
+      const res = await getBoardList(obj)
       commit('SET_BOARDLIST', res.data)
+      return res
+    },
+    async FETCH_BOARDCOUNT({ commit }, name) {
+      const res = await getBoardCount(name)
+      commit('SET_BOARDCOUNT', res.data[0]['count(*)'])
       return res
     },
     async FETCH_TRAINING_DATA({ commit }, id) {
       const res = await getTrainingData(id)
-      console.log('res: ', res)
+
       commit('SET_TRAINING', res.data)
+      return res
+    },
+    async FETCH_TRAINING_DATALIST({ commit }, obj) {
+      const res = await getTrainingBoardList(obj)
+      commit('SET_BOARDLIST', res.data)
       return res
     },
     async LOGIN({ commit }, { username, password }) {
@@ -37,11 +53,13 @@ export default createStore({
       state.sidemenu = sidemenu
     },
     SET_BOARDLIST(state, item) {
-      console.log('item: ', item)
       state.dataList = item
     },
     SET_TRAINING(state, item) {
       state.training = item
+    },
+    SET_BOARDCOUNT(state, item) {
+      state.count = item
     }
   }
 })

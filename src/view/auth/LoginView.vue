@@ -88,13 +88,11 @@ const username = ref('')
 const password = ref('')
 
 async function login() {
-  console.log('username.value: ', username.value)
-  console.log('password.value: ', password.value)
   const response = await store.dispatch('LOGIN', {
     username: username.value,
     password: password.value
   })
-  console.log('response: ', response)
+
   if (response.status === 200 && sessionStorage.getItem(1)) {
     Swal.fire({
       title: '로그인 되었습니다.',

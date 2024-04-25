@@ -17,7 +17,6 @@ const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SMALLGROUP)
 obj.value = SMALLGROUP.find((o) => route.name === o.path)
-console.log('excute')
 </script>
 
 <style lang="scss" scoped></style>

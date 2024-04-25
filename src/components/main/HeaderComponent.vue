@@ -64,8 +64,6 @@ const props = defineProps({
     default: ''
   }
 })
-
-console.log('props: ', props.imgUrl)
 </script>
 
 <style scoped>

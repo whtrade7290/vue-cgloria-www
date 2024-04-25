@@ -35,23 +35,86 @@ const routes = [
   { path: '/paster', name: 'paster', component: PasterInfo },
   { path: '/notice', name: 'notice', component: NoticeBoard },
   // 속회말씀
-  { path: '/sermon', name: 'sermon', component: SermonBoard },
-  { path: '/column', name: 'column', component: ColumnBoard },
-  { path: '/small', name: 'small', component: SmallGroup },
-  { path: '/weekly', name: 'weekly', component: WeeklySermonBoard },
+  {
+    path: '/sermon',
+    name: 'sermon',
+    component: SermonBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'sermon')
+      await next()
+    }
+  },
+  {
+    path: '/column',
+    name: 'column',
+    component: ColumnBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'column')
+      await next()
+    }
+  },
+  {
+    path: '/small',
+    name: 'small',
+    component: SmallGroup,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'small')
+      await next()
+    }
+  },
+  {
+    path: '/weekly',
+    name: 'weekly',
+    component: WeeklySermonBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'weekly')
+      await next()
+    }
+  },
   // 예배/훈련
   { path: '/jumokja', name: 'jumokja', component: JumokjaView },
   { path: '/training', name: 'training', component: TrainingView },
   // 주일학교
   { path: '/schedule', name: 'schedule', component: EventSchedule },
   { path: '/school_photo', name: 'school_photo', component: SchoolPhotoBoard },
-  { path: '/library', name: 'library', component: SchoolLibrary },
+  {
+    path: '/library',
+    name: 'library',
+    component: SchoolLibrary,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'library')
+      await next()
+    }
+  },
   // 전도섬김
   { path: '/evangelize', name: 'evangelize', component: EvangelizeView },
   // 교재마당
   { path: '/photo', name: 'photo', component: PhotoBoard },
-  { path: '/free', name: 'free', component: FreeBoard },
-  { path: '/testimony', name: 'testimony', component: TestimonyBoard },
+  {
+    path: '/free',
+    name: 'free',
+    component: FreeBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'free')
+      await next()
+    }
+  },
+  {
+    path: '/testimony',
+    name: 'testimony',
+    component: TestimonyBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'testimony')
+      await next()
+    }
+  },
   // 훈련
   {
     path: '/training/home',
@@ -61,7 +124,7 @@ const routes = [
       if (sessionStorage.getItem(1)) {
         const store = useStore()
 
-        const trainingId = JSON.parse(sessionStorage.getItem(1)).traning_num
+        const trainingId = JSON.parse(sessionStorage.getItem(1)).training_num
         const response = await store.dispatch('FETCH_TRAINING_DATA', trainingId)
 
         if (response.status === 200 && response.data.length !== 0) {

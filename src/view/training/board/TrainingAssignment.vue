@@ -5,7 +5,7 @@
     :isTraining="true"
   ></HeaderComponent>
   <CardContainer :title="obj.title" :isTraining="true">
-    <TableComponent :called="route.name"></TableComponent>
+    <TableComponent :isTraining="true" :called="route.name"></TableComponent>
   </CardContainer>
 </template>
 
