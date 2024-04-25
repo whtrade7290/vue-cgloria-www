@@ -92,11 +92,10 @@
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+
 useRoute
 const store = useStore()
 const router = useRouter()
-const route = useRoute()
 const props = defineProps({
   called: {
     type: String,
@@ -105,14 +104,10 @@ const props = defineProps({
   isTraining: {
     type: Boolean,
     default: false
-  },
-  pageNum: {
-    type: Number,
-    default: 1
   }
 })
 
-let pageNum = props.pageNum
+let pageNum = 1
 const pageSize = 5
 let pageList = []
 
@@ -122,7 +117,6 @@ if (props.isTraining) {
   const trainingNum = JSON.parse(sessionStorage.getItem(1)).training_num
 
   if (trainingNum) {
-    console.log('test')
     store.dispatch('FETCH_TRAINING_DATALIST', { name: props.called, trainingNum: trainingNum })
   } else {
     Swal.fire({
@@ -145,7 +139,6 @@ function fetchList(num) {
 }
 
 function settingPageNumber() {
-  console.log('totalCount: ', totalCount)
   let totalPages = Math.ceil(totalCount / pageSize)
   let startIndex = (Math.ceil(pageNum / pageSize) - 1) * pageSize + 1
   let endIndex = startIndex + pageSize > totalCount ? totalCount : startIndex + pageSize - 1
@@ -156,8 +149,6 @@ function settingPageNumber() {
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
-  console.log('pageList: ', pageList)
-
   return endIndex
 }
 </script>
