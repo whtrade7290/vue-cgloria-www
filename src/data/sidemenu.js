@@ -34,6 +34,7 @@ const SOCIALIZE = [
   { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]
 const TRAINING = [
+  { title: '훈련홈', icon: 'home', path: 'trainingHome' },
   { title: '영성일기', icon: 'church', path: 'diary' },
   { title: '과제제출', icon: 'book', path: 'assignment' },
   { title: '알림장', icon: 'attribution', path: 'training_notice' }

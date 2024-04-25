@@ -23,10 +23,22 @@ function getTrainingData(id) {
     id: id
   })
 }
-function getTrainingBoardList({ name, trainingNum }) {
+function getTrainingBoardList({ name, trainingNum, startRow, pageSize }) {
   return axios.post(`${config.baseUrl}${name}`, {
-    training_num: trainingNum
+    training_num: trainingNum,
+    startRow: startRow,
+    pageSize: pageSize
   })
 }
+function getTrainingBoardCount({ name, trainingNum }) {
+  return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
+}
 
-export { getBoardList, requestLogin, getTrainingData, getTrainingBoardList, getBoardCount }
+export {
+  getBoardList,
+  requestLogin,
+  getTrainingData,
+  getTrainingBoardList,
+  getBoardCount,
+  getTrainingBoardCount
+}

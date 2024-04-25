@@ -4,7 +4,8 @@ import {
   requestLogin,
   getTrainingData,
   getTrainingBoardList,
-  getBoardCount
+  getBoardCount,
+  getTrainingBoardCount
 } from '@/api/index'
 
 export default createStore({
@@ -33,6 +34,11 @@ export default createStore({
       const res = await getTrainingData(id)
 
       commit('SET_TRAINING', res.data)
+      return res
+    },
+    async FETCH_TRAINING_BOARDCOUNT({ commit }, obj) {
+      const res = await getTrainingBoardCount(obj)
+      commit('SET_BOARDCOUNT', res.data[0]['count(*)'])
       return res
     },
     async FETCH_TRAINING_DATALIST({ commit }, obj) {

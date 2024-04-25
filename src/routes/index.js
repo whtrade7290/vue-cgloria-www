@@ -142,9 +142,46 @@ const routes = [
       }
     }
   },
-  { path: '/training/diary', name: 'diary', component: TrainingDiary },
-  { path: '/training/assignment', name: 'assignment', component: TrainingAssignment },
-  { path: '/training/notice', name: 'training_notice', component: TrainingNotice }
+  {
+    path: '/training/diary',
+    name: 'diary',
+    component: TrainingDiary,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+
+      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
+        name: 'diary',
+        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
+      })
+      await next()
+    }
+  },
+  {
+    path: '/training/assignment',
+    name: 'assignment',
+    component: TrainingAssignment,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
+        name: 'assignment',
+        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
+      })
+      await next()
+    }
+  },
+  {
+    path: '/training/notice',
+    name: 'training_notice',
+    component: TrainingNotice,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
+        name: 'training_notice',
+        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
+      })
+      await next()
+    }
+  }
 ]
 
 const router = createRouter({

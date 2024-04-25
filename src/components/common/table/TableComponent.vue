@@ -90,12 +90,10 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import Swal from 'sweetalert2'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 useRoute
 const store = useStore()
-const router = useRouter()
 const props = defineProps({
   called: {
     type: String,
@@ -112,28 +110,26 @@ const pageSize = 5
 let pageList = []
 
 const totalCount = store.state.count
-
-if (props.isTraining) {
-  const trainingNum = JSON.parse(sessionStorage.getItem(1)).training_num
-
-  if (trainingNum) {
-    store.dispatch('FETCH_TRAINING_DATALIST', { name: props.called, trainingNum: trainingNum })
-  } else {
-    Swal.fire({
-      title: '훈련이 확인되지 않습니다.',
-      icon: 'error'
-    }).then(() => router.replace('/'))
-  }
-} else {
-  fetchList(pageNum)
-}
+fetchList(pageNum)
 
 function fetchList(num) {
-  store.dispatch('FETCH_BOARDLIST', {
+  const payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
     pageSize: pageSize
-  })
+  }
+
+  let actionsName = ''
+
+  if (props.isTraining) {
+    const trainingNum = JSON.parse(sessionStorage.getItem(1)).training_num
+    payload.trainingNum = trainingNum
+    actionsName = 'FETCH_TRAINING_DATALIST'
+  } else {
+    actionsName = 'FETCH_BOARDLIST'
+  }
+
+  store.dispatch(actionsName, payload)
   pageNum = num
   settingPageNumber()
 }
