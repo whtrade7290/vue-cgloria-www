@@ -33,7 +33,16 @@ const routes = [
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
   { path: '/paster', name: 'paster', component: PasterInfo },
-  { path: '/notice', name: 'notice', component: NoticeBoard },
+  {
+    path: '/notice',
+    name: 'notice',
+    component: NoticeBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'notice')
+      await next()
+    }
+  },
   // 속회말씀
   {
     path: '/sermon',
