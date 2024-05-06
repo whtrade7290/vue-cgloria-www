@@ -39,5 +39,6 @@ const TRAINING = [
   { title: '과제제출', icon: 'book', path: 'assignment' },
   { title: '알림장', icon: 'attribution', path: 'training_notice' }
 ]
+const WRITE = [{ title: '작성페이지', icon: 'write', path: 'write' }]
 
-export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, TRAINING }
+export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, TRAINING, WRITE }

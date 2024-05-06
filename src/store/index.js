@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import bootstrap from 'bootstrap/dist/js/bootstrap.min.js'
 import {
   getBoardList,
   requestLogin,
@@ -10,12 +11,18 @@ import {
 
 export default createStore({
   state: {
+    bootstrap,
     sidemenu: {},
     dataList: [],
     training: {},
-    count: 0
+    count: 0,
+    isLogIned: false
   },
-  getters: {},
+  getters: {
+    checkLogin() {
+      return !sessionStorage.getItem(1)
+    }
+  },
   actions: {
     FETCH_SIDEMENU({ commit }, sidemenu) {
       commit('SET_SIDEMENU', sidemenu)

@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
@@ -21,6 +21,8 @@ import TrainingHome from '@/view/training/TrainingHome.vue'
 import TrainingDiary from '@/view/training/board/TraininDiary.vue'
 import TrainingAssignment from '@/view/training/board/TrainingAssignment.vue'
 import TrainingNotice from '@/view/training/board/TrainingNotice.vue'
+import WritePage from '@/view/WritePage.vue'
+
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
@@ -89,7 +91,16 @@ const routes = [
   { path: '/training', name: 'training', component: TrainingView },
   // 주일학교
   { path: '/schedule', name: 'schedule', component: EventSchedule },
-  { path: '/school_photo', name: 'school_photo', component: SchoolPhotoBoard },
+  {
+    path: '/school_photo',
+    name: 'school_photo',
+    component: SchoolPhotoBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
+      await next()
+    }
+  },
   {
     path: '/library',
     name: 'library',
@@ -103,7 +114,16 @@ const routes = [
   // 전도섬김
   { path: '/evangelize', name: 'evangelize', component: EvangelizeView },
   // 교재마당
-  { path: '/photo', name: 'photo', component: PhotoBoard },
+  {
+    path: '/photo',
+    name: 'photo',
+    component: PhotoBoard,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      await store.dispatch('FETCH_BOARDCOUNT', 'photo')
+      await next()
+    }
+  },
   {
     path: '/free',
     name: 'free',
@@ -190,11 +210,16 @@ const routes = [
       })
       await next()
     }
+  },
+  {
+    path: '/write',
+    name: 'write',
+    component: WritePage
   }
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes
 })
 

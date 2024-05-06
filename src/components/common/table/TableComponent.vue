@@ -59,7 +59,7 @@
             @click="fetchList((pageNum = pageNum - 1))"
           >
             <i class="fa fa-angle-left"></i>
-            <span class="sr-only">Previous</span>
+            <i class="material-icons" style="font-size: 1rem">arrow_back_ios</i>
           </a>
         </li>
         <li class="page-item" v-for="page in pageList" :key="page">
@@ -80,7 +80,7 @@
             @click="fetchList((pageNum = pageNum + 1))"
           >
             <i class="fa fa-angle-right"></i>
-            <span class="sr-only">Next</span>
+            <i class="material-icons" style="font-size: 1rem">arrow_forward_ios</i>
           </a>
         </li>
       </ul>
@@ -90,9 +90,7 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
 
-useRoute
 const store = useStore()
 const props = defineProps({
   called: {

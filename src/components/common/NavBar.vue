@@ -303,6 +303,10 @@
                     </div>
                   </div>
                 </li>
+                isLoggedIn:
+                {{
+                  isLoggedIn
+                }}
                 <li v-if="isLoggedIn" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
                   <router-link
                     to="/logIn"
@@ -311,7 +315,11 @@
                   >
                 </li>
                 <template v-else>
-                  <li v-if="true" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
+                  <li
+                    v-if="true"
+                    class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto"
+                    style="float: left"
+                  >
                     <router-link
                       to="/training/home"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -336,18 +344,17 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
-// const route = useRoute()
+
 const router = useRouter()
 
-const isLoggedIn = computed(() => {
-  return !sessionStorage.getItem(1)
-})
+let isLoggedIn = ref(true)
+
+isLoggedIn.value = !sessionStorage.getItem(1)
 
 function logout() {
   Swal.fire({
@@ -357,8 +364,9 @@ function logout() {
   }).then((result) => {
     if (result.isConfirmed) {
       sessionStorage.removeItem(1)
-      router.push('/')
+      isLoggedIn.value = true
       window.location.reload()
+      router.replace('/')
     }
   })
 }
