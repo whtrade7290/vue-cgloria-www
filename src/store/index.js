@@ -59,6 +59,9 @@ export default createStore({
         sessionStorage.setItem(1, JSON.stringify(res.data[0]))
       }
       return res
+    },
+    async CHECKING_SESSION({ commit }, isLogIned) {
+      commit('SET_LOGINED', isLogIned)
     }
   },
   mutations: {
@@ -73,6 +76,9 @@ export default createStore({
     },
     SET_BOARDCOUNT(state, item) {
       state.count = item
+    },
+    SET_LOGINED(state, item) {
+      state.isLogIned = item
     }
   }
 })

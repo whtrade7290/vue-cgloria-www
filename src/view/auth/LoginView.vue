@@ -97,15 +97,10 @@ async function login() {
     Swal.fire({
       title: '로그인 되었습니다.',
       icon: 'success'
+    }).then(() => {
+      store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+      router.go(-1)
     })
-      .then(() => {
-        // 페이지 리로드
-        window.location.reload()
-      })
-      .then(() => {
-        // 리로드 후에 새로운 경로로 이동
-        router.push('/')
-      })
   } else {
     Swal.fire({
       title: '로그인에 실패하였습니다.',

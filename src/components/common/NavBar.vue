@@ -303,11 +303,7 @@
                     </div>
                   </div>
                 </li>
-                isLoggedIn:
-                {{
-                  isLoggedIn
-                }}
-                <li v-if="isLoggedIn" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
+                <li v-if="store.state.isLogIned" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
                   <router-link
                     to="/logIn"
                     class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -346,15 +342,15 @@
 </template>
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 
 const router = useRouter()
+const store = useStore()
 
-let isLoggedIn = ref(true)
-
-isLoggedIn.value = !sessionStorage.getItem(1)
+// const isLoggedIn = ref(sessionStorage.getItem(1))
 
 function logout() {
   Swal.fire({
@@ -364,12 +360,15 @@ function logout() {
   }).then((result) => {
     if (result.isConfirmed) {
       sessionStorage.removeItem(1)
-      isLoggedIn.value = true
-      window.location.reload()
-      router.replace('/')
+      store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+      router.go()
     }
   })
 }
+
+onMounted(() => {
+  store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+})
 </script>
 
 <style scoped></style>
