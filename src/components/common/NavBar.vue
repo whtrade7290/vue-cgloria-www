@@ -368,6 +368,14 @@ function logout() {
 
 onMounted(() => {
   store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+  if (store.state.isLogIned) {
+    Swal.fire({
+      title: '훈련생 전용 화면입니다.',
+      icon: 'error'
+    }).then(() => {
+      router.push('/')
+    })
+  }
 })
 </script>
 
