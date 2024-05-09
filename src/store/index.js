@@ -6,7 +6,8 @@ import {
   getTrainingData,
   getTrainingBoardList,
   getBoardCount,
-  getTrainingBoardCount
+  getTrainingBoardCount,
+  writeBoard
 } from '@/api/index'
 
 export default createStore({
@@ -62,6 +63,13 @@ export default createStore({
     },
     async CHECKING_SESSION({ commit }, isLogIned) {
       commit('SET_LOGINED', isLogIned)
+    },
+    async WRITE_BOARD({ commit }, { title, content }) {
+      const res = await writeBoard(title, content)
+      if (res.status === 200) {
+        sessionStorage.setItem(1, JSON.stringify(res.data[0]))
+      }
+      return res
     }
   },
   mutations: {
