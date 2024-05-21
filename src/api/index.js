@@ -33,10 +33,11 @@ function getTrainingBoardList({ name, trainingNum, startRow, pageSize }) {
 function getTrainingBoardCount({ name, trainingNum }) {
   return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
 }
-function writeBoard(title, content) {
-  return axios.post(`${config.baseUrl}sermon_write`, {
+function writeBoard(title, content, name) {
+  return axios.post(`${config.baseUrl}write_${name}`, {
     title: title,
     content: content,
+    name: name,
     writer: JSON.parse(sessionStorage.getItem(1)).username
   })
 }

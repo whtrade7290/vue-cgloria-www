@@ -64,12 +64,9 @@ export default createStore({
     async CHECKING_SESSION({ commit }, isLogIned) {
       commit('SET_LOGINED', isLogIned)
     },
-    async WRITE_BOARD({ commit }, { title, content }) {
-      const res = await writeBoard(title, content)
-      if (res.status === 200) {
-        sessionStorage.setItem(1, JSON.stringify(res.data[0]))
-      }
-      return res
+    async WRITE_BOARD({ commit }, { title, content, name }) {
+      const res = await writeBoard(title, content, name)
+      return res.status === 200
     }
   },
   mutations: {

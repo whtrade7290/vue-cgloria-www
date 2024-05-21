@@ -16,6 +16,17 @@
       v-model="editorData"
       :config="editorConfig"
     ></ckeditor>
+    <div style="margin-top: 1rem; margin-left;: 2.5rem; display: flex; justify-content: end;">
+      <a
+        class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+        href="javascript:;"
+        @click="write"
+        >글작성</a
+      >
+      <a class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0" href="javascript:;"
+        >글수정</a
+      >
+    </div>
   </CardContainer>
 </template>
 
@@ -23,6 +34,7 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   components: {
@@ -36,12 +48,22 @@ export default {
         placeholder: '글 내용을 입력하세요.'
       },
       inputTitle: '',
-      store: useStore()
+      store: useStore(),
+      route: useRoute(),
+      router: useRouter()
     }
   },
   methods: {
     write() {
-      this.store.dispatch('WRITE_BOARD', { title: this.inputTitle, content: this.editorData })
+      console.log('route name: ', this.route.name)
+      const result = this.store.dispatch('WRITE_BOARD', {
+        title: this.inputTitle,
+        content: this.editorData,
+        name: this.$route.query.name
+      })
+      if (result) {
+        this.router.push(`/${this.$route.query.name}`)
+      }
     }
   }
 }

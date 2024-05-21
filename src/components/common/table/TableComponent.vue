@@ -40,7 +40,7 @@
             <p class="text-sm font-weight-bold mb-0 text-center">{{ item.writer }}</p>
           </td>
           <td>
-            <p class="text-sm font-weight-bold mb-0 text-center">{{ item.date }}</p>
+            <p class="text-sm font-weight-bold mb-0 text-center">{{ formatDate(item.date) }}</p>
           </td>
           <td>
             <p class="text-sm font-weight-bold mb-0 text-center">{{ item.hit }}</p>
@@ -144,6 +144,11 @@ function settingPageNumber() {
     pageList.push(index)
   }
   return endIndex
+}
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString)
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
 }
 </script>
 

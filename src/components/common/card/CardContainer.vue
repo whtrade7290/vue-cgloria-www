@@ -8,9 +8,7 @@
             <CardHeader :title="title"></CardHeader>
             <div class="card card-calendar">
               <div class="card-body p-3">
-                <!-- 내용 -->
                 <slot></slot>
-                <WriteBtnGroup @write="$emit('write')" :isWritePage="true"></WriteBtnGroup>
               </div>
             </div>
           </div>
@@ -23,7 +21,7 @@
 <script setup>
 import SideMenu from '@/components/common/SideMenu.vue'
 import CardHeader from '@/components/common/card/CardHeader.vue'
-import WriteBtnGroup from '@/components/common/WriteButtonGroup.vue'
+
 import { defineProps, computed } from 'vue'
 
 defineProps({

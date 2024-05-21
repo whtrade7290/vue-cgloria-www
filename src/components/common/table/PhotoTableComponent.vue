@@ -19,7 +19,7 @@
         </div>
         <span>
           <a href="javascript:;" class="text-dark" style="font-size: 14px; line-height: 16px">{{
-            item.date
+            formatDate(item.date)
           }}</a>
         </span>
       </div>
@@ -105,6 +105,11 @@ function settingPageNumber() {
     pageList.push(index)
   }
   return endIndex
+}
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString)
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
 }
 </script>
 
