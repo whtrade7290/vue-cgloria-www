@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   main_msg: {
     type: String,
     default: ''

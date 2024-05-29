@@ -5,45 +5,45 @@
         <tr>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+            style="width: 10%; text-align: center"
           >
             번호
           </th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">제목</th>
+          <th
+            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+            style="width: 40%; text-align: center"
+          >
+            제목
+          </th>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+            style="width: 10%; text-align: center"
           >
             글쓴이
           </th>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
+            style="width: 20%; text-align: center"
           >
             날짜
-          </th>
-          <th
-            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-          >
-            조회수
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, idx) in store.state.dataList" :key="idx">
-          <td>
+          <td style="width: 10%; text-align: center">
             <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id }}</p>
           </td>
-          <td>
+          <td style="width: 40%; text-align: center">
             <p class="text-sm font-weight-bold mb-0">
-              {{ item.title }}
+              <a href="javascript:;" @click="intoDetail(item.id)">{{ item.title }}</a>
             </p>
           </td>
-          <td>
+          <td style="width: 10%; text-align: center">
             <p class="text-sm font-weight-bold mb-0 text-center">{{ item.writer }}</p>
           </td>
-          <td>
+          <td style="width: 20%; text-align: center">
             <p class="text-sm font-weight-bold mb-0 text-center">{{ formatDate(item.date) }}</p>
-          </td>
-          <td>
-            <p class="text-sm font-weight-bold mb-0 text-center">{{ item.hit }}</p>
           </td>
         </tr>
       </tbody>
@@ -89,8 +89,11 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
+const router = useRouter()
+const route = useRoute()
 const store = useStore()
 const props = defineProps({
   called: {
@@ -148,7 +151,11 @@ function settingPageNumber() {
 
 const formatDate = (dateString) => {
   const date = new Date(dateString)
-  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
+  return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+}
+
+async function intoDetail(id) {
+  await router.push({ name: 'detail', params: { name: route.name, id: id } })
 }
 </script>
 

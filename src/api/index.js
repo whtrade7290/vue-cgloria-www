@@ -41,6 +41,13 @@ function writeBoard(title, content, name) {
     writer: JSON.parse(sessionStorage.getItem(1)).username
   })
 }
+function getContentById(name, id) {
+  console.log('name: ', name)
+  console.log('id: ', id)
+  return axios.post(`${config.baseUrl}detail/${name}`, {
+    id: id
+  })
+}
 
 export {
   getBoardList,
@@ -49,5 +56,6 @@ export {
   getTrainingBoardList,
   getBoardCount,
   getTrainingBoardCount,
-  writeBoard
+  writeBoard,
+  getContentById
 }

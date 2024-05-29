@@ -7,7 +7,8 @@ import {
   getTrainingBoardList,
   getBoardCount,
   getTrainingBoardCount,
-  writeBoard
+  writeBoard,
+  getContentById
 } from '@/api/index'
 
 export default createStore({
@@ -17,7 +18,8 @@ export default createStore({
     dataList: [],
     training: {},
     count: 0,
-    isLogIned: false
+    isLogIned: false,
+    detail: {}
   },
   getters: {
     checkLogin() {
@@ -67,6 +69,15 @@ export default createStore({
     async WRITE_BOARD({ commit }, { title, content, name }) {
       const res = await writeBoard(title, content, name)
       return res.status === 200
+    },
+    async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
+      const res = await getContentById(name, id)
+      console.log('res: ', res)
+      if (res.status === 200) {
+        commit('SET_DETAIL', res.data[0])
+      }
+      // console.log('id: ', id)
+      return res
     }
   },
   mutations: {
@@ -84,6 +95,9 @@ export default createStore({
     },
     SET_LOGINED(state, item) {
       state.isLogIned = item
+    },
+    SET_DETAIL(state, item) {
+      state.detail = item
     }
   }
 })

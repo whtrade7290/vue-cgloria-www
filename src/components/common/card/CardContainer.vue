@@ -22,7 +22,7 @@
 import SideMenu from '@/components/common/SideMenu.vue'
 import CardHeader from '@/components/common/card/CardHeader.vue'
 
-import { defineProps, computed } from 'vue'
+import { computed } from 'vue'
 
 defineProps({
   title: {

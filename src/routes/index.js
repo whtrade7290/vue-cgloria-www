@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter, useRoute } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
@@ -22,6 +22,7 @@ import TrainingDiary from '@/view/training/board/TraininDiary.vue'
 import TrainingAssignment from '@/view/training/board/TrainingAssignment.vue'
 import TrainingNotice from '@/view/training/board/TrainingNotice.vue'
 import WritePage from '@/view/WritePage.vue'
+import DetailPage from '@/view/DetailPage.vue'
 
 // sweetalert2
 import Swal from 'sweetalert2'
@@ -215,6 +216,18 @@ const routes = [
     path: '/write',
     name: 'write',
     component: WritePage
+  },
+  {
+    path: '/detail/:name/:id',
+    name: 'detail',
+    component: DetailPage,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const name = to.params.name
+      const id = to.params.id
+      await store.dispatch('FETCH_CONTENT_DETAIL', { name: name, id: id })
+      await next()
+    }
   }
 ]
 
