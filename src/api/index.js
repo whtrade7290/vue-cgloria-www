@@ -42,8 +42,6 @@ function writeBoard(title, content, name) {
   })
 }
 function getContentById(name, id) {
-  console.log('name: ', name)
-  console.log('id: ', id)
   return axios.post(`${config.baseUrl}detail/${name}`, {
     id: id
   })

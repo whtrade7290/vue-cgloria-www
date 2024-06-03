@@ -32,6 +32,12 @@
             @click="goToBoardList"
             >목록으로</a
           >
+          <a
+            href="javascript:;"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            v-show="isWriter"
+            >글수정</a
+          >
         </div>
       </div>
     </div>
@@ -39,9 +45,11 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
+const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
@@ -49,10 +57,13 @@ const formatDate = (dateString) => {
   const date = new Date(dateString)
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
 }
-
 function goToBoardList() {
-  router.back()
+  router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
 }
+
+const isWriter = computed(() => {
+  return JSON.parse(sessionStorage.getItem(1))?.username ?? '' === store.state.detail.writer
+})
 </script>
 
 <style scoped>

@@ -72,7 +72,6 @@ export default createStore({
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getContentById(name, id)
-      console.log('res: ', res)
       if (res.status === 200) {
         commit('SET_DETAIL', res.data[0])
       }

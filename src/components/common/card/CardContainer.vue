@@ -2,7 +2,7 @@
   <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7" :class="[isTraining ? '' : 'bg-gray-200']">
     <div class="container">
       <div class="row" :class="[isWritePage ? '' : 'write-page-margin']">
-        <SideMenu class="disabled" :class="[isWritePage ? '' : 'hidden']"></SideMenu>
+        <SideMenu></SideMenu>
         <div class="col-lg-10">
           <div class="card shadow-lg mb-5">
             <CardHeader :title="title"></CardHeader>
@@ -50,22 +50,10 @@ const isWritePage = computed(() => {
 </script>
 
 <style scoped>
-@media (max-width: 991px) {
-  .disabled {
-    display: none;
-  }
-}
 .btn-write {
   display: flex;
   justify-content: end;
   margin-right: 2rem;
   margin-bottom: 1rem;
-}
-.hidden {
-  display: none;
-}
-
-.write-page-margin {
-  margin-left: 11rem;
 }
 </style>

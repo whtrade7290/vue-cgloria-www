@@ -106,7 +106,7 @@ const props = defineProps({
   }
 })
 
-let pageNum = 1
+let pageNum = route.query?.pageNum ?? 1
 const pageSize = 5
 let pageList = []
 
@@ -155,7 +155,11 @@ const formatDate = (dateString) => {
 }
 
 async function intoDetail(id) {
-  await router.push({ name: 'detail', params: { name: route.name, id: id } })
+  await router.push({
+    name: 'detail',
+    params: { name: route.name, id: id },
+    query: { pageNum: pageNum }
+  })
 }
 </script>
 
