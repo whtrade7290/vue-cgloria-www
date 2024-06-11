@@ -53,7 +53,7 @@ const routes = [
     component: SermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'sermon')
+      await store.dispatch('SET_BOARDLIST', 'sermon')
       await next()
     }
   },

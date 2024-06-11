@@ -58,8 +58,10 @@ export default createStore({
     },
     async LOGIN({ commit }, { username, password }) {
       const res = await requestLogin(username, password)
-      if (res.status === 200) {
-        sessionStorage.setItem(1, JSON.stringify(res.data[0]))
+
+      if (res && res.success) {
+        const { user } = res
+        sessionStorage.setItem(user.id, JSON.stringify(res))
       }
       return res
     },

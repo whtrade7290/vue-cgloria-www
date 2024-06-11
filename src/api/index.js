@@ -1,22 +1,24 @@
 import axios from 'axios'
 
 const config = {
-  baseUrl: 'http://localhost:8080/'
+  baseUrl: 'http://localhost:3000/'
 }
-function getBoardList({ name, startRow, pageSize }) {
-  return axios.post(`${config.baseUrl}${name} `, {
-    startRow: startRow,
-    pageSize: pageSize
-  })
+function getBoardList({ name }) {
+  return axios.post(`${config.baseUrl}${name} `)
 }
 function getBoardCount(name) {
   return axios.get(`${config.baseUrl}${name}_count`)
 }
-function requestLogin(username, password) {
-  return axios.post(`${config.baseUrl}login`, {
-    username: username,
-    password: password
-  })
+async function requestLogin(username, password) {
+  try {
+    const response = await axios.post(`${config.baseUrl}login`, {
+      username: username,
+      password: password
+    })
+    return response.data
+  } catch (error) {
+    console.error('error login')
+  }
 }
 function getTrainingData(id) {
   return axios.post(`${config.baseUrl}training`, {

@@ -92,8 +92,8 @@ async function login() {
     username: username.value,
     password: password.value
   })
-
-  if (response.status === 200 && sessionStorage.getItem(1)) {
+  console.log('response: ', response)
+  if (response && response.success && sessionStorage.getItem(response.user.id)) {
     Swal.fire({
       title: '로그인 되었습니다.',
       icon: 'success'
