@@ -92,13 +92,12 @@ async function login() {
     username: username.value,
     password: password.value
   })
-  console.log('response: ', response)
   if (response && response.success && sessionStorage.getItem(response.user.id)) {
     Swal.fire({
       title: '로그인 되었습니다.',
       icon: 'success'
     }).then(() => {
-      store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+      store.dispatch('CHECKING_SESSION', false)
       router.go(-1)
     })
   } else {

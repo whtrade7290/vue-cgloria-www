@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter, useRoute } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
@@ -53,7 +53,7 @@ const routes = [
     component: SermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('SET_BOARDLIST', 'sermon')
+      await store.dispatch('FETCH_BOARDCOUNT', 'sermon')
       await next()
     }
   },
@@ -68,12 +68,12 @@ const routes = [
     }
   },
   {
-    path: '/small',
-    name: 'small',
+    path: '/classMeeting',
+    name: 'classMeeting',
     component: SmallGroup,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'small')
+      await store.dispatch('FETCH_BOARDCOUNT', 'classMeeting')
       await next()
     }
   },
@@ -126,12 +126,12 @@ const routes = [
     }
   },
   {
-    path: '/free',
-    name: 'free',
+    path: '/generalForum',
+    name: 'generalForum',
     component: FreeBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'free')
+      await store.dispatch('FETCH_BOARDCOUNT', 'generalForum')
       await next()
     }
   },

@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     write() {
-      console.log('route name: ', this.route.name)
       const result = this.store.dispatch('WRITE_BOARD', {
         title: this.inputTitle,
         content: this.editorData,

@@ -10,7 +10,7 @@ const SMALLGROUP = [
   { title: '설교', icon: 'church', path: 'sermon' },
   { title: '칼럼', icon: 'book', path: 'column' },
   { title: '금주의 성경말씀', icon: 'attribution', path: 'weekly' },
-  { title: '속회교재실', icon: 'pin_drop', path: 'small' }
+  { title: '속회교재실', icon: 'pin_drop', path: 'classMeeting' }
 ]
 const WORSHIP = [
   { title: '예배/훈련시간', icon: 'church', path: '' },
@@ -29,7 +29,7 @@ const SCHOOL = [
   { title: '주일학교 자료실', icon: 'attribution', path: 'library' }
 ]
 const SOCIALIZE = [
-  { title: '자유게시판', icon: 'church', path: 'free' },
+  { title: '자유게시판', icon: 'church', path: 'generalForum' },
   { title: '사진갤러리', icon: 'book', path: 'photo' },
   { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]

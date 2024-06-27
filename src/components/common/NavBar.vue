@@ -117,7 +117,7 @@
                       <router-link to="/weekly" class="dropdown-item border-radius-md">
                         <span class="ps-3">금주의 성경말씀</span>
                       </router-link>
-                      <router-link to="/small" class="dropdown-item border-radius-md">
+                      <router-link to="/classMeeting" class="dropdown-item border-radius-md">
                         <span class="ps-3">속회교재실</span>
                       </router-link>
                     </div>
@@ -131,7 +131,7 @@
                       <router-link to="/weekly" class="dropdown-item border-radius-md">
                         <span class="ps-3">금주의 성경말씀</span>
                       </router-link>
-                      <router-link to="/small" class="dropdown-item border-radius-md">
+                      <router-link to="/classMeeting" class="dropdown-item border-radius-md">
                         <span class="ps-3">속회교재실</span>
                       </router-link>
                     </div>
@@ -280,7 +280,7 @@
                     aria-labelledby="dropdownMenuPages"
                   >
                     <div class="d-none d-lg-block">
-                      <router-link to="/free" class="dropdown-item border-radius-md">
+                      <router-link to="/generalForum" class="dropdown-item border-radius-md">
                         <span class="ps-3">자유게시판</span>
                       </router-link>
                       <router-link to="/photo" class="dropdown-item border-radius-md">
@@ -291,7 +291,7 @@
                       </router-link>
                     </div>
                     <div class="d-lg-none">
-                      <router-link to="/free" class="dropdown-item border-radius-md">
+                      <router-link to="/generalForum" class="dropdown-item border-radius-md">
                         <span class="ps-3">자유게시판</span>
                       </router-link>
                       <router-link to="/photo" class="dropdown-item border-radius-md">
@@ -307,7 +307,7 @@
                   <router-link
                     to="/logIn"
                     class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                    >로그인</router-link
+                    >로그인{{ store.state.isLogIned }}{{ store.state.userId }}</router-link
                   >
                 </li>
                 <template v-else>
@@ -346,11 +346,10 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 const router = useRouter()
 const store = useStore()
-
-// const isLoggedIn = ref(sessionStorage.getItem(1))
 
 function logout() {
   Swal.fire({
@@ -359,15 +358,17 @@ function logout() {
     showCancelButton: true
   }).then((result) => {
     if (result.isConfirmed) {
-      sessionStorage.removeItem(1)
-      store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+      sessionStorage.removeItem(getUserIdFromCookie())
+      store.dispatch('CHECKING_SESSION', true)
+      document.cookie = `userId=;`
       router.go()
     }
   })
 }
 
 onMounted(() => {
-  store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(1))
+  console.log(getUserIdFromCookie())
+  store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(getUserIdFromCookie()))
 })
 </script>
 

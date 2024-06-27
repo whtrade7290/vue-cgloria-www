@@ -20,7 +20,7 @@
           </div>
           <div>
             <p style="margin-top: 0.2rem; font-size: 1rem; font-weight: 500">
-              {{ formatDate(store.state.detail.date) }}
+              {{ formatDate(store.state.detail.create_at) }}
             </p>
           </div>
         </div>

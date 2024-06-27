@@ -43,7 +43,9 @@
             <p class="text-sm font-weight-bold mb-0 text-center">{{ item.writer }}</p>
           </td>
           <td style="width: 20%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0 text-center">{{ formatDate(item.date) }}</p>
+            <p class="text-sm font-weight-bold mb-0 text-center">
+              {{ formatDate(item.create_at) }}
+            </p>
           </td>
         </tr>
       </tbody>
@@ -122,14 +124,7 @@ function fetchList(num) {
 
   let actionsName = ''
 
-  if (props.isTraining) {
-    const trainingNum = JSON.parse(sessionStorage.getItem(1)).training_num
-    payload.trainingNum = trainingNum
-    actionsName = 'FETCH_TRAINING_DATALIST'
-  } else {
-    actionsName = 'FETCH_BOARDLIST'
-  }
-
+  actionsName = 'FETCH_BOARDLIST'
   store.dispatch(actionsName, payload)
   pageNum = num
   settingPageNumber()

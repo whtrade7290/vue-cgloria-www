@@ -1,23 +1,36 @@
 import axios from 'axios'
-
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
   baseUrl: 'http://localhost:3000/'
 }
-function getBoardList({ name }) {
-  return axios.post(`${config.baseUrl}${name} `)
+
+function createInstance() {
+  return axios.create({
+    baseURL: import.meta.env.VITE_API_URL
+  })
+}
+
+const instance = createInstance()
+
+function getBoardList(obj) {
+  const { name, startRow, pageSize } = obj
+  return instance.post(`${name}/${name}`, {
+    startRow: startRow,
+    pageSize: pageSize
+  })
 }
 function getBoardCount(name) {
-  return axios.get(`${config.baseUrl}${name}_count`)
+  return instance.get(`${name}/${name}_count`)
 }
 async function requestLogin(username, password) {
   try {
-    const response = await axios.post(`${config.baseUrl}login`, {
+    const response = await axios.post(`${config.baseUrl}signIn`, {
       username: username,
       password: password
     })
     return response.data
   } catch (error) {
-    console.error('error login')
+    console.error(error, 'error login')
   }
 }
 function getTrainingData(id) {
@@ -36,15 +49,15 @@ function getTrainingBoardCount({ name, trainingNum }) {
   return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
 }
 function writeBoard(title, content, name) {
-  return axios.post(`${config.baseUrl}write_${name}`, {
+  return instance.post(`${config.baseUrl}write_${name}`, {
     title: title,
     content: content,
     name: name,
-    writer: JSON.parse(sessionStorage.getItem(1)).username
+    writer: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).username
   })
 }
 function getContentById(name, id) {
-  return axios.post(`${config.baseUrl}detail/${name}`, {
+  return instance.post(`${name}/${name}_detail`, {
     id: id
   })
 }

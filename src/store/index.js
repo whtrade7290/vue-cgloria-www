@@ -37,7 +37,7 @@ export default createStore({
     },
     async FETCH_BOARDCOUNT({ commit }, name) {
       const res = await getBoardCount(name)
-      commit('SET_BOARDCOUNT', res.data[0]['count(*)'])
+      commit('SET_BOARDCOUNT', res.data.count)
       return res
     },
     async FETCH_TRAINING_DATA({ commit }, id) {
@@ -62,6 +62,7 @@ export default createStore({
       if (res && res.success) {
         const { user } = res
         sessionStorage.setItem(user.id, JSON.stringify(res))
+        document.cookie = `userId=${user.id};`
       }
       return res
     },
@@ -74,10 +75,10 @@ export default createStore({
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getContentById(name, id)
+      console.log('res: ', res)
       if (res.status === 200) {
-        commit('SET_DETAIL', res.data[0])
+        commit('SET_DETAIL', res.data)
       }
-      // console.log('id: ', id)
       return res
     }
   },

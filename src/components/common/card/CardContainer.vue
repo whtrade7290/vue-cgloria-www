@@ -1,8 +1,8 @@
 <template>
   <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7" :class="[isTraining ? '' : 'bg-gray-200']">
     <div class="container">
-      <div class="row" :class="[isWritePage ? '' : 'write-page-margin']">
-        <SideMenu></SideMenu>
+      <div class="row">
+        <SideMenu class="display-sideMenu"></SideMenu>
         <div class="col-lg-10">
           <div class="card shadow-lg mb-5">
             <CardHeader :title="title"></CardHeader>
@@ -33,19 +33,6 @@ defineProps({
     type: Boolean,
     default: false
   }
-  // isWritePage: {
-  //   type: Boolean,
-  //   default: false
-  // }
-})
-
-import { useRoute } from 'vue-router'
-const route = useRoute()
-
-const routeName = route.name
-
-const isWritePage = computed(() => {
-  return routeName !== 'write'
 })
 </script>
 
@@ -55,5 +42,16 @@ const isWritePage = computed(() => {
   justify-content: end;
   margin-right: 2rem;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 991px) {
+  .display-sideMenu {
+    margin-top: 3rem;
+  }
+}
+@media (max-width: 767px) {
+  .display-sideMenu {
+    margin-top: 5rem;
+  }
 }
 </style>
