@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
   baseUrl: 'http://localhost:3000/'
 }
@@ -48,20 +47,9 @@ function getTrainingBoardList({ name, trainingNum, startRow, pageSize }) {
 function getTrainingBoardCount({ name, trainingNum }) {
   return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
 }
-function writeBoard(title, content, name) {
-  return instance.post(
-    `${name}/${name}_write`,
-    {
-      title: title,
-      content: content,
-      writer: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+function writeBoard(formData, name) {
+  console.log('excute')
+  return instance.post(`${name}/${name}_write`, formData)
 }
 function getContentById(name, id) {
   return instance.post(`${name}/${name}_detail`, {

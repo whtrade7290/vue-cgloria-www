@@ -57,7 +57,7 @@
             <img :src="imageData" alt="img" />
           </div>
         </div>
-        <input type="file" id="image" @change="changeImage" name="file_name" /><br />
+        <input type="file" id="image" @change="changeImage" name="avatar" /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -90,6 +90,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 export default {
   components: {},
@@ -130,7 +131,11 @@ export default {
 
       formData.append('title', this.inputTitle)
       formData.append('content', this.editorData)
-      formData.append('file', this.file)
+      formData.append(
+        'writer',
+        JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
+      )
+      formData.append('avatar', this.file)
 
       console.log('formData title1: ', this.inputTitle)
       console.log('formData title2: ', formData.get('title'))
@@ -140,8 +145,7 @@ export default {
       console.log('formData file2: ', formData.get('file'))
 
       const result = this.store.dispatch('WRITE_BOARD', {
-        title: this.inputTitle,
-        content: this.editorData,
+        formData: formData,
         name: this.$route.query.name
       })
       if (result) {

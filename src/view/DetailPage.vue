@@ -27,7 +27,7 @@
         <div class="content-box">
           <p>내용...</p>
           <figure class="image">
-            <img src="/Users/jeongwoohyeon/WS/cgloria-api/src/uploads/disciple.jpg" />
+            <img :src="imageUrl" />
           </figure>
           <p>내용...</p>
         </div>
@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -70,6 +70,10 @@ function goToBoardList() {
 const isWriter = computed(() => {
   return JSON.parse(sessionStorage.getItem(1))?.username ?? '' === store.state.detail.writer
 })
+
+const imageUrl = ref('')
+
+imageUrl.value = `/Users/jeongwoohyeon/WS/cgloria-api/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
 </script>
 
 <style scoped>

@@ -69,8 +69,8 @@ export default createStore({
     async CHECKING_SESSION({ commit }, isLogIned) {
       commit('SET_LOGINED', isLogIned)
     },
-    async WRITE_BOARD({ commit }, { title, content, name }) {
-      const res = await writeBoard(title, content, name)
+    async WRITE_BOARD({ commit }, { formData, name }) {
+      const res = await writeBoard(formData, name)
       return res.status === 200
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
