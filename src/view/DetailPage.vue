@@ -24,7 +24,13 @@
             </p>
           </div>
         </div>
-        <div class="content-box" v-html="store.state.detail.content"></div>
+        <div class="content-box">
+          <p>내용...</p>
+          <figure class="image">
+            <img src="/Users/jeongwoohyeon/WS/cgloria-api/src/uploads/disciple.jpg" />
+          </figure>
+          <p>내용...</p>
+        </div>
         <div class="button-box">
           <a
             href="javascript:;"

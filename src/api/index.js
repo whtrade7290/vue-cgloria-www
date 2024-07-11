@@ -49,12 +49,19 @@ function getTrainingBoardCount({ name, trainingNum }) {
   return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
 }
 function writeBoard(title, content, name) {
-  return instance.post(`${config.baseUrl}write_${name}`, {
-    title: title,
-    content: content,
-    name: name,
-    writer: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).username
-  })
+  return instance.post(
+    `${name}/${name}_write`,
+    {
+      title: title,
+      content: content,
+      writer: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
 }
 function getContentById(name, id) {
   return instance.post(`${name}/${name}_detail`, {

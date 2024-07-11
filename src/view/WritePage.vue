@@ -51,6 +51,13 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
+        <label for="image">이미지 첨부</label><br />
+        <div style="width: 100%; display: flex; justify-content: center">
+          <div class="image-container" v-if="files.length !== 0">
+            <img :src="imageData" alt="img" />
+          </div>
+        </div>
+        <input type="file" id="image" @change="changeImage" name="file_name" /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -91,16 +98,47 @@ export default {
       editor: ClassicEditor,
       editorData: '',
       editorConfig: {
-        placeholder: '글 내용을 입력하세요.'
+        placeholder: '글 내용을 입력하세요.',
+        toolbar: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'bulletedList',
+          'numberedList',
+          'blockQuote',
+          'insertTable',
+          '|',
+          'undo',
+          'redo'
+        ]
       },
+
       inputTitle: '',
       store: useStore(),
       route: useRoute(),
-      router: useRouter()
+      router: useRouter(),
+      files: [],
+      imageData: null,
+      file: null
     }
   },
   methods: {
     write() {
+      let formData = new FormData()
+
+      formData.append('title', this.inputTitle)
+      formData.append('content', this.editorData)
+      formData.append('file', this.file)
+
+      console.log('formData title1: ', this.inputTitle)
+      console.log('formData title2: ', formData.get('title'))
+      console.log('formData content1: ', this.editorData)
+      console.log('formData content2: ', formData.get('content'))
+      console.log('formData file1: ', this.file)
+      console.log('formData file2: ', formData.get('file'))
+
       const result = this.store.dispatch('WRITE_BOARD', {
         title: this.inputTitle,
         content: this.editorData,
@@ -112,6 +150,23 @@ export default {
     },
     backPage() {
       this.router.back()
+    },
+    changeImage(event) {
+      this.files = event.target?.files
+      console.log('files: ', this.files)
+
+      if (this.files.length > 0) {
+        const file = this.files[0]
+
+        const reader = new FileReader()
+        this.file = this.files[0]
+
+        reader.onload = (e) => {
+          this.imageData = e.target.result
+        }
+        reader.readAsDataURL(file)
+        console.log('reader: ', reader)
+      }
     }
   }
 }
@@ -132,5 +187,18 @@ export default {
 .ck-content {
   height: 300px;
   border-radius: 1.5rem;
+}
+.image-container {
+  width: 22rem;
+  height: 17rem;
+  overflow: hidden;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  border-radius: 0.7rem;
+}
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
 }
 </style>
