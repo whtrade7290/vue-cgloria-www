@@ -25,11 +25,18 @@
           </div>
         </div>
         <div class="content-box">
-          <p>내용...</p>
-          <figure class="image">
-            <img :src="imageUrl" />
-          </figure>
-          <p>내용...</p>
+          <div
+            v-show="
+              store.state.detail.filename &&
+              store.state.detail.fileDate &&
+              store.state.detail.extension
+            "
+            class="img-container"
+          >
+            <img :src="imageUrl" alt="img" />
+          </div>
+
+          <div class="content-container" v-html="store.state.detail.content"></div>
         </div>
         <div class="button-box">
           <a
@@ -51,7 +58,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -71,9 +78,12 @@ const isWriter = computed(() => {
   return JSON.parse(sessionStorage.getItem(1))?.username ?? '' === store.state.detail.writer
 })
 
-const imageUrl = ref('')
+const imageUrl = ref(null)
 
-imageUrl.value = `/Users/jeongwoohyeon/WS/cgloria-api/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+onMounted(() => {
+  // 컴포넌트가 마운트된 후에 이미지 URL을 설정
+  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+})
 </script>
 
 <style scoped>
@@ -98,13 +108,30 @@ imageUrl.value = `/Users/jeongwoohyeon/WS/cgloria-api/uploads/${store.state.deta
 .content-box {
   width: 100%;
   height: 85%;
-  margin-top: 3rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
   padding: 0 1.5rem 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 .button-box {
   display: flex;
   justify-content: center;
   margin-top: 4rem;
+}
+.img-container {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+}
+.content-container {
+  margin-top: 2rem;
 }
 </style>

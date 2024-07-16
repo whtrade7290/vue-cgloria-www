@@ -57,7 +57,7 @@
             <img :src="imageData" alt="img" />
           </div>
         </div>
-        <input type="file" id="image" @change="changeImage" name="avatar" /><br />
+        <input type="file" id="image" @change="changeImage" name="fileField" /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -135,7 +135,7 @@ export default {
         'writer',
         JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
       )
-      formData.append('avatar', this.file)
+      formData.append('fileField', this.file)
 
       console.log('formData title1: ', this.inputTitle)
       console.log('formData title2: ', formData.get('title'))
