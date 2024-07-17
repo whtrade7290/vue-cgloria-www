@@ -160,7 +160,7 @@ async function intoDetail(id) {
 
 <style scoped>
 .selected {
-  border: 3px solid #ffbaef;
+  border: 3px solid #c5b5aa;
   background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

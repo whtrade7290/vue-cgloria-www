@@ -8,18 +8,10 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-left rounded-3 img-fluid position-relative top-0 end-0 bg-cover"
-                  style="border: 5px #b10b8a solid"
                   src="@/assets/img/jumok.jpg"
                 />
               </div>
             </div>
-
-            <p
-              class="blockquote border border-primary rounded w-50 p-3 text-sm text-primary float-md-end mt-4 me-md-n2 mx-auto"
-            >
-              하나님이 주목하시는 일을 하고 하나님이 주목하시는 예물을 드리는 자들은 분명 하나님이
-              주목하는 인생을 살게 될 것입니다.
-            </p>
             <!-- Second image on the left side of the article -->
             <div
               class="position-absolute bottom-0 mb-10 ms-n2 me-3 start-0 end-2 d-md-block d-none"
@@ -38,7 +30,7 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-right rounded-3 img-fluid position-relative bg-cover"
-                  style="width: 70%; border: 5px #b10b8a solid"
+                  style="width: 70%"
                   src="@/assets/img/ju1.png"
                 />
               </div>

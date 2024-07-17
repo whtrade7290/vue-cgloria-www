@@ -319,7 +319,7 @@
                     <router-link
                       to="/training/home"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      >나의 훈련</router-link
+                      >예수동행일기</router-link
                     >
                   </li>
                   <li class="nav-item my-auto ms-3 ms-lg-0">

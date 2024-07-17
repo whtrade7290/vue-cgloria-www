@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
-                <h3 class="text-gradient text-primary">2024.01.07</h3>
+                <h3>2024.01.07</h3>
                 <h5 class="mt-3">설교말씀</h5>
                 <p class="text-sm">믿음과 동행(信仰と同行)</p>
               </div>
