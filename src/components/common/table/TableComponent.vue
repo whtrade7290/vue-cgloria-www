@@ -141,6 +141,7 @@ function settingPageNumber() {
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
+
   return endIndex
 }
 

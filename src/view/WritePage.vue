@@ -137,13 +137,6 @@ export default {
       )
       formData.append('fileField', this.file)
 
-      console.log('formData title1: ', this.inputTitle)
-      console.log('formData title2: ', formData.get('title'))
-      console.log('formData content1: ', this.editorData)
-      console.log('formData content2: ', formData.get('content'))
-      console.log('formData file1: ', this.file)
-      console.log('formData file2: ', formData.get('file'))
-
       const result = this.store.dispatch('WRITE_BOARD', {
         formData: formData,
         name: this.$route.query.name
@@ -157,7 +150,6 @@ export default {
     },
     changeImage(event) {
       this.files = event.target?.files
-      console.log('files: ', this.files)
 
       if (this.files.length > 0) {
         const file = this.files[0]
@@ -169,7 +161,6 @@ export default {
           this.imageData = e.target.result
         }
         reader.readAsDataURL(file)
-        console.log('reader: ', reader)
       }
     }
   }

@@ -367,7 +367,6 @@ function logout() {
 }
 
 onMounted(() => {
-  console.log(getUserIdFromCookie())
   store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(getUserIdFromCookie()))
 })
 </script>

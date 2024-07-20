@@ -37,7 +37,7 @@ export default createStore({
     },
     async FETCH_BOARDCOUNT({ commit }, name) {
       const res = await getBoardCount(name)
-      commit('SET_BOARDCOUNT', res.data.count)
+      commit('SET_BOARDCOUNT', res.data)
       return res
     },
     async FETCH_TRAINING_DATA({ commit }, id) {
@@ -75,7 +75,6 @@ export default createStore({
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getContentById(name, id)
-      console.log('res: ', res)
       if (res.status === 200) {
         commit('SET_DETAIL', res.data)
       }

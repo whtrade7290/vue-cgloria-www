@@ -48,7 +48,6 @@ function getTrainingBoardCount({ name, trainingNum }) {
   return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
 }
 function writeBoard(formData, name) {
-  console.log('excute')
   return instance.post(`${name}/${name}_write`, formData)
 }
 function getContentById(name, id) {
