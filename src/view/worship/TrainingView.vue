@@ -286,7 +286,7 @@ import { ref } from 'vue'
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
-store.dispatch('FETCH_SIDEMENU', WORSHIP)
+// store.dispatch('FETCH_SIDEMENU', WORSHIP)
 obj.value = WORSHIP.find((o) => route.name === o.path)
 </script>
 

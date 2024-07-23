@@ -33,12 +33,7 @@ const SOCIALIZE = [
   { title: '사진갤러리', icon: 'book', path: 'photo' },
   { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]
-const TRAINING = [
-  { title: '훈련홈', icon: 'home', path: 'trainingHome' },
-  { title: '영성일기', icon: 'church', path: 'diary' },
-  { title: '과제제출', icon: 'book', path: 'assignment' },
-  { title: '알림장', icon: 'attribution', path: 'training_notice' }
-]
+const WITHDIARY = [{ title: '예수동행일기', icon: 'book', path: 'withDiary' }]
 const WRITE = [{ title: '작성페이지', icon: 'write', path: 'write' }]
 
-export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, TRAINING, WRITE }
+export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, WRITE, WITHDIARY }

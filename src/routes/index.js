@@ -17,16 +17,13 @@ import TestimonyBoard from '@/view/socialize/TestimonyBoard.vue'
 import JumokjaView from '@/view/worship/JumokjaView.vue'
 import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
-import TrainingHome from '@/view/training/TrainingHome.vue'
-import TrainingDiary from '@/view/training/board/TraininDiary.vue'
-import TrainingAssignment from '@/view/training/board/TrainingAssignment.vue'
-import TrainingNotice from '@/view/training/board/TrainingNotice.vue'
+import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/WritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
-
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 const routes = [
   // main
@@ -145,71 +142,26 @@ const routes = [
       await next()
     }
   },
-  // 훈련
   {
-    path: '/training/home',
-    name: 'trainingHome',
-    component: TrainingHome,
+    path: '/withDiary',
+    name: 'withDiary',
+    component: WithDiary,
     beforeEnter: async (to, from, next) => {
-      if (sessionStorage.getItem(1)) {
-        const store = useStore()
+      const store = useStore()
 
-        const trainingId = JSON.parse(sessionStorage.getItem(1)).training_num
-        const response = await store.dispatch('FETCH_TRAINING_DATA', trainingId)
+      const withDiaryNum = JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.withDiary
 
-        if (response.status === 200 && response.data.length !== 0) {
-          next()
-        } else {
-          Swal.fire({
-            title: '훈련을 찾지 못했습니다.',
-            icon: 'error'
-          })
-          next(false)
-        }
+      if (withDiaryNum === 0) {
+        await Swal.fire({
+          title: '예수동행일기 그룹이 존재하지 않습니다.',
+          icon: 'warning'
+        })
+
+        await next(from)
       } else {
-        console.log('not login')
-        next(false)
+        await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', 'withDiary')
+        return next()
       }
-    }
-  },
-  {
-    path: '/training/diary',
-    name: 'diary',
-    component: TrainingDiary,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-
-      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
-        name: 'diary',
-        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
-      })
-      await next()
-    }
-  },
-  {
-    path: '/training/assignment',
-    name: 'assignment',
-    component: TrainingAssignment,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
-        name: 'assignment',
-        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
-      })
-      await next()
-    }
-  },
-  {
-    path: '/training/notice',
-    name: 'training_notice',
-    component: TrainingNotice,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      await store.dispatch('FETCH_TRAINING_BOARDCOUNT', {
-        name: 'training_notice',
-        trainingNum: JSON.parse(sessionStorage.getItem(1)).training_num
-      })
-      await next()
     }
   },
   {

@@ -3,10 +3,9 @@ import bootstrap from 'bootstrap/dist/js/bootstrap.min.js'
 import {
   getBoardList,
   requestLogin,
-  getTrainingData,
-  getTrainingBoardList,
+  getWithDiaryBoardList,
   getBoardCount,
-  getTrainingBoardCount,
+  getWithDiaryBoardCount,
   writeBoard,
   getContentById
 } from '@/api/index'
@@ -40,19 +39,15 @@ export default createStore({
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_TRAINING_DATA({ commit }, id) {
-      const res = await getTrainingData(id)
-
-      commit('SET_TRAINING', res.data)
+    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, obj) {
+      console.log('excute')
+      const res = await getWithDiaryBoardCount(obj)
+      commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_TRAINING_BOARDCOUNT({ commit }, obj) {
-      const res = await getTrainingBoardCount(obj)
-      commit('SET_BOARDCOUNT', res.data[0]['count(*)'])
-      return res
-    },
-    async FETCH_TRAINING_DATALIST({ commit }, obj) {
-      const res = await getTrainingBoardList(obj)
+    async FETCH_WITHDIARY_DATALIST({ commit }, obj) {
+      console.log('test1')
+      const res = await getWithDiaryBoardList(obj)
       commit('SET_BOARDLIST', res.data)
       return res
     },

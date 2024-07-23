@@ -1,15 +1,14 @@
 <template>
   <header class="header-2">
     <div
-      class="page-header min-vh-75 relative"
-      :class="[isTraining ? 'training-img-effect' : 'main-back-img']"
+      class="page-header min-vh-75 relative main-back-img"
       :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
     >
       <div class="container">
         <div class="row">
           <div class="col-lg-7mx-auto">
             <h1 class="text-white pt-3 mt-n5">{{ main_msg }}</h1>
-            <p class="lead text-white mt-3">
+            <p class="text-white gugi-regular" style="font-size: 5rem; font-weight: bold">
               {{ sub_msg }}
             </p>
           </div>
@@ -67,6 +66,21 @@ defineProps({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Jua&display=swap');
+
+.jua-regular {
+  font-family: 'Jua', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.gugi-regular {
+  font-family: 'Gugi', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #f5c6aa;
+  text-shadow: 2px 2px #000;
+}
+
 .training-img-effect {
   background-color: rgba(0, 0, 0, 0.7);
   background-size: cover;

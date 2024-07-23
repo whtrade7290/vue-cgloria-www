@@ -1,5 +1,8 @@
 <template>
-  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7" :class="[isTraining ? '' : 'bg-gray-200']">
+  <section
+    class="pt-3 pt-md-5 pb-md-5 pt-lg-7 mt-5 mb-7"
+    style="border-radius: 1.5rem; background-color: #f6f6f6"
+  >
     <div class="container">
       <div class="row">
         <SideMenu class="display-sideMenu"></SideMenu>

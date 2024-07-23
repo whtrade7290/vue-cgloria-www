@@ -124,7 +124,11 @@ function fetchList(num) {
 
   let actionsName = ''
 
-  actionsName = 'FETCH_BOARDLIST'
+  if (route.name === 'withDiary') {
+    actionsName = 'FETCH_WITHDIARY_DATALIST'
+  } else {
+    actionsName = 'FETCH_BOARDLIST'
+  }
   store.dispatch(actionsName, payload)
   pageNum = num
   settingPageNumber()

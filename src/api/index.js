@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
   baseUrl: 'http://localhost:3000/'
 }
@@ -32,22 +33,26 @@ async function requestLogin(username, password) {
     console.error(error, 'error login')
   }
 }
-function getTrainingData(id) {
-  return axios.post(`${config.baseUrl}training`, {
-    id: id
-  })
-}
-function getTrainingBoardList({ name, trainingNum, startRow, pageSize }) {
-  return axios.post(`${config.baseUrl}${name}`, {
-    training_num: trainingNum,
+function getWithDiaryBoardList(obj) {
+  const { startRow, pageSize } = obj
+  return instance.post(`withDiary/withDiary`, {
     startRow: startRow,
-    pageSize: pageSize
+    pageSize: pageSize,
+    withDiary: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.withDiary
   })
 }
-function getTrainingBoardCount({ name, trainingNum }) {
-  return axios.post(`${config.baseUrl}${name}_count`, { training_num: trainingNum })
+function getWithDiaryBoardCount() {
+  return instance.post(`withDiary/withDiary_count`, {
+    withDiary: JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+  })
 }
 function writeBoard(formData, name) {
+  if (name === 'withDiary') {
+    formData.append(
+      'withDiaryNum',
+      JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+    )
+  }
   return instance.post(`${name}/${name}_write`, formData)
 }
 function getContentById(name, id) {
@@ -59,10 +64,9 @@ function getContentById(name, id) {
 export {
   getBoardList,
   requestLogin,
-  getTrainingData,
-  getTrainingBoardList,
+  getWithDiaryBoardList,
   getBoardCount,
-  getTrainingBoardCount,
+  getWithDiaryBoardCount,
   writeBoard,
   getContentById
 }

@@ -317,7 +317,7 @@
                     style="float: left"
                   >
                     <router-link
-                      to="/training/home"
+                      to="/withDiary"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                       >예수동행일기</router-link
                     >
@@ -361,7 +361,7 @@ function logout() {
       sessionStorage.removeItem(getUserIdFromCookie())
       store.dispatch('CHECKING_SESSION', true)
       document.cookie = `userId=;`
-      router.go()
+      router.push('/')
     }
   })
 }
