@@ -95,7 +95,7 @@ const routes = [
     component: SchoolPhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
+      // await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
       await next()
     }
   },
@@ -118,7 +118,7 @@ const routes = [
     component: PhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'photo')
+      // await store.dispatch('FETCH_BOARDCOUNT', 'photo')
       await next()
     }
   },

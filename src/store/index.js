@@ -83,9 +83,6 @@ export default createStore({
     SET_BOARDLIST(state, item) {
       state.dataList = item
     },
-    SET_TRAINING(state, item) {
-      state.training = item
-    },
     SET_BOARDCOUNT(state, item) {
       state.count = item
     },

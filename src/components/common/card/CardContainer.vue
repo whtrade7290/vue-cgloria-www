@@ -31,10 +31,6 @@ defineProps({
   title: {
     type: String,
     default: ''
-  },
-  isTraining: {
-    type: Boolean,
-    default: false
   }
 })
 </script>

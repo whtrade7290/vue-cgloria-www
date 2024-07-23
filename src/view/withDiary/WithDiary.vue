@@ -3,7 +3,6 @@
     <HeaderComponent
       sub_msg="예수동행일기"
       imgUrl="/src/assets/img/main/sky1.jpeg"
-      :isTraining="true"
     ></HeaderComponent>
     <div class="container">
       <CardContainer title="예수동행일기">

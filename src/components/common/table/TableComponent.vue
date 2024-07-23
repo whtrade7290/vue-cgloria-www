@@ -101,10 +101,6 @@ const props = defineProps({
   called: {
     type: String,
     default: ''
-  },
-  isTraining: {
-    type: Boolean,
-    default: false
   }
 })
 
