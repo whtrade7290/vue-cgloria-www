@@ -19,6 +19,7 @@ import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/WritePage.vue'
+import PhotoWritePage from '@/view/PhotoWritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
 // sweetalert2
 import Swal from 'sweetalert2'
@@ -95,7 +96,7 @@ const routes = [
     component: SchoolPhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      // await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
+      await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
       await next()
     }
   },
@@ -118,7 +119,7 @@ const routes = [
     component: PhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      // await store.dispatch('FETCH_BOARDCOUNT', 'photo')
+      await store.dispatch('FETCH_BOARDCOUNT', 'photo')
       await next()
     }
   },
@@ -168,6 +169,11 @@ const routes = [
     path: '/write',
     name: 'write',
     component: WritePage
+  },
+  {
+    path: '/photo_write',
+    name: 'photo_write',
+    component: PhotoWritePage
   },
   {
     path: '/detail/:name/:id',

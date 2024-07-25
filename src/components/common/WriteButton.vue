@@ -19,7 +19,11 @@ const route = useRoute()
 const store = useStore()
 
 function moveWritePage() {
-  router.push({ name: 'write', query: { name: route.name } })
+  if (route.name === 'photo' || route.name === 'school_photo') {
+    router.push({ name: 'photo_write', query: { name: route.name } })
+  } else {
+    router.push({ name: 'write', query: { name: route.name } })
+  }
 }
 </script>
 
