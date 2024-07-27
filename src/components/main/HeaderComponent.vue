@@ -7,9 +7,13 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7mx-auto">
-            <h1 class="text-white pt-3 mt-n5">{{ main_msg }}</h1>
-            <p class="text-white gugi-regular" style="font-size: 5rem; font-weight: bold">
-              {{ sub_msg }}
+            <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ sub_msg }}</h1>
+            <p
+              class="text-white gugi-regular"
+              style="margin-top: -1.5rem"
+              :class="[sub_msg === '예수동행일기' ? 'diary-font' : 'main-font']"
+            >
+              {{ main_msg }}
             </p>
           </div>
         </div>
@@ -84,5 +88,13 @@ defineProps({
 }
 .main-back-img {
   background-image: url('@/assets/img/main/main01.jpg');
+}
+.main-font {
+  font-size: 4.5rem;
+  font-weight: bold;
+}
+.diary-font {
+  font-size: 5rem;
+  font-weight: bold;
 }
 </style>

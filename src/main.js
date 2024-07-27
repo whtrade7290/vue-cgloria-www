@@ -7,6 +7,8 @@ import store from './store'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import mitt from 'mitt'
+import '@fancyapps/ui/dist/fancybox/fancybox.css'
+
 const emitter = mitt()
 
 const app = createApp(App)

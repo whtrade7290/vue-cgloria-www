@@ -7,7 +7,8 @@ import {
   getBoardCount,
   getWithDiaryBoardCount,
   writeBoard,
-  getContentById
+  getContentById,
+  getPhotoContentById
 } from '@/api/index'
 
 export default createStore({
@@ -74,6 +75,40 @@ export default createStore({
         commit('SET_DETAIL', res.data)
       }
       return res
+    },
+    async FETCH_PHOTO_CONTENT_DETAIL({ commit }, { name, id }) {
+      const res = await getPhotoContentById(name, id)
+
+      let data = {}
+
+      if (res.data !== null || res.data !== undefined) {
+        const fileUrlList = JSON.parse(res.data.files ?? '').map((file) => {
+          return {
+            fileUrl: `http://localhost:3000/uploads/${file.filename}_${file.date}.${file.extension}`,
+            filename: file.filename
+          }
+        })
+
+        console.log('fileUrlList: ', fileUrlList)
+
+        data = {
+          id: Number(res.data.id),
+          title: res.data.title,
+          content: res.data.content,
+          writer: res.data.writer,
+          files: fileUrlList,
+          create_at: res.data.create_at,
+          update_at: res.data.update_at,
+          deleted: res.data.deleted
+        }
+
+        console.log('data: ', data)
+      }
+
+      if (res.status === 200) {
+        commit('SET_DETAIL', data)
+      }
+      return res
     }
   },
   mutations: {
@@ -90,6 +125,7 @@ export default createStore({
       state.isLogIned = item
     },
     SET_DETAIL(state, item) {
+      console.log('item: ', item)
       state.detail = item
     }
   }

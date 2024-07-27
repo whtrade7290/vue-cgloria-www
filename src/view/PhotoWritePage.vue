@@ -130,7 +130,6 @@ export default {
   },
   methods: {
     write() {
-      console.log('test')
       let formData = new FormData()
 
       formData.append('title', this.inputTitle)
@@ -139,9 +138,8 @@ export default {
         'writer',
         JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
       )
-      formData.append('fileField', this.files)
 
-      console.log('this.files: ', this.files)
+      formData.append('fileField', this.files)
 
       this.files.forEach((file) => {
         formData.append('fileField', file)

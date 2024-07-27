@@ -60,6 +60,11 @@ function getContentById(name, id) {
     id: id
   })
 }
+function getPhotoContentById(name, id) {
+  return instance.post(`${name}/${name}_detail`, {
+    id: id
+  })
+}
 
 export {
   getBoardList,
@@ -68,5 +73,6 @@ export {
   getBoardCount,
   getWithDiaryBoardCount,
   writeBoard,
-  getContentById
+  getContentById,
+  getPhotoContentById
 }

@@ -8,7 +8,7 @@
     >
       <div class="card card-plain card-blog">
         <div class="card-image border-radius-lg position-relative">
-          <a href="javascript:;">
+          <a href="javascript:;" @click="intoDetail(item.id)">
             <img class="w-100 border-radius-lg move-on-hover shadow" :src="item.thumnailUrl" />
           </a>
         </div>
@@ -66,7 +66,10 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+const router = useRouter()
+const route = useRoute()
 const store = useStore()
 
 const props = defineProps({
@@ -118,7 +121,13 @@ const parsedFiles = computed(() => {
   const dataList = store.state.dataList
 
   const newList = dataList.map((data) => {
-    const files = JSON.parse(data.files)
+    let files = []
+    if (data.files) {
+      files = JSON.parse(data.files)
+    } else {
+      files = []
+    }
+
     return {
       id: data.id,
       title: data.title,
@@ -126,7 +135,7 @@ const parsedFiles = computed(() => {
       content: data.content,
       writer: data.writer,
       files: files,
-      thumnailUrl: `http://localhost:3000/uploads/${files[0].filename}_${files[0].date}.${files[0].extension}`,
+      thumnailUrl: `http://localhost:3000/uploads/${files[0]?.filename}_${files[0]?.date}.${files[0]?.extension}`,
       update_at: data.update_at,
       create_at: data.create_at,
       deleted: data.deleted
@@ -134,26 +143,15 @@ const parsedFiles = computed(() => {
   })
 
   return newList
-
-  // // dataList가 비어있지 않으면
-  // if (dataList.length > 0) {
-  //   // 첫 번째 항목의 files를 가져옵니다
-  //   const fileInfoList = dataList.map((item) => JSON.parse(item.files))
-  //   const firstFileList = fileInfoList.map((item) => {
-  //     return `http://localhost:3000/uploads/${item[0].filename}_${item[0].date}.${item[0].extension}`
-  //   })
-
-  //   console.log('firstFileList: ', firstFileList)
-  //   console.log('dataList: ', dataList)
-
-  //   try {
-  //     return firstFileList
-  //   } catch (e) {
-  //     console.error('Failed to parse JSON:', e)
-  //     return []
-  //   }
-  // }
 })
+
+async function intoDetail(id) {
+  await router.push({
+    name: 'photoDetail',
+    params: { name: route.name, id: id },
+    query: { pageNum: pageNum }
+  })
+}
 </script>
 
 <style scoped>

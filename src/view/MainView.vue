@@ -1,6 +1,10 @@
 <template>
   <div>
-    <HeaderComponent :imgUrl="imgUrl"></HeaderComponent>
+    <HeaderComponent
+      :imgUrl="imgUrl"
+      main_msg="중앙영광교회"
+      sub_msg="말씀으로 동행하는 교회"
+    ></HeaderComponent>
     <WeeklySermon></WeeklySermon>
     <MainSectionOne></MainSectionOne>
     <MainSectionTwo></MainSectionTwo>

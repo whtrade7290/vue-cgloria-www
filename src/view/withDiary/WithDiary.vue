@@ -1,7 +1,8 @@
 <template>
   <div>
     <HeaderComponent
-      sub_msg="예수동행일기"
+      main_msg="예수동행일기"
+      sub_msg="중앙영광교회"
       imgUrl="/src/assets/img/main/sky1.jpeg"
     ></HeaderComponent>
     <div class="container">
