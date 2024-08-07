@@ -8,8 +8,10 @@ import {
   getWithDiaryBoardCount,
   writeBoard,
   getContentById,
-  getPhotoContentById
+  getPhotoContentById,
+  deleteBoard
 } from '@/api/index'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 export default createStore({
   state: {
@@ -23,7 +25,7 @@ export default createStore({
   },
   getters: {
     checkLogin() {
-      return !sessionStorage.getItem(1)
+      return !sessionStorage.getItem(getUserIdFromCookie())
     }
   },
   actions: {
@@ -109,6 +111,10 @@ export default createStore({
         commit('SET_DETAIL', data)
       }
       return res
+    },
+    async DELETE_BOARD({ commit }, { name, id }) {
+      const result = await deleteBoard(name, id)
+      return result.data
     }
   },
   mutations: {

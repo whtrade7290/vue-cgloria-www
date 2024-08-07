@@ -57,7 +57,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
@@ -74,7 +74,10 @@ function goToBoardList() {
 }
 
 const isWriter = computed(() => {
-  return JSON.parse(sessionStorage.getItem(1))?.username ?? '' === store.state.detail.writer
+  return (
+    JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.username ??
+    '' === store.state.detail.writer
+  )
 })
 
 onMounted(() => {
@@ -90,7 +93,11 @@ onMounted(() => {
     SlideShow: {
       autoStart: false, // 자동 슬라이드쇼 시작 여부
       speed: 3000 // 슬라이드쇼 속도
+    },
+    Carousel: {
+      infinite: false
     }
+
     // 기타 옵션 추가 가능
   })
 })

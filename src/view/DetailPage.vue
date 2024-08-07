@@ -49,7 +49,15 @@
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             v-show="isWriter"
+            @click="goToEditPage"
             >글수정</a
+          >
+          <a
+            href="javascript:;"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            v-show="isWriter"
+            @click="deleteBoard"
+            >글삭제</a
           >
         </div>
       </div>
@@ -61,6 +69,8 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
+import Swal from 'sweetalert2'
 
 const route = useRoute()
 const router = useRouter()
@@ -75,8 +85,49 @@ function goToBoardList() {
 }
 
 const isWriter = computed(() => {
-  return JSON.parse(sessionStorage.getItem(1))?.username ?? '' === store.state.detail.writer
+  return (
+    JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username ===
+    store.state.detail.writer
+  )
 })
+
+const deleteBoard = () => {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+  swalWithBootstrapButtons
+    .fire({
+      title: '정말 삭제하시겠습니까?',
+      text: '이 글을 다시 볼 수 없게 됩니다.',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: '아니오',
+      confirmButtonText: '네'
+    })
+    .then(async (result) => {
+      console.log('id: ', route.params.name)
+      if (result.isConfirmed) {
+        const result = await store.dispatch('DELETE_BOARD', {
+          name: route.params.name,
+          id: store.state.detail.id
+        })
+        if (result) {
+          swalWithBootstrapButtons
+            .fire({
+              title: '삭제되었습니다!',
+              icon: 'success'
+            })
+            .then(() => {
+              router.go(-1)
+            })
+        }
+      }
+    })
+}
 
 const imageUrl = ref(null)
 

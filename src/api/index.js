@@ -66,6 +66,12 @@ function getPhotoContentById(name, id) {
   })
 }
 
+function deleteBoard(name, id) {
+  return instance.post(`${name}/${name}_delete`, {
+    id: id
+  })
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -74,5 +80,6 @@ export {
   getWithDiaryBoardCount,
   writeBoard,
   getContentById,
-  getPhotoContentById
+  getPhotoContentById,
+  deleteBoard
 }
