@@ -91,6 +91,10 @@ const isWriter = computed(() => {
   )
 })
 
+const goToEditPage = () => {
+  router.push({ name: 'edit', params: { name: route.params.name, id: store.state.detail.id } })
+}
+
 const deleteBoard = () => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -133,7 +137,9 @@ const imageUrl = ref(null)
 
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
-  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+  if (store.state.detail.filename && store.state.detail.fileDate && store.state.detail.extension) {
+    imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+  }
 })
 </script>
 
