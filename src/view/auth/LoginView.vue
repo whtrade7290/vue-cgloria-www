@@ -32,8 +32,8 @@
                     />
                   </div>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="rememberMe" />
-                    <label class="form-check-label" for="rememberMe">기억하기</label>
+                    <!-- <input class="form-check-input" type="checkbox" id="rememberMe" /> -->
+                    <!-- <label class="form-check-label" for="rememberMe">기억하기</label> -->
                   </div>
                   <div class="text-center">
                     <button

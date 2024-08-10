@@ -19,6 +19,7 @@ import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/WritePage.vue'
+import EditPage from '@/view/EditPage.vue'
 import PhotoWritePage from '@/view/PhotoWritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
 import PhotoDetailPage from '@/view/PhotoDetailPage.vue'
@@ -170,6 +171,18 @@ const routes = [
     path: '/write',
     name: 'write',
     component: WritePage
+  },
+  {
+    path: '/edit',
+    name: 'edit',
+    component: EditPage,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const name = to.query.name
+      const id = to.query.id
+      await store.dispatch('FETCH_CONTENT_DETAIL', { name: name, id: id })
+      await next()
+    }
   },
   {
     path: '/photo_write',

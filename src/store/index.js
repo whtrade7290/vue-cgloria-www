@@ -9,7 +9,8 @@ import {
   writeBoard,
   getContentById,
   getPhotoContentById,
-  deleteBoard
+  deleteBoard,
+  editBoard
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -49,7 +50,6 @@ export default createStore({
       return res
     },
     async FETCH_WITHDIARY_DATALIST({ commit }, obj) {
-      console.log('test1')
       const res = await getWithDiaryBoardList(obj)
       commit('SET_BOARDLIST', res.data)
       return res
@@ -115,6 +115,10 @@ export default createStore({
     async DELETE_BOARD({ commit }, { name, id }) {
       const result = await deleteBoard(name, id)
       return result.data
+    },
+    async EDIT_BOARD({ commit }, { formData, name }) {
+      const res = await editBoard(formData, name)
+      return res.status === 200
     }
   },
   mutations: {

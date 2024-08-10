@@ -47,6 +47,7 @@ function getWithDiaryBoardCount() {
   })
 }
 function writeBoard(formData, name) {
+  console.log('formData file: ', formData.get('fileField'))
   if (name === 'withDiary') {
     formData.append(
       'withDiaryNum',
@@ -72,6 +73,16 @@ function deleteBoard(name, id) {
   })
 }
 
+function editBoard(formData, name) {
+  if (name === 'withDiary') {
+    formData.append(
+      'withDiaryNum',
+      JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+    )
+  }
+  return instance.post(`${name}/${name}_edit`, formData)
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -81,5 +92,6 @@ export {
   writeBoard,
   getContentById,
   getPhotoContentById,
-  deleteBoard
+  deleteBoard,
+  editBoard
 }

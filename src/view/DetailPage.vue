@@ -92,7 +92,10 @@ const isWriter = computed(() => {
 })
 
 const goToEditPage = () => {
-  router.push({ name: 'edit', params: { name: route.params.name, id: store.state.detail.id } })
+  router.push({
+    name: 'edit',
+    query: { name: route.params.name, id: store.state.detail.id }
+  })
 }
 
 const deleteBoard = () => {
