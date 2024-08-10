@@ -58,6 +58,17 @@
           </div>
           <div class="image-container" v-else>
             <img :src="imageUrl" alt="img" />
+            <div
+              v-if="
+                store.state.detail.filename &&
+                store.state.detail.fileDate &&
+                store.state.detail.extension
+              "
+            >
+              {{ store.state.detail.filename }}_{{ store.state.detail.fileDate }}.{{
+                store.state.detail.extension
+              }}
+            </div>
           </div>
         </div>
         <div class="mb-3">
@@ -187,7 +198,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
 
-  imageUrl.value = `http://localhost:3000/uploads/disciple_1723272463446.jpg`
+  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
 })
 </script>
 
