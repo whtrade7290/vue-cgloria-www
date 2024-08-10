@@ -51,13 +51,24 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
-        <label for="image">이미지 첨부</label><br />
+        <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
             <img :src="imageData" alt="img" />
           </div>
+          <div class="image-container" v-else>
+            <img :src="imageUrl" alt="img" />
+          </div>
         </div>
-        <input type="file" id="image" @change="changeImage" name="fileField" /><br />
+        <div class="mb-3">
+          <input
+            class="form-control"
+            type="file"
+            id="image"
+            @change="changeImage"
+            name="fileField"
+          />
+        </div>
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -86,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -159,6 +170,8 @@ const changeImage = (event) => {
   if (files.value.length > 0) {
     const fileObject = files.value[0]
 
+    console.log('fileObject: ', fileObject)
+
     const reader = new FileReader()
     file.value = files.value[0]
 
@@ -168,6 +181,14 @@ const changeImage = (event) => {
     reader.readAsDataURL(fileObject)
   }
 }
+
+const imageUrl = ref(null)
+
+onMounted(() => {
+  // 컴포넌트가 마운트된 후에 이미지 URL을 설정
+
+  imageUrl.value = `http://localhost:3000/uploads/disciple_1723272463446.jpg`
+})
 </script>
 
 <style scoped>
