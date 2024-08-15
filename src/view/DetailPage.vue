@@ -78,8 +78,15 @@ const store = useStore()
 
 const formatDate = (dateString) => {
   const date = new Date(dateString)
-  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`
 }
+
 function goToBoardList() {
   router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
 }
@@ -116,7 +123,6 @@ const deleteBoard = () => {
       confirmButtonText: '네'
     })
     .then(async (result) => {
-      console.log('id: ', route.params.name)
       if (result.isConfirmed) {
         const result = await store.dispatch('DELETE_BOARD', {
           name: route.params.name,

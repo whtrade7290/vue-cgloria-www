@@ -45,7 +45,15 @@
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             v-show="isWriter"
+            @click="goToEditPage"
             >글수정</a
+          >
+          <a
+            href="javascript:;"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            v-show="isWriter"
+            @click="deleteBoard"
+            >글삭제</a
           >
         </div>
       </div>
@@ -60,6 +68,7 @@ import { useStore } from 'vuex'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
+import Swal from 'sweetalert2'
 
 const route = useRoute()
 const router = useRouter()
@@ -67,16 +76,66 @@ const store = useStore()
 
 const formatDate = (dateString) => {
   const date = new Date(dateString)
-  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일  ${date.getHours()}:${date.getMinutes()}`
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`
 }
 function goToBoardList() {
   router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
 }
 
+const goToEditPage = () => {
+  router.push({
+    name: 'photo_edit',
+    query: { name: route.params.name, id: store.state.detail.id }
+  })
+}
+
+const deleteBoard = () => {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+  swalWithBootstrapButtons
+    .fire({
+      title: '정말 삭제하시겠습니까?',
+      text: '이 글을 다시 볼 수 없게 됩니다.',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: '아니오',
+      confirmButtonText: '네'
+    })
+    .then(async (result) => {
+      if (result.isConfirmed) {
+        const result = await store.dispatch('DELETE_BOARD', {
+          name: route.params.name,
+          id: store.state.detail.id
+        })
+        if (result) {
+          swalWithBootstrapButtons
+            .fire({
+              title: '삭제되었습니다!',
+              icon: 'success'
+            })
+            .then(() => {
+              router.go(-1)
+            })
+        }
+      }
+    })
+}
+
 const isWriter = computed(() => {
   return (
-    JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.username ??
-    '' === store.state.detail.writer
+    JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username ===
+    store.state.detail.writer
   )
 })
 

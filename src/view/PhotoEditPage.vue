@@ -13,7 +13,7 @@
         class="card-header bg-gradient-primary p-5 position-relative"
         style="border-radius: 1rem"
       >
-        <h3 class="text-white mb-0">글수정</h3>
+        <h3 class="text-white mb-0">사진 글 수정</h3>
         <p class="text-white opacity-8 mb-4">중앙 영광교회 교회 역사와 형제교회 소개</p>
         <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
           <svg
@@ -42,6 +42,7 @@
           </svg>
         </div>
       </div>
+
       <div style="padding: 1.5rem">
         <label for="title">제목</label><br />
         <input
@@ -51,33 +52,25 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
-        <label for="image" class="form-label mt-3">이미지 첨부</label><br />
+        <label for="image">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
-            <img :src="imageData" alt="img" />
+            <div class="image-wrapper" v-for="(img, index) in imageData" :key="index">
+              <img :src="img" :alt="'Image ' + (index + 1)" width="200" class="image" />
+            </div>
           </div>
           <div class="image-container" v-else>
-            <img :src="imageUrl" alt="img" />
             <div
-              v-if="
-                store.state.detail.filename &&
-                store.state.detail.fileDate &&
-                store.state.detail.extension
-              "
+              class="image-wrapper"
+              v-for="(item, index) in store.state.detail.files"
+              :key="index"
             >
-              {{ store.state.detail.filename }}
+              <img :src="item.fileUrl" :alt="'Image ' + (index + 1)" width="200" class="image" />
+              {{ item.filename }}
             </div>
           </div>
         </div>
-        <div class="mb-3">
-          <input
-            class="form-control"
-            type="file"
-            id="image"
-            @change="changeImage"
-            name="fileField"
-          />
-        </div>
+        <input type="file" id="image" @change="changeImage" name="fileField" multiple /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -97,7 +90,7 @@
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
             @click="backPage"
-            >취소하기</a
+            >목록으로</a
           >
         </div>
       </div>
@@ -106,16 +99,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
-// 상태 선언
 const store = useStore()
-const route = useRoute()
-const router = useRouter()
-const editor = ref(ClassicEditor)
+const editor = ClassicEditor
 const editorData = ref('')
 editorData.value = store.state.detail.content
 const editorConfig = {
@@ -138,33 +128,30 @@ const editorConfig = {
 
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
+
+const route = useRoute()
+const router = useRouter()
 const files = ref([])
-const imageData = ref(null)
-const file = ref(null)
+const imageData = ref([])
 
-// 메서드 선언
 const edit = async () => {
-  try {
-    const formData = new FormData()
+  let formData = new FormData()
 
-    formData.append('title', inputTitle.value)
-    formData.append('content', editorData.value)
-    formData.append('id', store.state.detail.id)
+  formData.append('title', inputTitle.value)
+  formData.append('content', editorData.value)
+  formData.append('id', store.state.detail.id)
 
-    if (file.value) {
-      formData.append('fileField', file.value)
-    }
+  files.value.forEach((file) => {
+    formData.append('fileField', file)
+  })
 
-    const result = await store.dispatch('EDIT_BOARD', {
-      formData: formData,
-      name: route.query?.name
-    })
+  const result = await store.dispatch('EDIT_PHOTO_BOARD', {
+    formData: formData,
+    name: route.query.name
+  })
 
-    if (result) {
-      router.push(`/${route.query.name}`)
-    }
-  } catch (error) {
-    console.error('Error writing board:', error)
+  if (result) {
+    router.push(`/${route.query.name}`)
   }
 }
 
@@ -173,28 +160,21 @@ const backPage = () => {
 }
 
 const changeImage = (event) => {
-  files.value = event.target?.files
+  const newFiles = Array.from(event.target.files)
+  files.value = files.value.concat(newFiles)
+  imageData.value = []
 
   if (files.value.length > 0) {
-    const fileObject = files.value[0]
+    files.value.forEach((file) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        imageData.value.push(e.target.result)
+      }
 
-    const reader = new FileReader()
-    file.value = files.value[0]
-
-    reader.onload = (e) => {
-      imageData.value = e.target.result
-    }
-    reader.readAsDataURL(fileObject)
+      reader.readAsDataURL(file)
+    })
   }
 }
-
-const imageUrl = ref(null)
-
-onMounted(() => {
-  // 컴포넌트가 마운트된 후에 이미지 URL을 설정
-
-  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
-})
 </script>
 
 <style scoped>
@@ -214,16 +194,25 @@ onMounted(() => {
   border-radius: 1.5rem;
 }
 .image-container {
-  width: 22rem;
-  height: 17rem;
-  overflow: hidden;
-  margin-top: 0.2rem;
-  margin-bottom: 0.7rem;
-  border-radius: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 80%;
+  width: 80%;
 }
-.image-container img {
+
+.image-wrapper {
+  flex: 1 0 21%; /* 각 이미지의 크기를 설정 (여기서는 21%로 설정) */
+  margin: 5px;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+.image {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+  height: auto;
+  display: block;
 }
 </style>

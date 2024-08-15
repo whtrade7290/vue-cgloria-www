@@ -10,7 +10,8 @@ import {
   getContentById,
   getPhotoContentById,
   deleteBoard,
-  editBoard
+  editBoard,
+  editPhotoBoard
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -44,7 +45,6 @@ export default createStore({
       return res
     },
     async FETCH_WITHDIARY_BOARDCOUNT({ commit }, obj) {
-      console.log('excute')
       const res = await getWithDiaryBoardCount(obj)
       commit('SET_BOARDCOUNT', res.data)
       return res
@@ -91,8 +91,6 @@ export default createStore({
           }
         })
 
-        console.log('fileUrlList: ', fileUrlList)
-
         data = {
           id: Number(res.data.id),
           title: res.data.title,
@@ -103,8 +101,6 @@ export default createStore({
           update_at: res.data.update_at,
           deleted: res.data.deleted
         }
-
-        console.log('data: ', data)
       }
 
       if (res.status === 200) {
@@ -118,6 +114,10 @@ export default createStore({
     },
     async EDIT_BOARD({ commit }, { formData, name }) {
       const res = await editBoard(formData, name)
+      return res.status === 200
+    },
+    async EDIT_PHOTO_BOARD({ commit }, { formData, name }) {
+      const res = await editPhotoBoard(formData, name)
       return res.status === 200
     }
   },
@@ -135,7 +135,6 @@ export default createStore({
       state.isLogIned = item
     },
     SET_DETAIL(state, item) {
-      console.log('item: ', item)
       state.detail = item
     }
   }
