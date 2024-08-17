@@ -51,22 +51,24 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
+        <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
+        <input type="checkbox" id="mainContent" v-model="isMainContent" /><br />
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
             <img :src="imageData" alt="img" />
           </div>
-          <div class="image-container" v-else>
+          <div
+            class="image-container"
+            v-if="
+              files.length === 0 &&
+              store.state.detail.filename &&
+              store.state.detail.fileDate &&
+              store.state.detail.extension
+            "
+          >
             <img :src="imageUrl" alt="img" />
-            <div
-              v-if="
-                store.state.detail.filename &&
-                store.state.detail.fileDate &&
-                store.state.detail.extension
-              "
-            >
-              {{ store.state.detail.filename }}
-            </div>
+            {{ store.state.detail.filename }}
           </div>
         </div>
         <div class="mb-3">
