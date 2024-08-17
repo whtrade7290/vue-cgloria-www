@@ -31,7 +31,21 @@ import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 const routes = [
   // main
-  { path: '/', name: 'main', component: MainView },
+  {
+    path: '/',
+    name: 'main',
+    component: MainView,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const payload = {
+        name: 'photo',
+        startRow: 0,
+        pageSize: 8
+      }
+      await store.dispatch('FETCH_BOARDLIST', payload)
+      await next()
+    }
+  },
   // auth
   { path: '/logIn', name: 'logIn', component: LoginView },
   // 교회소개

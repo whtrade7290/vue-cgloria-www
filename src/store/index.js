@@ -126,6 +126,7 @@ export default createStore({
       state.sidemenu = sidemenu
     },
     SET_BOARDLIST(state, item) {
+      console.log('item: ', item)
       state.dataList = item
     },
     SET_BOARDCOUNT(state, item) {

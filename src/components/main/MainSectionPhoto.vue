@@ -7,154 +7,21 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-3 col-sm-6" v-for="item in processedDataList" :key="item">
           <div class="card card-plain card-blog">
             <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
+              <a href="javascript:;" @click="intoDetail(item.id)">
                 <img
                   class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
+                  style="height: 15rem"
+                  :src="item.url"
                 />
               </a>
             </div>
             <div class="card-body px-0" style="padding-top: 10px">
               <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="card card-plain card-blog">
-            <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;">
-                <img
-                  class="w-100 border-radius-lg move-on-hover shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-                />
-              </a>
-            </div>
-            <div class="card-body px-0" style="padding-top: 10px">
-              <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold"
-                  >20230423 목사님 성지 순례 사진</a
-                >
+                <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title }}</a>
+                {{ item.id }}
               </h6>
             </div>
           </div>
@@ -164,6 +31,52 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const router = useRouter()
+const store = useStore()
+const dataList = store.state.dataList
+
+console.log('dataList: ', dataList)
+
+const processedDataList = computed(() => {
+  return store.state.dataList.map((item) => {
+    let arr = []
+    try {
+      // item.files가 존재할 때만 파싱 시도
+      if (item.files) {
+        arr = JSON.parse(item.files)
+      }
+    } catch (error) {
+      // JSON 파싱 오류가 발생할 경우 처리
+      console.error('JSON 파싱 오류:', error)
+      arr = [] // 빈 배열로 초기화
+    }
+
+    // 파일 데이터가 없거나 배열이 비어 있을 경우 기본값 설정
+    const url =
+      arr.length > 0
+        ? `http://localhost:3000/uploads/${arr[0]?.filename}_${arr[0]?.date}.${arr[0]?.extension}`
+        : null
+
+    return {
+      id: item.id,
+      title: item.title,
+      url: url
+    }
+  })
+})
+
+async function intoDetail(id) {
+  await router.push({
+    name: 'photoDetail',
+    params: { name: 'photo', id: id },
+    query: { pageNum: 1 }
+  })
+}
+</script>
 
 <style lang="scss" scoped></style>
