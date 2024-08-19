@@ -12,7 +12,9 @@
             중의 하나는 주리고 목마른 자들을 돌보는 것이었음을 성경도 말하고 있습니다.
           </p>
           <div class="github-buttons">
-            <a href="#" rel="nofollow" class="btn bg-gradient-primary mb-5 mb-sm-0">바로가기</a>
+            <router-link to="/jumokja" rel="nofollow" class="btn bg-gradient-primary mb-5 mb-sm-0"
+              >바로가기</router-link
+            >
             <div class="github-button">
               <span></span>
             </div>

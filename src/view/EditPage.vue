@@ -51,8 +51,19 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
+
         <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
-        <input type="checkbox" id="mainContent" v-model="isMainContent" /><br />
+        <br />
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            id="mainContent"
+            v-model="isMainContent"
+            v-bind:disabled="store.state.detail.mainContent"
+          />
+          <span class="slider"></span>
+        </label>
+        <br />
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
@@ -143,6 +154,7 @@ inputTitle.value = store.state.detail.title
 const files = ref([])
 const imageData = ref(null)
 const file = ref(null)
+const isMainContent = ref(store.state.detail.mainContent)
 
 // 메서드 선언
 const edit = async () => {
@@ -152,6 +164,7 @@ const edit = async () => {
     formData.append('title', inputTitle.value)
     formData.append('content', editorData.value)
     formData.append('id', store.state.detail.id)
+    formData.append('mainContent', isMainContent.value)
 
     if (file.value) {
       formData.append('fileField', file.value)
@@ -227,5 +240,72 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+}
+
+/* 전체 토글 스위치 */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; /* 너비 축소 */
+  height: 28px; /* 높이 축소 */
+}
+
+/* 숨김 처리된 체크박스 */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 슬라이더 */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 28px; /* 높이에 맞춘 슬라이더 라운딩 */
+}
+
+/* 슬라이더 안의 원 */
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 22px; /* 원의 크기 축소 */
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* 체크된 상태 */
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+/* 체크된 상태에서 원의 위치 */
+input:checked + .slider:before {
+  transform: translateX(22px); /* 원의 이동 거리 조정 */
+}
+
+/* 비활성화된 상태 */
+input:disabled + .slider {
+  background-color: #e6e6e6;
+  cursor: not-allowed;
+}
+
+/* 비활성화된 상태에서 체크된 상태 */
+input:checked:disabled + .slider {
+  background-color: #a0a0a0;
+}
+
+/* 비활성화된 상태에서 슬라이더 안의 원 */
+input:disabled + .slider:before {
+  background-color: #bfbfbf;
 }
 </style>

@@ -86,6 +86,26 @@ function editPhotoBoard(formData, name) {
   return instance.post(`${name}/${name}_edit`, formData)
 }
 
+function getMainColumn(name) {
+  return instance.get(`${name}/main_${name}`)
+}
+
+function getMainClassMeeting(name) {
+  return instance.get(`${name}/main_${name}`)
+}
+
+function getMainTestimony(name) {
+  return instance.get(`${name}/main_${name}`)
+}
+
+function getMainSermon(name) {
+  return instance.get(`${name}/main_${name}`)
+}
+
+function getMainWeekly(name) {
+  return instance.get(`${name}/main_${name}`)
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -97,5 +117,10 @@ export {
   getPhotoContentById,
   deleteBoard,
   editBoard,
-  editPhotoBoard
+  editPhotoBoard,
+  getMainColumn,
+  getMainClassMeeting,
+  getMainTestimony,
+  getMainSermon,
+  getMainWeekly
 }

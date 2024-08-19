@@ -200,4 +200,9 @@ onMounted(() => {
 .content-container {
   margin-top: 2rem;
 }
+
+p {
+  word-wrap: break-word; /* 긴 단어를 자동으로 줄바꿈 */
+  white-space: normal; /* 기본적인 줄바꿈 설정 */
+}
 </style>

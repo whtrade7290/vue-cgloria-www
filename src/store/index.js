@@ -11,7 +11,12 @@ import {
   getPhotoContentById,
   deleteBoard,
   editBoard,
-  editPhotoBoard
+  editPhotoBoard,
+  getMainColumn,
+  getMainClassMeeting,
+  getMainTestimony,
+  getMainSermon,
+  getMainWeekly
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -23,7 +28,8 @@ export default createStore({
     training: {},
     count: 0,
     isLogIned: false,
-    detail: {}
+    detail: {},
+    mainContents: []
   },
   getters: {
     checkLogin() {
@@ -119,6 +125,20 @@ export default createStore({
     async EDIT_PHOTO_BOARD({ commit }, { formData, name }) {
       const res = await editPhotoBoard(formData, name)
       return res.status === 200
+    },
+    async FETCH_MAIN_CONTENTS({ commit }, name) {
+      const sermon = await getMainSermon('sermon')
+      const weekly = await getMainWeekly('weekly')
+      const column = await getMainColumn('column')
+      const classMeeting = await getMainClassMeeting('classMeeting')
+      const testimony = await getMainTestimony('testimony')
+
+      const res = [column.data, classMeeting.data, testimony.data, sermon.data, weekly.data]
+
+      if (column.status === 200 && classMeeting.status === 200 && testimony.status == 200) {
+        commit('SET_MAIN_CONTENTS', res)
+      }
+      return res
     }
   },
   mutations: {
@@ -137,6 +157,9 @@ export default createStore({
     },
     SET_DETAIL(state, item) {
       state.detail = item
+    },
+    SET_MAIN_CONTENTS(state, item) {
+      state.mainContents = item
     }
   }
 })

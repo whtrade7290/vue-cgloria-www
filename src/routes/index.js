@@ -43,6 +43,7 @@ const routes = [
         pageSize: 8
       }
       await store.dispatch('FETCH_BOARDLIST', payload)
+      await store.dispatch('FETCH_MAIN_CONTENTS')
       await next()
     }
   },
