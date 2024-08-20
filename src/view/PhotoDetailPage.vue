@@ -14,7 +14,7 @@
             </div>
             <div>
               <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
-                {{ store.state.detail.writer }}
+                {{ store.state.detail.writer_name ?? store.state.detail.writer }}
               </p>
             </div>
           </div>

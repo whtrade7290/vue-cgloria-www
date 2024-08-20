@@ -65,7 +65,7 @@
                       <router-link to="/paster" class="dropdown-item border-radius-md">
                         <span class="ps-3">목회자소개</span>
                       </router-link>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
                         <span class="ps-3">교회약도</span>
                       </a>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
@@ -82,7 +82,7 @@
                       <router-link to="/paster" class="dropdown-item border-radius-md">
                         <span class="ps-3">목회자소개</span>
                       </router-link>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
                         <span class="ps-3">교회약도</span>
                       </a>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
@@ -206,9 +206,13 @@
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">4영리</span>
                       </a> -->
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">섬김</span>
-                      </a> -->
+                      <a
+                        href="javascript:;"
+                        class="dropdown-item border-radius-md"
+                        @click="readyYet"
+                      >
+                        <span class="ps-3">성경통독</span>
+                      </a>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/evangelize" class="dropdown-item border-radius-md">
@@ -363,6 +367,13 @@ function logout() {
       document.cookie = `userId=;`
       router.push('/')
     }
+  })
+}
+
+function readyYet() {
+  Swal.fire({
+    title: '준비중입니다^^;',
+    icon: 'info'
   })
 }
 

@@ -17,11 +17,14 @@
             <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title }}</a>
           </span>
         </div>
-        <span>
-          <a href="javascript:;" class="text-dark" style="font-size: 14px; line-height: 16px">{{
-            formatDate(item.create_at)
-          }}</a>
-        </span>
+        <div style="display: flex; justify-content: space-between">
+          <span
+            ><a href="javascript:;" class="text-dark" style="font-size: 14px; line-height: 16px">{{
+              formatDate(item.create_at)
+            }}</a>
+          </span>
+          <span> {{ item.writer_name ?? item.writer }} </span>
+        </div>
       </div>
     </div>
     <nav aria-label="Page navigation example">

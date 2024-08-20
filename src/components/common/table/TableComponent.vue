@@ -40,7 +40,9 @@
             </p>
           </td>
           <td style="width: 10%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0 text-center">{{ item.writer }}</p>
+            <p class="text-sm font-weight-bold mb-0 text-center">
+              {{ item.writer_name ?? item.writer }}
+            </p>
           </td>
           <td style="width: 20%; text-align: center">
             <p class="text-sm font-weight-bold mb-0 text-center">

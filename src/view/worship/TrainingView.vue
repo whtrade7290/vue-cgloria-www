@@ -80,7 +80,7 @@
     </section>
 
     <!-- Section with icon, title and description -->
-    <section class="py-0">
+    <!-- <section class="py-0">
       <div class="container py-5" style="padding: 0 60px">
         <div class="row">
           <div class="col-lg-12">
@@ -272,7 +272,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </CardContainer>
 </template>
 
