@@ -63,6 +63,7 @@
       </div>
     </div>
   </section>
+  <CommentComponent></CommentComponent>
 </template>
 
 <script setup>
@@ -71,6 +72,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import Swal from 'sweetalert2'
+import CommentComponent from '@/components/common/CommentComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -153,6 +155,42 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.border-line {
+  border-top: 1px #dddddd solid;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.comment-display-box {
+  font-size: 1.2rem;
+  width: 50rem;
+  /* height: 20rem; */
+  margin: 2rem 0 0 2.5rem;
+  overflow-y: scroll;
+}
+.comment-container {
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 0 2.5rem 0;
+}
+.comment-box {
+  width: 60rem;
+  /* height: 35rem; */
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.comment-info-box {
+  width: 55rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  /* background-color: yellow; */
+}
+
 .container {
   width: 90%;
   display: flex;

@@ -106,6 +106,20 @@ function getMainWeekly(name) {
   return instance.get(`${name}/main_${name}`)
 }
 
+function writeComment(boardId, boardName, comment, writerName, writer) {
+  return instance.post(`comment/comment_write`, {
+    boardId: boardId,
+    boardName: boardName,
+    comment: comment,
+    writerName: writerName,
+    writer: writer
+  })
+}
+
+function getCommentList(boardId, boardName) {
+  return instance.post(`comment/comment`, { boardId: boardId, boardName: boardName })
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -122,5 +136,7 @@ export {
   getMainClassMeeting,
   getMainTestimony,
   getMainSermon,
-  getMainWeekly
+  getMainWeekly,
+  writeComment,
+  getCommentList
 }

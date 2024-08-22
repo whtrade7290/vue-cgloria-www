@@ -16,7 +16,9 @@ import {
   getMainClassMeeting,
   getMainTestimony,
   getMainSermon,
-  getMainWeekly
+  getMainWeekly,
+  writeComment,
+  getCommentList
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -29,7 +31,8 @@ export default createStore({
     count: 0,
     isLogIned: false,
     detail: {},
-    mainContents: []
+    mainContents: [],
+    CommentList: []
   },
   getters: {
     checkLogin() {
@@ -139,6 +142,17 @@ export default createStore({
         commit('SET_MAIN_CONTENTS', res)
       }
       return res
+    },
+    async WRITE_COMMENT({ commit }, { boardId, boardName, comment, writerName, writer }) {
+      const res = await writeComment(boardId, boardName, comment, writerName, writer)
+      return res.status === 200
+    },
+    async FETCH_COMMENT({ commit }, { boardId, boardName }) {
+      const res = await getCommentList(boardId, boardName)
+      if (res.status === 200) {
+        commit('SET_COMMENTLIST', res.data)
+      }
+      return res
     }
   },
   mutations: {
@@ -160,6 +174,9 @@ export default createStore({
     },
     SET_MAIN_CONTENTS(state, item) {
       state.mainContents = item
+    },
+    SET_COMMENTLIST(state, item) {
+      state.CommentList = item
     }
   }
 })
