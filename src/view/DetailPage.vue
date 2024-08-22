@@ -6,16 +6,29 @@
           <h2>{{ store.state.detail.title }}</h2>
         </div>
         <div style="display: flex; justify-content: space-between">
-          <div class="user-info">
-            <div style="margin-right: 0.8rem">
-              <span style="font-size: 3rem" class="material-symbols-outlined">
-                account_circle
-              </span>
+          <div>
+            <div class="d-flex justify-content-start">
+              <div style="margin-right: 0.8rem">
+                <span style="font-size: 3rem" class="material-symbols-outlined">
+                  account_circle
+                </span>
+              </div>
+              <div>
+                <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
+                  {{ store.state.detail.writer_name ?? store.state.detail.writer }}
+                </p>
+              </div>
             </div>
-            <div>
-              <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
-                {{ store.state.detail.writer_name ?? store.state.detail.writer }}
-              </p>
+            <div class="d-flex justify-content-start">
+              <div style="margin-right: 0.8rem; margin-left: 0.5rem">
+                <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
+                  share
+                </a>
+              </div>
+              <div style="margin-right: 0.3rem">
+                <span class="material-symbols-outlined"> comment </span>
+              </div>
+              <div style="font-size: 1rem">{{ commentCount }}</div>
             </div>
           </div>
           <div>
@@ -63,7 +76,7 @@
       </div>
     </div>
   </section>
-  <CommentComponent></CommentComponent>
+  <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
 </template>
 
 <script setup>
@@ -77,6 +90,36 @@ import CommentComponent from '@/components/common/CommentComponent.vue'
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
+
+const commentCount = ref(0)
+
+const handleCommentCount = (count) => {
+  commentCount.value = count
+}
+
+const contentCopy = async () => {
+  const content = store.state.detail.content
+  console.log('content: ', stripHtmlTags(content))
+  navigator.clipboard.writeText(stripHtmlTags(content))
+
+  await Swal.fire({
+    title: '복사되었습니다.',
+    icon: 'success'
+  })
+}
+
+function stripHtmlTags(input) {
+  if (typeof input !== 'string') {
+    throw new TypeError('Expected a string input')
+  }
+
+  // 임시 요소를 사용하여 HTML 태그를 제거
+  const tempDiv = document.createElement('div')
+  tempDiv.innerHTML = input
+
+  // 텍스트 콘텐츠를 반환
+  return tempDiv.textContent || tempDiv.innerText || ''
+}
 
 const formatDate = (dateString) => {
   const date = new Date(dateString)

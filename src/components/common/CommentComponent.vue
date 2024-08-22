@@ -3,7 +3,7 @@
     <div class="comment-container">
       <div class="comment-box">
         <div>
-          <div class="comment-info-box">댓글 {{}}</div>
+          <div class="comment-info-box">댓글 {{ commentList.length }}</div>
           <div class="comment-text-container">
             <div class="comment-textarea-box">
               <div class="mt-2 d-flex justify-content-start">
@@ -12,7 +12,7 @@
                 </span>
                 <div>
                   <div style="margin-top: 0.3rem; margin-left: 0.5rem; font-size: 1.3rem">
-                    {{ whoIam }}
+                    {{ getUserNameFromSession }}
                   </div>
                 </div>
               </div>
@@ -57,9 +57,6 @@ import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
-const curruntId = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username
-const curruntName = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.name
-
 const props = defineProps({
   id: {
     type: Number,
@@ -70,6 +67,7 @@ const props = defineProps({
 const route = useRoute()
 const store = useStore()
 const inputComment = ref('')
+const emit = defineEmits(['commentCount'])
 
 const formatDate = (dateString) => {
   const date = new Date(dateString)
@@ -82,7 +80,9 @@ const formatDate = (dateString) => {
   return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`
 }
 
-const whoIam = computed(() => {
+const getUserNameFromSession = computed(() => {
+  const curruntId = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username
+  const curruntName = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.name
   return curruntName !== '' ? curruntName : curruntId
 })
 
@@ -111,6 +111,7 @@ const writeComment = async () => {
 
     // 댓글 목록 갱신
     commentList.value = updatedComments.data
+
     inputComment.value = '' // 입력 필드 초기화
   }
 }
@@ -122,6 +123,7 @@ onMounted(async () => {
     boardId: store.state.detail.id,
     boardName: route.params.name
   })
+  emit('commentCount', result.data.length)
   commentList.value = result.data
 })
 </script>
