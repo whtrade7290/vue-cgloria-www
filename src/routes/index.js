@@ -157,8 +157,22 @@ const routes = [
     component: TestimonyBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'testimony')
-      await next()
+
+      const storedData = sessionStorage.getItem(getUserIdFromCookie())
+
+      const sessionUser = storedData ? JSON.parse(storedData) : {}
+
+      if (!sessionUser.token) {
+        await Swal.fire({
+          title: '로그인 전용 게시판입니다.',
+          icon: 'warning'
+        }).then(() => {
+          next(from)
+        })
+      } else {
+        await store.dispatch('FETCH_BOARDCOUNT', 'testimony')
+        await next()
+      }
     }
   },
   {
@@ -168,9 +182,11 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
-      const withDiaryNum = JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.withDiary
+      const storedData = sessionStorage.getItem(getUserIdFromCookie())
 
-      if (withDiaryNum === 0) {
+      const sessionUser = storedData ? JSON.parse(storedData) : {}
+
+      if (sessionUser.withDiary === 0 || !sessionUser.token) {
         await Swal.fire({
           title: '예수동행일기 그룹이 존재하지 않습니다.',
           icon: 'warning'
@@ -178,7 +194,7 @@ const routes = [
 
         await next(from)
       } else {
-        await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', 'withDiary')
+        await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.withDiary)
         return next()
       }
     }

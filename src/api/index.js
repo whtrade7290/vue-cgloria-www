@@ -1,16 +1,9 @@
+import { instance } from '@/api/intercept.js'
 import axios from 'axios'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
   baseUrl: 'http://localhost:3000/'
 }
-
-function createInstance() {
-  return axios.create({
-    baseURL: import.meta.env.VITE_API_URL
-  })
-}
-
-const instance = createInstance()
 
 function getBoardList(obj) {
   const { name, startRow, pageSize } = obj
@@ -41,9 +34,9 @@ function getWithDiaryBoardList(obj) {
     withDiary: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.withDiary
   })
 }
-function getWithDiaryBoardCount() {
+function getWithDiaryBoardCount(withDiaryNum) {
   return instance.post(`withDiary/withDiary_count`, {
-    withDiary: JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+    withDiary: withDiaryNum
   })
 }
 function writeBoard(formData, name) {

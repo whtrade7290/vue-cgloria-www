@@ -53,8 +53,8 @@ export default createStore({
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, obj) {
-      const res = await getWithDiaryBoardCount(obj)
+    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, withDiaryNum) {
+      const res = await getWithDiaryBoardCount(withDiaryNum)
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
