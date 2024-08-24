@@ -307,19 +307,8 @@
                     </div>
                   </div>
                 </li>
-                <li v-if="store.state.isLogIned" class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
-                  <router-link
-                    to="/logIn"
-                    class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                    >로그인</router-link
-                  >
-                </li>
-                <template v-else>
-                  <li
-                    v-if="true"
-                    class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto"
-                    style="float: left"
-                  >
+                <template v-if="store.state.isLogIned">
+                  <li class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto" style="float: left">
                     <router-link
                       to="/withDiary"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -335,6 +324,13 @@
                     >
                   </li>
                 </template>
+                <li v-else class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
+                  <router-link
+                    to="/logIn"
+                    class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                    >로그인</router-link
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -346,26 +342,33 @@
 </template>
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
+import router from '@/routes'
 
-const router = useRouter()
 const store = useStore()
+const storedData = localStorage.getItem(getUserIdFromCookie())
+const accessToken = storedData ? JSON.parse(storedData).token : ''
+const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
 function logout() {
   Swal.fire({
     title: '로그아웃 하시겠습니까?.',
     icon: 'question',
     showCancelButton: true
-  }).then((result) => {
+  }).then(async (result) => {
     if (result.isConfirmed) {
-      sessionStorage.removeItem(getUserIdFromCookie())
-      store.dispatch('CHECKING_SESSION', true)
+      localStorage.removeItem(getUserIdFromCookie())
       document.cookie = `userId=;`
-      router.push('/')
+      await Swal.fire({
+        title: '로그아웃 되었습니다.',
+        icon: 'success'
+      }).then(async () => {
+        await store.dispatch('CHECKING_TOKEN', { accessToken: '', refreshToken: '' })
+        router.push('/')
+      })
     }
   })
 }
@@ -378,7 +381,7 @@ function readyYet() {
 }
 
 onMounted(() => {
-  store.dispatch('CHECKING_SESSION', !sessionStorage.getItem(getUserIdFromCookie()))
+  store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
 })
 </script>
 

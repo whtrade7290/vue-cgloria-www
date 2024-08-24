@@ -76,10 +76,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
+import { getUserIdFromCookie } from '@/utils/cookie.js'
 
 const store = useStore()
 const router = useRouter()
@@ -87,18 +88,23 @@ const router = useRouter()
 const username = ref('')
 const password = ref('')
 
+const storedData = localStorage.getItem(getUserIdFromCookie())
+const accessToken = storedData ? JSON.parse(storedData).token : ''
+const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
+
 async function login() {
   const response = await store.dispatch('LOGIN', {
     username: username.value,
     password: password.value
   })
-  if (response && response.success && sessionStorage.getItem(response.user.id)) {
+  if (response && response.success && localStorage.getItem(response.user.id)) {
     Swal.fire({
       title: '로그인 되었습니다.',
       icon: 'success'
-    }).then(() => {
-      store.dispatch('CHECKING_SESSION', false)
-      router.go(-1)
+    }).then(async () => {
+      await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+      sessionStorage.setItem('logoutAlerted', 1)
+      router.push('/')
     })
   } else {
     Swal.fire({
@@ -110,6 +116,19 @@ async function login() {
     })
   }
 }
+
+onMounted(async () => {
+  if (store.state.isLogIned) return
+  await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+  if (store.state.isLogIned) {
+    Swal.fire({
+      title: '이미 로그인 되었습니다.',
+      icon: 'success'
+    }).then(() => {
+      router.back()
+    })
+  }
+})
 </script>
 
 <style scoped>

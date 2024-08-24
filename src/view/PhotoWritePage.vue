@@ -136,7 +136,7 @@ export default {
       formData.append('content', this.editorData)
       formData.append(
         'writer',
-        JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.username
+        JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username
       )
 
       formData.append('fileField', this.files)

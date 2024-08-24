@@ -158,7 +158,7 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
-      const storedData = sessionStorage.getItem(getUserIdFromCookie())
+      const storedData = localStorage.getItem(getUserIdFromCookie())
 
       const sessionUser = storedData ? JSON.parse(storedData) : {}
 
@@ -182,7 +182,7 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
-      const storedData = sessionStorage.getItem(getUserIdFromCookie())
+      const storedData = localStorage.getItem(getUserIdFromCookie())
 
       const sessionUser = storedData ? JSON.parse(storedData) : {}
 

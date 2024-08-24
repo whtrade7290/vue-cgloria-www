@@ -38,9 +38,6 @@ import { useStore } from 'vuex'
 
 const router = useRouter()
 const store = useStore()
-const dataList = store.state.dataList
-
-console.log('dataList: ', dataList)
 
 const processedDataList = computed(() => {
   return store.state.dataList.map((item) => {

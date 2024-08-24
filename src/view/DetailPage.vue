@@ -99,7 +99,6 @@ const handleCommentCount = (count) => {
 
 const contentCopy = async () => {
   const content = store.state.detail.content
-  console.log('content: ', stripHtmlTags(content))
   navigator.clipboard.writeText(stripHtmlTags(content))
 
   await Swal.fire({
@@ -138,7 +137,7 @@ function goToBoardList() {
 
 const isWriter = computed(() => {
   return (
-    JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username ===
+    JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.username ===
     store.state.detail.writer
   )
 })

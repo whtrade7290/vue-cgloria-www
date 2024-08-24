@@ -81,13 +81,13 @@ const formatDate = (dateString) => {
 }
 
 const getUserNameFromSession = computed(() => {
-  const curruntId = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.username
-  const curruntName = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user?.name
+  const curruntId = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.username
+  const curruntName = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.name
   return curruntName !== '' ? curruntName : curruntId
 })
 
 const writeComment = async () => {
-  const user = JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user
+  const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
 
   if (!user) {
     return false

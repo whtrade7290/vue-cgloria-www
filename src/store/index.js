@@ -18,7 +18,8 @@ import {
   getMainSermon,
   getMainWeekly,
   writeComment,
-  getCommentList
+  getCommentList,
+  checkToken
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -36,7 +37,7 @@ export default createStore({
   },
   getters: {
     checkLogin() {
-      return !sessionStorage.getItem(getUserIdFromCookie())
+      return !localStorage.getItem(getUserIdFromCookie())
     }
   },
   actions: {
@@ -68,13 +69,24 @@ export default createStore({
 
       if (res && res.success) {
         const { user } = res
-        sessionStorage.setItem(user.id, JSON.stringify(res))
+        localStorage.setItem(user.id, JSON.stringify(res))
         document.cookie = `userId=${user.id};`
       }
       return res
     },
-    async CHECKING_SESSION({ commit }, isLogIned) {
-      commit('SET_LOGINED', isLogIned)
+    async CHECKING_TOKEN({ commit }, { accessToken, refreshToken }) {
+      const result = await checkToken(accessToken, refreshToken)
+
+      if (result.data.success === 0) {
+        // 새로 만들어진 access Token으로 바꾸기
+        const storedData = localStorage.getItem(getUserIdFromCookie())
+        const parsingUserData = storedData ? JSON.parse(storedData) : {}
+        parsingUserData.token = result.data.accessToken
+        localStorage.setItem(getUserIdFromCookie(), JSON.stringify(parsingUserData))
+      }
+
+      commit('SET_LOGINED', result.data.success === 2 || result.data.success === 0)
+      return result.data
     },
     async WRITE_BOARD({ commit }, { formData, name }) {
       const res = await writeBoard(formData, name)
@@ -160,7 +172,6 @@ export default createStore({
       state.sidemenu = sidemenu
     },
     SET_BOARDLIST(state, item) {
-      console.log('item: ', item)
       state.dataList = item
     },
     SET_BOARDCOUNT(state, item) {

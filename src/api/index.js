@@ -31,7 +31,7 @@ function getWithDiaryBoardList(obj) {
   return instance.post(`withDiary/withDiary`, {
     startRow: startRow,
     pageSize: pageSize,
-    withDiary: JSON.parse(sessionStorage.getItem(getUserIdFromCookie())).user.withDiary
+    withDiary: JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.withDiary
   })
 }
 function getWithDiaryBoardCount(withDiaryNum) {
@@ -43,7 +43,7 @@ function writeBoard(formData, name) {
   if (name === 'withDiary') {
     formData.append(
       'withDiaryNum',
-      JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
     )
   }
   return instance.post(`${name}/${name}_write`, formData)
@@ -69,7 +69,7 @@ function editBoard(formData, name) {
   if (name === 'withDiary') {
     formData.append(
       'withDiaryNum',
-      JSON.parse(sessionStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
     )
   }
   return instance.post(`${name}/${name}_edit`, formData)
@@ -113,6 +113,13 @@ function getCommentList(boardId, boardName) {
   return instance.post(`comment/comment`, { boardId: boardId, boardName: boardName })
 }
 
+function checkToken(accessToken, refreshToken) {
+  return instance.post(`/check_Token`, {
+    accessToken,
+    refreshToken
+  })
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -131,5 +138,6 @@ export {
   getMainSermon,
   getMainWeekly,
   writeComment,
-  getCommentList
+  getCommentList,
+  checkToken
 }

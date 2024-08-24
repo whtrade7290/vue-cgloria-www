@@ -96,8 +96,6 @@ const truncatedText = (content, limit) => {
   return cleanedContent.length > limit ? cleanedContent.slice(0, limit) + '...' : cleanedContent
 }
 
-console.log('store: ', store.state.mainContents[0])
-
 const columnItem = store.state.mainContents[0]
 const classMeetingItem = store.state.mainContents[1]
 const testimonyItem = store.state.mainContents[2]
