@@ -38,17 +38,9 @@
           </div>
         </div>
         <div class="content-box">
-          <div
-            v-show="
-              store.state.detail.filename &&
-              store.state.detail.fileDate &&
-              store.state.detail.extension
-            "
-            class="img-container"
-          >
+          <div v-show="imageUrl" class="img-container">
             <img :src="imageUrl" alt="img" />
           </div>
-
           <div class="content-container" v-html="store.state.detail.content"></div>
         </div>
         <div class="button-box">
@@ -191,7 +183,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
   if (store.state.detail.filename && store.state.detail.fileDate && store.state.detail.extension) {
-    imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+    imageUrl.value = `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
   }
 })
 </script>

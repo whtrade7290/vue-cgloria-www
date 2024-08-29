@@ -141,7 +141,7 @@ export default {
     }
   },
   methods: {
-    write() {
+    async write() {
       let formData = new FormData()
 
       formData.append('title', this.inputTitle)
@@ -153,12 +153,14 @@ export default {
       )
       formData.append('fileField', this.file)
 
-      const result = this.store.dispatch('WRITE_BOARD', {
-        formData: formData,
-        name: this.$route.query.name
-      })
-      if (result) {
+      try {
+        await this.store.dispatch('WRITE_BOARD', {
+          formData: formData,
+          name: this.$route.query.name
+        })
         this.router.push(`/${this.$route.query.name}`)
+      } catch (error) {
+        console.error('Error during WRITE_BOARD dispatch:', error)
       }
     },
     backPage() {
