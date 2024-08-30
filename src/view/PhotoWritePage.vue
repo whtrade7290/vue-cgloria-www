@@ -129,7 +129,7 @@ export default {
     }
   },
   methods: {
-    write() {
+    async write() {
       let formData = new FormData()
 
       formData.append('title', this.inputTitle)
@@ -145,7 +145,7 @@ export default {
         formData.append('fileField', file)
       })
 
-      const result = this.store.dispatch('WRITE_BOARD', {
+      const result = await this.store.dispatch('WRITE_BOARD', {
         formData: formData,
         name: this.$route.query.name
       })

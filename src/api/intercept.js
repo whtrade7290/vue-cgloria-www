@@ -6,7 +6,7 @@ import router from '@/routes/index'
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 1000
+  timeout: 2000
 })
 
 let isAccessTokenValid = false

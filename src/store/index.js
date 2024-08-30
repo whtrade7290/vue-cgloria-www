@@ -106,11 +106,14 @@ export default createStore({
 
       if (res.data !== null || res.data !== undefined) {
         const fileUrlList = JSON.parse(res.data.files ?? '').map((file) => {
+          console.log('file: ', file)
           return {
-            fileUrl: `http://localhost:3000/uploads/${file.filename}_${file.date}.${file.extension}`,
+            fileUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${file.date}${file.filename}${file.extension}`,
             filename: file.filename
           }
         })
+
+        console.log('fileUrlList: ', fileUrlList)
 
         data = {
           id: Number(res.data.id),
@@ -181,6 +184,7 @@ export default createStore({
       state.isLogIned = item
     },
     SET_DETAIL(state, item) {
+      console.log('item: ', item)
       state.detail = item
     },
     SET_MAIN_CONTENTS(state, item) {

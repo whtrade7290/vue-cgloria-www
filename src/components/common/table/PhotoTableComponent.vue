@@ -144,7 +144,7 @@ const parsedFiles = computed(() => {
       content: data.content,
       writer: data.writer,
       files: files,
-      thumnailUrl: `http://localhost:3000/uploads/${files[0]?.filename}_${files[0]?.date}.${files[0]?.extension}`,
+      thumnailUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${files[0]?.date}${files[0]?.filename}${files[0]?.extension}`,
       update_at: data.update_at,
       create_at: data.create_at,
       deleted: data.deleted
