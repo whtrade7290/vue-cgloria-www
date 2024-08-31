@@ -101,19 +101,19 @@ export default createStore({
     },
     async FETCH_PHOTO_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getPhotoContentById(name, id)
-
+      const isEmptyObject = (obj) => Object.keys(obj).length === 0
+      console.log('res.data: ', res.data)
       let data = {}
 
-      if (res.data !== null || res.data !== undefined) {
+      if (res.data !== null || res.data !== undefined || isEmptyObject(res.data.files)) {
         const fileUrlList = JSON.parse(res.data.files ?? '').map((file) => {
-          console.log('file: ', file)
           return {
-            fileUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${file.date}${file.filename}${file.extension}`,
-            filename: file.filename
+            // fileUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${file.date}${file.filename}${file.extension}`,
+            filename: file.filename,
+            date: file.date,
+            extension: file.extension
           }
         })
-
-        console.log('fileUrlList: ', fileUrlList)
 
         data = {
           id: Number(res.data.id),
@@ -184,7 +184,6 @@ export default createStore({
       state.isLogIned = item
     },
     SET_DETAIL(state, item) {
-      console.log('item: ', item)
       state.detail = item
     },
     SET_MAIN_CONTENTS(state, item) {

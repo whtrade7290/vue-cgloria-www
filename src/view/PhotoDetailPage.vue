@@ -40,8 +40,15 @@
         <div class="content-box">
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
-              <a :href="item.fileUrl" data-fancybox :data-caption="item.filename">
-                <img :src="item.fileUrl" alt="img" />
+              <a
+                :href="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
+                data-fancybox
+                :data-caption="item.filename"
+              >
+                <img
+                  :src="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
+                  alt="img"
+                />
               </a>
             </div>
           </div>
@@ -181,6 +188,8 @@ const isWriter = computed(() => {
   )
 })
 
+const imageUrl = ref(null)
+
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', {
     Thumbs: {
@@ -201,6 +210,10 @@ onMounted(() => {
 
     // 기타 옵션 추가 가능
   })
+
+  if (store.state.files) {
+    imageUrl.value = `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
+  }
 })
 </script>
 

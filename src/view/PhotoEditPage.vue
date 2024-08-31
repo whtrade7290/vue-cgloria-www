@@ -65,7 +65,12 @@
               v-for="(item, index) in store.state.detail.files"
               :key="index"
             >
-              <img :src="item.fileUrl" :alt="'Image ' + (index + 1)" width="200" class="image" />
+              <img
+                :src="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
+                :alt="'Image ' + (index + 1)"
+                width="200"
+                class="image"
+              />
               {{ item.filename }}
             </div>
           </div>
@@ -140,6 +145,17 @@ const edit = async () => {
   formData.append('title', inputTitle.value)
   formData.append('content', editorData.value)
   formData.append('id', store.state.detail.id)
+
+  console.log('files: ', files.value.length)
+  if (files.value.length > 0) {
+    // console.log('store.state.detail.files.fileUrl: ', store.state.detail.files[0])
+    const deleteKeyList = store.state.detail.files.map((deleteFile) => {
+      console.log('deleteFile: ', deleteFile)
+      return 'cgloria-photo/' + deleteFile.date + deleteFile.filename + deleteFile.extension
+    })
+    console.log('deleteKeyList: ', deleteKeyList)
+    formData.append('deleteKeyList', deleteKeyList)
+  }
 
   files.value.forEach((file) => {
     formData.append('fileField', file)
