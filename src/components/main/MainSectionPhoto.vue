@@ -56,7 +56,7 @@ const processedDataList = computed(() => {
     // 파일 데이터가 없거나 배열이 비어 있을 경우 기본값 설정
     const url =
       arr.length > 0
-        ? `http://localhost:3000/uploads/${arr[0]?.filename}_${arr[0]?.date}.${arr[0]?.extension}`
+        ? `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${arr[0]?.date}${arr[0]?.filename}${arr[0]?.extension}`
         : null
 
     return {

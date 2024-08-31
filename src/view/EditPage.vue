@@ -51,19 +51,18 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
-
-        <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
-        <br />
-        <label class="toggle-switch">
-          <input
-            type="checkbox"
-            id="mainContent"
-            v-model="isMainContent"
-            v-bind:disabled="store.state.detail.mainContent"
-          />
-          <span class="slider"></span>
-        </label>
-        <br />
+        <div v-if="isDisplay">
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
+          <label class="toggle-switch">
+            <input
+              type="checkbox"
+              id="mainContent"
+              v-model="isMainContent"
+              v-bind:disabled="store.state.detail.mainContent"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
@@ -119,7 +118,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -155,6 +154,16 @@ const files = ref([])
 const imageData = ref(null)
 const file = ref(null)
 const isMainContent = ref(store.state.detail.mainContent)
+
+const isDisplay = computed(() => {
+  const routeNames = ['sermon', 'column', 'weekly', 'classMeeting', 'testimony']
+  return routeNames.some((name) => {
+    console.log('name: ', name)
+    console.log('route.query?.name: ', route.query?.name)
+
+    return route.query?.name === name
+  })
+})
 
 // 메서드 선언
 const edit = async () => {
@@ -220,7 +229,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
 
-  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}_${store.state.detail.fileDate}${store.state.detail.extension}`
+  imageUrl.value = `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
 })
 </script>
 
