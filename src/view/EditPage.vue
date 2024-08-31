@@ -166,9 +166,21 @@ const edit = async () => {
     formData.append('id', store.state.detail.id)
     formData.append('mainContent', isMainContent.value)
 
+    console.log('file.value: ', file.value)
+
+    let deleteFile = ''
+
     if (file.value) {
-      formData.append('fileField', file.value)
+      deleteFile =
+        'cgloria-photo/' +
+        store.state.detail.fileDate +
+        store.state.detail.filename +
+        store.state.detail.extension
+
+      formData.append('deleteFile', deleteFile)
     }
+
+    formData.append('fileField', file.value)
 
     const result = await store.dispatch('EDIT_BOARD', {
       formData: formData,

@@ -59,7 +59,14 @@ function getPhotoContentById(name, id) {
   })
 }
 
-function deleteBoard(name, id, deleteKeyList) {
+function deleteBoard(name, id, deleteKey) {
+  return instance.post(`${name}/${name}_delete`, {
+    id: id,
+    deleteKey: deleteKey
+  })
+}
+
+function deletePhotoBoard(name, id, deleteKeyList) {
   return instance.post(`${name}/${name}_delete`, {
     id: id,
     deleteKeyList: deleteKeyList
@@ -131,6 +138,7 @@ export {
   getContentById,
   getPhotoContentById,
   deleteBoard,
+  deletePhotoBoard,
   editBoard,
   editPhotoBoard,
   getMainColumn,

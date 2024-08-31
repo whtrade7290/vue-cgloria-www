@@ -160,9 +160,11 @@ const deleteBoard = () => {
     })
     .then(async (result) => {
       if (result.isConfirmed) {
+        const deleteKey = `cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
         const result = await store.dispatch('DELETE_BOARD', {
           name: route.params.name,
-          id: store.state.detail.id
+          id: store.state.detail.id,
+          deleteKey: deleteKey
         })
         if (result) {
           swalWithBootstrapButtons

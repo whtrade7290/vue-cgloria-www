@@ -132,7 +132,12 @@ export default createStore({
       }
       return res
     },
-    async DELETE_BOARD({ commit }, { name, id, deleteKeyList }) {
+    async DELETE_BOARD({ commit }, { name, id, deleteKey }) {
+      console.log('deleteKey: ', deleteKey)
+      const result = await deleteBoard(name, id, deleteKey)
+      return result.data
+    },
+    async DELETE_PHOTO_BOARD({ commit }, { name, id, deleteKeyList }) {
       console.log('deleteKeyList: ', deleteKeyList)
       const result = await deleteBoard(name, id, deleteKeyList)
       return result.data

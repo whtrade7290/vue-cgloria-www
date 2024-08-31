@@ -164,7 +164,7 @@ const deleteBoard = () => {
     .then(async (result) => {
       console.log('store.state.detail: ', store.state.detail)
       if (result.isConfirmed) {
-        const result = await store.dispatch('DELETE_BOARD', {
+        const result = await store.dispatch('DELETE_PHOTO_BOARD', {
           name: route.params.name,
           id: store.state.detail.id,
           deleteKeyList: store.state.detail.files
