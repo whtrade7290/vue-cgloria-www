@@ -113,6 +113,8 @@ const writeComment = async () => {
     commentList.value = updatedComments.data
 
     inputComment.value = '' // 입력 필드 초기화
+
+    emit('commentCount', commentList.value.length)
   }
 }
 

@@ -85,9 +85,11 @@ const store = useStore()
 
 const commentCount = ref(0)
 
-const handleCommentCount = computed((count) => {
-  return (commentCount.value = count)
-})
+const handleCommentCount = (count) => {
+  commentCount.value = count
+}
+
+console.log('')
 
 const contentCopy = async () => {
   const content = store.state.detail.content
