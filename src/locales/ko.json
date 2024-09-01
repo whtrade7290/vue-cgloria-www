@@ -1,0 +1,46 @@
+{
+  "button": {
+    "withDiary": "예수동행일기",
+    "logout": "로그아웃",
+    "lang": "日本語"
+  },
+  "nav": {
+    "main": "중앙영광교회",
+    "intro": "교회소개",
+    "class/word": "속회/말씀",
+    "worship/training": "예배/훈련",
+    "evangelism/service": "전도/섬김",
+    "sundaySchool": "주일학교",
+    "fellowshipArea": "교제마당",
+    "subTitle1": {
+      "intro": "교회소개",
+      "paster": "목회자소개",
+      "location": "교회약도",
+      "notice": "공지사항"
+    },
+    "subTitle2": {
+      "sermon": "설교",
+      "column": "칼럼",
+      "weeklyWord": "금주의성경말씀",
+      "classMeeting": "속회교재실"
+    },
+    "subTitle3": {
+      "jumok": "주목자예배",
+      "training": "훈련"
+    },
+    "subTitle4": {
+      "evangelismAndVision": "전도비전",
+      "readBible": "성경통독"
+    },
+    "subTitle5": {
+      "eventSchedule": "행사일정",
+      "schoolPhotoBoard": "주일학교 사진갤러리",
+      "library": "주일학교자료실"
+    },
+    "subTitle6": {
+      "generalFolum": "자유게시판",
+      "photoBoard": "사진갤러리",
+      "testimony": "간증게시판"
+    }
+  }
+}

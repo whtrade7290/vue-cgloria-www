@@ -21,7 +21,7 @@
                 font-family: 'M PLUS Rounded 1c';
               "
             >
-              中央栄光教会
+              {{ $t('nav.main') }}
             </router-link>
             <button
               class="navbar-toggler shadow-none ms-2"
@@ -48,7 +48,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    교회소개&nbsp;
+                    {{ $t('nav.intro') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -57,36 +57,36 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/intro" class="dropdown-item border-radius-md">
-                        <span class="ps-3">교회소개</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.intro') }}</span>
                       </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">예배 및 훈련시간</span>
                       </a> -->
                       <router-link to="/paster" class="dropdown-item border-radius-md">
-                        <span class="ps-3">목회자소개</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
                       </router-link>
                       <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
-                        <span class="ps-3">교회약도</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
                       </a>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
-                        <span class="ps-3">공지사항</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
                       </router-link>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/intro" class="dropdown-item border-radius-md">
-                        <span class="ps-3">교회소개</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.intro') }}</span>
                       </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">예배 및 훈련시간</span>
                       </a> -->
                       <router-link to="/paster" class="dropdown-item border-radius-md">
-                        <span class="ps-3">목회자소개</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
                       </router-link>
                       <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
-                        <span class="ps-3">교회약도</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
                       </a>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
-                        <span class="ps-3">공지사항</span>
+                        <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -100,7 +100,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    속회/말씀&nbsp;
+                    {{ $t('nav.class/word') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -109,30 +109,30 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/sermon" class="dropdown-item border-radius-md">
-                        <span class="ps-3">설교</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.sermon') }}</span>
                       </router-link>
                       <router-link to="/column" class="dropdown-item border-radius-md">
-                        <span class="ps-3">칼럼</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.column') }}</span>
                       </router-link>
                       <router-link to="/weekly" class="dropdown-item border-radius-md">
-                        <span class="ps-3">금주의 성경말씀</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.weeklyWord') }}</span>
                       </router-link>
                       <router-link to="/classMeeting" class="dropdown-item border-radius-md">
-                        <span class="ps-3">속회교재실</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.classMeeting') }}</span>
                       </router-link>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/sermon" class="dropdown-item border-radius-md">
-                        <span class="ps-3">설교</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.sermon') }}</span>
                       </router-link>
                       <router-link to="/column" class="dropdown-item border-radius-md">
-                        <span class="ps-3">칼럼</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.column') }}</span>
                       </router-link>
                       <router-link to="/weekly" class="dropdown-item border-radius-md">
-                        <span class="ps-3">금주의 성경말씀</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.weeklyWord') }}</span>
                       </router-link>
                       <router-link to="/classMeeting" class="dropdown-item border-radius-md">
-                        <span class="ps-3">속회교재실</span>
+                        <span class="ps-3">{{ $t('nav.subTitle2.classMeeting') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -146,7 +146,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    예배/훈련&nbsp;
+                    {{ $t('nav.worship/training') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -158,10 +158,10 @@
                         <span class="ps-3">예배/훈련시간</span>
                       </a> -->
                       <router-link to="/jumokja" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주목자예배</span>
+                        <span class="ps-3">{{ $t('nav.subTitle3.jumok') }}</span>
                       </router-link>
                       <router-link to="/training" class="dropdown-item border-radius-md">
-                        <span class="ps-3">훈련</span>
+                        <span class="ps-3">{{ $t('nav.subTitle3.training') }}</span>
                       </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">중보기도</span>
@@ -172,10 +172,10 @@
                         <span class="ps-3">예배/훈련시간</span>
                       </a> -->
                       <router-link to="/jumokja" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주목자예배</span>
+                        <span class="ps-3">{{ $t('nav.subTitle3.jumok') }}</span>
                       </router-link>
                       <router-link to="/training" class="dropdown-item border-radius-md">
-                        <span class="ps-3">훈련</span>
+                        <span class="ps-3">{{ $t('nav.subTitle3.training') }}</span>
                       </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">중보기도</span>
@@ -192,7 +192,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    전도/섬김&nbsp;
+                    {{ $t('nav.evangelism/service') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -201,7 +201,7 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/evangelize" class="dropdown-item border-radius-md">
-                        <span class="ps-3">전도비전</span>
+                        <span class="ps-3">{{ $t('nav.subTitle4.evangelismAndVision') }}</span>
                       </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">4영리</span>
@@ -211,16 +211,16 @@
                         class="dropdown-item border-radius-md"
                         @click="readyYet"
                       >
-                        <span class="ps-3">성경통독</span>
+                        <span class="ps-3">{{ $t('nav.subTitle4.readBible') }}</span>
                       </a>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/evangelize" class="dropdown-item border-radius-md">
-                        <span class="ps-3">전도비전</span>
+                        <span class="ps-3">{{ $t('nav.subTitle4.evangelismAndVision') }}</span>
                       </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">4영리</span>
-                      </a> -->
+                      <router-link class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{ $t('nav.subTitle4.readBible') }}</span>
+                      </router-link>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">섬김</span>
                       </a> -->
@@ -236,7 +236,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    주일학교&nbsp;
+                    {{ $t('nav.sundaySchool') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -245,24 +245,24 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/schedule" class="dropdown-item border-radius-md">
-                        <span class="ps-3">행사일정</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.eventSchedule') }}</span>
                       </router-link>
                       <router-link to="/school_photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주일학교 사진갤러리</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.schoolPhotoBoard') }}</span>
                       </router-link>
                       <router-link to="/library" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주일학교 자료실</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.library') }}</span>
                       </router-link>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/schedule" class="dropdown-item border-radius-md">
-                        <span class="ps-3">행사일정</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.eventSchedule') }}</span>
                       </router-link>
                       <router-link to="/school_photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주일학교 사진갤러리</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.schoolPhotoBoard') }}</span>
                       </router-link>
                       <router-link to="/library" class="dropdown-item border-radius-md">
-                        <span class="ps-3">주일학교 자료실</span>
+                        <span class="ps-3">{{ $t('nav.subTitle5.library') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -276,7 +276,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    교재마당&nbsp;
+                    {{ $t('nav.fellowshipArea') }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -285,24 +285,24 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/generalForum" class="dropdown-item border-radius-md">
-                        <span class="ps-3">자유게시판</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.generalFolum') }}</span>
                       </router-link>
                       <router-link to="/photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">사진갤러리</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.photoBoard') }}</span>
                       </router-link>
                       <router-link to="/testimony" class="dropdown-item border-radius-md">
-                        <span class="ps-3">간증게시판</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.testimony') }}</span>
                       </router-link>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/generalForum" class="dropdown-item border-radius-md">
-                        <span class="ps-3">자유게시판</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.generalFolum') }}</span>
                       </router-link>
                       <router-link to="/photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">사진갤러리</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.photoBoard') }}</span>
                       </router-link>
                       <router-link to="/testimony" class="dropdown-item border-radius-md">
-                        <span class="ps-3">간증게시판</span>
+                        <span class="ps-3">{{ $t('nav.subTitle6.testimony') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -312,7 +312,7 @@
                     <router-link
                       to="/withDiary"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      >예수동행일기</router-link
+                      >{{ $t('button.withDiary') }}</router-link
                     >
                   </li>
                   <li class="nav-item my-auto ms-3 ms-lg-0">
@@ -320,7 +320,15 @@
                       href="#"
                       class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                       @click="logout"
-                      >로그아웃</a
+                      >{{ $t('button.logout') }}</a
+                    >
+                  </li>
+                  <li class="nav-item my-auto ms-3 ms-lg-0">
+                    <a
+                      href="#"
+                      class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                      @click="changeLanguage()"
+                      >{{ $t('button.lang') }}</a
                     >
                   </li>
                 </template>
@@ -342,11 +350,12 @@
 </template>
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { onMounted, computed } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import router from '@/routes'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -378,6 +387,20 @@ function readyYet() {
     title: '준비중입니다^^;',
     icon: 'info'
   })
+}
+
+const { locale } = useI18n()
+
+let toggle = true
+
+const changeLanguage = () => {
+  if (toggle) {
+    locale.value = 'jp'
+    toggle = false
+  } else {
+    locale.value = 'ko'
+    toggle = true
+  }
 }
 
 onMounted(() => {

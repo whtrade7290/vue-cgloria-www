@@ -1,0 +1,46 @@
+{
+  "button": {
+    "withDiary": "イエス同行日記",
+    "logout": "ログアウト",
+    "lang": "한국어"
+  },
+  "nav": {
+    "main": "中央栄光教会",
+    "intro": "教会紹介",
+    "class/word": "属会/御言葉",
+    "worship/training": "礼拝/訓練",
+    "evangelism/service": "伝道/奉仕",
+    "sundaySchool": "日曜学校",
+    "fellowshipArea": "交わりの場",
+    "subTitle1": {
+      "intro": "教会紹介",
+      "paster": "牧師紹介",
+      "location": "教会地図",
+      "notice": "お知らせ"
+    },
+    "subTitle2": {
+      "sermon": "説教",
+      "column": "コラム",
+      "weeklyWord": "今週の御言葉",
+      "classMeeting": "属会教材"
+    },
+    "subTitle3": {
+      "jumok": "主目者礼拝",
+      "training": "訓練"
+    },
+    "subTitle4": {
+      "evangelismAndVision": "伝道のビジョン",
+      "readBible": "聖書通読"
+    },
+    "subTitle5": {
+      "eventSchedule": "日程",
+      "schoolPhotoBoard": "日曜学校フォトギャラリー",
+      "library": "日曜学校資料"
+    },
+    "subTitle6": {
+      "generalFolum": "自由掲示板",
+      "photoBoard": "フォトギャラリー",
+      "testimony": "証し"
+    }
+  }
+}
