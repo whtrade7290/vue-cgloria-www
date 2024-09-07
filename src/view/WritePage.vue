@@ -105,6 +105,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation.js'
+
 
 export default {
   components: {},
@@ -142,6 +144,11 @@ export default {
   },
   methods: {
     async write() {
+
+     if(VALIDATION_TITLE(this.inputTitle)) return 
+     if(VALIDATION_CONTENT(this.editorData)) return 
+
+     console.log("title: ", this.inputTitle.length);
       let formData = new FormData()
 
       formData.append('title', this.inputTitle)
@@ -162,6 +169,7 @@ export default {
       } catch (error) {
         console.error('Error during WRITE_BOARD dispatch:', error)
       }
+      
     },
     backPage() {
       this.router.back()

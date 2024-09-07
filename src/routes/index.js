@@ -17,6 +17,7 @@ import TestimonyBoard from '@/view/socialize/TestimonyBoard.vue'
 import JumokjaView from '@/view/worship/JumokjaView.vue'
 import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
+import SignUpView from '@/view/auth/SignUpView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/WritePage.vue'
 import EditPage from '@/view/EditPage.vue'
@@ -49,6 +50,7 @@ const routes = [
   },
   // auth
   { path: '/logIn', name: 'logIn', component: LoginView },
+  { path: '/signUp', name: 'signUp', component: SignUpView },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
   { path: '/paster', name: 'paster', component: PasterInfo },

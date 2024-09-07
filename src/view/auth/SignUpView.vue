@@ -6,7 +6,7 @@
           <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h4 class="font-weight-bolder">로그인</h4>
+                <h4 class="font-weight-bolder">회원가입</h4>
                 <p class="mb-0">God is my light in darkness</p>
               </div>
               <div class="card-body">
@@ -41,7 +41,7 @@
                       class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
                       @click="login"
                     >
-                      로그인
+                      회원가입
                     </button>
                   </div>
                 </form>
@@ -49,7 +49,7 @@
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <p class="mb-4 text-sm mx-auto">
                   회원가입 문의는
-                  <router-link to="/signUp" class="text-primary text-gradient font-weight-bold"
+                  <router-link to="/sign_up" class="text-primary text-gradient font-weight-bold"
                     >담당자</router-link
                   >에게 연락 바랍니다.
                 </p>

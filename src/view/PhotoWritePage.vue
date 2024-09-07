@@ -93,6 +93,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation.js'
 
 export default {
   components: {},
@@ -132,6 +133,12 @@ export default {
     async write() {
       let formData = new FormData()
 
+    if(VALIDATION_TITLE(this.inputTitle)) return 
+
+    if(VALIDATION_CONTENT(this.editorData)) return 
+
+    if(VALIDATION_FILES(this.files)) return 
+
       formData.append('title', this.inputTitle)
       formData.append('content', this.editorData)
       formData.append(
@@ -145,18 +152,19 @@ export default {
         formData.append('fileField', file)
       })
 
-      const result = await this.store.dispatch('WRITE_BOARD', {
-        formData: formData,
-        name: this.$route.query.name
-      })
-      if (result) {
-        this.router.push(`/${this.$route.query.name}`)
-      }
+      // const result = await this.store.dispatch('WRITE_BOARD', {
+      //   formData: formData,
+      //   name: this.$route.query.name
+      // })
+      // if (result) {
+      //   this.router.push(`/${this.$route.query.name}`)
+      // }
     },
     backPage() {
       this.router.back()
     },
     changeImage(event) {
+      this.files = []
       const newFiles = Array.from(event.target.files)
       this.files = this.files.concat(newFiles)
       this.imageData = []

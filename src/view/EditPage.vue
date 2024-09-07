@@ -122,6 +122,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation.js'
 
 // 상태 선언
 const store = useStore()
@@ -168,6 +169,10 @@ const isDisplay = computed(() => {
 // 메서드 선언
 const edit = async () => {
   try {
+
+    if(VALIDATION_TITLE(inputTitle.value)) return 
+    if(VALIDATION_CONTENT(editorData.value)) return 
+
     const formData = new FormData()
 
     formData.append('title', inputTitle.value)

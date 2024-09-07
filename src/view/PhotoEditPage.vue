@@ -108,6 +108,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation.js'
 
 const store = useStore()
 const editor = ClassicEditor
@@ -140,6 +141,11 @@ const files = ref([])
 const imageData = ref([])
 
 const edit = async () => {
+
+  if(VALIDATION_TITLE(inputTitle.value)) return 
+  if(VALIDATION_CONTENT(editorData.value)) return 
+  if(VALIDATION_FILES(files.value)) return 
+
   let formData = new FormData()
 
   formData.append('title', inputTitle.value)
