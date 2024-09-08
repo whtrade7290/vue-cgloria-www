@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <h3 class="text-gradient text-primary mb-3">교회사진</h3>
+          <h3 class="text-gradient text-primary mb-3">{{ $t('MainSectionPhoto.title') }}</h3>
         </div>
       </div>
       <div class="row">

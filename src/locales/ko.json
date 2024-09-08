@@ -42,5 +42,75 @@
       "photoBoard": "사진갤러리",
       "testimony": "간증게시판"
     }
+  },
+  "mainMsg": {
+    "main": "중앙영광교회",
+    "sub": "말씀으로 동행하는 교회"
+  },
+  "weeklySermon": {
+    "sermon": "설교말씀"
+  },
+  "mainSectionOne": {
+    "column": "칼럼",
+    "classMeeting": "속회교재실",
+    "testimony": "간증",
+    "midnightWorship": "새벽예배",
+    "sundayWorsip1": "주일1부예배",
+    "sundayWorsip2": "주일2부예배",
+    "am": "오전",
+    "worshipAndTraining": "예배 및 훈련시간"
+  },
+  "mainSectionTwo": {
+    "main": "말씀과 동행하는 교회",
+    "sub": "”성령의 능력으로 예배, 전도, 섬김, 교제를 회복하여 목적이 이끄는 초대 교회의 모습을 되찾는 사명”"
+  },
+  "MainSectionTraining": {
+    "title": "제자훈련",
+    "subTitle": "새가족반 제자반 사역반",
+    "content1Bold": "새가족반",
+    "content1": "은 4주 과정으로, 교회에 새로오신 모든 분들은 이 과정을 통해서 교회의\n멤버쉽을 갖고, 교회를 배워가며, 신앙의 가장 기본적인 주제를 배우고, 서로를 알아가는\n과정입니다.",
+    "content2Bold": "제자반",
+    "content2": "은 30주 과정으로, 양육반 다음 단계로 기독교의 교리와 신앙생활을 좀 더\n깊이 공부합니다. 매주 QT를 서로 나누며, 주제에 관련된 말씀을 암송하며 훈련합니다.",
+    "content3Bold": "사역반",
+    "content3": "은 30주 과정으로 제자반 다음 단계입니다. 사역반은 리더쉽 과정입니다.\n교회가 무엇인지, 교회의 존재 이유가 무엇인지, 제자가 무엇인지, 소그룹 성경공부를\n어떻게 인도할지 등을 배우게 됩니다. 이 과정을 통해서 평신도 지도자로서 교회 사역을\n맡아서 감당할 수 있는 지도력을 키우게 됩니다."
+  },
+  "MainSectionJumokja": {
+    "title": "주목자 예배",
+    "content": "주목자라고 하는 용어는, 마태복음 25장 35절 '내가 주릴 때에 너희가 먹을 것을 주었고\n목마를 때에 마시게 하였고....' 의 말씀 속에 나오는 주린자의 ‘주’와 목마른 자의 ‘목’의 앞\n글자를 따서 지은 것입니다. 그리고 한자로는 주님 주(主), 눈 목(目) 즉, 주목(主目)이란\n한자를 사용하여 주님께서 항상 주목하고 계신다는 의미를 담고 있습니다. 예수님의 귀한 사역\n중의 하나는 주리고 목마른 자들을 돌보는 것이었음을 성경도 말하고 있습니다."
+  },
+  "MainSectionPhoto": {
+    "title": "포토갤러리"
+  },
+  "MainSectionBrother": {
+    "refreshTitle": "영과 육의 쉼과 충만",
+    "refreshSubTitle": "아름답고 편안한 안식공간에 오신 것을 환영합니다. 해발 900m에 위치한 후지산 기슭에\n있는 별장식 기도원입니다",
+    "moveToPage": "바로가기",
+    "yokohamaTitle": "요코하마 영광교회",
+    "yokohamaPaster": "담임목사 김경환",
+    "chibaTitle": "치바 영광교회",
+    "chibaPaster": "담임목사 김성섭",
+    "hachioojiTitle": "하치오지 영광교회",
+    "hachioojiPaster": "담임목사 소대섭",
+    "kawaguchiTitle": "가와구치 영광교회",
+    "kawaguchiPaster": "담임목사 윤건희"
+  },
+  "FooterComponent": {
+    "worshipTime": "예배시간",
+    "midnightWorship": "새벽예배",
+    "everyDay": "매일",
+    "worship1": "주일1부 예배 (일본어)",
+    "worship2": "주일2부 예배",
+    "worship2Info": "(한국어, 일본어통역)",
+    "trainingTime": "훈련시간",
+    "disciple": "제자훈련",
+    "ministry": "사역훈련",
+    "seminar": "속장세미나",
+    "sunday": "일요일",
+    "saturday": "토요일",
+    "location": "오시는길"
+  },
+  "common": {
+    "more": "...더보기",
+    "moveToPage": "바로가기"
   }
 }

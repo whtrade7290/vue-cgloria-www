@@ -2,8 +2,8 @@
   <div>
     <HeaderComponent
       :imgUrl="imgUrl"
-      main_msg="중앙영광교회"
-      sub_msg="말씀으로 동행하는 교회"
+      :main_msg="$t('mainMsg.main')"
+      :sub_msg="$t('mainMsg.sub')"
     ></HeaderComponent>
     <WeeklySermon></WeeklySermon>
     <MainSectionOne></MainSectionOne>

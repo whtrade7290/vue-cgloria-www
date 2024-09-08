@@ -42,5 +42,77 @@
       "photoBoard": "フォトギャラリー",
       "testimony": "証し"
     }
+  },
+  "mainMsg": {
+    "main": "中央栄光教会",
+    "sub": "御言葉と同行する教会"
+  },
+  "weeklySermon": {
+    "sermon": "説教の御言葉"
+  },
+  "mainSectionOne": {
+    "column": "コラム",
+    "classMeeting": "属会教材",
+    "testimony": "証し",
+    "midnightWorship": "早天礼拝",
+    "sundayWorsip1": "主日礼拝 1",
+    "sundayWorsip2": "主日礼拝 2",
+    "am": "午前",
+    "worshipAndTraining": "礼拝及び訓練時間"
+  },
+  "MainSectionTraining": {
+    "title": "訓練",
+    "subTitle": "新家族 弟子訓練 使役訓練",
+    "content1Bold": "新家族",
+    "content1": "は4週間のプログラムで、新しく教会に参加された方々がこの期間を通じて教会のメンバーシップを得ることができ、教会のことを学び、信仰の基本的なテーマについて学ぶとともに、お互いを知り合う機会となります。",
+    "content2Bold": "弟子訓練",
+    "content2": "イエス様に倣って人格と生活が成長することを目指している1年コースの訓練です。御言葉と祈り、また生活への実適用を中心に行っています。",
+    "content3Bold": "使役訓練",
+    "content3": "弟子訓練を受けた聖徒さんの中でグループのリーダー（属長）となる人のための１年コースの訓練です。",
+    "moveToPage": "もっと見る"
+  },
+  "mainSectionTwo": {
+    "main": "御言葉と同行する教会",
+    "sub": "”聖霊の力によって、礼拝、伝道、奉仕、交わりを回復し、目的に導かれる初代教会の姿を取り戻す使命”"
+  },
+  "MainSectionJumokja": {
+    "title": "主目者礼拝",
+    "content": "『主目者』とは、「お前たちは、わたしが飢えていたときに食べさせ、のどが渇いていた\nときに飲ませ、…（後略）(マタイによる福音書25:35)」という御言葉から、また、主で\nある神様の主・目、つまり主目、主が常に注目しておられることを意識してあてた言葉です。\nイエス様の大事な使命の一つにも飢え渇いた人々を救われることがあったと聖書も語っています。",
+    "moveToPage": "もっと見る"
+  },
+  "MainSectionPhoto": {
+    "title": "フォトギャラリー"
+  },
+  "MainSectionBrother": {
+    "refreshTitle": "霊と肉の休息と充実",
+    "refreshSubTitle": "美しくて心地よい休息の場所へようこそ。標高900mに位置する富士山のふもとにある別荘風の祈りの場です。",
+    "moveToPage": "もっと見る",
+    "yokohamaTitle": "横浜栄光教会",
+    "yokohamaPaster": "牧師：キム",
+    "chibaTitle": "千葉栄光教会",
+    "chibaPaster": "牧師：キム",
+    "hachioojiTitle": "八王子栄光教会",
+    "hachioojiPaster": "牧師：ソ",
+    "kawaguchiTitle": "川口栄光教会",
+    "kawaguchiPaster": "牧師：ユン"
+  },
+  "FooterComponent": {
+    "worshipTime": "礼拝時間",
+    "midnightWorship": "早天礼拝",
+    "everyDay": "毎日",
+    "worship1": "主日１部礼拝 (日本語)",
+    "worship2": "主日2部礼拝",
+    "worship2Info": "(韓国語, 日本語通訳)",
+    "trainingTime": "訓練時間",
+    "disciple": "弟子訓練",
+    "ministry": "使役訓練",
+    "seminar": "属長セミナー",
+    "sunday": "日曜日",
+    "saturday": "土曜日",
+    "location": "アクセス"
+  },
+  "common": {
+    "more": "...もっと見る",
+    "moveToPage": "もっと見る"
   }
 }

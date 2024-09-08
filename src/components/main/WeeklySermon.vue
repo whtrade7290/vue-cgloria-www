@@ -7,7 +7,7 @@
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
                 <h3>{{ formatDate(sermonItem.create_at) }}</h3>
-                <h5 class="mt-3">설교말씀</h5>
+                <h5 class="mt-3">{{ $t('weeklySermon.sermon') }}</h5>
                 <p class="text-sm">{{ sermonItem.title }}</p>
               </div>
               <hr class="vertical dark" />
@@ -21,7 +21,7 @@
                   href="javascript:;"
                   @click="intoDetail(weeklyItem.id, 'weekly')"
                   style="color: #d4a59a; font-size: 1.2rem"
-                  >...더보기</a
+                  >{{ $t('common.more') }}</a
                 >
               </div>
               <hr class="vertical dark" />

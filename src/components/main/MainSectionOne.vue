@@ -7,7 +7,9 @@
             <div class="col-md-12">
               <div class="info mb-3">
                 <div style="display: flex">
-                  <h3 class="text-gradient text-primary" style="padding-left: 0px">칼럼</h3>
+                  <h3 class="text-gradient text-primary" style="padding-left: 0px">
+                    {{ $t('mainSectionOne.column') }}
+                  </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
                     {{ columnItem.title }}
                   </h5>
@@ -17,14 +19,16 @@
                   href="javascript:;"
                   @click="intoDetail(columnItem.id, 'column')"
                   style="color: #d4a59a; font-size: 1.2rem"
-                  >...더보기</a
+                  >{{ $t('common.more') }}</a
                 >
               </div>
             </div>
             <div class="col-md-12">
               <div class="info mb-3">
                 <div style="display: flex">
-                  <h3 class="text-gradient text-primary" style="padding-left: 0px">속회교재실</h3>
+                  <h3 class="text-gradient text-primary" style="padding-left: 0px">
+                    {{ $t('mainSectionOne.classMeeting') }}
+                  </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
                     {{ classMeetingItem.title }}
                   </h5>
@@ -34,14 +38,16 @@
                   href="javascript:;"
                   @click="intoDetail(classMeetingItem.id, 'classMeeting')"
                   style="color: #d4a59a; font-size: 1.2rem"
-                  >...더보기</a
+                  >{{ $t('common.more') }}</a
                 >
               </div>
             </div>
             <div class="col-md-12">
               <div class="info mb-3">
                 <div style="display: flex">
-                  <h3 class="text-gradient text-primary" style="padding-left: 0px">간증</h3>
+                  <h3 class="text-gradient text-primary" style="padding-left: 0px">
+                    {{ $t('mainSectionOne.testimony') }}
+                  </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
                     {{ testimonyItem.title }}
                   </h5>
@@ -51,7 +57,7 @@
                   href="javascript:;"
                   @click="intoDetail(testimonyItem.id, 'testimony')"
                   style="color: #d4a59a; font-size: 1.2rem"
-                  >...더보기</a
+                  >{{ $t('common.more') }}</a
                 >
               </div>
             </div>
@@ -65,17 +71,20 @@
             ></div>
             <div class="card-body pt-7 text-center">
               <h2 class="text-white up mb-0" style="text-align: left">
-                새벽예배<br />오전 5:50 ~ 06:40
+                {{ $t('mainSectionOne.midnightWorship') }}<br />{{ $t('mainSectionOne.am') }} 5:50 ~
+                06:30
               </h2>
               <h2 class="text-white up mb-0" style="text-align: left">
-                주일1부예배<br />오전 8:50 ~ 10:00
+                {{ $t('mainSectionOne.sundayWorsip1') }}<br />{{ $t('mainSectionOne.am') }} 8:50 ~
+                10:00
               </h2>
               <h2 class="text-white up mb-0" style="text-align: left">
-                주일2부예배<br />오전 10:30 ~ 12:00
+                {{ $t('mainSectionOne.sundayWorsip2') }}<br />{{ $t('mainSectionOne.am') }} 10:40 ~
+                12:00
               </h2>
-              <a href="#" style="font-size: 24px" class="btn btn-outline-white mt-5 up btn-round"
-                >예배 및 훈련시간</a
-              >
+              <a href="#" style="font-size: 24px" class="btn btn-outline-white mt-5 up btn-round">{{
+                $t('mainSectionOne.worshipAndTraining')
+              }}</a>
             </div>
           </div>
         </div>
