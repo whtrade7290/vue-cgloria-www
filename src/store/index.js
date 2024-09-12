@@ -19,7 +19,9 @@ import {
   getMainWeekly,
   writeComment,
   getCommentList,
-  checkToken
+  checkToken,
+  getUserByUsername,
+  makeWithDiary
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -33,7 +35,8 @@ export default createStore({
     isLogIned: false,
     detail: {},
     mainContents: [],
-    CommentList: []
+    CommentList: [],
+    user: {}
   },
   getters: {
     checkLogin() {
@@ -54,8 +57,8 @@ export default createStore({
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, withDiaryNum) {
-      const res = await getWithDiaryBoardCount(withDiaryNum)
+    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, id) {
+      const res = await getWithDiaryBoardCount(id)
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
@@ -174,6 +177,20 @@ export default createStore({
         commit('SET_COMMENTLIST', res.data)
       }
       return res
+    },
+    async SEARCH_USER({ commit }, { searchUser }) {
+      const res = await getUserByUsername(searchUser)
+      if (res.status === 200) {
+        commit('SET_USER', res.data)
+      }
+      return res
+    },
+    async MAKE_WITHDIARY({ commit }, { teamName, userIdList }) {
+      const res = await makeWithDiary(teamName, userIdList)
+
+      console.log('res: ', res)
+
+      return res.data
     }
   },
   mutations: {
@@ -197,6 +214,9 @@ export default createStore({
     },
     SET_COMMENTLIST(state, item) {
       state.CommentList = item
+    },
+    SET_USER(state, item) {
+      state.user = item
     }
   }
 })

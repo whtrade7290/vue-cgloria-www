@@ -34,9 +34,9 @@ function getWithDiaryBoardList(obj) {
     withDiary: JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.withDiary
   })
 }
-function getWithDiaryBoardCount(withDiaryNum) {
+function getWithDiaryBoardCount(id) {
   return instance.post(`withDiary/withDiary_count`, {
-    withDiary: withDiaryNum
+    id: id
   })
 }
 function writeBoard(formData, name) {
@@ -128,6 +128,19 @@ function checkToken(accessToken, refreshToken) {
   })
 }
 
+function getUserByUsername(username) {
+  return instance.post('/find_user', {
+    username: username
+  })
+}
+
+function makeWithDiary(teamName, userIdList) {
+  return instance.post('/withDiary/make_withDiary', {
+    teamName: teamName,
+    userIdList: userIdList
+  })
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -148,5 +161,7 @@ export {
   getMainWeekly,
   writeComment,
   getCommentList,
-  checkToken
+  checkToken,
+  getUserByUsername,
+  makeWithDiary
 }

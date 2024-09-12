@@ -218,9 +218,9 @@
                       <router-link to="/evangelize" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle4.evangelismAndVision') }}</span>
                       </router-link>
-                      <router-link class="dropdown-item border-radius-md">
+                      <a href="javascript:;" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle4.readBible') }}</span>
-                      </router-link>
+                      </a>
                       <!-- <a href="#" class="dropdown-item border-radius-md">
                         <span class="ps-3">섬김</span>
                       </a> -->
@@ -307,6 +307,34 @@
                     </div>
                   </div>
                 </li>
+
+                <li class="nav-item dropdown dropdown-hover mx-2">
+                  <a
+                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
+                    href="javascript:;"
+                    id="dropdownMenuPages"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    관리자 게시판&nbsp;
+                    <DownArrowDarkVue></DownArrowDarkVue>
+                  </a>
+                  <div
+                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
+                    aria-labelledby="dropdownMenuPages"
+                  >
+                    <div class="d-none d-lg-block">
+                      <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
+                        <span class="ps-3">예수동행일기 개설</span>
+                      </router-link>
+                    </div>
+                    <div class="d-lg-none">
+                      <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
+                        <span class="ps-3">예수동행일기 개설</span>
+                      </router-link>
+                    </div>
+                  </div>
+                </li>
                 <template v-if="store.state.isLogIned">
                   <li class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto" style="float: left">
                     <router-link
@@ -350,7 +378,7 @@
 </template>
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
@@ -361,6 +389,7 @@ const store = useStore()
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
+const role = ref('')
 
 function logout() {
   Swal.fire({

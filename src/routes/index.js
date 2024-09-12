@@ -25,6 +25,7 @@ import PhotoEditPage from '@/view/PhotoEditPage.vue'
 import PhotoWritePage from '@/view/PhotoWritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
 import PhotoDetailPage from '@/view/PhotoDetailPage.vue'
+import MakeWithDiaryRoom from '@/view/admin/MakeWithDiaryRoom.vue'
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
@@ -188,17 +189,29 @@ const routes = [
 
       const sessionUser = storedData ? JSON.parse(storedData) : {}
 
-      if (sessionUser.withDiary === 0 || !sessionUser.token) {
+      await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.id)
+
+      if (store.state.count > 0) {
+        next()
+      } else {
         await Swal.fire({
           title: '예수동행일기 그룹이 존재하지 않습니다.',
           icon: 'warning'
         })
-
-        await next(from)
-      } else {
-        await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.withDiary)
-        return next()
+        next(false) // 이동하지 않음
       }
+
+      // if (sessionUser.user.withDiary.length === 0 || !sessionUser.token) {
+      //   await Swal.fire({
+      //     title: '예수동행일기 그룹이 존재하지 않습니다.',
+      //     icon: 'warning'
+      //   })
+
+      //   await next(from)
+      // } else {
+      //   await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.withDiary)
+      //   return next()
+      // }
     }
   },
   {
@@ -258,6 +271,11 @@ const routes = [
       await store.dispatch('FETCH_PHOTO_CONTENT_DETAIL', { name: name, id: id })
       await next()
     }
+  },
+  {
+    path: '/make_withDiary',
+    name: 'make_withDiary',
+    component: MakeWithDiaryRoom
   }
 ]
 
