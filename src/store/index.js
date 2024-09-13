@@ -36,7 +36,8 @@ export default createStore({
     detail: {},
     mainContents: [],
     CommentList: [],
-    user: {}
+    user: {},
+    role: ''
   },
   getters: {
     checkLogin() {
@@ -217,6 +218,9 @@ export default createStore({
     },
     SET_USER(state, item) {
       state.user = item
+    },
+    SET_USER_ROLE(state, item) {
+      state.role = item
     }
   }
 })

@@ -94,9 +94,8 @@ const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
 async function login() {
-
-  if(VALIDATION_USERNAME(username.value)) return 
-  if(VALIDATION_PASSWORD(password.value)) return 
+  if (VALIDATION_USERNAME(username.value)) return
+  if (VALIDATION_PASSWORD(password.value)) return
 
   const response = await store.dispatch('LOGIN', {
     username: username.value,
@@ -109,6 +108,7 @@ async function login() {
     }).then(async () => {
       await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
       sessionStorage.setItem('logoutAlerted', 1)
+      store.commit('SET_USER_ROLE', response.user.role)
       router.push('/')
     })
   } else {

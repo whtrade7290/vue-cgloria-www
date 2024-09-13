@@ -185,21 +185,53 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
-      const storedData = localStorage.getItem(getUserIdFromCookie())
+      Swal.fire({
+        title: 'Select an option',
+        html: `
+    <form>
+      <label>
+        <input type="radio" name="radioOption" value="option1"> Option 1
+      </label><br>
+      <label>
+        <input type="radio" name="radioOption" value="option2"> Option 2
+      </label><br>
+      <label>
+        <input type="radio" name="radioOption" value="option13"> Option 3
+      </label>
+    </form>
+  `,
+        confirmButtonText: 'Submit',
+        preConfirm: () => {
+          const selectedOption = document.querySelector('input[name="radioOption"]:checked')
 
-      const sessionUser = storedData ? JSON.parse(storedData) : {}
+          console.log('selectedOption: ', selectedOption)
+          if (!selectedOption) {
+            Swal.showValidationMessage('Please select an option')
+          }
+          return selectedOption ? selectedOption.value : null
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log('Selected option:', result.value)
+          return next()
+        }
+      })
 
-      await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.id)
+      // const storedData = localStorage.getItem(getUserIdFromCookie())
 
-      if (store.state.count > 0) {
-        next()
-      } else {
-        await Swal.fire({
-          title: '예수동행일기 그룹이 존재하지 않습니다.',
-          icon: 'warning'
-        })
-        next(false) // 이동하지 않음
-      }
+      // const sessionUser = storedData ? JSON.parse(storedData) : {}
+
+      // await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.id)
+
+      // if (store.state.count > 0) {
+      //   next()
+      // } else {
+      //   await Swal.fire({
+      //     title: '예수동행일기 그룹이 존재하지 않습니다.',
+      //     icon: 'warning'
+      //   })
+      //   next(false) // 이동하지 않음
+      // }
 
       // if (sessionUser.user.withDiary.length === 0 || !sessionUser.token) {
       //   await Swal.fire({

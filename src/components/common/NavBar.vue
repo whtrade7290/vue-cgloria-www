@@ -308,7 +308,10 @@
                   </div>
                 </li>
 
-                <li class="nav-item dropdown dropdown-hover mx-2">
+                <li
+                  class="nav-item dropdown dropdown-hover mx-2"
+                  v-if="store.state.role === 'ADMIN'"
+                >
                   <a
                     class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                     href="javascript:;"
@@ -316,7 +319,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    관리자 게시판&nbsp;
+                    관리자 페이지&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -389,7 +392,6 @@ const store = useStore()
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
-const role = ref('')
 
 function logout() {
   Swal.fire({
@@ -405,6 +407,7 @@ function logout() {
         icon: 'success'
       }).then(async () => {
         await store.dispatch('CHECKING_TOKEN', { accessToken: '', refreshToken: '' })
+        store.commit('SET_USER_ROLE', '')
         router.push('/')
       })
     }
