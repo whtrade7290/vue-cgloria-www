@@ -21,7 +21,9 @@ import {
   getCommentList,
   checkToken,
   getUserByUsername,
-  makeWithDiary
+  makeWithDiary,
+  fetchWithDiaryRoomList,
+  fetchWithDiaryRoom
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -37,7 +39,9 @@ export default createStore({
     mainContents: [],
     CommentList: [],
     user: {},
-    role: ''
+    role: '',
+    rooms: [],
+    room: {}
   },
   getters: {
     checkLogin() {
@@ -49,6 +53,7 @@ export default createStore({
       commit('SET_SIDEMENU', sidemenu)
     },
     async FETCH_BOARDLIST({ commit }, obj) {
+      console.log('obj: ', obj)
       const res = await getBoardList(obj)
       commit('SET_BOARDLIST', res.data)
       return res
@@ -188,9 +193,20 @@ export default createStore({
     },
     async MAKE_WITHDIARY({ commit }, { teamName, userIdList }) {
       const res = await makeWithDiary(teamName, userIdList)
-
-      console.log('res: ', res)
-
+      return res.data
+    },
+    async FETCH_WITHDIARY_ROOM_LIST({ commit }, { userId }) {
+      const res = await fetchWithDiaryRoomList(userId)
+      if (res.status === 200) {
+        commit('SET_ROOMS', res.data)
+      }
+      return res.data
+    },
+    async FETCH_WITHDIARY_ROOM({ commit }, { roomId }) {
+      const res = await fetchWithDiaryRoom(roomId)
+      if (res.status === 200) {
+        commit('SET_ROOM', res.data)
+      }
       return res.data
     }
   },
@@ -221,6 +237,12 @@ export default createStore({
     },
     SET_USER_ROLE(state, item) {
       state.role = item
+    },
+    SET_ROOMS(state, item) {
+      state.rooms = item
+    },
+    SET_ROOM(state, item) {
+      state.room = item
     }
   }
 })

@@ -27,11 +27,11 @@ async function requestLogin(username, password) {
   }
 }
 function getWithDiaryBoardList(obj) {
-  const { startRow, pageSize } = obj
+  const { startRow, pageSize, roomId } = obj
   return instance.post(`withDiary/withDiary`, {
     startRow: startRow,
     pageSize: pageSize,
-    withDiary: JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.withDiary
+    roomId: roomId
   })
 }
 function getWithDiaryBoardCount(id) {
@@ -141,6 +141,18 @@ function makeWithDiary(teamName, userIdList) {
   })
 }
 
+function fetchWithDiaryRoomList(userId) {
+  return instance.post('/withDiary/fetch_withDiaryList', {
+    userId: userId
+  })
+}
+
+function fetchWithDiaryRoom(roomId) {
+  return instance.post('/withDiary/fetch_withDiary', {
+    roomId: roomId
+  })
+}
+
 export {
   getBoardList,
   requestLogin,
@@ -163,5 +175,7 @@ export {
   getCommentList,
   checkToken,
   getUserByUsername,
-  makeWithDiary
+  makeWithDiary,
+  fetchWithDiaryRoomList,
+  fetchWithDiaryRoom
 }

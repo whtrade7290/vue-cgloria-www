@@ -109,12 +109,13 @@ const props = defineProps({
 let pageNum = route.query?.pageNum ?? 1
 const pageSize = 5
 let pageList = []
-
+const roomId = route.query.roomId ?? 0
 const totalCount = store.state.count
+
 fetchList(pageNum)
 
 function fetchList(num) {
-  const payload = {
+  let payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
     pageSize: pageSize
@@ -124,9 +125,17 @@ function fetchList(num) {
 
   if (route.name === 'withDiary') {
     actionsName = 'FETCH_WITHDIARY_DATALIST'
+
+    if (roomId) {
+      payload = {
+        ...payload,
+        roomId: roomId
+      }
+    }
   } else {
     actionsName = 'FETCH_BOARDLIST'
   }
+
   store.dispatch(actionsName, payload)
   pageNum = num
   settingPageNumber()
@@ -139,11 +148,16 @@ function settingPageNumber() {
   if (endIndex > totalPages) {
     endIndex = totalPages
   }
+  // console.log('totalPages: ', totalPages)
+  // console.log('startIndex: ', startIndex)
+  // console.log('endIndex: ', endIndex)
+
   pageList = []
+
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
-
+  // console.log('pageList: ', pageList)
   return endIndex
 }
 
@@ -161,8 +175,8 @@ const formatDate = (dateString) => {
 async function intoDetail(id) {
   await router.push({
     name: 'detail',
-    params: { name: route.name, id: id },
-    query: { pageNum: pageNum }
+    query: { pageNum: pageNum, roomId }, // roomId를 query로 설정
+    params: { name: route.name, id: id }
   })
 }
 </script>

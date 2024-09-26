@@ -340,15 +340,16 @@
                 </li>
                 <template v-if="store.state.isLogIned">
                   <li class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto" style="float: left">
-                    <router-link
-                      to="/withDiary"
+                    <a
+                      href="javascript:;"
+                      @click="goToWithDiary"
                       class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      >{{ $t('button.withDiary') }}</router-link
+                      >{{ $t('button.withDiary') }}</a
                     >
                   </li>
                   <li class="nav-item my-auto ms-3 ms-lg-0">
                     <a
-                      href="#"
+                      href="javascript:;"
                       class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                       @click="logout"
                       >{{ $t('button.logout') }}</a
@@ -387,11 +388,14 @@ import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import router from '@/routes'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const store = useStore()
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
+const userId = storedData ? JSON.parse(storedData).user.id : ''
 
 function logout() {
   Swal.fire({
@@ -434,6 +438,93 @@ const changeLanguage = () => {
     toggle = true
   }
 }
+
+const goToWithDiary = async () => {
+  try {
+    await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId })
+
+    if (!checkRoomAvailability()) return
+
+    const roomList = store.state.rooms
+
+    store.commit('SET_ROOMS', [])
+
+    if (!roomList || roomList.length === 0) {
+      await Swal.fire({
+        title: 'No rooms available',
+        text: 'There are no diary rooms available for this user.',
+        icon: 'warning'
+      })
+
+      return
+    }
+
+    const optionsHtml = roomList
+      .map(
+        (room) => `
+          <label>
+            <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.cohort}
+          </label><br>
+        `
+      )
+      .join('')
+
+    const result = await Swal.fire({
+      title: 'Select an option',
+      html: `${optionsHtml}`,
+      confirmButtonText: 'Submit',
+      preConfirm: () => {
+        const selectedOption = document.querySelector('input[name="radioOption"]:checked')
+        if (!selectedOption) {
+          Swal.showValidationMessage('Please select an option')
+        }
+        return selectedOption ? selectedOption.value : null
+      }
+    })
+    if (result.isConfirmed) {
+      // await navigateToDiary(result.value)
+      console.log('result.value: ', result.value)
+      await router.push({ name: 'withDiary', query: { roomId: result.value } }).then(() => {
+        router.go(0)
+      })
+    }
+  } catch (error) {
+    console.error('Error in withDiary:', error)
+  }
+}
+
+const checkRoomAvailability = async () => {
+  const rooms = store.state.rooms
+  if (!rooms || rooms.length === 0) {
+    await Swal.fire({
+      title: '예수동행일기 그룹이 존재하지 않습니다.',
+      icon: 'warning'
+    })
+    return false
+  }
+  return true
+}
+/**
+ * 비동기 처리 로직 (방법 아직 모름)
+ */
+// const navigateToDiary = async (roomId) => {
+//   try {
+//     await router.push({ name: 'withDiary', query: { roomId } })
+//     await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId })
+//     await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
+
+//     const payload = {
+//       name: 'withDiary',
+//       startRow: 0,
+//       pageSize: 5,
+//       roomId: store.state.room?.id ?? 0
+//     }
+
+//     await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
+//   } catch (err) {
+//     console.error('라우터 이동 중 에러 발생:', err)
+//   }
+// }
 
 onMounted(() => {
   store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })

@@ -89,8 +89,6 @@ const handleCommentCount = (count) => {
   commentCount.value = count
 }
 
-console.log('')
-
 const contentCopy = async () => {
   const content = store.state.detail.content
   navigator.clipboard.writeText(stripHtmlTags(content))
@@ -126,7 +124,10 @@ const formatDate = (dateString) => {
 }
 
 function goToBoardList() {
-  router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
+  router.push({
+    name: route.params.name,
+    query: { pageNum: route.query.pageNum, roomId: route.query.roomId }
+  })
 }
 
 const isWriter = computed(() => {

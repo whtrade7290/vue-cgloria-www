@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter, useRouter } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
@@ -185,65 +185,29 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
-      Swal.fire({
-        title: 'Select an option',
-        html: `
-    <form>
-      <label>
-        <input type="radio" name="radioOption" value="option1"> Option 1
-      </label><br>
-      <label>
-        <input type="radio" name="radioOption" value="option2"> Option 2
-      </label><br>
-      <label>
-        <input type="radio" name="radioOption" value="option13"> Option 3
-      </label>
-    </form>
-  `,
-        confirmButtonText: 'Submit',
-        preConfirm: () => {
-          const selectedOption = document.querySelector('input[name="radioOption"]:checked')
+      await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId: to.query.roomId })
 
-          console.log('selectedOption: ', selectedOption)
-          if (!selectedOption) {
-            Swal.showValidationMessage('Please select an option')
-          }
-          return selectedOption ? selectedOption.value : null
+      let payload = {
+        name: 'withDiary',
+        startRow: 0,
+        pageSize: 5,
+        roomId: store.state.room.id
+      }
+
+      await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
+      await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
+
+      const roomId = store.state.room.id
+
+      if (roomId) {
+        if (!to.query.roomId) {
+          next({ name: to.name, query: { ...to.query, roomId } }) // 쿼리 파라미터에 roomId 추가
+        } else {
+          next() // 이미 쿼리 파라미터에 roomId가 있으면 그대로 진행
         }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          console.log('Selected option:', result.value)
-          return next()
-        }
-      })
-
-      // const storedData = localStorage.getItem(getUserIdFromCookie())
-
-      // const sessionUser = storedData ? JSON.parse(storedData) : {}
-
-      // await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.id)
-
-      // if (store.state.count > 0) {
-      //   next()
-      // } else {
-      //   await Swal.fire({
-      //     title: '예수동행일기 그룹이 존재하지 않습니다.',
-      //     icon: 'warning'
-      //   })
-      //   next(false) // 이동하지 않음
-      // }
-
-      // if (sessionUser.user.withDiary.length === 0 || !sessionUser.token) {
-      //   await Swal.fire({
-      //     title: '예수동행일기 그룹이 존재하지 않습니다.',
-      //     icon: 'warning'
-      //   })
-
-      //   await next(from)
-      // } else {
-      //   await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', sessionUser.user.withDiary)
-      //   return next()
-      // }
+      } else {
+        next(false) // roomId가 없으면 진행 중단
+      }
     }
   },
   {
