@@ -307,10 +307,12 @@
                     </div>
                   </div>
                 </li>
-
+                {{
+                  isAdmin
+                }}
                 <li
                   class="nav-item dropdown dropdown-hover mx-2"
-                  v-if="store.state.role === 'ADMIN'"
+                  v-if="role === 'ADMIN' || store.state.role === 'ADMIN'"
                 >
                   <a
                     class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
@@ -319,7 +321,8 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    관리자 페이지&nbsp;
+                    관리자 페이지
+
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -382,20 +385,19 @@
 </template>
 <script setup>
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { onMounted, computed, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import router from '@/routes'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
 const store = useStore()
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 const userId = storedData ? JSON.parse(storedData).user.id : ''
+const role = storedData ? JSON.parse(storedData).user.role : ''
 
 function logout() {
   Swal.fire({
@@ -412,7 +414,7 @@ function logout() {
       }).then(async () => {
         await store.dispatch('CHECKING_TOKEN', { accessToken: '', refreshToken: '' })
         store.commit('SET_USER_ROLE', '')
-        router.push('/')
+        await router.push('/')
       })
     }
   })
