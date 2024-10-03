@@ -23,6 +23,7 @@ instance.interceptors.request.use(
       isAccessTokenValid = true
       const result = await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
       // 1 이면 refresh / access 둘다 만료
+      console.log('result: ', result)
       if (result.success === 1) {
         const hasAlerted = sessionStorage.getItem('logoutAlerted')
         if (hasAlerted && Number(hasAlerted)) {

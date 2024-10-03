@@ -208,6 +208,18 @@ export default createStore({
         commit('SET_ROOM', res.data)
       }
       return res.data
+    },
+    async CLEAR_STATE({ commit }) {
+      console.log('excute')
+      commit('SET_BOARDLIST', [])
+      commit('SET_BOARDCOUNT', 0)
+      commit('SET_DETAIL', {})
+      commit('SET_MAIN_CONTENTS', [])
+      commit('SET_COMMENTLIST', [])
+      commit('SET_USER', {})
+      commit('SET_USER_ROLE', '')
+      commit('SET_ROOMS', [])
+      commit('SET_ROOM', {})
     }
   },
   mutations: {

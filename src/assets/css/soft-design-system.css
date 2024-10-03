@@ -5625,7 +5625,7 @@ fieldset:disabled .btn {
 .disabled > .page-link {
   color: var(--bs-pagination-disabled-color);
   pointer-events: none;
-  background-color: var(--bs-pagination-disabled-bg);
+  background-color: rgba(0, 0, 0, 0.1);
   border-color: var(--bs-pagination-disabled-border-color);
 }
 

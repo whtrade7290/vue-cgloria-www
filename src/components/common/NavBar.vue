@@ -307,12 +307,9 @@
                     </div>
                   </div>
                 </li>
-                {{
-                  isAdmin
-                }}
                 <li
                   class="nav-item dropdown dropdown-hover mx-2"
-                  v-if="role === 'ADMIN' || store.state.role === 'ADMIN'"
+                  v-if="store.state.role === 'ADMIN' || role === 'ADMIN'"
                 >
                   <a
                     class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
@@ -322,7 +319,6 @@
                     aria-expanded="false"
                   >
                     관리자 페이지
-
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -384,21 +380,42 @@
   </div>
 </template>
 <script setup>
-import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import router from '@/routes'
 import { useI18n } from 'vue-i18n'
+import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
 
 const store = useStore()
-const storedData = localStorage.getItem(getUserIdFromCookie())
-const accessToken = storedData ? JSON.parse(storedData).token : ''
-const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
-const userId = storedData ? JSON.parse(storedData).user.id : ''
-const role = storedData ? JSON.parse(storedData).user.role : ''
+const { locale } = useI18n()
 
+function getParsedStoredData() {
+  const storedData = localStorage.getItem(getUserIdFromCookie())
+  if (storedData) {
+    const parsedData = JSON.parse(storedData)
+
+    return {
+      accessToken: parsedData.token || '',
+      refreshToken: parsedData.refreshToken || '',
+      userId: parsedData.user?.id || '',
+      storedRole: parsedData.user?.role || ''
+    }
+  }
+  return {
+    accessToken: '',
+    refreshToken: '',
+    userId: '',
+    storedRole: ''
+  }
+}
+
+const { accessToken, refreshToken, storedRole } = getParsedStoredData()
+const role = ref(storedRole)
+const toggle = ref(true)
+
+// 로그아웃 함수
 function logout() {
   Swal.fire({
     title: '로그아웃 하시겠습니까?.',
@@ -407,94 +424,35 @@ function logout() {
   }).then(async (result) => {
     if (result.isConfirmed) {
       localStorage.removeItem(getUserIdFromCookie())
-      document.cookie = `userId=;`
+      document.cookie = 'userId=;'
       await Swal.fire({
         title: '로그아웃 되었습니다.',
         icon: 'success'
       }).then(async () => {
+        role.value = ''
         await store.dispatch('CHECKING_TOKEN', { accessToken: '', refreshToken: '' })
-        store.commit('SET_USER_ROLE', '')
-        await router.push('/')
+        store.dispatch('CLEAR_STATE')
+        router.push('/')
       })
     }
   })
 }
 
-function readyYet() {
+// 준비중입니다 알림
+const readyYet = () => {
   Swal.fire({
     title: '준비중입니다^^;',
     icon: 'info'
   })
 }
 
-const { locale } = useI18n()
-
-let toggle = true
-
+// 언어 변경 함수
 const changeLanguage = () => {
-  if (toggle) {
-    locale.value = 'jp'
-    toggle = false
-  } else {
-    locale.value = 'ko'
-    toggle = true
-  }
+  locale.value = toggle.value ? 'jp' : 'ko'
+  toggle.value = !toggle.value
 }
 
-const goToWithDiary = async () => {
-  try {
-    await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId })
-
-    if (!checkRoomAvailability()) return
-
-    const roomList = store.state.rooms
-
-    store.commit('SET_ROOMS', [])
-
-    if (!roomList || roomList.length === 0) {
-      await Swal.fire({
-        title: 'No rooms available',
-        text: 'There are no diary rooms available for this user.',
-        icon: 'warning'
-      })
-
-      return
-    }
-
-    const optionsHtml = roomList
-      .map(
-        (room) => `
-          <label>
-            <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.cohort}
-          </label><br>
-        `
-      )
-      .join('')
-
-    const result = await Swal.fire({
-      title: 'Select an option',
-      html: `${optionsHtml}`,
-      confirmButtonText: 'Submit',
-      preConfirm: () => {
-        const selectedOption = document.querySelector('input[name="radioOption"]:checked')
-        if (!selectedOption) {
-          Swal.showValidationMessage('Please select an option')
-        }
-        return selectedOption ? selectedOption.value : null
-      }
-    })
-    if (result.isConfirmed) {
-      // await navigateToDiary(result.value)
-      console.log('result.value: ', result.value)
-      await router.push({ name: 'withDiary', query: { roomId: result.value } }).then(() => {
-        router.go(0)
-      })
-    }
-  } catch (error) {
-    console.error('Error in withDiary:', error)
-  }
-}
-
+// 예수동행일기 그룹 존재 여부 확인
 const checkRoomAvailability = async () => {
   const rooms = store.state.rooms
   if (!rooms || rooms.length === 0) {
@@ -506,30 +464,64 @@ const checkRoomAvailability = async () => {
   }
   return true
 }
-/**
- * 비동기 처리 로직 (방법 아직 모름)
- */
-// const navigateToDiary = async (roomId) => {
-//   try {
-//     await router.push({ name: 'withDiary', query: { roomId } })
-//     await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId })
-//     await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
 
-//     const payload = {
-//       name: 'withDiary',
-//       startRow: 0,
-//       pageSize: 5,
-//       roomId: store.state.room?.id ?? 0
-//     }
+// 예수동행일기 방 선택 및 이동
+const goToWithDiary = async () => {
+  try {
+    const { userId } = getParsedStoredData()
 
-//     await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
-//   } catch (err) {
-//     console.error('라우터 이동 중 에러 발생:', err)
-//   }
-// }
+    await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId: userId })
 
-onMounted(() => {
+    if (!(await checkRoomAvailability())) return
+
+    const roomList = store.state.rooms
+
+    const optionsHtml = roomList
+      .map(
+        (room) => `
+      <label>
+        <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.cohort}
+      </label><br>
+    `
+      )
+      .join('')
+
+    const result = await Swal.fire({
+      title: 'Select an option',
+      html: optionsHtml,
+      confirmButtonText: 'Submit',
+      preConfirm: () => {
+        const selectedOption = document.querySelector('input[name="radioOption"]:checked')
+        if (!selectedOption) {
+          Swal.showValidationMessage('Please select an option')
+        }
+        return selectedOption ? selectedOption.value : null
+      }
+    })
+
+    if (result.isConfirmed) {
+      await router.push({ name: 'withDiary', query: { roomId: result.value, pageNum: 1 } })
+      await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId: result.value })
+
+      let payload = {
+        name: 'withDiary',
+        startRow: 0,
+        pageSize: 5,
+        roomId: store.state.room.id
+      }
+
+      await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
+      await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
+    }
+  } catch (error) {
+    console.error('Error in withDiary:', error)
+  }
+}
+
+// 토큰 검사 실행
+onMounted(async () => {
   store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+  getParsedStoredData()
 })
 </script>
 

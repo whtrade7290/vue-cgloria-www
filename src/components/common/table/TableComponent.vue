@@ -57,7 +57,7 @@
         <li class="page-item">
           <a
             class="page-link"
-            :class="[pageNum == 1 ? 'disabled' : '']"
+            :class="[pageNum === 1 ? 'disabled' : '']"
             href="javascript:;"
             tabindex="-1"
             @click="fetchList((pageNum = pageNum - 1))"
@@ -69,7 +69,7 @@
         <li class="page-item" v-for="page in pageList" :key="page">
           <a
             class="page-link"
-            :class="[pageNum == page ? 'selected' : '']"
+            :class="[pageNum === page ? 'selected' : '']"
             href="javascript:;"
             @click="fetchList(page)"
             >{{ page }}</a
@@ -79,7 +79,12 @@
         <li class="page-item">
           <a
             class="page-link"
-            :class="[pageNum == Math.ceil(store.state.count / pageSize) ? 'disabled' : '']"
+            :class="[
+              pageNum === Math.ceil(store.state.count / pageSize) ||
+              Math.ceil(store.state.count / pageSize) === 0
+                ? 'disabled'
+                : ''
+            ]"
             href="javascript:;"
             @click="fetchList((pageNum = pageNum + 1))"
           >
@@ -93,6 +98,7 @@
 </template>
 
 <script setup>
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -106,15 +112,42 @@ const props = defineProps({
   }
 })
 
-let pageNum = route.query?.pageNum ?? 1
+let pageNum = ref(Number(route.query?.pageNum ?? 1)) // ref로 선언
+
+// route.query.pageNum이 변경되면 pageNum을 업데이트하는 watch
+watch(
+  () => Number(route.query.pageNum), // route.query 전체를 감시
+  (newQuery) => {
+    if (newQuery.pageNum) {
+      // pageNum이 존재할 때만 업데이트
+      pageNum.value = Number(newQuery.pageNum ?? 1)
+    }
+  },
+  { immediate: true } // 필요 시 deep 옵션 사용
+)
+
 const pageSize = 5
 let pageList = []
-const roomId = route.query.roomId ?? 0
-const totalCount = store.state.count
 
-fetchList(pageNum)
+const roomId = computed(() => Number(route.query?.roomId ?? 0))
+
+console.log('roomId: ', roomId)
+
+// Vuex 상태를 computed로 관리
+const totalCount = computed(() => store.state.count)
+
+watch(
+  totalCount, // computed로 Vuex 상태 감시
+  (newTotalCount) => {
+    console.log('totalCount 변경됨: ', newTotalCount)
+    fetchList(pageNum.value) // totalCount가 변경되면 리스트 다시 로드
+  }
+)
+
+fetchList(pageNum.value)
 
 function fetchList(num) {
+  console.log('num: ', num)
   let payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
@@ -129,35 +162,34 @@ function fetchList(num) {
     if (roomId) {
       payload = {
         ...payload,
-        roomId: roomId
+        roomId: roomId.value
       }
     }
   } else {
     actionsName = 'FETCH_BOARDLIST'
   }
 
+  console.log('payload: ', payload)
+
   store.dispatch(actionsName, payload)
-  pageNum = num
+  pageNum.value = num
   settingPageNumber()
 }
 
 function settingPageNumber() {
-  let totalPages = Math.ceil(totalCount / pageSize)
-  let startIndex = (Math.ceil(pageNum / pageSize) - 1) * pageSize + 1
-  let endIndex = startIndex + pageSize > totalCount ? totalCount : startIndex + pageSize - 1
+  let totalPages = Math.ceil(totalCount.value / pageSize)
+  let startIndex = (Math.ceil(pageNum.value / pageSize) - 1) * pageSize + 1
+  let endIndex =
+    startIndex + pageSize > totalCount.value ? totalCount.value : startIndex + pageSize - 1
   if (endIndex > totalPages) {
     endIndex = totalPages
   }
-  // console.log('totalPages: ', totalPages)
-  // console.log('startIndex: ', startIndex)
-  // console.log('endIndex: ', endIndex)
 
   pageList = []
 
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
-  // console.log('pageList: ', pageList)
   return endIndex
 }
 
@@ -175,7 +207,7 @@ const formatDate = (dateString) => {
 async function intoDetail(id) {
   await router.push({
     name: 'detail',
-    query: { pageNum: pageNum, roomId }, // roomId를 query로 설정
+    query: { pageNum: pageNum.value, roomId: roomId.value }, // roomId를 query로 설정
     params: { name: route.name, id: id }
   })
 }
