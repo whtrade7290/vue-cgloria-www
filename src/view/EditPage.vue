@@ -159,9 +159,6 @@ const isMainContent = ref(store.state.detail.mainContent)
 const isDisplay = computed(() => {
   const routeNames = ['sermon', 'column', 'weekly', 'classMeeting', 'testimony']
   return routeNames.some((name) => {
-    console.log('name: ', name)
-    console.log('route.query?.name: ', route.query?.name)
-
     return route.query?.name === name
   })
 })
@@ -169,9 +166,8 @@ const isDisplay = computed(() => {
 // 메서드 선언
 const edit = async () => {
   try {
-
-    if(VALIDATION_TITLE(inputTitle.value)) return 
-    if(VALIDATION_CONTENT(editorData.value)) return 
+    if (VALIDATION_TITLE(inputTitle.value)) return
+    if (VALIDATION_CONTENT(editorData.value)) return
 
     const formData = new FormData()
 
@@ -202,7 +198,10 @@ const edit = async () => {
     })
 
     if (result) {
-      router.push(`/${route.query.name}`)
+      router.push({
+        name: `${route.query.name}`,
+        query: { roomId: store.state.room.id, pageNum: 1 }
+      })
     }
   } catch (error) {
     console.error('Error writing board:', error)

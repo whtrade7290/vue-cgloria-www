@@ -51,11 +51,13 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
-        <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
-        <label class="toggle-switch">
-          <input type="checkbox" id="mainContent" v-model="isMainContent" />
-          <span class="slider"></span>
-        </label>
+        <div v-if="isDisplay">
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="mainContent" v-model="isMainContent" />
+            <span class="slider"></span>
+          </label>
+        </div>
         <br />
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
@@ -99,98 +101,106 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation.js'
 
+const editor = ClassicEditor
+const editorData = ref('')
+const editorConfig = {
+  placeholder: '글 내용을 입력하세요.',
+  toolbar: [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    'link',
+    'bulletedList',
+    'numberedList',
+    'blockQuote',
+    'insertTable',
+    '|',
+    'undo',
+    'redo'
+  ]
+}
 
-export default {
-  components: {},
-  data() {
-    return {
-      editor: ClassicEditor,
-      editorData: '',
-      editorConfig: {
-        placeholder: '글 내용을 입력하세요.',
-        toolbar: [
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          'link',
-          'bulletedList',
-          'numberedList',
-          'blockQuote',
-          'insertTable',
-          '|',
-          'undo',
-          'redo'
-        ]
-      },
+const inputTitle = ref('')
+const files = ref([])
+const imageData = ref(null)
+const file = ref(null)
+const isMainContent = ref(false)
 
-      inputTitle: '',
-      store: useStore(),
-      route: useRoute(),
-      router: useRouter(),
-      files: [],
-      imageData: null,
-      file: null,
-      isMainContent: false
-    }
-  },
-  methods: {
-    async write() {
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
 
-     if(VALIDATION_TITLE(this.inputTitle)) return 
-     if(VALIDATION_CONTENT(this.editorData)) return 
+console.log('store.state.room.id: ', store.state.room.id)
 
-     console.log("title: ", this.inputTitle.length);
-      let formData = new FormData()
+const write = async () => {
+  if (VALIDATION_TITLE(inputTitle.value)) return
+  if (VALIDATION_CONTENT(editorData.value)) return
+  let formData = new FormData()
 
-      formData.append('title', this.inputTitle)
-      formData.append('content', this.editorData)
-      formData.append('mainContent', this.isMainContent)
-      formData.append(
-        'writer',
-        JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username
-      )
-      formData.append('fileField', this.file)
+  formData.append('title', inputTitle.value)
+  formData.append('content', editorData.value)
+  formData.append('mainContent', isMainContent.value)
+  formData.append('fileField', file.value)
 
-      try {
-        await this.store.dispatch('WRITE_BOARD', {
-          formData: formData,
-          name: this.$route.query.name
-        })
-        this.router.push(`/${this.$route.query.name}`)
-      } catch (error) {
-        console.error('Error during WRITE_BOARD dispatch:', error)
-      }
-      
-    },
-    backPage() {
-      this.router.back()
-    },
-    changeImage(event) {
-      this.files = event.target?.files
+  const storedData = localStorage.getItem(getUserIdFromCookie())
+  if (storedData) {
+    const user = JSON.parse(storedData).user
+    const username = user.username
+    const name = user.name
+    formData.append('writer', username)
+    formData.append('writer_name', name)
+  }
 
-      if (this.files.length > 0) {
-        const file = this.files[0]
+  if (route.query?.name === 'withDiary') {
+    formData.append('diaryRoomId', store.state.room.id)
+  }
 
-        const reader = new FileReader()
-        this.file = this.files[0]
-
-        reader.onload = (e) => {
-          this.imageData = e.target.result
-        }
-        reader.readAsDataURL(file)
-      }
-    }
+  try {
+    await store.dispatch('WRITE_BOARD', {
+      formData: formData,
+      name: route.query.name
+    })
+    router.push({ name: `${route.query.name}`, query: { roomId: store.state.room.id, pageNum: 1 } })
+  } catch (error) {
+    console.error('Error during WRITE_BOARD dispatch:', error)
   }
 }
+
+const backPage = () => {
+  router.back()
+}
+
+const changeImage = (event) => {
+  files.value = event.target?.files
+
+  if (files.value.length > 0) {
+    const selectedFile = files.value[0]
+
+    const reader = new FileReader()
+    file.value = files.value[0]
+
+    reader.onload = (e) => {
+      imageData.value = e.target.result
+    }
+    reader.readAsDataURL(selectedFile)
+  }
+}
+
+const isDisplay = computed(() => {
+  const routeNames = ['sermon', 'column', 'weekly', 'classMeeting', 'testimony']
+  return routeNames.some((name) => {
+    return route.query?.name === name
+  })
+})
 </script>
 
 <style scoped>
@@ -266,11 +276,11 @@ export default {
 
 /* 체크된 상태 */
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: #4caf50;
 }
 
-/* 체크된 상태에서 원의 위치 */
+/* 체크된 상태에서의 슬라이더 원 */
 input:checked + .slider:before {
-  transform: translateX(22px); /* 원의 이동 거리 조정 */
+  transform: translateX(22px); /* 원이 이동할 거리 축소 */
 }
 </style>

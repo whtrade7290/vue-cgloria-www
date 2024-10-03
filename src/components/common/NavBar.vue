@@ -478,9 +478,10 @@ const goToWithDiary = async () => {
 
     const optionsHtml = roomList
       .map(
-        (room) => `
+        (room) =>
+          `
       <label>
-        <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.cohort}
+        <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.roomName}
       </label><br>
     `
       )

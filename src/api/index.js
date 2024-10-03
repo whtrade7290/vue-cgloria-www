@@ -135,9 +135,15 @@ function getUserByUsername(username) {
 }
 
 function makeWithDiary(teamName, userIdList) {
+  const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
+  if (!user) {
+    return null
+  }
   return instance.post('/withDiary/make_withDiary', {
     teamName: teamName,
-    userIdList: userIdList
+    userIdList: userIdList,
+    creator: user.id ?? 0,
+    creator_name: user.name ?? ''
   })
 }
 
