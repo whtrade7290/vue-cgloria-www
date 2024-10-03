@@ -133,11 +133,11 @@ export default {
     async write() {
       let formData = new FormData()
 
-    if(VALIDATION_TITLE(this.inputTitle)) return 
+      if (VALIDATION_TITLE(this.inputTitle)) return
 
-    if(VALIDATION_CONTENT(this.editorData)) return 
+      if (VALIDATION_CONTENT(this.editorData)) return
 
-    if(VALIDATION_FILES(this.files)) return 
+      if (VALIDATION_FILES(this.files)) return
 
       formData.append('title', this.inputTitle)
       formData.append('content', this.editorData)
@@ -152,13 +152,13 @@ export default {
         formData.append('fileField', file)
       })
 
-      // const result = await this.store.dispatch('WRITE_BOARD', {
-      //   formData: formData,
-      //   name: this.$route.query.name
-      // })
-      // if (result) {
-      //   this.router.push(`/${this.$route.query.name}`)
-      // }
+      const result = await this.store.dispatch('WRITE_BOARD', {
+        formData: formData,
+        name: this.$route.query.name
+      })
+      if (result) {
+        this.router.push(`/${this.$route.query.name}`)
+      }
     },
     backPage() {
       this.router.back()
