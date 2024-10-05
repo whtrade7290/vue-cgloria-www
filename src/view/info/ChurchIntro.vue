@@ -117,6 +117,7 @@ import { ref } from 'vue'
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
+console.log(INFO)
 store.dispatch('FETCH_SIDEMENU', INFO)
 obj.value = INFO.find((o) => route.name === o.path)
 </script>

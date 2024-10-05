@@ -12,7 +12,7 @@
             <div class="icon me-2">
               <i class="material-icons" style="font-size: 1rem">{{ menu.icon }}</i>
             </div>
-            {{ menu.title }}
+            {{ $t(menu.title) }}
           </router-link>
         </div>
       </li>

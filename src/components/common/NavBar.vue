@@ -318,7 +318,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    관리자 페이지
+                    {{ $t('nav.adminPage') }}
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
@@ -327,12 +327,12 @@
                   >
                     <div class="d-none d-lg-block">
                       <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예수동행일기 개설</span>
+                        <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
                       </router-link>
                     </div>
                     <div class="d-lg-none">
                       <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예수동행일기 개설</span>
+                        <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -356,7 +356,7 @@
                   </li>
                   <li class="nav-item my-auto ms-3 ms-lg-0">
                     <a
-                      href="#"
+                      href="javascript:;"
                       class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                       @click="changeLanguage()"
                       >{{ $t('button.lang') }}</a
@@ -389,7 +389,7 @@ import { useI18n } from 'vue-i18n'
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
 
 const store = useStore()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 function getParsedStoredData() {
   const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -418,7 +418,7 @@ const toggle = ref(true)
 // 로그아웃 함수
 function logout() {
   Swal.fire({
-    title: '로그아웃 하시겠습니까?.',
+    title: t('modalMsg.logout'),
     icon: 'question',
     showCancelButton: true
   }).then(async (result) => {
@@ -426,7 +426,7 @@ function logout() {
       localStorage.removeItem(getUserIdFromCookie())
       document.cookie = 'userId=;'
       await Swal.fire({
-        title: '로그아웃 되었습니다.',
+        title: t('modalMsg.logouted'),
         icon: 'success'
       }).then(async () => {
         role.value = ''
@@ -488,7 +488,7 @@ const goToWithDiary = async () => {
       .join('')
 
     const result = await Swal.fire({
-      title: 'Select an option',
+      title: t('modalMsg.withDiaryRoom'),
       html: optionsHtml,
       confirmButtonText: 'Submit',
       preConfirm: () => {

@@ -97,6 +97,9 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const router = useRouter()
 
 const store = useStore()
@@ -134,14 +137,14 @@ const make = async () => {
 
   if (result) {
     Swal.fire({
-      title: '예수동행일기 게시판이 생성되었습니다.',
+      title: t('modalMsg.makeWithDiary'),
       icon: 'success'
     }).then(() => {
       router.push('/')
     })
   } else {
     Swal.fire({
-      title: '예수동행일기 게시판 생성에 실패하였습니다.',
+      title: t('modalMsg.failWithDiary'),
       icon: 'error'
     })
   }

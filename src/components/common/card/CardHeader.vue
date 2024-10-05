@@ -1,7 +1,7 @@
 <template>
   <div class="card-header bg-gradient-primary p-5 position-relative">
-    <h3 class="text-white mb-0">{{ title }}</h3>
-    <p class="text-white opacity-8 mb-4">중앙 영광교회 교회 역사와 형제교회 소개</p>
+    <h3 class="text-white mb-0">{{ $t(title) }}</h3>
+    <p class="text-white opacity-8 mb-4">{{ $t('discriptions.intro') }}</p>
     <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
       <svg
         class="waves"

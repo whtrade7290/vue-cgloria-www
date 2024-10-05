@@ -1,12 +1,12 @@
 <template>
   <div>
     <HeaderComponent
-      main_msg="예수동행일기"
-      sub_msg="중앙영광교회"
+      :main_msg="$t('withDiaryParams.mainTitle')"
+      :sub_msg="$t('withDiaryParams.subTitle')"
       imgUrl="/src/assets/img/main/sky1.jpeg"
     ></HeaderComponent>
     <div class="container">
-      <CardContainer title="예수동행일기">
+      <CardContainer title="withDiaryParams.mainTitle">
         <TableComponent :called="route.name"></TableComponent>
         <WriteButton></WriteButton>
       </CardContainer>

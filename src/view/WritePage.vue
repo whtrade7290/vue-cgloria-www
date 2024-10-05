@@ -13,8 +13,8 @@
         class="card-header bg-gradient-primary p-5 position-relative"
         style="border-radius: 1rem"
       >
-        <h3 class="text-white mb-0">글작성</h3>
-        <p class="text-white opacity-8 mb-4">중앙 영광교회 교회 역사와 형제교회 소개</p>
+        <h3 class="text-white mb-0">{{ $t('writePage.mainTitle') }}</h3>
+        <p class="text-white opacity-8 mb-4">{{ $t('discriptions.intro') }}</p>
         <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
           <svg
             class="waves"
@@ -43,23 +43,27 @@
         </div>
       </div>
       <div style="padding: 1.5rem">
-        <label for="title">제목</label><br />
+        <label for="title">{{ $t('writePage.title') }}</label
+        ><br />
         <input
           type="text"
           id="title"
           class="input-title"
-          placeholder=" 제목을 입력하세요."
+          :placeholder="$t('writePage.placeholder.title')"
           v-model="inputTitle"
         /><br />
         <div v-if="isDisplay">
-          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
+            $t('writePage.mainContent')
+          }}</label>
           <label class="toggle-switch">
             <input type="checkbox" id="mainContent" v-model="isMainContent" />
             <span class="slider"></span>
           </label>
         </div>
         <br />
-        <label for="image" class="form-label mt-3">이미지 첨부</label><br />
+        <label for="image" class="form-label mt-3">{{ $t('writePage.addImage') }}</label
+        ><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
             <img :src="imageData" alt="img" />
@@ -74,7 +78,8 @@
             name="fileField"
           />
         </div>
-        <label for="content">내용</label><br />
+        <label for="content">{{ $t('writePage.content') }}</label
+        ><br />
         <ckeditor
           id="content"
           class="ck_contents"
@@ -87,13 +92,13 @@
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
             @click="write"
-            >글작성</a
+            >{{ $t('button.write') }}</a
           >
           <a
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
             @click="backPage"
-            >목록으로</a
+            >{{ $t('button.toList') }}</a
           >
         </div>
       </div>
@@ -112,7 +117,6 @@ import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation.js'
 const editor = ClassicEditor
 const editorData = ref('')
 const editorConfig = {
-  placeholder: '글 내용을 입력하세요.',
   toolbar: [
     'heading',
     '|',

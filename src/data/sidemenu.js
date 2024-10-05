@@ -1,39 +1,35 @@
 const INFO = [
-  { title: '교회소개', icon: 'church', path: 'intro' },
-  { title: '예배 및 훈련', icon: 'book', path: '' },
-  { title: '목회자 소개', icon: 'attribution', path: 'paster' },
-  { title: '교회 약도', icon: 'pin_drop', path: '' },
-  { title: '공지사항', icon: 'info', path: 'notice' }
+  { title: 'nav.subTitle1.intro', icon: 'church', path: 'intro' },
+  { title: 'nav.subTitle1.paster', icon: 'attribution', path: 'paster' },
+  { title: 'nav.subTitle1.location', icon: 'pin_drop', path: '' },
+  { title: 'nav.subTitle1.notice', icon: 'info', path: 'notice' }
 ]
 
 const SMALLGROUP = [
-  { title: '설교', icon: 'church', path: 'sermon' },
-  { title: '칼럼', icon: 'book', path: 'column' },
-  { title: '금주의 성경말씀', icon: 'attribution', path: 'weekly' },
-  { title: '속회교재실', icon: 'pin_drop', path: 'classMeeting' }
+  { title: 'nav.subTitle2.sermon', icon: 'church', path: 'sermon' },
+  { title: 'nav.subTitle2.column', icon: 'book', path: 'column' },
+  { title: 'nav.subTitle2.weeklyWord', icon: 'attribution', path: 'weekly' },
+  { title: 'nav.subTitle2.classMeeting', icon: 'pin_drop', path: 'classMeeting' }
 ]
 const WORSHIP = [
-  { title: '예배/훈련시간', icon: 'church', path: '' },
-  { title: '주목자 예배', icon: 'book', path: 'jumokja' },
-  { title: '훈련', icon: 'attribution', path: 'training' },
-  { title: '중보기도', icon: 'pin_drop', path: '' }
+  { title: 'nav.subTitle3.jumok', icon: 'book', path: 'jumokja' },
+  { title: 'nav.subTitle3.training', icon: 'attribution', path: 'training' }
 ]
 const TESTIMONY = [
-  { title: '전도비전', icon: 'church', path: 'evangelize' },
-  { title: '4영리', icon: 'book', path: '' },
-  { title: '섬김', icon: 'attribution', path: '' }
+  { title: 'nav.subTitle4.evangelismAndVision', icon: 'church', path: 'evangelize' }
+  // { title: 'nav.subTitle3.readBible', icon: 'book', path: 'readBible' }
 ]
 const SCHOOL = [
-  { title: '행사일정', icon: 'church', path: 'schedule' },
-  { title: '주일학교 사진갤러리', icon: 'book', path: 'school_photo' },
-  { title: '주일학교 자료실', icon: 'attribution', path: 'library' }
+  { title: 'nav.subTitle5.eventSchedule', icon: 'church', path: 'schedule' },
+  { title: 'nav.subTitle5.schoolPhotoBoard', icon: 'book', path: 'school_photo' },
+  { title: 'nav.subTitle5.library', icon: 'attribution', path: 'library' }
 ]
 const SOCIALIZE = [
-  { title: '자유게시판', icon: 'church', path: 'generalForum' },
-  { title: '사진갤러리', icon: 'book', path: 'photo' },
-  { title: '간증게시판', icon: 'attribution', path: 'testimony' }
+  { title: 'nav.subTitle6.generalFolum', icon: 'church', path: 'generalForum' },
+  { title: 'nav.subTitle6.photoBoard', icon: 'book', path: 'photo' },
+  { title: 'nav.subTitle6.testimony', icon: 'attribution', path: 'testimony' }
 ]
-const WITHDIARY = [{ title: '예수동행일기', icon: 'book', path: 'withDiary' }]
-const WRITE = [{ title: '작성페이지', icon: 'write', path: 'write' }]
+const WITHDIARY = [{ title: 'button.withDiary', icon: 'book', path: 'withDiary' }]
+const WRITE = [{ title: 'button.withDiary', icon: 'write', path: 'write' }]
 
 export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, WRITE, WITHDIARY }

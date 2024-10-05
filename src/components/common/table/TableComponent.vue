@@ -201,7 +201,7 @@ const formatDate = (dateString) => {
   const hours = String(date.getHours()).padStart(2, '0')
   const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`
+  return `${year}. ${month}. ${day}. ${hours}:${minutes}`
 }
 
 async function intoDetail(id) {

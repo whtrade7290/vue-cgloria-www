@@ -82,6 +82,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { VALIDATION_USERNAME, VALIDATION_PASSWORD } from '@/utils/validation.js'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const router = useRouter()
@@ -92,6 +93,7 @@ const password = ref('')
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
+const { t } = useI18n()
 
 async function login() {
   if (VALIDATION_USERNAME(username.value)) return
@@ -103,7 +105,7 @@ async function login() {
   })
   if (response && response.success && localStorage.getItem(response.user.id)) {
     Swal.fire({
-      title: '로그인 되었습니다.',
+      title: t('modalMsg.logIn'),
       icon: 'success'
     }).then(async () => {
       await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
@@ -113,7 +115,7 @@ async function login() {
     })
   } else {
     Swal.fire({
-      title: '로그인에 실패하였습니다.',
+      title: t('modalMsg.logInFail'),
       icon: 'error'
     }).then(() => {
       username.value = ''
@@ -127,7 +129,7 @@ onMounted(async () => {
   await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
   if (store.state.isLogIned) {
     Swal.fire({
-      title: '이미 로그인 되었습니다.',
+      title: t('modalMsg.logined'),
       icon: 'success'
     }).then(() => {
       router.back()
