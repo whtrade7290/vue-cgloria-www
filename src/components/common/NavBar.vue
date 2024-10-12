@@ -476,21 +476,56 @@ const goToWithDiary = async () => {
 
     const roomList = store.state.rooms
 
-    const optionsHtml = roomList
-      .map(
-        (room) =>
-          `
-      <label>
-        <input type="radio" name="radioOption" value="${room.diaryRoom.id}"> ${room.diaryRoom.roomName}
-      </label><br>
+    const optionsHtml =
+      `
+      <style>
+        .custom-radio-label {
+          display: inline-block;
+          margin-bottom: 10px;
+        }
+
+        .custom-radio-label input[type="radio"] {
+          display: none; /* 기본 라디오 버튼 숨김 */
+        }
+
+        .custom-radio-button {
+          display: inline-block;
+          padding: 10px 20px;
+          border: 2px solid #ccc;
+          border-radius: 4px;
+          background-color: #f7f7f7;
+          cursor: pointer;
+          transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .custom-radio-label input[type="radio"]:checked + .custom-radio-button {
+          background-color: #4CAF50; /* 선택된 버튼 배경색 */
+          border-color: #4CAF50; /* 선택된 버튼 테두리색 */
+          color: white; /* 선택된 버튼 텍스트 색 */
+        }
+
+        .custom-radio-button:hover {
+          background-color: #e0e0e0;
+          border-color: #bdbdbd;
+        }
+      </style>
+    ` +
+      roomList
+        .map(
+          (room) =>
+            `
+     <label class="custom-radio-label">
+        <input type="radio" name="radioOption" value="${room.diaryRoom.id}">
+        <span class="custom-radio-button">${room.diaryRoom.roomName}</span>
+    </label><br>
     `
-      )
-      .join('')
+        )
+        .join('')
 
     const result = await Swal.fire({
       title: t('modalMsg.withDiaryRoom'),
       html: optionsHtml,
-      confirmButtonText: 'Submit',
+      confirmButtonText: t('button.enterWithDiary'),
       preConfirm: () => {
         const selectedOption = document.querySelector('input[name="radioOption"]:checked')
         if (!selectedOption) {
@@ -526,4 +561,15 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.custom-radio-label {
+  color: red;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.custom-radio-label input[type='radio'] {
+  margin-right: 10px;
+}
+</style>

@@ -60,7 +60,17 @@ const formatDate = (dateString) => {
   const date = new Date(dateString)
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate() - date.getDay()).padStart(2, '0')
+  let week = date.getDay()
+  let num = 0
+
+  while (week < 7) {
+    week++ // week을 증가
+    num++ // num도 증가
+  }
+
+  console.log('week: ', week)
+  console.log('num: ', num)
+  const day = String(date.getDate() + num).padStart(2, '0')
   return `${year}. ${month}. ${day} `
 }
 </script>
