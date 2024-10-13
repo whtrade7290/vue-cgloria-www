@@ -7,25 +7,25 @@
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
             style="width: 10%; text-align: center"
           >
-            번호
+            {{ $t('table.tableComponent.number') }}
           </th>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
             style="width: 40%; text-align: center"
           >
-            제목
+            {{ $t('table.tableComponent.title') }}
           </th>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
             style="width: 10%; text-align: center"
           >
-            글쓴이
+            {{ $t('table.tableComponent.writer') }}
           </th>
           <th
             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
             style="width: 20%; text-align: center"
           >
-            날짜
+            {{ $t('table.tableComponent.date') }}
           </th>
         </tr>
       </thead>

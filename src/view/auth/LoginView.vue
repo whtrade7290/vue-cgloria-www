@@ -13,9 +13,9 @@
                 <form role="form">
                   <div class="mb-3">
                     <input
-                      type="email"
+                      type="text"
                       class="form-control form-control-lg"
-                      placeholder="Email"
+                      placeholder="acount"
                       aria-label="Email"
                       aria-describedby="email-addon"
                       v-model="username"
@@ -31,10 +31,6 @@
                       v-model="password"
                     />
                   </div>
-                  <div class="form-check form-switch">
-                    <!-- <input class="form-check-input" type="checkbox" id="rememberMe" /> -->
-                    <!-- <label class="form-check-label" for="rememberMe">기억하기</label> -->
-                  </div>
                   <div class="text-center">
                     <button
                       type="button"
@@ -48,10 +44,9 @@
               </div>
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <p class="mb-4 text-sm mx-auto">
-                  회원가입 문의는
                   <router-link to="/signUp" class="text-primary text-gradient font-weight-bold"
-                    >담당자</router-link
-                  >에게 연락 바랍니다.
+                    >회원가입</router-link
+                  >
                 </p>
               </div>
             </div>

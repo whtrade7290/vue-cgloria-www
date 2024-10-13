@@ -159,6 +159,23 @@ function fetchWithDiaryRoom(roomId) {
   })
 }
 
+function signUp(username, password, name) {
+  return instance.post('/signUp', {
+    username: username,
+    password: password,
+    name: name
+  })
+}
+
+function fetchDisapproveUsers() {
+  return instance.get('/disapproveUsers')
+}
+
+function updateApproveStatus(id) {
+  return instance.post('/updateApproveStatus', {
+    id: id
+  })
+}
 export {
   getBoardList,
   requestLogin,
@@ -183,5 +200,8 @@ export {
   getUserByUsername,
   makeWithDiary,
   fetchWithDiaryRoomList,
-  fetchWithDiaryRoom
+  fetchWithDiaryRoom,
+  signUp,
+  fetchDisapproveUsers,
+  updateApproveStatus
 }

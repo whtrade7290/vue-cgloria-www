@@ -29,7 +29,11 @@ const SOCIALIZE = [
   { title: 'nav.subTitle6.photoBoard', icon: 'book', path: 'photo' },
   { title: 'nav.subTitle6.testimony', icon: 'attribution', path: 'testimony' }
 ]
+const ADMIN = [
+  { title: 'nav.subTitle7.makeWithDiary', icon: 'book', path: 'make_withDiary' },
+  { title: 'nav.subTitle7.approvePage', icon: 'book', path: 'approve' }
+]
 const WITHDIARY = [{ title: 'button.withDiary', icon: 'book', path: 'withDiary' }]
 const WRITE = [{ title: 'button.withDiary', icon: 'write', path: 'write' }]
 
-export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, WRITE, WITHDIARY }
+export { INFO, SMALLGROUP, TESTIMONY, WORSHIP, SCHOOL, SOCIALIZE, WRITE, WITHDIARY, ADMIN }

@@ -26,6 +26,7 @@ import PhotoWritePage from '@/view/PhotoWritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
 import PhotoDetailPage from '@/view/PhotoDetailPage.vue'
 import MakeWithDiaryRoom from '@/view/admin/MakeWithDiaryRoom.vue'
+import ApprovePage from '@/view/admin/ApprovePage.vue'
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
@@ -163,9 +164,9 @@ const routes = [
 
       const storedData = localStorage.getItem(getUserIdFromCookie())
 
-      const sessionUser = storedData ? JSON.parse(storedData) : {}
+      const storageUser = storedData ? JSON.parse(storedData) : {}
 
-      if (!sessionUser.token) {
+      if (!storageUser.token) {
         await Swal.fire({
           title: '로그인 전용 게시판입니다.',
           icon: 'warning'
@@ -271,7 +272,44 @@ const routes = [
   {
     path: '/make_withDiary',
     name: 'make_withDiary',
-    component: MakeWithDiaryRoom
+    component: MakeWithDiaryRoom,
+    beforeEnter: async (to, from, next) => {
+      const storedData = localStorage.getItem(getUserIdFromCookie())
+      const storageUser = storedData ? JSON.parse(storedData) : {}
+
+      if (storageUser.user.role !== 'ADMIN') {
+        await Swal.fire({
+          title: '관리자 전용 게시판입니다.',
+          icon: 'warning'
+        })
+        await next(from)
+      } else {
+        await next()
+      }
+    }
+  },
+  {
+    path: '/approve',
+    name: 'approve',
+    component: ApprovePage,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const storedData = localStorage.getItem(getUserIdFromCookie())
+
+      const storageUser = storedData ? JSON.parse(storedData) : {}
+
+      if (storageUser.user.role !== 'ADMIN') {
+        await Swal.fire({
+          title: '관리자 전용 게시판입니다.',
+          icon: 'warning'
+        })
+        await next(from)
+      } else {
+        await store.dispatch('FIND_DISAPPROVE_USERS')
+
+        await next()
+      }
+    }
   }
 ]
 

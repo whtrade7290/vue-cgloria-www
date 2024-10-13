@@ -13,9 +13,9 @@
                 <form role="form">
                   <div class="mb-3">
                     <input
-                      type="email"
+                      type="text"
                       class="form-control form-control-lg"
-                      placeholder="Email"
+                      placeholder="acount"
                       aria-label="Email"
                       aria-describedby="email-addon"
                       v-model="username"
@@ -31,28 +31,26 @@
                       v-model="password"
                     />
                   </div>
-                  <div class="form-check form-switch">
-                    <!-- <input class="form-check-input" type="checkbox" id="rememberMe" /> -->
-                    <!-- <label class="form-check-label" for="rememberMe">기억하기</label> -->
+                  <div class="mb-3">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
+                      placeholder="name"
+                      aria-label="Email"
+                      aria-describedby="email-addon"
+                      v-model="name"
+                    />
                   </div>
                   <div class="text-center">
                     <button
                       type="button"
                       class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
-                      @click="login"
+                      @click="signUp"
                     >
                       회원가입
                     </button>
                   </div>
                 </form>
-              </div>
-              <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                <p class="mb-4 text-sm mx-auto">
-                  회원가입 문의는
-                  <router-link to="/sign_up" class="text-primary text-gradient font-weight-bold"
-                    >담당자</router-link
-                  >에게 연락 바랍니다.
-                </p>
               </div>
             </div>
           </div>
@@ -88,38 +86,22 @@ const router = useRouter()
 
 const username = ref('')
 const password = ref('')
+const name = ref('')
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
-async function login() {
+const signUp = async () => {
+  // console.log('username: ', username.value)
+  // console.log('password: ', password.value)
+  // console.log('name: ', name.value)
 
-  if(VALIDATION_USERNAME(username.value)) return 
-  if(VALIDATION_PASSWORD(password.value)) return 
-
-  const response = await store.dispatch('LOGIN', {
+  await store.dispatch('SIGN_UP', {
     username: username.value,
-    password: password.value
+    password: password.value,
+    name: name.value
   })
-  if (response && response.success && localStorage.getItem(response.user.id)) {
-    Swal.fire({
-      title: '로그인 되었습니다.',
-      icon: 'success'
-    }).then(async () => {
-      await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
-      sessionStorage.setItem('logoutAlerted', 1)
-      router.push('/')
-    })
-  } else {
-    Swal.fire({
-      title: '로그인에 실패하였습니다.',
-      icon: 'error'
-    }).then(() => {
-      username.value = ''
-      password.value = ''
-    })
-  }
 }
 
 onMounted(async () => {

@@ -68,8 +68,6 @@ const formatDate = (dateString) => {
     num++ // num도 증가
   }
 
-  console.log('week: ', week)
-  console.log('num: ', num)
   const day = String(date.getDate() + num).padStart(2, '0')
   return `${year}. ${month}. ${day} `
 }

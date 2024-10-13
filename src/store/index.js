@@ -23,7 +23,10 @@ import {
   getUserByUsername,
   makeWithDiary,
   fetchWithDiaryRoomList,
-  fetchWithDiaryRoom
+  fetchWithDiaryRoom,
+  signUp,
+  fetchDisapproveUsers,
+  updateApproveStatus
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -41,7 +44,8 @@ export default createStore({
     user: {},
     role: '',
     rooms: [],
-    room: {}
+    room: {},
+    disapproveUsers: []
   },
   getters: {
     checkLogin() {
@@ -82,6 +86,9 @@ export default createStore({
         document.cookie = `userId=${user.id};`
       }
       return res
+    },
+    async SIGN_UP({ commit }, { username, password, name }) {
+      const result = await signUp(username, password, name)
     },
     async CHECKING_TOKEN({ commit }, { accessToken, refreshToken }) {
       const result = await checkToken(accessToken, refreshToken)
@@ -220,6 +227,18 @@ export default createStore({
       commit('SET_USER_ROLE', '')
       commit('SET_ROOMS', [])
       commit('SET_ROOM', {})
+    },
+    async FIND_DISAPPROVE_USERS({ commit }) {
+      const res = await fetchDisapproveUsers()
+
+      if (res.data || res.data.length > 0) {
+        commit('SET_DISAPPROVE_USERS', res.data)
+      }
+    },
+    async UPDATE_APPROVE_STATUS({ commit }, id) {
+      const res = await updateApproveStatus(id)
+
+      return res.data
     }
   },
   mutations: {
@@ -255,6 +274,9 @@ export default createStore({
     },
     SET_ROOM(state, item) {
       state.room = item
+    },
+    SET_DISAPPROVE_USERS(state, item) {
+      state.disapproveUsers = item
     }
   }
 })

@@ -1,108 +1,71 @@
 <template>
-  <div style="display: flex; justify-content: center; background-color: #e9ecef">
-    <div
-      style="
-        margin-top: 7rem;
-        margin-bottom: 5rem;
-        width: 50%;
-        background-color: #fff;
-        border-radius: 1.5rem;
-      "
-    >
-      <div
-        class="card-header bg-gradient-primary p-5 position-relative"
-        style="border-radius: 1rem"
-      >
-        <h3 class="text-white mb-0">예수동행일기 개설</h3>
-        <p class="text-white opacity-8 mb-4">중앙 영광교회 교회 역사와 형제교회 소개</p>
-        <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
-          <svg
-            class="waves"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 40"
-            preserveAspectRatio="none"
-            shape-rendering="auto"
-            style="height: 7vh; min-height: 50px"
-          >
-            <defs>
-              <path
-                id="gentle-wave"
-                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-              ></path>
-            </defs>
-            <g class="moving-waves">
-              <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40"></use>
-              <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95"></use>
-            </g>
-          </svg>
+  <CardContainer :title="obj.title">
+    <div style="padding: 1.5rem">
+      <div class="withDiary-box">
+        <div>
+          <label for="title">팀이름</label><br />
+          <input
+            type="text"
+            id="title"
+            class="input-title"
+            placeholder="제 1기 예수동행일기"
+            v-model="teamName"
+          />
         </div>
-      </div>
-      <div style="padding: 1.5rem">
-        <div class="withDiary-box">
-          <div>
-            <label for="title">팀이름</label><br />
-            <input
-              type="text"
-              id="title"
-              class="input-title"
-              placeholder="제 1기 예수동행일기"
-              v-model="teamName"
-            />
-          </div>
-          <div>
-            <label for="title">성도 검색</label><br />
-            <input
-              type="text"
-              id="title"
-              class="btn-search"
-              placeholder="whtrade7290"
-              v-model="searchUser"
-            />
+        <div>
+          <label for="title">성도 검색</label><br />
+          <input
+            type="text"
+            id="title"
+            class="btn-search"
+            placeholder="whtrade7290"
+            v-model="searchUser"
+          />
 
-            <a
-              class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-              href="javascript:;"
-              @click="search"
-              >성도검색</a
-            >
-          </div>
-        </div>
-        <div class="member-container">
-          <div class="member-box">
-            <div class="name-label-box" v-for="item in userList" :key="item">
-              <div class="name-label">{{ item.name || item.username }}</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top: 1rem; margin-left;: 2.5rem; display: flex; justify-content: end;">
           <a
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
-            @click="make"
-            >개설</a
+            @click="search"
+            >성도검색</a
           >
         </div>
       </div>
+      <div class="member-container">
+        <div class="member-box">
+          <div class="name-label-box" v-for="item in userList" :key="item">
+            <div class="name-label">{{ item.name || item.username }}</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 1rem; margin-left;: 2.5rem; display: flex; justify-content: end;">
+        <a
+          class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+          href="javascript:;"
+          @click="make"
+          >개설</a
+        >
+      </div>
     </div>
-  </div>
+  </CardContainer>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useStore } from 'vuex'
+import CardContainer from '@/components/common/card/CardContainer.vue'
 import Swal from 'sweetalert2'
-import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { ADMIN } from '@/data/sidemenu.js'
+import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+const route = useRoute()
+const store = useStore()
+const obj = ref(null)
+store.dispatch('FETCH_SIDEMENU', ADMIN)
+obj.value = ADMIN.find((o) => route.name === o.path)
 
 const { t } = useI18n()
 const router = useRouter()
-
-const store = useStore()
 
 const teamName = ref('')
 const searchUser = ref('')

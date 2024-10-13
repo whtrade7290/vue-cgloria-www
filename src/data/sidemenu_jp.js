@@ -32,6 +32,7 @@ const SOCIALIZE = [
   { title: '사진갤러리', icon: 'book', path: 'photo' },
   { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]
+
 const WITHDIARY = [{ title: '예수동행일기', icon: 'book', path: 'withDiary' }]
 const WRITE = [{ title: '작성페이지', icon: 'write', path: 'write' }]
 

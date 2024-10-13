@@ -47,7 +47,23 @@
       "testimony": "証し"
     },
     "subTitle7": {
-      "makeWithDiary": "イエス同行日記開設"
+      "makeWithDiary": "イエス同行日記開設",
+      "approvePage": "新規登録承認ページ"
+    }
+  },
+  "table": {
+    "approvePage": {
+      "id": "ID",
+      "account": "アカウント名",
+      "name": "名前",
+      "role": "権限",
+      "approve": "承認可否"
+    },
+    "tableComponent": {
+      "number": "番号",
+      "title": "タイトル",
+      "writer": "作成者",
+      "date": "日付"
     }
   },
   "mainMsg": {

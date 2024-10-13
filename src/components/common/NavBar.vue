@@ -330,9 +330,19 @@
                         <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
                       </router-link>
                     </div>
+                    <div class="d-none d-lg-block">
+                      <router-link to="/approve" class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
+                      </router-link>
+                    </div>
                     <div class="d-lg-none">
                       <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
+                      </router-link>
+                    </div>
+                    <div class="d-lg-none">
+                      <router-link to="/approve" class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
                       </router-link>
                     </div>
                   </div>
