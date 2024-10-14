@@ -379,6 +379,12 @@
                     class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
                     >로그인</router-link
                   >
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                    @click="changeLanguage()"
+                    >{{ $t('button.lang') }}</a
+                  >
                 </li>
               </ul>
             </div>

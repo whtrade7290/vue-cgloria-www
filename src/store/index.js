@@ -89,6 +89,12 @@ export default createStore({
     },
     async SIGN_UP({ commit }, { username, password, name }) {
       const result = await signUp(username, password, name)
+
+      if (result.data && result.status === 200) {
+        return true
+      } else {
+        return false
+      }
     },
     async CHECKING_TOKEN({ commit }, { accessToken, refreshToken }) {
       const result = await checkToken(accessToken, refreshToken)
@@ -192,6 +198,7 @@ export default createStore({
       return res
     },
     async SEARCH_USER({ commit }, { searchUser }) {
+      console.log('searchUser: ', searchUser)
       const res = await getUserByUsername(searchUser)
       if (res.status === 200) {
         commit('SET_USER', res.data)
