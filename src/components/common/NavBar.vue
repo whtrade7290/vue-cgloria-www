@@ -545,7 +545,7 @@ const goToWithDiary = async () => {
       preConfirm: () => {
         const selectedOption = document.querySelector('input[name="radioOption"]:checked')
         if (!selectedOption) {
-          Swal.showValidationMessage('Please select an option')
+          Swal.showValidationMessage('일기방을 선택해주세요.')
         }
         return selectedOption ? selectedOption.value : null
       }
