@@ -121,9 +121,11 @@ const checkingUsername = async () => {
   const usernameRegex = /^[a-zA-Z0-9_]{4,16}$/
 
   if (username.value === '') {
+    confirmUsername = false
     usernameMsg.value = '계정을 4자 이상 입력해주세요.'
     usernameClass.value = true
   } else if (!usernameRegex.test(username.value)) {
+    confirmUsername = false
     usernameClass.value = true
     usernameMsg.value = '계정은 4자 이상 16자 이하의 영문자, 숫자, 밑줄(_)만 사용할 수 있습니다.'
   } else {
@@ -131,6 +133,7 @@ const checkingUsername = async () => {
     await store.dispatch('SEARCH_USER', { searchUser: username.value })
 
     if (store.state.user) {
+      confirmUsername = false
       usernameClass.value = true
       usernameMsg.value = '이미 사용중인 계정입니다..'
     } else {
@@ -143,9 +146,11 @@ const checkingUsername = async () => {
 
 const checkingPassword = async () => {
   if (password1.value.length < 4) {
+    confirmPassword = false
     passwordClass.value = true
     passwordMsg.value = '비밀번호는 4자리 이상 입력해주세요.'
   } else if (password1.value !== password2.value) {
+    confirmPassword = false
     passwordClass.value = true
     passwordMsg.value = '비밀번호가 일치하지 않습니다.'
   } else {
@@ -159,9 +164,11 @@ const checkingName = async () => {
   const nameRegex = /^[\u3040-\u30FF\uAC00-\uD7A3\u4E00-\u9FFFa-zA-Z]+$/
 
   if (name.value.length === 0) {
+    confirmName = false
     nameClass.value = true
     nameMsg.value = '이름을 입력해주세요.'
   } else if (!nameRegex.test(name.value)) {
+    confirmName = false
     nameClass.value = true
     nameMsg.value = '이름은 히라가나, 가타카나, 한글, 한자, 영문자만 포함할 수 있습니다.'
   } else {

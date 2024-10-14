@@ -67,7 +67,7 @@
         <div>
           <h3>{{ teamName || '팀이름' }}</h3>
         </div>
-        <div>
+        <div style="margin-bottom: 1.5rem; margin-top: 1rem">
           <h4>팀리스트</h4>
         </div>
         <div class="list-box">
