@@ -24,12 +24,6 @@
 <script setup>
 import SideMenu from '@/components/common/SideMenu.vue'
 import CardHeader from '@/components/common/card/CardHeader.vue'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-
-const withDiaryNums = JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.withDiary
 
 defineProps({
   title: {
