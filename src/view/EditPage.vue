@@ -178,16 +178,12 @@ const edit = async () => {
 
     console.log('file.value: ', file.value)
 
-    let deleteFile = ''
+    let deleteKey = ''
 
     if (file.value) {
-      deleteFile =
-        'cgloria-photo/' +
-        store.state.detail.fileDate +
-        store.state.detail.filename +
-        store.state.detail.extension
+      deleteKey = `uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
 
-      formData.append('deleteFile', deleteFile)
+      formData.append('deleteKey', deleteKey)
     }
 
     formData.append('fileField', file.value)

@@ -82,7 +82,7 @@ import CommentComponent from '@/components/common/CommentComponent.vue'
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
-
+console.log('store.state.detail: ', store.state.detail)
 const commentCount = ref(0)
 
 const handleCommentCount = (count) => {
@@ -145,50 +145,44 @@ const goToEditPage = () => {
 }
 
 const deleteBoard = () => {
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
-    },
-    buttonsStyling: false
-  })
-  swalWithBootstrapButtons
-    .fire({
-      title: '정말 삭제하시겠습니까?',
-      text: '이 글을 다시 볼 수 없게 됩니다.',
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: '아니오',
-      confirmButtonText: '네'
-    })
-    .then(async (result) => {
-      if (result.isConfirmed) {
-        const deleteKey = `cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
-        const result = await store.dispatch('DELETE_BOARD', {
-          name: route.params.name,
-          id: store.state.detail.id,
-          deleteKey: deleteKey
-        })
-        if (result) {
-          swalWithBootstrapButtons
-            .fire({
-              title: '삭제되었습니다!',
-              icon: 'success'
-            })
-            .then(() => {
-              router.go(-1)
-            })
-        }
+  Swal.fire({
+    title: '정말 삭제하시겠습니까?',
+    text: '이 글을 다시 볼 수 없게 됩니다.',
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonText: '아니오',
+    confirmButtonText: '네'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      let deleteKey = ''
+
+      if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
+        deleteKey = `uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
       }
-    })
+
+      const result = await store.dispatch('DELETE_BOARD', {
+        name: route.params.name,
+        id: store.state.detail.id,
+        deleteKey: deleteKey
+      })
+      if (result) {
+        Swal.fire({
+          title: '삭제되었습니다!',
+          icon: 'success'
+        }).then(() => {
+          router.go(-1)
+        })
+      }
+    }
+  })
 }
 
 const imageUrl = ref(null)
 
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
-  if (store.state.detail.filename && store.state.detail.fileDate && store.state.detail.extension) {
-    imageUrl.value = `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
+  if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
+    imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
   }
 })
 </script>
