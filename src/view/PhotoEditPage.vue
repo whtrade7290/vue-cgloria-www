@@ -66,16 +66,26 @@
               :key="index"
             >
               <img
-                :src="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
+                :src="`http://localhost:3000/uploads/${item?.filename}`"
                 :alt="'Image ' + (index + 1)"
                 width="200"
                 class="image"
               />
-              {{ item.filename }}
             </div>
           </div>
         </div>
-        <input type="file" id="image" @change="changeImage" name="fileField" multiple /><br />
+        <label
+          for="fileUpload"
+          class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 mb-3"
+          >파일 업로드</label
+        >
+        <input
+          type="file"
+          id="fileUpload"
+          @change="changeImage"
+          class="hidden-file-input"
+          multiple
+        /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -141,26 +151,25 @@ const files = ref([])
 const imageData = ref([])
 
 const edit = async () => {
-
-  if(VALIDATION_TITLE(inputTitle.value)) return 
-  if(VALIDATION_CONTENT(editorData.value)) return 
-  if(VALIDATION_FILES(files.value)) return 
+  if (VALIDATION_TITLE(inputTitle.value)) return
+  if (VALIDATION_CONTENT(editorData.value)) return
+  // if (VALIDATION_FILES(files.value)) return
 
   let formData = new FormData()
 
+  console.log('route.query.id: ', route.query.id)
+
   formData.append('title', inputTitle.value)
   formData.append('content', editorData.value)
-  formData.append('id', store.state.detail.id)
+  formData.append('id', route.query.id)
 
-  console.log('files: ', files.value.length)
   if (files.value.length > 0) {
-    // console.log('store.state.detail.files.fileUrl: ', store.state.detail.files[0])
-    const deleteKeyList = store.state.detail.files.map((deleteFile) => {
-      console.log('deleteFile: ', deleteFile)
-      return 'cgloria-photo/' + deleteFile.date + deleteFile.filename + deleteFile.extension
-    })
-    console.log('deleteKeyList: ', deleteKeyList)
-    formData.append('deleteKeyList', deleteKeyList)
+    const deleteKeyList = store.state.detail.files.map((file) => file.filename)
+
+    if (deleteKeyList.length > 0) {
+      const jsonDeleteKeys = JSON.stringify(deleteKeyList)
+      formData.append('jsonDeleteKeys', jsonDeleteKeys)
+    }
   }
 
   files.value.forEach((file) => {
@@ -183,18 +192,25 @@ const backPage = () => {
 
 const changeImage = (event) => {
   const newFiles = Array.from(event.target.files)
-  files.value = files.value.concat(newFiles)
-  imageData.value = []
 
-  if (files.value.length > 0) {
-    files.value.forEach((file) => {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        imageData.value.push(e.target.result)
-      }
+  if (VALIDATION_FILES(files.value, newFiles)) {
+    files.value = files.value.concat(
+      newFiles.filter(
+        (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
+      )
+    )
 
-      reader.readAsDataURL(file)
-    })
+    if (files.value.length > 0) {
+      files.value.forEach((file) => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          if (!imageData.value.includes(e.target.result)) {
+            imageData.value.push(e.target.result)
+          }
+        }
+        reader.readAsDataURL(file)
+      })
+    }
   }
 }
 </script>

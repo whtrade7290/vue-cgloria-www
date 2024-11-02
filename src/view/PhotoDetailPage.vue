@@ -41,14 +41,11 @@
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
               <a
-                :href="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
+                :href="`http://localhost:3000/uploads/${item?.filename}`"
                 data-fancybox
                 :data-caption="item.filename"
               >
-                <img
-                  :src="`https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${item.date}${item.filename}${item.extension}`"
-                  alt="img"
-                />
+                <img :src="`http://localhost:3000/uploads/${item?.filename}`" alt="img" />
               </a>
             </div>
           </div>
@@ -145,42 +142,32 @@ const goToEditPage = () => {
 }
 
 const deleteBoard = () => {
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
-    },
-    buttonsStyling: false
-  })
-  swalWithBootstrapButtons
-    .fire({
-      title: '정말 삭제하시겠습니까?',
-      text: '이 글을 다시 볼 수 없게 됩니다.',
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: '아니오',
-      confirmButtonText: '네'
-    })
-    .then(async (result) => {
-      console.log('store.state.detail: ', store.state.detail)
-      if (result.isConfirmed) {
-        const result = await store.dispatch('DELETE_PHOTO_BOARD', {
-          name: route.params.name,
-          id: store.state.detail.id,
-          deleteKeyList: store.state.detail.files
+  Swal.fire({
+    title: '정말 삭제하시겠습니까?',
+    text: '이 글을 다시 볼 수 없게 됩니다.',
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonText: '아니오',
+    confirmButtonText: '네'
+  }).then(async (result) => {
+    console.log('store.state.detail: ', store.state.detail)
+    if (result.isConfirmed) {
+      console.log('store.state.detail.files: ', store.state.detail.files)
+      const result = await store.dispatch('DELETE_PHOTO_BOARD', {
+        name: route.params.name,
+        id: store.state.detail.id,
+        deleteKeyList: store.state.detail.files
+      })
+      if (result) {
+        Swal.fire({
+          title: '삭제되었습니다!',
+          icon: 'success'
+        }).then(() => {
+          router.go(-1)
         })
-        if (result) {
-          swalWithBootstrapButtons
-            .fire({
-              title: '삭제되었습니다!',
-              icon: 'success'
-            })
-            .then(() => {
-              router.go(-1)
-            })
-        }
       }
-    })
+    }
+  })
 }
 
 const isWriter = computed(() => {
@@ -214,7 +201,7 @@ onMounted(() => {
   })
 
   if (store.state.files) {
-    imageUrl.value = `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${store.state.detail.fileDate}${store.state.detail.filename}${store.state.detail.extension}`
+    imageUrl.value = `http://localhost:3000/uploads/${item?.filename}`
   }
 })
 </script>

@@ -26,7 +26,8 @@ import {
   fetchWithDiaryRoom,
   signUp,
   fetchDisapproveUsers,
-  updateApproveStatus
+  updateApproveStatus,
+  deletePhotoBoard
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 
@@ -161,7 +162,7 @@ export default createStore({
     },
     async DELETE_PHOTO_BOARD({ commit }, { name, id, deleteKeyList }) {
       console.log('deleteKeyList: ', deleteKeyList)
-      const result = await deleteBoard(name, id, deleteKeyList)
+      const result = await deletePhotoBoard(name, id, deleteKeyList)
       return result.data
     },
     async EDIT_BOARD({ commit }, { formData, name }) {

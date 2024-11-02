@@ -137,6 +137,8 @@ const parsedFiles = computed(() => {
       files = []
     }
 
+    console.log('files: ', files[0])
+
     return {
       id: data.id,
       title: data.title,
@@ -144,7 +146,7 @@ const parsedFiles = computed(() => {
       content: data.content,
       writer: data.writer,
       files: files,
-      thumnailUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${files[0]?.date}${files[0]?.filename}${files[0]?.extension}`,
+      thumnailUrl: `http://localhost:3000/uploads/${files[0]?.filename}`,
       update_at: data.update_at,
       create_at: data.create_at,
       deleted: data.deleted

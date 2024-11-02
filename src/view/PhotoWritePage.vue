@@ -59,7 +59,18 @@
             </div>
           </div>
         </div>
-        <input type="file" id="image" @change="changeImage" name="fileField" multiple /><br />
+        <label
+          for="fileUpload"
+          class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 mb-3"
+          >파일 업로드</label
+        >
+        <input
+          type="file"
+          id="fileUpload"
+          @change="changeImage"
+          class="hidden-file-input"
+          multiple
+        /><br />
         <label for="content">내용</label><br />
         <ckeditor
           id="content"
@@ -87,98 +98,90 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, reactive } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation.js'
 
-export default {
-  components: {},
-  data() {
-    return {
-      editor: ClassicEditor,
-      editorData: '',
-      editorConfig: {
-        placeholder: '글 내용을 입력하세요.',
-        toolbar: [
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          'link',
-          'bulletedList',
-          'numberedList',
-          'blockQuote',
-          'insertTable',
-          '|',
-          'undo',
-          'redo'
-        ]
-      },
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
 
-      inputTitle: '',
-      store: useStore(),
-      route: useRoute(),
-      router: useRouter(),
-      files: [],
-      saveFiles: [],
-      imageData: [],
-      file: null
-    }
-  },
-  methods: {
-    async write() {
-      let formData = new FormData()
+const editor = ClassicEditor
+const editorData = ref('')
+const editorConfig = {
+  placeholder: '글 내용을 입력하세요.',
+  toolbar: [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    'link',
+    'bulletedList',
+    'numberedList',
+    'blockQuote',
+    'insertTable',
+    '|',
+    'undo',
+    'redo'
+  ]
+}
 
-      if (VALIDATION_TITLE(this.inputTitle)) return
+const inputTitle = ref('')
+const files = ref([])
+const imageData = ref([])
 
-      if (VALIDATION_CONTENT(this.editorData)) return
+async function write() {
+  const formData = new FormData()
 
-      if (VALIDATION_FILES(this.files)) return
+  if (VALIDATION_TITLE(inputTitle.value)) return
+  if (VALIDATION_CONTENT(editorData.value)) return
 
-      formData.append('title', this.inputTitle)
-      formData.append('content', this.editorData)
-      formData.append(
-        'writer',
-        JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username
+  formData.append('title', inputTitle.value)
+  formData.append('content', editorData.value)
+  formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
+  formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
+
+  files.value.forEach((file) => {
+    formData.append('fileField', file)
+  })
+
+  const result = await store.dispatch('WRITE_BOARD', {
+    formData,
+    name: route.query.name
+  })
+  if (result) {
+    router.push(`/${route.query.name}`)
+  }
+}
+
+function backPage() {
+  router.back()
+}
+
+function changeImage(event) {
+  const newFiles = Array.from(event.target.files)
+
+  if (VALIDATION_FILES(files.value, newFiles)) {
+    files.value = files.value.concat(
+      newFiles.filter(
+        (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
       )
+    )
 
-      formData.append('fileField', this.files)
-
-      this.files.forEach((file) => {
-        formData.append('fileField', file)
-      })
-
-      const result = await this.store.dispatch('WRITE_BOARD', {
-        formData: formData,
-        name: this.$route.query.name
-      })
-      if (result) {
-        this.router.push(`/${this.$route.query.name}`)
-      }
-    },
-    backPage() {
-      this.router.back()
-    },
-    changeImage(event) {
-      this.files = []
-      const newFiles = Array.from(event.target.files)
-      this.files = this.files.concat(newFiles)
-      this.imageData = []
-
-      if (this.files.length > 0) {
-        this.files.forEach((file) => {
-          const reader = new FileReader()
-          reader.onload = (e) => {
-            this.imageData.push(e.target.result)
+    if (files.value.length > 0) {
+      files.value.forEach((file) => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          if (!imageData.value.includes(e.target.result)) {
+            imageData.value.push(e.target.result)
           }
-
-          reader.readAsDataURL(file)
-        })
-      }
+        }
+        reader.readAsDataURL(file)
+      })
     }
   }
 }
@@ -203,16 +206,15 @@ export default {
 .image-container {
   display: flex;
   flex-wrap: wrap;
-  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+  overflow-y: auto;
   border: 1px solid #ccc;
   padding: 10px;
   box-sizing: border-box;
   height: 80%;
   width: 80%;
 }
-
 .image-wrapper {
-  flex: 1 0 21%; /* 각 이미지의 크기를 설정 (여기서는 21%로 설정) */
+  flex: 1 0 21%;
   margin: 5px;
   box-sizing: border-box;
 }
@@ -220,5 +222,24 @@ export default {
   width: 100%;
   height: auto;
   display: block;
+}
+.hidden-file-input {
+  display: none; /* 파일 입력창 완전히 숨기기 */
+}
+
+.custom-upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50; /* 버튼 배경색 */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* 커스텀 버튼에 호버 효과 추가 */
+.custom-upload-button:hover {
+  background-color: #45a049;
 }
 </style>
