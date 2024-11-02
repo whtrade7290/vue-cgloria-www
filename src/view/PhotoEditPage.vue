@@ -74,9 +74,7 @@
             </div>
           </div>
         </div>
-        <label
-          for="fileUpload"
-          class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 mb-3"
+        <label for="fileUpload" class="btn btn-sm btn-outline-primary mb-0 me-1 mt-2 mt-md-0"
           >파일 업로드</label
         >
         <input
