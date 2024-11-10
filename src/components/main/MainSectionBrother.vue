@@ -2,9 +2,7 @@
   <section>
     <div class="container mt-sm-5">
       <div
-        class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl"
-        style="background-image: url('assets/img/main/ref.jpg')"
-      >
+        class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl">
         <span class="mask bg-gradient-dark"></span>
         <div class="container">
           <div class="row">

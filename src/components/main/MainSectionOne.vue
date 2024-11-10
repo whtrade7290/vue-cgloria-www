@@ -67,7 +67,7 @@
           <div class="card card-background card-background-mask-primary tilt" data-tilt>
             <div
               class="full-background"
-              style="background-image: url('/src/assets/img/cross1.jpeg')"
+              style="background-image: url('/assets/cross1.jpeg')"
             ></div>
             <div class="card-body pt-7 text-center">
               <h2 class="text-white up mb-0" style="text-align: left">
