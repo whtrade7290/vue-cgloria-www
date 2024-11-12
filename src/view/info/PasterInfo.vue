@@ -76,7 +76,7 @@
             <img
               class="border-radius-md"
               style="width: 100%"
-              src="@/assets/img/pastor.jpeg"
+              src="http://localhost:3000/uploads/assets/pastor.jpeg"
               alt="First slide"
             />
           </div>
