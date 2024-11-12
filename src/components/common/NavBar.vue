@@ -68,9 +68,9 @@
                       <router-link to="/paster" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
                       </router-link>
-                      <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
+                      <router-link to="/location" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
-                      </a>
+                      </router-link>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
                       </router-link>
@@ -85,9 +85,9 @@
                       <router-link to="/paster" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
                       </router-link>
-                      <a href="#" class="dropdown-item border-radius-md" @click="readyYet">
+                      <router-link to="/location" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
-                      </a>
+                      </router-link>
                       <router-link to="/notice" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
                       </router-link>

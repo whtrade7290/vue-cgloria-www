@@ -4,13 +4,10 @@
       <div class="container" style="padding: 0 60px">
         <div class="row">
           <div class="col-lg-4 my-auto" style="padding: 0">
-            <h1 class="text-gradient text-warning mb-0">중앙영광교회</h1>
-            <h5 class="mb-4">동행으로 소문난 교회</h5>
-            <p class="lead" style="font-size: 16px">
-              중앙 영광교회는 하나님의 말씀(마28:18-20, 행1:8)에 순종하여 성령의 능력으로 모든
-              족속으로 제자를 삼아 증인 공동체를 세움으로 하나님께 영광을 돌리고자 1994년 동경
-              신주쿠에 세워졌습니다.
-            </p>
+            <h1 class="text-gradient text-warning mb-0">
+              {{ $t('webContents.churchIntro.main') }}
+            </h1>
+            <h5 class="mb-4">{{ $t('webContents.churchIntro.subtitle') }}</h5>
           </div>
           <div class="col-lg-8 ps-5 pe-0">
             <div class="row">
@@ -64,42 +61,37 @@
       <div class="container">
         <div class="card-body">
           <p>
-            중앙 영광교회는 하나님의 말씀(마28:18-20, 행1:8)에 순종하여 성령의 능력으로 모든
-            족속으로 제자를 삼아 증인 공동체를 세움으로 하나님께 영광을 돌리고자 1994년 동경
-            신주쿠에 세워졌습니다.
+            {{ $t('webContents.churchIntro.content1') }}
           </p>
           <p>
-            중앙영광교회는 “말씀훈련을 통해 한 사람 한 사람을 예수님의 제자로 세우는 건강한 교회”를
-            만들어 가며 ” 성령의 능력으로 예배, 전도, 섬김, 교제를 회복하여 목적이 이끄는 초대
-            교회의 모습을 되찾는 사명”을 감당해 가고 있습니다
+            {{ $t('webContents.churchIntro.content2') }}
           </p>
           <p>
-            중앙영광교회는 한인이 중심이 된 교회이지만 한국인이 불씨가 되어 일본인들에게 생명의
-            복음을 옮겨주는 영적 사명을 다하며 목적이 이끄는 교회로 늘 깨어 있기 위하여 365일
-            새벽기도와 매년 ‘목적이 이끄는 40일 특새를 실시하고 있습니다 .
+            {{ $t('webContents.churchIntro.content3') }}
           </p>
           <p>
-            그리고 땅끝까지 이르러 증인이 되라는 예수님의 말씀에 따라 만민이 예배하는 선교센터로서의
-            사명을 다하기 위해 순종하며 달려가고 있습니다.
+            {{ $t('webContents.churchIntro.content4') }}
           </p>
           <p>
-            이 모든 사역이 우리의 노력으로 세워지고 이루어진 것이 아님을 고백합니다. 주님이 세우신
-            교회(마16:18)이며 주님이 주인이신 교회입니다 . 주신 비전과 사명 역시 주님의 뜻대로
-            행하실 것임을 믿기에 “작은 예수가 되자”이라는 푯대를 향하여 달려갈 것입니다.
+            {{ $t('webContents.churchIntro.content5') }}
           </p>
 
-          <h3 class="mt-5 mb-3" id="cookies">형제교회 연락처</h3>
+          <h3 class="mt-5 mb-3" id="cookies">{{ $t('webContents.churchIntro.brotherMain') }}</h3>
           <div style="display: grid; padding-bottom: 30px">
-            <span>요코하마 영광교회 (담임목사 : 김경환) </span>
-            <span>☎ 045-212-0061(교회), 090-8302-4749 http://www.yhgloria.com</span>
+            <span>{{ $t('webContents.churchIntro.yokohamaName') }}</span>
+            <span>{{ $t('webContents.churchIntro.yokohamaInfo') }}</span>
           </div>
           <div style="display: grid; padding-bottom: 30px">
-            <span>치바 영광교회 (담임목사 : 김성섭) </span>
-            <span>☎ 043-201-6350(교회), 090-4258-9340 http://www.cgch.net/</span>
+            <span>{{ $t('webContents.churchIntro.chibaName') }}</span>
+            <span>{{ $t('webContents.churchIntro.chibaInfo') }}</span>
           </div>
           <div style="display: grid; padding-bottom: 30px">
-            <span>하치오지 영광교회 (담임목사 : 소대섭)</span>
-            <span>042-634-8633(교회), 080-8300-4747 cafe.daum.net/h-gmc</span>
+            <span>{{ $t('webContents.churchIntro.hachioojiName') }}</span>
+            <span>{{ $t('webContents.churchIntro.hachioojiInfo') }}</span>
+          </div>
+          <div style="display: grid; padding-bottom: 30px">
+            <span>{{ $t('webContents.churchIntro.kawaguchiName') }}</span>
+            <span>{{ $t('webContents.churchIntro.kawaguchiInfo') }}</span>
           </div>
         </div>
       </div>

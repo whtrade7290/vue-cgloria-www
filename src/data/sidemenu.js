@@ -1,7 +1,7 @@
 const INFO = [
   { title: 'nav.subTitle1.intro', icon: 'church', path: 'intro' },
   { title: 'nav.subTitle1.paster', icon: 'attribution', path: 'paster' },
-  { title: 'nav.subTitle1.location', icon: 'pin_drop', path: '' },
+  { title: 'nav.subTitle1.location', icon: 'pin_drop', path: 'location' },
   { title: 'nav.subTitle1.notice', icon: 'info', path: 'notice' }
 ]
 

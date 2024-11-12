@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter, useRouter } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
+import ChurchMap from '@/view/info/ChurchMap.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
 import NoticeBoard from '@/view/info/NoticeBoard.vue'
 import SermonBoard from '@/view/smallGroup/SermonBoard.vue'
@@ -55,6 +56,7 @@ const routes = [
   { path: '/signUp', name: 'signUp', component: SignUpView },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
+  { path: '/location', name: 'location', component: ChurchMap },
   { path: '/paster', name: 'paster', component: PasterInfo },
   {
     path: '/notice',

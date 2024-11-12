@@ -4,12 +4,9 @@
       <div class="container" style="padding: 0 60px">
         <div class="row">
           <div class="col-lg-12">
-            <h3>5가지의 훈련에 헌신된 교회로 달려가고 있습니다.</h3>
+            <h3>{{ $t('webContents.training.main') }}</h3>
             <p>
-              교회 훈련의 목적은 신앙의 깊이와 예수님의 가르침 실천을 도모하는 제자 훈련, 교회 내외
-              사역에 필요한 능력 개발을 위한 사역 훈련, 소그룹 리더십을 강화하는 속장 훈련, 개인과
-              교회의 영적 목적 이해 및 실현에 중점을 두는 목적 훈련으로 구성됩니다, 이는 교회와
-              개인의 신앙 성장을 지향합니다.
+              {{ $t('webContents.training.mainDiscription') }}
             </p>
           </div>
           <div class="col-lg-12 mt-lg-0 mt-5 ps-lg-0 ps-0">
@@ -18,10 +15,9 @@
                 <i class="fas fa-ship opacity-10"></i>
               </div>
               <div class="description ps-3">
-                <h3 style="font-size: 2rem">제자훈련</h3>
+                <h3 style="font-size: 2rem">{{ $t('webContents.training.training1') }}</h3>
                 <p class="mb-0">
-                  한 영혼 한 영혼을 귀하게 여겨 그들의 삶과 인격이 예수님을 닮아가도록 말씀과 기도와
-                  적용을 중심으로 1년간의 과정으로 훈련합니다.
+                  {{ $t('webContents.training.discription1') }}
                 </p>
               </div>
             </div>
@@ -31,10 +27,9 @@
                 <i class="fas fa-handshake opacity-10"></i>
               </div>
               <div class="description ps-3">
-                <h3 style="font-size: 2rem">사역훈련</h3>
+                <h3 style="font-size: 2rem">{{ $t('webContents.training.training2') }}</h3>
                 <p class="mb-0">
-                  제자훈련을 받은 성도들 중에서 교회의 리더(속장)로 세움 받을 사람을 훈련하는
-                  과정으로 1년의 과정이 필요합니다.
+                  {{ $t('webContents.training.discription2') }}
                 </p>
               </div>
             </div>
@@ -43,10 +38,9 @@
                 <i class="fas fa-hourglass opacity-10"></i>
               </div>
               <div class="description ps-3">
-                <h3 style="font-size: 2rem">속장훈련</h3>
+                <h3 style="font-size: 2rem">{{ $t('webContents.training.training3') }}</h3>
                 <p class="mb-0">
-                  ‘속장이 살아야 속회가 살고 속회가 살아야 교회가 산다’는 신념으로, 소그룹의
-                  생명력인 속장훈련을 매주 세미나 형식으로 실시합니다.
+                  {{ $t('webContents.training.discription3') }}
                 </p>
               </div>
             </div>
@@ -55,10 +49,9 @@
                 <i class="fas fa-hourglass opacity-10"></i>
               </div>
               <div class="description ps-3">
-                <h3 style="font-size: 2rem">목적훈련</h3>
+                <h3 style="font-size: 2rem">{{ $t('webContents.training.training4') }}</h3>
                 <p class="mb-0">
-                  인생의 목적을 계속 확인시켜 주기 위해서 해마다 ‘목적이 이끄는 40일 특새’를
-                  실시합니다. 교재는 ‘목적이 이끄는 삶’입니다.
+                  {{ $t('webContents.training.discription4') }}
                 </p>
               </div>
             </div>
@@ -67,10 +60,9 @@
                 <i class="fas fa-hourglass opacity-10"></i>
               </div>
               <div class="description ps-3">
-                <h3 style="font-size: 2rem">새벽훈련</h3>
+                <h3 style="font-size: 2rem">{{ $t('webContents.training.training5') }}</h3>
                 <p class="mb-0">
-                  날마다 깨어 기도하는 삶을 체질화하기 위해서 1년 365일을 쉬지 않고 새벽기도회를
-                  하고 있습니다.
+                  {{ $t('webContents.training.discription5') }}
                 </p>
               </div>
             </div>
