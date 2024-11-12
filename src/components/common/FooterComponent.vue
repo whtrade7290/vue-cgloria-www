@@ -51,7 +51,7 @@
             </h4>
             <img
               style="height: 100px; width: 100%; border-radius: 5px"
-              src="http://localhost:3000/uploads/assets/main/mini_map.png"
+              src="http://160.251.179.146:3000/uploads/assets/main/mini_map.png"
             />
           </div>
         </div>

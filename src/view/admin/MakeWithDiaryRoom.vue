@@ -19,7 +19,7 @@
                 type="text"
                 id="title"
                 class="input-title"
-                placeholder="whtrade7290"
+                placeholder="acount"
                 v-model="searchUser"
               />
               <button
@@ -331,5 +331,10 @@ const deleteUser = async (id) => {
 }
 .btn-delete {
   color: #4d88ff;
+}
+.input-title {
+  border-radius: 0.5rem;
+  border: 1px solid #999999;
+  padding: 0.4rem;
 }
 </style>

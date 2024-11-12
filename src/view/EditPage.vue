@@ -229,7 +229,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
 
-  imageUrl.value = `http://localhost:3000/uploads/${store.state.detail.filename}`
+  imageUrl.value = `http://160.251.179.146:3000/uploads/${store.state.detail.filename}`
 })
 </script>
 

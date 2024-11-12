@@ -7,7 +7,10 @@
           class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4"
         >
           <div class="container-fluid px-0">
-            <img src="http://localhost:3000/uploads/assets/main/f_logo.png" style="width: 50px" />
+            <img
+              src="http://160.251.179.146:3000/uploads/assets/main/f_logo.png"
+              style="width: 50px"
+            />
             <router-link
               to="/"
               class="navbar-brand font-weight-bolder ms-sm-3"

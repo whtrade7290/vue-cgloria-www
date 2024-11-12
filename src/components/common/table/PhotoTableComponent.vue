@@ -146,7 +146,7 @@ const parsedFiles = computed(() => {
       content: data.content,
       writer: data.writer,
       files: files,
-      thumnailUrl: `http://localhost:3000/uploads/${files[0]?.filename}`,
+      thumnailUrl: `http://160.251.179.146:3000/uploads/${files[0]?.filename}`,
       update_at: data.update_at,
       create_at: data.create_at,
       deleted: data.deleted

@@ -10,7 +10,7 @@
               class="bg-gradient-primary w-100 h-100 border-radius-xl position-absolute d-lg-block d-none"
             ></div>
             <img
-              src="http://localhost:3000/uploads/assets/main/discipleMember.jpg"
+              src="http://160.251.179.146:3000/uploads/assets/main/discipleMember.jpg"
               class="w-100 border-radius-xl mt-6 ms-lg-5 position-relative z-index-5"
               alt=""
             />
