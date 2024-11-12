@@ -84,9 +84,12 @@
                 {{ $t('mainSectionOne.sundayWorsip2') }}<br />{{ $t('mainSectionOne.am') }} 10:40 ~
                 12:00
               </h2>
-              <a href="#" style="font-size: 24px" class="btn btn-outline-white mt-5 up btn-round">{{
-                $t('mainSectionOne.worshipAndTraining')
-              }}</a>
+              <a
+                href="#"
+                style="font-size: 24px"
+                class="btn btn-outline-white btn-round invisible"
+                >{{ $t('mainSectionOne.worshipAndTraining') }}</a
+              >
             </div>
           </div>
         </div>
