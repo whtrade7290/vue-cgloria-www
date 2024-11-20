@@ -82,7 +82,6 @@ import CommentComponent from '@/components/common/CommentComponent.vue'
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
-console.log('store.state.detail: ', store.state.detail)
 const commentCount = ref(0)
 
 const handleCommentCount = (count) => {

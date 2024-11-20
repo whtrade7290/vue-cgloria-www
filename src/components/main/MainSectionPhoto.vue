@@ -41,7 +41,6 @@ const store = useStore()
 
 const processedDataList = computed(() => {
   return store.state.dataList.map((item) => {
-    console.log('item: ', item)
     let arr = []
     try {
       // item.files가 존재할 때만 파싱 시도
@@ -55,7 +54,7 @@ const processedDataList = computed(() => {
     }
 
     // 파일 데이터가 없거나 배열이 비어 있을 경우 기본값 설정
-    console.log('arr: ', arr)
+
     const url = arr.length > 0 ? `http://160.251.179.146:3000/uploads/${arr[0]?.filename}` : null
 
     return {

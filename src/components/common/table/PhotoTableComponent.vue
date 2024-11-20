@@ -137,8 +137,6 @@ const parsedFiles = computed(() => {
       files = []
     }
 
-    console.log('files: ', files[0])
-
     return {
       id: data.id,
       title: data.title,

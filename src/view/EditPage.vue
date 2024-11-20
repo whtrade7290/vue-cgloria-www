@@ -176,8 +176,6 @@ const edit = async () => {
     formData.append('id', store.state.detail.id)
     formData.append('mainContent', isMainContent.value)
 
-    console.log('file.value: ', file.value)
-
     let deleteKey = ''
 
     if (file.value) {

@@ -186,8 +186,6 @@ const search = async () => {
 
     const resUser = store.state.user // 사용자 정보 가져오기
 
-    console.log('resUser: ', resUser)
-
     // 검색 결과가 있을 때
     if (resUser && resUser.id) {
       // 기존 사용자 리스트에서 중복된 사용자가 있는지 확인
@@ -200,8 +198,6 @@ const search = async () => {
         user.value.name = resUser.name
         user.value.role = resUser.role
         user.value.createAt = resUser.create_at
-
-        console.log('user.value: ', user.value)
 
         // 사용자 추가 알림
         await Swal.fire({

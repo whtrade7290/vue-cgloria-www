@@ -150,9 +150,7 @@ const deleteBoard = () => {
     cancelButtonText: '아니오',
     confirmButtonText: '네'
   }).then(async (result) => {
-    console.log('store.state.detail: ', store.state.detail)
     if (result.isConfirmed) {
-      console.log('store.state.detail.files: ', store.state.detail.files)
       const result = await store.dispatch('DELETE_PHOTO_BOARD', {
         name: route.params.name,
         id: store.state.detail.id,

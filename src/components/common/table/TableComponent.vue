@@ -131,15 +131,12 @@ let pageList = []
 
 const roomId = computed(() => Number(route.query?.roomId ?? 0))
 
-console.log('roomId: ', roomId)
-
 // Vuex 상태를 computed로 관리
 const totalCount = computed(() => store.state.count)
 
 watch(
   totalCount, // computed로 Vuex 상태 감시
-  (newTotalCount) => {
-    console.log('totalCount 변경됨: ', newTotalCount)
+  () => {
     fetchList(pageNum.value) // totalCount가 변경되면 리스트 다시 로드
   }
 )
@@ -147,7 +144,6 @@ watch(
 fetchList(pageNum.value)
 
 function fetchList(num) {
-  console.log('num: ', num)
   let payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
@@ -168,8 +164,6 @@ function fetchList(num) {
   } else {
     actionsName = 'FETCH_BOARDLIST'
   }
-
-  console.log('payload: ', payload)
 
   store.dispatch(actionsName, payload)
   pageNum.value = num

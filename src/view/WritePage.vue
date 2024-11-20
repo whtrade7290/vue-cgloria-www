@@ -143,8 +143,6 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
-console.log('store.state.room.id: ', store.state.room.id)
-
 const write = async () => {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
@@ -155,14 +153,11 @@ const write = async () => {
   formData.append('mainContent', isMainContent.value)
   formData.append('fileField', file.value)
 
-  console.log('file: ', file.value)
-
   const storedData = localStorage.getItem(getUserIdFromCookie())
   if (storedData) {
     const user = JSON.parse(storedData).user
     const username = user.username
     const name = user.name
-    console.log('name: ', name)
     formData.append('writer', username)
     formData.append('writer_name', name)
   }
@@ -188,8 +183,6 @@ const backPage = () => {
 
 const changeImage = (event) => {
   files.value = event.target?.files
-
-  console.log('event.target?.files: ', event.target?.files)
 
   if (files.value.length > 0) {
     const selectedFile = files.value[0]

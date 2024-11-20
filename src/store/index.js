@@ -58,7 +58,6 @@ export default createStore({
       commit('SET_SIDEMENU', sidemenu)
     },
     async FETCH_BOARDLIST({ commit }, obj) {
-      console.log('obj: ', obj)
       const res = await getBoardList(obj)
       commit('SET_BOARDLIST', res.data)
       return res
@@ -125,7 +124,6 @@ export default createStore({
     async FETCH_PHOTO_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getPhotoContentById(name, id)
       const isEmptyObject = (obj) => Object.keys(obj).length === 0
-      console.log('res.data: ', res.data)
       let data = {}
 
       if (res.data !== null || res.data !== undefined || isEmptyObject(res.data.files)) {
@@ -156,12 +154,10 @@ export default createStore({
       return res
     },
     async DELETE_BOARD({ commit }, { name, id, deleteKey }) {
-      console.log('deleteKey: ', deleteKey)
       const result = await deleteBoard(name, id, deleteKey)
       return result.data
     },
     async DELETE_PHOTO_BOARD({ commit }, { name, id, deleteKeyList }) {
-      console.log('deleteKeyList: ', deleteKeyList)
       const result = await deletePhotoBoard(name, id, deleteKeyList)
       return result.data
     },
@@ -199,7 +195,6 @@ export default createStore({
       return res
     },
     async SEARCH_USER({ commit }, { searchUser }) {
-      console.log('searchUser: ', searchUser)
       const res = await getUserByUsername(searchUser)
       if (res.status === 200) {
         commit('SET_USER', res.data)
@@ -225,7 +220,6 @@ export default createStore({
       return res.data
     },
     async CLEAR_STATE({ commit }) {
-      console.log('excute')
       commit('SET_BOARDLIST', [])
       commit('SET_BOARDCOUNT', 0)
       commit('SET_DETAIL', {})

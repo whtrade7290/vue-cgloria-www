@@ -155,8 +155,6 @@ const edit = async () => {
 
   let formData = new FormData()
 
-  console.log('route.query.id: ', route.query.id)
-
   formData.append('title', inputTitle.value)
   formData.append('content', editorData.value)
   formData.append('id', route.query.id)

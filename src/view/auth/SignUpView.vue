@@ -129,7 +129,6 @@ const checkingUsername = async () => {
     usernameClass.value = true
     usernameMsg.value = '계정은 4자 이상 16자 이하의 영문자, 숫자, 밑줄(_)만 사용할 수 있습니다.'
   } else {
-    console.log('username: ', username.value)
     await store.dispatch('SEARCH_USER', { searchUser: username.value })
 
     if (store.state.user) {
@@ -189,8 +188,6 @@ const signUp = async () => {
       password: password1.value,
       name: name.value
     })
-
-    console.log('result: ', result)
 
     if (result) {
       await Swal.fire({
