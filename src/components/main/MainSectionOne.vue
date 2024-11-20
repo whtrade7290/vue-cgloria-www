@@ -15,12 +15,14 @@
                   </h5>
                 </div>
                 <p class="pe-5" v-html="truncatedText(columnItem.content, 200)"></p>
-                <a
-                  href="javascript:;"
-                  @click="intoDetail(columnItem.id, 'column')"
-                  style="color: #d4a59a; font-size: 1.2rem"
-                  >{{ $t('common.more') }}</a
-                >
+                <template v-if="columnItem.id !== 999999">
+                  <a
+                    href="javascript:;"
+                    @click="intoDetail(columnItem.id, 'column')"
+                    style="color: #d4a59a; font-size: 1.2rem"
+                    >{{ $t('common.more') }}</a
+                  >
+                </template>
               </div>
             </div>
             <div class="col-md-12">
@@ -34,12 +36,14 @@
                   </h5>
                 </div>
                 <p class="pe-3" v-html="truncatedText(classMeetingItem.content, 300)"></p>
-                <a
-                  href="javascript:;"
-                  @click="intoDetail(classMeetingItem.id, 'classMeeting')"
-                  style="color: #d4a59a; font-size: 1.2rem"
-                  >{{ $t('common.more') }}</a
-                >
+                <template v-if="classMeetingItem.id !== 999999">
+                  <a
+                    href="javascript:;"
+                    @click="intoDetail(classMeetingItem.id, 'classMeeting')"
+                    style="color: #d4a59a; font-size: 1.2rem"
+                    >{{ $t('common.more') }}</a
+                  >
+                </template>
               </div>
             </div>
             <div class="col-md-12">
@@ -53,12 +57,14 @@
                   </h5>
                 </div>
                 <p class="pe-3" v-html="truncatedText(testimonyItem.content, 250)"></p>
-                <a
-                  href="javascript:;"
-                  @click="intoDetail(testimonyItem.id, 'testimony')"
-                  style="color: #d4a59a; font-size: 1.2rem"
-                  >{{ $t('common.more') }}</a
-                >
+                <template v-if="classMeetingItem.id !== 999999">
+                  <a
+                    href="javascript:;"
+                    @click="intoDetail(testimonyItem.id, 'testimony')"
+                    style="color: #d4a59a; font-size: 1.2rem"
+                    >{{ $t('common.more') }}</a
+                  >
+                </template>
               </div>
             </div>
           </div>
