@@ -6,7 +6,7 @@
         <div class="col-md-3 mb-3">
           <div style="text-align: center; color: #777777">
             <img
-              src="https://160.251.179.146:3000/uploads/assets/main/f_logo.png"
+              src="http://160.251.179.146:3000/uploads/assets/main/f_logo.png"
               style="width: 100px"
             /><br /><br />
             <strong>
@@ -51,7 +51,7 @@
             </h4>
             <img
               style="height: 100px; width: 100%; border-radius: 5px"
-              src="https://160.251.179.146:3000/uploads/assets/main/mini_map.png"
+              src="http://160.251.179.146:3000/uploads/assets/main/mini_map.png"
             />
           </div>
         </div>

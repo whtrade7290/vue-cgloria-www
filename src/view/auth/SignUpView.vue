@@ -235,7 +235,7 @@ onMounted(async () => {
 
 <style scoped>
 .bg-img {
-  background-image: url('https://160.251.179.146:3000/uploads/assets/jesus.png');
+  background-image: url('http://160.251.179.146:3000/uploads/assets/jesus.png');
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;
