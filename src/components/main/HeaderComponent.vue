@@ -87,7 +87,7 @@ defineProps({
   background-blend-mode: multiply;
 }
 .main-back-img {
-  background-image: url('http://160.251.179.146:3000/uploads/assets/main/main01.jpg');
+  background-image: url('https://160.251.179.146:3000/uploads/assets/main/main01.jpg');
 }
 .main-font {
   font-size: 4.5rem;

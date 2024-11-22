@@ -2,7 +2,7 @@ import { instance } from '@/api/intercept.js'
 import axios from 'axios'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
-  baseUrl: 'http://160.251.179.146:3000/'
+  baseUrl: 'https://160.251.179.146:3000/'
 }
 
 function getBoardList(obj) {

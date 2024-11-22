@@ -74,7 +74,7 @@
             <div
               class="full-background"
               style="
-                background-image: url('http://160.251.179.146:3000/uploads/assets/cross1.jpeg');
+                background-image: url('https://160.251.179.146:3000/uploads/assets/cross1.jpeg');
               "
             ></div>
             <div class="card-body pt-7 text-center">
