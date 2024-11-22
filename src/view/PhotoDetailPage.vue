@@ -41,11 +41,11 @@
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
               <a
-                :href="`http://160.251.179.146:3000/uploads/${item?.filename}`"
+                :href="`https://160.251.179.146:3000/uploads/${item?.filename}`"
                 data-fancybox
                 :data-caption="item.filename"
               >
-                <img :src="`http://160.251.179.146:3000/uploads/${item?.filename}`" alt="img" />
+                <img :src="`https://160.251.179.146:3000/uploads/${item?.filename}`" alt="img" />
               </a>
             </div>
           </div>
@@ -199,7 +199,7 @@ onMounted(() => {
   })
 
   if (store.state.files) {
-    imageUrl.value = `http://160.251.179.146:3000/uploads/${item?.filename}`
+    imageUrl.value = `https://160.251.179.146:3000/uploads/${item?.filename}`
   }
 })
 </script>
