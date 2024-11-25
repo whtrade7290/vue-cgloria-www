@@ -30,7 +30,7 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const imgUrl = 'https://160.251.179.146:3000/uploads/assets/main/main01.jpg'
+const imgUrl = 'https://cgloria.work:443/uploads/assets/main/main01.jpg'
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''

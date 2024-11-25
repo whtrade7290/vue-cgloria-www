@@ -8,7 +8,7 @@
         >
           <div class="container-fluid px-0">
             <img
-              src="https://160.251.179.146:3000/uploads/assets/main/f_logo.png"
+              src="https://cgloria.work:443/uploads/assets/main/f_logo.png"
               style="width: 50px"
             />
             <router-link

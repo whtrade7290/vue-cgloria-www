@@ -55,7 +55,7 @@ const processedDataList = computed(() => {
 
     // 파일 데이터가 없거나 배열이 비어 있을 경우 기본값 설정
 
-    const url = arr.length > 0 ? `https://160.251.179.146:3000/uploads/${arr[0]?.filename}` : null
+    const url = arr.length > 0 ? `https://cgloria.work:443/uploads/${arr[0]?.filename}` : null
 
     return {
       id: item.id,

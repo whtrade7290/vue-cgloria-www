@@ -66,7 +66,7 @@
               :key="index"
             >
               <img
-                :src="`https://160.251.179.146:3000/uploads/${item?.filename}`"
+                :src="`https://cgloria.work:443/uploads/${item?.filename}`"
                 :alt="'Image ' + (index + 1)"
                 width="200"
                 class="image"

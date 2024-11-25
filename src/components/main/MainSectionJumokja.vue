@@ -23,7 +23,7 @@
           <a href="#">
             <img
               class="w-100 border-radius-lg shadow-lg"
-              src="https://160.251.179.146:3000/uploads/assets/main/ju2.jpg"
+              src="https://cgloria.work:443/uploads/assets/main/ju2.jpg"
               alt="Product Image"
             />
           </a>
