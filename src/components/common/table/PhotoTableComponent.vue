@@ -168,4 +168,9 @@ async function intoDetail(id) {
   border: 3px solid #c5b5aa;
   background-color: rgba(0, 0, 0, 0.1);
 }
+.card-image img {
+  width: 100%;
+  height: 11rem; /* 이미지의 고정 높이 */
+  object-fit: cover; /* 이미지가 카드에 맞게 조정됨 */
+}
 </style>
