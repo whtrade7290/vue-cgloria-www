@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 const router = useRouter()
@@ -82,12 +82,12 @@ const props = defineProps({
   }
 })
 
-let pageNum = 1
+let pageNum = ref(Number(route.query?.pageNum ?? 1))
 const pageSize = 8
 let pageList = []
 
 const totalCount = store.state.count
-fetchList(pageNum)
+fetchList(pageNum.value)
 
 function fetchList(num) {
   const payload = {
