@@ -73,7 +73,7 @@
           <div class="card card-background card-background-mask-primary tilt" data-tilt>
             <div
               class="full-background"
-              style="background-image: url('https://cgloria.work:443/uploads/assets/cross1.jpeg')"
+              :style="{ backgroundImage: `url('${staticPath}cross1.jpeg')` }"
             ></div>
             <div class="card-body pt-7 text-center">
               <h2 class="text-white up mb-0" style="text-align: left">
@@ -105,7 +105,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-
+const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/`
 const store = useStore()
 const router = useRouter()
 

@@ -7,10 +7,7 @@
           class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4"
         >
           <div class="container-fluid px-0">
-            <img
-              src="https://cgloria.work:443/uploads/assets/main/f_logo.png"
-              style="width: 50px"
-            />
+            <img :src="`${staticPath}f_logo.png`" style="width: 50px" />
             <router-link
               to="/"
               class="navbar-brand font-weight-bolder ms-sm-3"
@@ -407,6 +404,7 @@ import router from '@/routes'
 import { useI18n } from 'vue-i18n'
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
 
+const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
 const store = useStore()
 const { locale, t } = useI18n()
 

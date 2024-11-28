@@ -23,7 +23,7 @@
           <a href="#">
             <img
               class="w-100 border-radius-lg shadow-lg"
-              src="https://cgloria.work:443/uploads/assets/main/ju2.jpg"
+              :src="`${staticPath}ju2.jpg`"
               alt="Product Image"
             />
           </a>
@@ -33,6 +33,8 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
+</script>
 
 <style lang="scss" scoped></style>

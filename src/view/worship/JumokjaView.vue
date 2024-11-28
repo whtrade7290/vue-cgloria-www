@@ -8,7 +8,7 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-left rounded-3 img-fluid position-relative top-0 end-0 bg-cover"
-                  src="https://cgloria.work:443/uploads/assets/jumok.jpg"
+                  :src="`${staticPath}uploads/assets/jumok.jpg`"
                 />
               </div>
             </div>
@@ -19,7 +19,7 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-container rounded-3 img-fluid position-relative bg-cover"
-                  src="https://cgloria.work:443/uploads/assets/ju2.jpeg"
+                  :src="`${staticPath}uploads/assets/ju2.jpeg`"
                 />
               </div>
             </div>
@@ -31,7 +31,7 @@
                 <img
                   class="image-right rounded-3 img-fluid position-relative bg-cover"
                   style="width: 70%"
-                  src="https://cgloria.work:443/uploads/assets/ju1.png"
+                  :src="`${staticPath}uploads/assets/ju1.png`"
                 />
               </div>
             </div>
@@ -61,6 +61,7 @@ import { WORSHIP } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 
+const staticPath = `${import.meta.env.VITE_API_URL}`
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)

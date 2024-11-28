@@ -131,11 +131,18 @@ onMounted(async () => {
     })
   }
 })
+
+const apiBaseUrl = import.meta.env.VITE_API_URL
+
+document.documentElement.style.setProperty(
+  '--background-image-url',
+  `url('${apiBaseUrl}uploads/assets/jesus.png')`
+)
 </script>
 
 <style scoped>
 .bg-img {
-  background-image: url('https://cgloria.work:443/uploads/assets/jesus.png');
+  background-image: var(--background-image-url);
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;

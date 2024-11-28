@@ -2,7 +2,7 @@ import { instance } from '@/api/intercept.js'
 import axios from 'axios'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
 const config = {
-  baseUrl: 'https://cgloria.work:3000/'
+  baseUrl: import.meta.env.VITE_API_URL
 }
 
 function getBoardList(obj) {

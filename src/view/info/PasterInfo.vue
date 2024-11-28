@@ -90,7 +90,7 @@
             <img
               class="border-radius-md"
               style="width: 100%"
-              src="https://cgloria.work:443/uploads/assets/pastor.jpeg"
+              :src="`${staticPath}uploads/assets/pastor.jpeg`"
               alt="First slide"
             />
           </div>
@@ -107,6 +107,7 @@ import { INFO } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 
+const staticPath = `${import.meta.env.VITE_API_URL}`
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)

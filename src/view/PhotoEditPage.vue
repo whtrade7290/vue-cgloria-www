@@ -66,7 +66,7 @@
               :key="index"
             >
               <img
-                :src="`https://cgloria.work:443/uploads/${item?.filename}`"
+                :src="`${staticPath}uploads/${item?.filename}`"
                 :alt="'Image ' + (index + 1)"
                 width="200"
                 class="image"
@@ -118,6 +118,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation.js'
 
+const staticPath = `${import.meta.env.VITE_API_URL}`
 const store = useStore()
 const editor = ClassicEditor
 const editorData = ref('')

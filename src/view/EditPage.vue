@@ -70,12 +70,7 @@
           </div>
           <div
             class="image-container"
-            v-if="
-              files.length === 0 &&
-              store.state.detail.filename &&
-              store.state.detail.fileDate &&
-              store.state.detail.extension
-            "
+            v-if="files.length === 0 && store.state.detail.filename && store.state.detail.extension"
           >
             <img :src="imageUrl" alt="img" />
             {{ store.state.detail.filename }}
@@ -227,7 +222,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
 
-  imageUrl.value = `https://cgloria.work:443/uploads/${store.state.detail.filename}`
+  imageUrl.value = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
 })
 </script>
 

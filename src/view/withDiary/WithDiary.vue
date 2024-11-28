@@ -3,7 +3,7 @@
     <HeaderComponent
       :main_msg="$t('withDiaryParams.mainTitle')"
       :sub_msg="$t('withDiaryParams.subTitle')"
-      imgUrl="https://cgloria.work:443/uploads/assets/main/sky1.jpeg"
+      :imgUrl="`${staticPath}uploads/assets/main/sky1.jpeg`"
     ></HeaderComponent>
     <div class="container">
       <CardContainer title="withDiaryParams.mainTitle">
@@ -20,11 +20,12 @@ import TableComponent from '@/components/common/table/TableComponent.vue'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import WriteButton from '@/components/common/WriteButton.vue'
 import { WITHDIARY } from '@/data/sidemenu.js'
-
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-const route = useRoute()
 
+const staticPath = `${import.meta.env.VITE_API_URL}`
+
+const route = useRoute()
 const store = useStore()
 
 store.dispatch('FETCH_SIDEMENU', WITHDIARY)

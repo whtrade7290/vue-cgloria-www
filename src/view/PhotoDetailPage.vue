@@ -41,11 +41,11 @@
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
               <a
-                :href="`https://cgloria.work:443/uploads/${item?.filename}`"
+                :href="`${staticPath}uploads/${item?.filename}`"
                 data-fancybox
                 :data-caption="item.filename"
               >
-                <img :src="`https://cgloria.work:443/uploads/${item?.filename}`" alt="img" />
+                <img :src="`${staticPath}uploads/${item?.filename}`" alt="img" />
               </a>
             </div>
           </div>
@@ -88,7 +88,7 @@ import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
-
+const staticPath = `${import.meta.env.VITE_API_URL}`
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -199,7 +199,7 @@ onMounted(() => {
   })
 
   if (store.state.files) {
-    imageUrl.value = `https://cgloria.work:443/uploads/${item?.filename}`
+    imageUrl.value = `${staticPath}uploads/${item?.filename}`
   }
 })
 </script>

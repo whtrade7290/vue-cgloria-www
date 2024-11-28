@@ -5,10 +5,7 @@
       <div class="row">
         <div class="col-md-3 mb-3">
           <div style="text-align: center; color: #777777">
-            <img
-              src="https://cgloria.work:443/uploads/assets/main/f_logo.png"
-              style="width: 100px"
-            /><br /><br />
+            <img :src="`${staticPath}f_logo.png`" style="width: 100px" /><br /><br />
             <strong>
               〒169-0074 東京都新宿区<br />北新宿３丁目１０−５<br /><br />
               TEL 03-5330-0090<br />
@@ -51,7 +48,7 @@
             </h4>
             <img
               style="height: 100px; width: 100%; border-radius: 5px"
-              src="https://cgloria.work:443/uploads/assets/main/mini_map.png"
+              :src="`${staticPath}mini_map.png`"
             />
           </div>
         </div>
@@ -68,6 +65,8 @@
   </footer>
 </template>
 
-<script setup></script>
+<script setup>
+const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
+</script>
 
 <style lang="scss" scoped></style>

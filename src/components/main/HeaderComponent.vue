@@ -86,9 +86,7 @@ defineProps({
   background-size: cover;
   background-blend-mode: multiply;
 }
-.main-back-img {
-  background-image: url('https://cgloria.work:443/uploads/assets/main/main01.jpg');
-}
+
 .main-font {
   font-size: 4.5rem;
   font-weight: bold;
