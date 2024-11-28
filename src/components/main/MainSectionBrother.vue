@@ -1,22 +1,23 @@
 <template>
   <section>
     <div class="container mt-sm-5">
-      <div class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl">
-        <div class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl">
-          <span class="mask bg-gradient-dark"></span>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 ms-lg-5">
-                <h4 class="text-white mb-0">Refresh Center</h4>
-                <h1 class="text-white">{{ $t('MainSectionBrother.refreshTitle') }}</h1>
-                <p class="lead text-white opacity-8">
-                  {{ $t('MainSectionBrother.refreshSubTitle') }}
-                </p>
-                <a href="http://www.fujirefresh.com/" class="text-white icon-move-right">
-                  {{ $t('MainSectionBrother.moveToPage') }}
-                  <i class="fas fa-arrow-right text-sm ms-1"></i>
-                </a>
-              </div>
+      <div
+        class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl"
+        :style="{ backgroundImage: `url('${staticPath}ref.jpg')` }"
+      >
+        <span class="mask bg-gradient-dark"></span>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 ms-lg-5">
+              <h4 class="text-white mb-0">Refresh Center</h4>
+              <h1 class="text-white">{{ $t('MainSectionBrother.refreshTitle') }}</h1>
+              <p class="lead text-white opacity-8">
+                {{ $t('MainSectionBrother.refreshSubTitle') }}
+              </p>
+              <a href="http://www.fujirefresh.com/" class="text-white icon-move-right">
+                {{ $t('MainSectionBrother.moveToPage') }}
+                <i class="fas fa-arrow-right text-sm ms-1"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -81,6 +82,8 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
+</script>
 
 <style lang="scss" scoped></style>
