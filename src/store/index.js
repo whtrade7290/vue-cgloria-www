@@ -62,13 +62,13 @@ export default createStore({
       commit('SET_BOARDLIST', res.data)
       return res
     },
-    async FETCH_BOARDCOUNT({ commit }, name) {
-      const res = await getBoardCount(name)
+    async FETCH_BOARDCOUNT({ commit }, obj) {
+      const res = await getBoardCount(obj)
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, id) {
-      const res = await getWithDiaryBoardCount(id)
+    async FETCH_WITHDIARY_BOARDCOUNT({ commit }, id, searchWord = '') {
+      const res = await getWithDiaryBoardCount(id, searchWord)
       commit('SET_BOARDCOUNT', res.data)
       return res
     },

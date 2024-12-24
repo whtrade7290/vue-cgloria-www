@@ -3,8 +3,8 @@ import ko from '../locales/ko.json'
 import jp from '../locales/jp.json'
 
 const i18n = createI18n({
-  locale: 'ko', // 기본 언어
-  fallbackLocale: 'jp', // 기본 언어 표시에 문제가 있을 경우 대체할 언어
+  locale: 'jp', // 기본 언어
+  fallbackLocale: 'ko', // 기본 언어 표시에 문제가 있을 경우 대체할 언어
   messages: {
     ko,
     jp

@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter, useRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 import MainView from '@/view/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import ChurchMap from '@/view/info/ChurchMap.vue'
@@ -64,7 +64,7 @@ const routes = [
     component: NoticeBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'notice')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'notice' })
       await next()
     }
   },
@@ -75,7 +75,7 @@ const routes = [
     component: SermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'sermon')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'sermon' })
       await next()
     }
   },
@@ -85,7 +85,7 @@ const routes = [
     component: ColumnBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'column')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'column' })
       await next()
     }
   },
@@ -95,7 +95,7 @@ const routes = [
     component: SmallGroup,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'classMeeting')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'classMeeting' })
       await next()
     }
   },
@@ -105,7 +105,7 @@ const routes = [
     component: WeeklySermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'weekly')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'weekly' })
       await next()
     }
   },
@@ -120,7 +120,7 @@ const routes = [
     component: SchoolPhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'school_photo')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'school_photo' })
       await next()
     }
   },
@@ -130,7 +130,7 @@ const routes = [
     component: SchoolLibrary,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'library')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'library' })
       await next()
     }
   },
@@ -143,7 +143,7 @@ const routes = [
     component: PhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'photo')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'photo' })
       await next()
     }
   },
@@ -153,7 +153,7 @@ const routes = [
     component: FreeBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', 'generalForum')
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'generalForum' })
       await next()
     }
   },
@@ -176,7 +176,7 @@ const routes = [
           next(from)
         })
       } else {
-        await store.dispatch('FETCH_BOARDCOUNT', 'testimony')
+        await store.dispatch('FETCH_BOARDCOUNT', { name: 'testimony' })
         await next()
       }
     }

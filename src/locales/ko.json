@@ -1,6 +1,7 @@
 {
   "button": {
     "withDiary": "예수동행일기",
+    "logIn": "로그인",
     "logout": "로그아웃",
     "write": "글작성",
     "toList": "목록으로",

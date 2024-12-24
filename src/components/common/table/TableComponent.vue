@@ -94,6 +94,21 @@
         </li>
       </ul>
     </nav>
+    <div class="d-flex justify-content-center mt-5">
+      <div class="mb-3 w-25">
+        <input
+          type="text"
+          class="form-control form-control-lg mr-1"
+          placeholder="search"
+          aria-label="Email"
+          aria-describedby="email-addon"
+          v-model="searchWord"
+        />
+      </div>
+      <div style="margin-left: 0.5rem; margin-top: 0.15rem">
+        <button type="button" class="btn bg-gradient-primary" @click="searchPost">검색</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -111,7 +126,7 @@ const props = defineProps({
     default: ''
   }
 })
-
+let searchWord = ref('')
 let pageNum = ref(Number(route.query?.pageNum ?? 1)) // ref로 선언
 
 // route.query.pageNum이 변경되면 pageNum을 업데이트하는 watch
@@ -147,7 +162,8 @@ function fetchList(num) {
   let payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
-    pageSize: pageSize
+    pageSize: pageSize,
+    searchWord: searchWord.value
   }
 
   let actionsName = ''
@@ -155,7 +171,7 @@ function fetchList(num) {
   if (route.name === 'withDiary') {
     actionsName = 'FETCH_WITHDIARY_DATALIST'
 
-    if (roomId) {
+    if (roomId.value) {
       payload = {
         ...payload,
         roomId: roomId.value
@@ -205,11 +221,46 @@ async function intoDetail(id) {
     params: { name: route.name, id: id }
   })
 }
+
+async function searchPost() {
+  pageNum.value = 1
+
+  let payload = {
+    name: props.called,
+    startRow: 0,
+    pageSize: pageSize,
+    searchWord: searchWord.value
+  }
+
+  let actionsName = ''
+  let actionsCountName = ''
+
+  if (route.name === 'withDiary') {
+    actionsName = 'FETCH_WITHDIARY_DATALIST'
+    actionsCountName = 'FETCH_WITHDIARY_BOARDCOUNT'
+
+    if (roomId.value) {
+      payload = {
+        ...payload,
+        roomId: roomId.value
+      }
+    }
+  } else {
+    actionsName = 'FETCH_BOARDLIST'
+    actionsCountName = 'FETCH_BOARDCOUNT'
+  }
+
+  // 글 갯수 조회
+  store.dispatch(actionsCountName, payload)
+  // 글 조회
+  store.dispatch(actionsName, payload)
+}
 </script>
 
 <style scoped>
 .selected {
   border: 3px solid #c5b5aa;
   background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
 }
 </style>

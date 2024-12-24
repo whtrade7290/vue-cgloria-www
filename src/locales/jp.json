@@ -1,6 +1,7 @@
 {
   "button": {
     "withDiary": "イエス同行日記",
+    "logIn": "ログイン",
     "logout": "ログアウト",
     "write": "作成",
     "toList": "リストへ",

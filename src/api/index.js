@@ -6,14 +6,19 @@ const config = {
 }
 
 function getBoardList(obj) {
-  const { name, startRow, pageSize } = obj
+  const { name, startRow, pageSize, searchWord } = obj
   return instance.post(`${name}/${name}`, {
     startRow: startRow,
-    pageSize: pageSize
+    pageSize: pageSize,
+    searchWord: searchWord
   })
 }
-function getBoardCount(name) {
-  return instance.get(`${name}/${name}_count`)
+function getBoardCount({ name, searchWord }) {
+  return instance.get(`${name}/${name}_count`, {
+    params: {
+      searchWord: searchWord
+    }
+  })
 }
 async function requestLogin(username, password) {
   try {

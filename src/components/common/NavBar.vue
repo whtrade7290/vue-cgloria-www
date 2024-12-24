@@ -377,7 +377,7 @@
                   <router-link
                     to="/logIn"
                     class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                    >로그인</router-link
+                    >{{ $t('button.logIn') }}</router-link
                   >
                   <a
                     href="javascript:;"
