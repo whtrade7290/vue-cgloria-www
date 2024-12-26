@@ -141,7 +141,7 @@ watch(
   { immediate: true } // 필요 시 deep 옵션 사용
 )
 
-const pageSize = 5
+const pageSize = 20
 let pageList = []
 
 const roomId = computed(() => Number(route.query?.roomId ?? 0))
