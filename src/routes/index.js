@@ -317,7 +317,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    // 페이지 이동 시 항상 상단으로 스크롤
+    return { top: 0 }
+  }
 })
 
 export default router
