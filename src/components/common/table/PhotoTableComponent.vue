@@ -114,6 +114,8 @@ watch(
 fetchList(pageNum.value)
 
 function fetchList(num) {
+  console.log('num: ', num)
+
   const payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
@@ -184,7 +186,7 @@ async function intoDetail(id) {
   await router.push({
     name: 'photoDetail',
     params: { name: route.name, id: id },
-    query: { pageNum: pageNum }
+    query: { pageNum: pageNum.value }
   })
 }
 
