@@ -163,22 +163,8 @@ const routes = [
     component: TestimonyBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-
-      const storedData = localStorage.getItem(getUserIdFromCookie())
-
-      const storageUser = storedData ? JSON.parse(storedData) : {}
-
-      if (!storageUser.token) {
-        await Swal.fire({
-          title: '로그인 전용 게시판입니다.',
-          icon: 'warning'
-        }).then(() => {
-          next(from)
-        })
-      } else {
-        await store.dispatch('FETCH_BOARDCOUNT', { name: 'testimony' })
-        await next()
-      }
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'testimony' })
+      await next()
     }
   },
   {
@@ -318,7 +304,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
+  scrollBehavior(to, from, savedPosition) {
     // 페이지 이동 시 항상 상단으로 스크롤
     return { top: 0 }
   }
