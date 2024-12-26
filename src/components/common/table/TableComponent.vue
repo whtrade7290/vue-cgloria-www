@@ -188,18 +188,17 @@ function fetchList(num) {
 
 function settingPageNumber() {
   let totalPages = Math.ceil(totalCount.value / pageSize)
-  let startIndex = (Math.ceil(pageNum.value / pageSize) - 1) * pageSize + 1
-  let endIndex =
-    startIndex + pageSize > totalCount.value ? totalCount.value : startIndex + pageSize - 1
-  if (endIndex > totalPages) {
-    endIndex = totalPages
-  }
+
+  // 항상 처음 5개 페이지가 표시되도록
+  let startIndex = Math.max(1, pageNum.value - 2) // 현재 페이지를 기준으로 앞 2개 페이지를 포함
+  let endIndex = Math.min(totalPages, startIndex + 4) // startIndex에서 5개 페이지까지 표시
 
   pageList = []
 
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
+
   return endIndex
 }
 
