@@ -36,8 +36,10 @@ export default createStore({
     bootstrap,
     sidemenu: {},
     dataList: [],
+    photoList: [],
     training: {},
     count: 0,
+    photoCount: 0,
     isLogIned: false,
     detail: {},
     mainContents: [],
@@ -67,14 +69,24 @@ export default createStore({
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
+    async FETCH_WITHDIARY_DATALIST({ commit }, obj) {
+      const res = await getWithDiaryBoardList(obj)
+      commit('SET_BOARDLIST', res.data)
+      return res
+    },
     async FETCH_WITHDIARY_BOARDCOUNT({ commit }, id, searchWord = '') {
       const res = await getWithDiaryBoardCount(id, searchWord)
       commit('SET_BOARDCOUNT', res.data)
       return res
     },
-    async FETCH_WITHDIARY_DATALIST({ commit }, obj) {
-      const res = await getWithDiaryBoardList(obj)
-      commit('SET_BOARDLIST', res.data)
+    async FETCH_PHOTO_DATALIST({ commit }, obj) {
+      const res = await getBoardList(obj)
+      commit('SET_PHOTO_DATALIST', res.data)
+      return res
+    },
+    async FETCH_PHOTO_DATACOUNT({ commit }, obj) {
+      const res = await getBoardCount(obj)
+      commit('SET_PHOTO_DATACOUNT', res.data)
       return res
     },
     async LOGIN({ commit }, { username, password }) {
@@ -252,6 +264,12 @@ export default createStore({
     },
     SET_BOARDCOUNT(state, item) {
       state.count = item
+    },
+    SET_PHOTO_DATALIST(state, item) {
+      state.photoList = item
+    },
+    SET_PHOTO_DATACOUNT(state, item) {
+      state.photoCount = item
     },
     SET_LOGINED(state, item) {
       state.isLogIned = item

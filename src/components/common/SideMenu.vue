@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-2 mb-lg-0 mb-2">
+  <div class="col-lg-2 mb-lg-0 mb-3">
     <ul class="nav flex-column bg-white border-radius-lg p-3 position-sticky top-1">
       <li class="nav-item" v-for="(menu, inx) in sidemenu" :key="inx">
         <div v-bind:class="[route.name === menu.path ? 'selected' : '']">

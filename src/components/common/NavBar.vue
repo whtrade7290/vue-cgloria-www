@@ -430,7 +430,6 @@ function getParsedStoredData() {
 
 const { accessToken, refreshToken, storedRole } = getParsedStoredData()
 const role = ref(storedRole)
-const toggle = ref(true)
 
 // 로그아웃 함수
 function logout() {
@@ -465,8 +464,18 @@ const readyYet = () => {
 
 // 언어 변경 함수
 const changeLanguage = () => {
-  locale.value = toggle.value ? 'jp' : 'ko'
-  toggle.value = !toggle.value
+  Swal.fire({
+    title: t('modalMsg.changeLang'),
+    icon: 'question',
+    showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const newLang = localStorage.getItem('getLanguage') === 'jp' ? 'ko' : 'jp'
+      localStorage.setItem('getLanguage', newLang) // ✅ 변경된 언어를 localStorage에 저장
+      locale.value = newLang // ✅ Vue I18n 언어 변경
+      window.document.title = t('nav.main')
+    }
+  })
 }
 
 // 예수동행일기 그룹 존재 여부 확인
@@ -573,8 +582,17 @@ const goToWithDiary = async () => {
 
 // 토큰 검사 실행
 onMounted(async () => {
-  store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+  await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken }) // ✅ 비동기 액션 대기
   getParsedStoredData()
+
+  const storedLang = localStorage.getItem('getLanguage') // ✅ 중복 호출 제거
+
+  if (!storedLang) {
+    locale.value = 'jp'
+    localStorage.setItem('getLanguage', 'jp') // ✅ 한 번만 저장
+  } else {
+    locale.value = storedLang // ✅ 기존 값 사용
+  }
 })
 </script>
 

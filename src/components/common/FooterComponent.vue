@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer pt-0 mt-0" style="background-color: #2b2b2b">
+  <footer class="footer pt-0 mt-5" style="background-color: #2b2b2b">
     <hr class="horizontal dark mb-5" />
     <div class="container">
       <div class="row">
@@ -13,9 +13,8 @@
             </strong>
           </div>
         </div>
-
-        <div class="col-md-3 col-sm-5 col-5 mb-4 align-items-center" style="padding-left: 100px">
-          <div style="color: #777777">
+        <div class="col-md-3 mb-5">
+          <div style="text-align: center; color: #777777">
             <h4>
               <strong style="color: #ffffff">{{ $t('FooterComponent.worshipTime') }}</strong>
             </h4>
@@ -28,8 +27,8 @@
             10:30~12:00
           </div>
         </div>
-        <div class="col-md-3 col-sm-5 col-5 mb-4 align-items-center" style="padding-left: 100px">
-          <div style="color: #777777">
+        <div class="col-md-3 mb-5">
+          <div style="text-align: center; color: #777777">
             <h4>
               <strong style="color: #ffffff">{{ $t('FooterComponent.trainingTime') }}</strong>
             </h4>
@@ -41,24 +40,24 @@
             {{ $t('FooterComponent.saturday') }} 06:40~07:40
           </div>
         </div>
-        <div class="col-md-3 col-sm-4 col-4 mb-5 me-auto">
-          <div>
-            <h4>
-              <strong style="color: #ffffff">{{ $t('FooterComponent.location') }}</strong>
-            </h4>
-            <img
-              style="height: 100px; width: 100%; border-radius: 5px"
-              :src="`${staticPath}mini_map.png`"
-            />
+        <div class="col-md-3 mb-5">
+          <div style="text-align: center; color: #777777">
+            <div>
+              <h4>
+                <strong style="color: #ffffff">{{ $t('FooterComponent.location') }}</strong>
+              </h4>
+              <img
+                style="height: 100px; width: 100%; border-radius: 5px"
+                :src="`${staticPath}mini_map.png`"
+              />
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-12">
-          <div class="text-center">
-            <p class="my-4 text-sm" style="color: #ffffff">
-              All Right Reserved © 중앙영광교회 LLC.
-            </p>
-          </div>
+      <div class="col-12">
+        <div class="text-center">
+          <p class="my-4 text-sm" style="color: #ffffff">All Right Reserved © 중앙영광교회 LLC.</p>
         </div>
       </div>
     </div>

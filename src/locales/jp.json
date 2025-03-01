@@ -161,7 +161,8 @@
     "logInFail": "ログインに失敗しました。",
     "logined": "既にログインされています。",
     "makeWithDiary": "イエス同行日記掲示板が作成されました。",
-    "failWithDiary": "イエス同行日記掲示板の作成に失敗しました。"
+    "failWithDiary": "イエス同行日記掲示板の作成に失敗しました。",
+    "changeLang": "한국어로 변경하시겠습니까?"
   },
   "webContents": {
     "training": {

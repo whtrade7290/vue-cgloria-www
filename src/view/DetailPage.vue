@@ -8,11 +8,11 @@
         <div style="display: flex; justify-content: space-between">
           <div>
             <div class="d-flex justify-content-start">
-              <div style="margin-right: 0.8rem">
+              <!-- <div style="margin-right: 0.8rem">
                 <span style="font-size: 3rem" class="material-symbols-outlined">
                   account_circle
                 </span>
-              </div>
+              </div> -->
               <div>
                 <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
                   {{ store.state.detail.writer_name ?? store.state.detail.writer }}
@@ -68,7 +68,7 @@
       </div>
     </div>
   </section>
-  <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
+  <CommentComponent v-if="isSignIn" @commentCount="handleCommentCount"></CommentComponent>
 </template>
 
 <script setup>
@@ -83,6 +83,10 @@ const route = useRoute()
 const router = useRouter()
 const store = useStore()
 const commentCount = ref(0)
+
+const isSignIn = computed(() => {
+  return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
+})
 
 const handleCommentCount = (count) => {
   commentCount.value = count
@@ -116,16 +120,18 @@ const formatDate = (dateString) => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}. ${month}. ${day}. ${hours}:${minutes}`
+  return `${year}. ${month}. ${day}. `
 }
 
 function goToBoardList() {
   router.push({
     name: route.params.name,
-    query: { pageNum: route.query.pageNum, roomId: route.query.roomId }
+    query: {
+      pageNum: route.query.pageNum,
+      roomId: route.query.roomId,
+      searchWord: route.query.searchWord
+    }
   })
 }
 

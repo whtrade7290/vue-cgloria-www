@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
         <SideMenu class="display-sideMenu"></SideMenu>
-        <div class="col-lg-10">
+        <div class="col-lg-9">
           <div class="card shadow-lg mb-5">
             <CardHeader :title="title"></CardHeader>
             <div class="card card-calendar">

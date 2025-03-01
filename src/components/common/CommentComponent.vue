@@ -7,9 +7,9 @@
           <div class="comment-text-container">
             <div class="comment-textarea-box">
               <div class="mt-2 d-flex justify-content-start">
-                <span style="font-size: 2.7rem" class="material-symbols-outlined">
+                <!-- <span style="font-size: 2.7rem" class="material-symbols-outlined">
                   account_circle
-                </span>
+                </span> -->
                 <div>
                   <div style="margin-top: 0.3rem; margin-left: 0.5rem; font-size: 1.3rem">
                     {{ getUserNameFromSession }}
@@ -57,7 +57,7 @@ import { getUserIdFromCookie } from '@/utils/cookie.js'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   id: {
     type: Number,
     default: 0
@@ -74,10 +74,8 @@ const formatDate = (dateString) => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}. ${month}. ${day}. ${hours}:${minutes}`
+  return `${year}. ${month}. ${day}. `
 }
 
 const getUserNameFromSession = computed(() => {
@@ -87,7 +85,11 @@ const getUserNameFromSession = computed(() => {
 })
 
 const writeComment = async () => {
+  console.log('excute')
+
   const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
+
+  console.log('user: ', user)
 
   if (!user) {
     return false
@@ -165,5 +167,19 @@ onMounted(async () => {
   font-size: 1.5rem;
   font-weight: bold;
   /* background-color: yellow; */
+}
+section {
+  width: 100%;
+}
+.comment-container {
+  width: 100%;
+}
+
+.comment-box {
+  width: 100%;
+}
+
+.comment-box > div {
+  width: 100%;
 }
 </style>

@@ -99,7 +99,7 @@ const props = defineProps({
 let searchWord = ref('')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))
-const pageSize = 8
+const pageSize = 20
 let pageList = []
 
 const totalCount = computed(() => store.state.count)
@@ -114,32 +114,30 @@ watch(
 fetchList(pageNum.value)
 
 function fetchList(num) {
-  console.log('num: ', num)
-
   const payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
     pageSize: pageSize,
     searchWord: searchWord.value
   }
-  store.dispatch('FETCH_BOARDLIST', payload)
+  store.dispatch('FETCH_PHOTO_DATALIST', payload)
   pageNum.value = num
   settingPageNumber()
 }
 
 function settingPageNumber() {
   let totalPages = Math.ceil(totalCount.value / pageSize)
-  let startIndex = (Math.ceil(pageNum.value / pageSize) - 1) * pageSize + 1
-  let endIndex =
-    startIndex + pageSize > totalCount.value ? totalCount.value : startIndex + pageSize - 1
-  if (endIndex > totalPages) {
-    endIndex = totalPages
-  }
+
+  // 항상 처음 5개 페이지가 표시되도록
+  let startIndex = Math.max(1, pageNum.value - 2) // 현재 페이지를 기준으로 앞 2개 페이지를 포함
+  let endIndex = Math.min(totalPages, startIndex + 7) // startIndex에서 5개 페이지까지 표시
+
   pageList = []
 
   for (let index = startIndex; index <= endIndex; index++) {
     pageList.push(index)
   }
+
   return endIndex
 }
 
@@ -148,15 +146,13 @@ const formatDate = (dateString) => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}. ${month}. ${day}. ${hours}:${minutes}`
+  return `${year}. ${month}. ${day}.`
 }
 
 const parsedFiles = computed(() => {
   // dataList를 가져옵니다
-  const dataList = store.state.dataList
+  const dataList = store.state.photoList
 
   const newList = dataList.map((data) => {
     let files = []
@@ -201,9 +197,9 @@ async function searchPost() {
   }
 
   // 글 갯수 조회
-  store.dispatch('FETCH_BOARDCOUNT', payload)
+  store.dispatch('FETCH_PHOTO_DATACOUNT', payload)
   // 글 조회
-  store.dispatch('FETCH_BOARDLIST', payload)
+  store.dispatch('FETCH_PHOTO_DATALIST', payload)
 }
 </script>
 

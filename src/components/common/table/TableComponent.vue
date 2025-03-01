@@ -30,26 +30,38 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, idx) in store.state.dataList" :key="idx">
-          <td style="width: 10%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id }}</p>
-          </td>
-          <td style="width: 40%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0">
-              <a href="javascript:;" @click="intoDetail(item.id)">{{ item.title }}</a>
-            </p>
-          </td>
-          <td style="width: 10%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0 text-center">
-              {{ item.writer_name ?? item.writer }}
-            </p>
-          </td>
-          <td style="width: 20%; text-align: center">
-            <p class="text-sm font-weight-bold mb-0 text-center">
-              {{ formatDate(item.create_at) }}
-            </p>
-          </td>
-        </tr>
+        <template v-if="store.state.dataList.length > 0">
+          <tr v-for="(item, idx) in store.state.dataList" :key="idx">
+            <td style="width: 10%; text-align: center">
+              <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id }}</p>
+            </td>
+            <td style="width: 40%; text-align: left">
+              <p class="text-sm font-weight-bold mb-0">
+                <a href="javascript:;" @click="intoDetail(item.id)">{{ item.title }}</a>
+              </p>
+            </td>
+            <td style="width: 10%; text-align: center">
+              <p class="text-sm font-weight-bold mb-0 text-center">
+                {{ item.writer_name ?? item.writer }}
+              </p>
+            </td>
+            <td style="width: 20%; text-align: center">
+              <p class="text-sm font-weight-bold mb-0 text-center">
+                {{ formatDate(item.create_at) }}
+              </p>
+            </td>
+          </tr>
+        </template>
+        <template v-else>
+          <tr>
+            <td colspan="4" class="no-results">
+              <div class="result-container">
+                <i class="fas fa-search"></i>
+                <p class="result-text">검색 결과가 없습니다.</p>
+              </div>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
     <nav aria-label="Page navigation example">
@@ -113,7 +125,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -207,18 +219,34 @@ const formatDate = (dateString) => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}. ${month}. ${day}. ${hours}:${minutes}`
+  return `${year}. ${month}. ${day}. `
 }
 
 async function intoDetail(id) {
   await router.push({
     name: 'detail',
-    query: { pageNum: pageNum.value, roomId: roomId.value }, // roomId를 query로 설정
+    query: {
+      pageNum: pageNum.value,
+      roomId: roomId.value,
+      ...(searchWord.value && { searchWord: searchWord.value })
+    }, // roomId를 query로 설정
     params: { name: route.name, id: id }
   })
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleEnterKey)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleEnterKey)
+})
+
+const handleEnterKey = (event) => {
+  if (event.key === 'Enter') {
+    searchPost()
+  }
 }
 
 async function searchPost() {
@@ -253,6 +281,8 @@ async function searchPost() {
   store.dispatch(actionsCountName, payload)
   // 글 조회
   store.dispatch(actionsName, payload)
+
+  window.scrollTo({ top: 0, behavior: 'smooth' }) // 부드러운 스크롤 적용
 }
 </script>
 
@@ -261,5 +291,46 @@ async function searchPost() {
   border: 3px solid #c5b5aa;
   background-color: rgba(0, 0, 0, 0.1);
   pointer-events: none;
+}
+
+.no-results {
+  text-align: center;
+  vertical-align: middle;
+  height: 200px;
+  background-color: #f8f9fa; /* 연한 회색 배경 */
+  border: 1px solid #ddd; /* 테두리 */
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.result-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555; /* 어두운 회색 */
+  margin-top: 10px;
+}
+
+i {
+  font-size: 30px;
+  color: #777; /* 아이콘 색상 */
+}
+
+/* 부드러운 페이드인 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

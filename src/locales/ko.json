@@ -159,7 +159,8 @@
     "logInFail": "로그인에 실패하였습니다.",
     "logined": "이미 로그인 되었습니다.",
     "makeWithDiary": "예수동행일기 게시판이 생성되었습니다.",
-    "failWithDiary": "예수동행일기 게시판 생성에 실패하였습니다."
+    "failWithDiary": "예수동행일기 게시판 생성에 실패하였습니다.",
+    "changeLang": "日本語に切り替えますか？"
   },
   "webContents": {
     "training": {
