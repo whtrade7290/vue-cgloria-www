@@ -28,8 +28,8 @@
 <script setup>
 import Swal from 'sweetalert2'
 import CardContainer from '@/components/common/card/CardContainer.vue'
-import MakeUserList from '@/view/admin/MakeUserList.vue'
-import MakeRoom from '@/view/admin/MakeRoom.vue'
+import MakeUserList from '@/view/admin/MakeWithDiary/MakeUserList.vue'
+import MakeRoom from '@/view/admin/MakeWithDiary/MakeRoom.vue'
 import { useStore } from 'vuex'
 import { ADMIN } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'

@@ -31,7 +31,8 @@ const SOCIALIZE = [
 ]
 const ADMIN = [
   { title: 'nav.subTitle7.makeWithDiary', icon: 'book', path: 'make_withDiary' },
-  { title: 'nav.subTitle7.approvePage', icon: 'book', path: 'approve' }
+  { title: 'nav.subTitle7.approvePage', icon: 'book', path: 'approve' },
+  { title: 'nav.subTitle7.manageWithDiary', icon: 'book', path: 'manageWithDiary' }
 ]
 const WITHDIARY = [{ title: 'button.withDiary', icon: 'book', path: 'withDiary' }]
 const WRITE = [{ title: 'button.withDiary', icon: 'write', path: 'write' }]

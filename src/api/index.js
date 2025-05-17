@@ -44,6 +44,9 @@ function getWithDiaryBoardCount(id) {
     id: id
   })
 }
+function getWithDiaryAll() {
+  return instance.get(`withDiary/withDiary_all`)
+}
 function writeBoard(formData, name) {
   if (name === 'withDiary') {
     formData.append(
@@ -187,6 +190,7 @@ export {
   getWithDiaryBoardList,
   getBoardCount,
   getWithDiaryBoardCount,
+  getWithDiaryAll,
   writeBoard,
   getContentById,
   getPhotoContentById,

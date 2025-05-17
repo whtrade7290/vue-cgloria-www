@@ -49,7 +49,8 @@
     },
     "subTitle7": {
       "makeWithDiary": "イエス同行日記開設",
-      "approvePage": "新規登録承認ページ"
+      "approvePage": "新規登録承認ページ",
+      "manageWithDiary": "イエス同行日記ルーム管理"
     }
   },
   "table": {
@@ -59,6 +60,14 @@
       "name": "名前",
       "role": "権限",
       "approve": "承認可否"
+    },
+    "manageWithDiary": {
+      "id": "ID",
+      "roomName": "ルームネーム",
+      "creator_name": "登録人",
+      "update_at": "登録日",
+      "member": "メンバー",
+      "btn": "削除"
     },
     "tableComponent": {
       "number": "番号",

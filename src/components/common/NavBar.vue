@@ -335,6 +335,11 @@
                         <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
                       </router-link>
                     </div>
+                    <div class="d-none d-lg-block">
+                      <router-link to="/manageWithDiary" class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{ $t('nav.subTitle7.manageWithDiary') }}</span>
+                      </router-link>
+                    </div>
                     <div class="d-lg-none">
                       <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
@@ -343,6 +348,11 @@
                     <div class="d-lg-none">
                       <router-link to="/approve" class="dropdown-item border-radius-md">
                         <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
+                      </router-link>
+                    </div>
+                    <div class="d-lg-none">
+                      <router-link to="/manageWithDiary" class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{ $t('nav.subTitle7.manageWithDiary') }}</span>
                       </router-link>
                     </div>
                   </div>
@@ -551,6 +561,8 @@ const goToWithDiary = async () => {
     const result = await Swal.fire({
       title: t('modalMsg.withDiaryRoom'),
       html: optionsHtml,
+      showCancelButton: true,
+      cancelButtonText: '취소',
       confirmButtonText: t('button.enterWithDiary'),
       preConfirm: () => {
         const selectedOption = document.querySelector('input[name="radioOption"]:checked')

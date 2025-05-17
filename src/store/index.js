@@ -4,6 +4,7 @@ import {
   getBoardList,
   requestLogin,
   getWithDiaryBoardList,
+  getWithDiaryAll,
   getBoardCount,
   getWithDiaryBoardCount,
   writeBoard,
@@ -181,7 +182,7 @@ export default createStore({
       const res = await editPhotoBoard(formData, name)
       return res.status === 200
     },
-    async FETCH_MAIN_CONTENTS({ commit }, name) {
+    async FETCH_MAIN_CONTENTS({ commit }) {
       const sermon = await getMainSermon('sermon')
       const weekly = await getMainWeekly('weekly')
       const column = await getMainColumn('column')
@@ -230,6 +231,10 @@ export default createStore({
         commit('SET_ROOM', res.data)
       }
       return res.data
+    },
+    async FETCH_WITHDIARY_ALL({ commit }) {
+      const res = await getWithDiaryAll()
+      commit('SET_ROOMS', res.data)
     },
     async CLEAR_STATE({ commit }) {
       commit('SET_BOARDLIST', [])

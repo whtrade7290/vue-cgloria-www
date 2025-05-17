@@ -172,6 +172,7 @@ section {
   width: 100%;
 }
 .comment-container {
+  padding: 7rem;
   width: 100%;
 }
 

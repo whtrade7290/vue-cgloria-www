@@ -26,8 +26,10 @@ import PhotoEditPage from '@/view/PhotoEditPage.vue'
 import PhotoWritePage from '@/view/PhotoWritePage.vue'
 import DetailPage from '@/view/DetailPage.vue'
 import PhotoDetailPage from '@/view/PhotoDetailPage.vue'
-import MakeWithDiaryRoom from '@/view/admin/MakeWithDiaryRoom.vue'
-import ApprovePage from '@/view/admin/ApprovePage.vue'
+import MakeWithDiaryRoom from '@/view/admin/MakeWithDiary/MakeWithDiaryRoom.vue'
+import ApprovePage from '@/view/admin/Approve/ApprovePage.vue'
+import ManageWithDiary from '@/view/admin/ManageWithDiary/ManageWithDiary.vue'
+
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
@@ -294,6 +296,29 @@ const routes = [
         await next(from)
       } else {
         await store.dispatch('FIND_DISAPPROVE_USERS')
+
+        await next()
+      }
+    }
+  },
+  {
+    path: '/manageWithDiary',
+    name: 'manageWithDiary',
+    component: ManageWithDiary,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const storedData = localStorage.getItem(getUserIdFromCookie())
+
+      const storageUser = storedData ? JSON.parse(storedData) : {}
+
+      if (storageUser.user.role !== 'ADMIN') {
+        await Swal.fire({
+          title: '관리자 전용 게시판입니다.',
+          icon: 'warning'
+        })
+        await next(from)
+      } else {
+        await store.dispatch('FETCH_WITHDIARY_ALL')
 
         await next()
       }

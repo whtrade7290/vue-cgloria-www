@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import Swal from 'sweetalert2'
 import { ref } from 'vue'
 
 const emit = defineEmits(['team-name'])
@@ -31,8 +32,15 @@ const emit = defineEmits(['team-name'])
 const isDecided = ref(false)
 const name = ref('')
 const decidedTeamName = () => {
-  isDecided.value = !isDecided.value
-  emit('emit-info', { name: name.value, isDecided: isDecided.value })
+  if (name.value.length > 0) {
+    isDecided.value = !isDecided.value
+    emit('emit-info', { name: name.value, isDecided: isDecided.value })
+  } else {
+    Swal.fire({
+      title: '팀이름을 입력하여주세요.',
+      icon: 'error'
+    })
+  }
 }
 </script>
 
