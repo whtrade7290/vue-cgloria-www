@@ -239,7 +239,6 @@ onMounted(() => {
 .img-container {
   height: 100%;
   overflow: hidden;
-
   display: flex;
 }
 
