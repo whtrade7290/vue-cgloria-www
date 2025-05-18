@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'

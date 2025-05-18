@@ -3,7 +3,7 @@
     <div class="container">
       <div class="detail-card">
         <div>
-          <h2>{{ store.state.detail.title }}</h2>
+          <h2>{{ store.state.detail.title || '' }}</h2>
         </div>
         <div style="display: flex; justify-content: space-between">
           <div>
@@ -33,7 +33,7 @@
           </div>
           <div>
             <p style="margin-top: 0.2rem; font-size: 1rem; font-weight: 500">
-              {{ formatDate(store.state.detail.create_at) }}
+              {{ formatDate(store.state.detail.create_at) || '' }}
             </p>
           </div>
         </div>

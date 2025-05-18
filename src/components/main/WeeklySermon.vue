@@ -6,17 +6,17 @@
           <div class="row">
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
-                <h3>{{ formatDate(sermonItem.create_at) }}</h3>
+                <h3>{{ formatDate(sermonItem.create_at) || '' }}</h3>
                 <h5 class="mt-3">{{ $t('weeklySermon.sermon') }}</h5>
-                <p class="text-sm">{{ sermonItem.title }}</p>
+                <p class="text-sm">{{ sermonItem.title || '' }}</p>
               </div>
               <hr class="vertical dark" />
             </div>
             <div class="col-md-8 position-relative">
               <div class="p-3">
                 <h3 class="text-gradient text-primary">&nbsp;</h3>
-                <h5 class="mt-3">{{ weeklyItem.title }}</h5>
-                <p class="text-sm" v-html="truncatedText(weeklyItem.content, 160)"></p>
+                <h5 class="mt-3">{{ weeklyItem.title || '' }}</h5>
+                <p class="text-sm" v-html="truncatedText(weeklyItem?.content ?? '', 160)"></p>
                 <template v-if="weeklyItem.id !== 999999">
                   <a
                     href="javascript:;"

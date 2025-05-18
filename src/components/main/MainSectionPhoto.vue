@@ -20,8 +20,8 @@
             </div>
             <div class="card-body px-0" style="padding-top: 10px">
               <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title }}</a>
-                {{ item.id }}
+                <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title || '' }}</a>
+                {{ item.id || '' }}
               </h6>
             </div>
           </div>
@@ -66,11 +66,13 @@ const processedDataList = computed(() => {
 })
 
 async function intoDetail(id) {
-  await router.push({
-    name: 'photoDetail',
-    params: { name: 'photo', id: id },
-    query: { pageNum: 1 }
-  })
+  if (id) {
+    await router.push({
+      name: 'photoDetail',
+      params: { name: 'photo', id: id },
+      query: { pageNum: 1 }
+    })
+  }
 }
 </script>
 

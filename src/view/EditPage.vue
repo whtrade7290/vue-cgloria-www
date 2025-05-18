@@ -73,7 +73,7 @@
             v-if="files.length === 0 && store.state.detail.filename && store.state.detail.extension"
           >
             <img :src="imageUrl" alt="img" />
-            {{ store.state.detail.filename }}
+            {{ store.state.detail.filename || '' }}
           </div>
         </div>
         <div class="mb-3">

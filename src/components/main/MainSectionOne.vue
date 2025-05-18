@@ -11,10 +11,10 @@
                     {{ $t('mainSectionOne.column') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    {{ columnItem.title }}
+                    {{ columnItem.title || '' }}
                   </h5>
                 </div>
-                <p class="pe-5" v-html="truncatedText(columnItem.content, 200)"></p>
+                <p class="pe-5" v-html="truncatedText(columnItem?.content ?? '', 200)"></p>
                 <template v-if="columnItem.id !== 999999">
                   <a
                     href="javascript:;"
@@ -32,7 +32,7 @@
                     {{ $t('mainSectionOne.classMeeting') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    {{ classMeetingItem.title }}
+                    {{ classMeetingItem.title || '' }}
                   </h5>
                 </div>
                 <p class="pe-3" v-html="truncatedText(classMeetingItem.content, 300)"></p>
@@ -53,7 +53,7 @@
                     {{ $t('mainSectionOne.testimony') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    {{ testimonyItem.title }}
+                    {{ testimonyItem.title || '' }}
                   </h5>
                 </div>
                 <p class="pe-3" v-html="truncatedText(testimonyItem.content, 250)"></p>
@@ -119,11 +119,13 @@ const classMeetingItem = store.state.mainContents[1]
 const testimonyItem = store.state.mainContents[2]
 
 async function intoDetail(id, name) {
-  await router.push({
-    name: 'detail',
-    params: { name: name, id: id },
-    query: { pageNum: 1 }
-  })
+  if (id) {
+    await router.push({
+      name: 'detail',
+      params: { name: name, id: id },
+      query: { pageNum: 1 }
+    })
+  }
 }
 </script>
 

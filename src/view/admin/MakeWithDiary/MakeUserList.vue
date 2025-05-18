@@ -51,17 +51,17 @@
           <template v-if="props.userList.length > 0">
             <tr v-for="(item, idx) in props.userList" :key="idx">
               <td style="width: 10%; text-align: center">
-                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id }}</p>
+                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id || '' }}</p>
               </td>
               <td style="width: 25%; text-align: left">
-                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.username }}</p>
+                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.username || '' }}</p>
               </td>
               <td style="width: 25%; text-align: center">
-                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.name }}</p>
+                <p class="text-sm font-weight-bold mb-0 text-center">{{ item.name || '' }}</p>
               </td>
               <td style="width: 20%; text-align: center">
                 <p class="text-sm font-weight-bold mb-0 text-center">
-                  {{ formatDate(item.create_at) }}
+                  {{ formatDate(item.create_at) || '' }}
                 </p>
               </td>
               <td style="width: 10%; text-align: center">
