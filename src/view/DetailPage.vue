@@ -66,9 +66,9 @@
           >
         </div>
       </div>
+      <CommentComponent v-if="isSignIn" @commentCount="handleCommentCount"></CommentComponent>
     </div>
   </section>
-  <CommentComponent v-if="isSignIn" @commentCount="handleCommentCount"></CommentComponent>
 </template>
 
 <script setup>
@@ -230,15 +230,18 @@ onMounted(() => {
 }
 
 .container {
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin-top: 3rem;
   margin-bottom: 5rem;
+  border: #d2d6da solid 1px;
+  border-radius: 1.5rem;
 }
 .detail-card {
   margin-top: 7rem;
-  width: 70%;
+  width: 100%;
   height: 80%;
 }
 .user-info {

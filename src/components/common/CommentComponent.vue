@@ -147,7 +147,7 @@ onMounted(async () => {
   overflow-y: scroll;
 }
 .comment-container {
-  background-color: #f4f4f4;
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 2.5rem 0 2.5rem 0;
@@ -169,10 +169,6 @@ onMounted(async () => {
   /* background-color: yellow; */
 }
 section {
-  width: 100%;
-}
-.comment-container {
-  padding: 7rem;
   width: 100%;
 }
 

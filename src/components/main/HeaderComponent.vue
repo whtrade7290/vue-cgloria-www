@@ -87,12 +87,27 @@ defineProps({
   background-blend-mode: multiply;
 }
 
-.main-font {
-  font-size: 4.5rem;
-  font-weight: bold;
-}
 .diary-font {
   font-size: 5rem;
   font-weight: bold;
+}
+
+.main-font {
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .main-font {
+    font-size: 5vh;
+    font-weight: bold;
+  }
+}
+
+@media (min-width: 1200px) {
+  .main-font {
+    font-size: 6.5vh;
+    font-weight: bold;
+  }
 }
 </style>

@@ -75,8 +75,8 @@
         </div>
       </div>
     </div>
+    <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
   </section>
-  <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
 </template>
 
 <script setup>
