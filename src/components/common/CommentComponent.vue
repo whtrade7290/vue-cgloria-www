@@ -29,7 +29,7 @@
 
           <div class="border-line" v-for="item in commentList" :key="item">
             <div class="mt-2 d-flex justify-content-start">
-              <span style="font-size: 4rem" class="material-symbols-outlined">
+              <span style="font-size: 3rem" class="material-symbols-outlined">
                 account_circle
               </span>
               <div>

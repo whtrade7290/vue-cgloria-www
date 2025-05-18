@@ -239,6 +239,7 @@ onMounted(() => {
   border: #d2d6da solid 1px;
   border-radius: 1.5rem;
   padding-bottom: 3rem;
+  overflow-x: hidden;
 }
 .detail-card {
   margin-top: 7rem;
