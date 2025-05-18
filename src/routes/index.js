@@ -55,7 +55,7 @@ const routes = [
   },
   // auth
   { path: '/logIn', name: 'logIn', component: LoginView },
-  { path: '/signUp', name: 'signUp', component: SignUpView },
+  { path: '/signUp/:isQr?', name: 'signUp', component: SignUpView },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
   { path: '/location', name: 'location', component: ChurchMap },

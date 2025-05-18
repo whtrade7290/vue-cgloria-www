@@ -104,7 +104,7 @@ export default createStore({
       const result = await signUp(username, password, name)
 
       if (result.data && result.status === 200) {
-        return true
+        return result.data
       } else {
         return false
       }

@@ -90,15 +90,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
-import { VALIDATION_USERNAME, VALIDATION_PASSWORD } from '@/utils/validation.js'
 
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
 const username = ref('')
 const usernameMsg = ref('')
@@ -190,11 +190,21 @@ const signUp = async () => {
     })
 
     if (result) {
-      await Swal.fire({
-        title:
-          '회원가입 신청이 완료 되었습니다.\n 관리자 승인 후 활성화 되니 \n 조금만 기다려주세요.',
-        icon: 'success'
-      })
+      if (route.params.isQr) {
+        const updatedUser = await store.dispatch('UPDATE_APPROVE_STATUS', result.id)
+        if (updatedUser.isApproved) {
+          await Swal.fire({
+            title: '회원가입이 완료 되었습니다.',
+            icon: 'success'
+          })
+        }
+      } else {
+        await Swal.fire({
+          title:
+            '회원가입 신청이 완료 되었습니다.\n 관리자 승인 후 활성화 되니 \n 조금만 기다려주세요.',
+          icon: 'success'
+        })
+      }
 
       confirmUsername = false
       confirmPassword = false
