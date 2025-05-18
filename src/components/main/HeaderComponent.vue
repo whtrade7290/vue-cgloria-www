@@ -1,8 +1,8 @@
 <template>
   <header class="header-2">
     <div
-      class="page-header min-vh-75 relative main-back-img"
-      :style="{ backgroundImage: 'url(' + imgUrl + ')' }"
+      class="page-header min-vh-75 relative main-bg"
+      :style="isMobile ? {} : { backgroundImage: `url(${imgUrl})` }"
     >
       <div class="container">
         <div class="row">
@@ -49,6 +49,8 @@
 </template>
 
 <script setup>
+import { onBeforeMount, onMounted, ref } from 'vue'
+
 defineProps({
   main_msg: {
     type: String,
@@ -63,6 +65,25 @@ defineProps({
     default: ''
   }
 })
+
+const isMobile = ref(false)
+
+function checkIsMobile() {
+  isMobile.value = window.innerWidth < 768
+}
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeMount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
+
+// const styleProps = ref({
+//   backgroundImage: `url(${props.imgUrl})`
+// })
 </script>
 
 <style scoped>
@@ -90,6 +111,10 @@ defineProps({
 .diary-font {
   font-size: 5rem;
   font-weight: bold;
+}
+
+.main-bg {
+  background-image: linear-gradient(310deg, #f5c6aa, #f7e7dc);
 }
 
 .main-font {

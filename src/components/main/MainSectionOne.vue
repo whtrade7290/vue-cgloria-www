@@ -14,7 +14,7 @@
                     {{ columnItem.title || '' }}
                   </h5>
                 </div>
-                <p class="pe-5" v-html="truncatedText(columnItem?.content ?? '', 200)"></p>
+                <p v-html="truncatedText(columnItem?.content ?? '', 200)"></p>
                 <template v-if="columnItem.id !== 999999">
                   <a
                     href="javascript:;"
@@ -35,7 +35,7 @@
                     {{ classMeetingItem.title || '' }}
                   </h5>
                 </div>
-                <p class="pe-3" v-html="truncatedText(classMeetingItem.content, 300)"></p>
+                <p v-html="truncatedText(classMeetingItem.content, 300)"></p>
                 <template v-if="classMeetingItem.id !== 999999">
                   <a
                     href="javascript:;"
@@ -56,7 +56,7 @@
                     {{ testimonyItem.title || '' }}
                   </h5>
                 </div>
-                <p class="pe-3" v-html="truncatedText(testimonyItem.content, 250)"></p>
+                <p v-html="truncatedText(testimonyItem.content, 250)"></p>
                 <template v-if="classMeetingItem.id !== 999999">
                   <a
                     href="javascript:;"

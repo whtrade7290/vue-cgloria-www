@@ -727,7 +727,7 @@ progress {
   .container-lg,
   .container-xl,
   .container-xxl {
-    max-width: 1600px;
+    max-width: 1700px;
   }
 }
 
@@ -20923,7 +20923,6 @@ fieldset:disabled .btn {
 
 .card .card-body {
   font-family: 'Open Sans';
-  padding: 1.5rem;
 }
 
 .card.card-plain {

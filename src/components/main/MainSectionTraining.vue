@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="col-lg-5 col-md-12 ms-auto order-1 order-md-1 order-lg-1">
-          <div class="p-3 pt-0">
+          <div class="pt-0">
             <h3 class="text-gradient text-primary mb-0">{{ $t('MainSectionTraining.title') }}</h3>
             <h5 class="mb-4">
               <a href="#" target="blank" rel="nofollow">{{ $t('MainSectionTraining.subTitle') }}</a>

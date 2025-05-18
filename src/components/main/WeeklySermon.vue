@@ -1,8 +1,8 @@
 <template>
   <section class="pt-3 pb-4" id="count-stats">
     <div class="container">
-      <div class="row w-100">
-        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur w-100">
+      <div class="row">
+        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
           <div class="row">
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
