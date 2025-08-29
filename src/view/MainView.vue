@@ -10,7 +10,7 @@
     <MainSectionTwo></MainSectionTwo>
     <MainSectionTraining></MainSectionTraining>
     <MainSectionJumokja></MainSectionJumokja>
-    <MainSectionPhoto></MainSectionPhoto>
+    <!-- <MainSectionPhoto></MainSectionPhoto> -->
     <MainSectionBrother></MainSectionBrother>
   </div>
 </template>

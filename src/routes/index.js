@@ -48,8 +48,8 @@ const routes = [
         startRow: 0,
         pageSize: 8
       }
-      await store.dispatch('FETCH_BOARDLIST', payload)
-      await store.dispatch('FETCH_MAIN_CONTENTS')
+      // await store.dispatch('FETCH_BOARDLIST', payload)
+      // await store.dispatch('FETCH_MAIN_CONTENTS')
       await next()
     }
   },

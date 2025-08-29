@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 
-export const VALIDATION_TITLE = (title) => {
+export const VALIDATION_TITLE = (title: string): boolean => {
   if (title.length === 0) {
     Swal.fire({
       title: '제목을 입력해주세요.',

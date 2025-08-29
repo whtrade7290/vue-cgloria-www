@@ -154,6 +154,8 @@ const parsedFiles = computed(() => {
   // dataList를 가져옵니다
   const dataList = store.state.photoList
 
+  if (Array.isArray(dataList) === false) return []
+
   const newList = dataList.map((data) => {
     let files = []
     if (data.files) {

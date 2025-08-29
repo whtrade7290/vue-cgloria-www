@@ -117,7 +117,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation.js'
+import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 
 // 상태 선언
 const store = useStore()

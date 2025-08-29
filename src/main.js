@@ -21,3 +21,7 @@ app.use(router)
 app.use(store)
 app.use(CKEditor)
 app.mount('#app')
+
+export function sum(a, b) {
+  return a + b
+}

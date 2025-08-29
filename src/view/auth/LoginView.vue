@@ -76,7 +76,7 @@ import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.js'
-import { VALIDATION_USERNAME, VALIDATION_PASSWORD } from '@/utils/validation.js'
+import { VALIDATION_USERNAME, VALIDATION_PASSWORD } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
