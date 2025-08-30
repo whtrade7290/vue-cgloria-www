@@ -30,7 +30,7 @@ import {
   updateApproveStatus,
   deletePhotoBoard
 } from '@/api/index'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 export default createStore({
   state: {

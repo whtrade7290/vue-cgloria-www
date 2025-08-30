@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { formatDate } from '@/utils/dateFormat'
+import { formatDate } from '@/utils/dateFormat.ts'
 
 const props = defineProps(['headerList', 'bodyList'])
 

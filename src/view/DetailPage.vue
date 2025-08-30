@@ -75,9 +75,10 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
+import { formatDate } from '@/utils/dateFormat'
 
 const route = useRoute()
 const router = useRouter()
@@ -113,15 +114,6 @@ function stripHtmlTags(input) {
 
   // 텍스트 콘텐츠를 반환
   return tempDiv.textContent || tempDiv.innerText || ''
-}
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  return `${year}. ${month}. ${day}. `
 }
 
 function goToBoardList() {
@@ -234,7 +226,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 3rem;
+  margin-top: 12rem;
   margin-bottom: 5rem;
   border: #d2d6da solid 1px;
   border-radius: 1.5rem;

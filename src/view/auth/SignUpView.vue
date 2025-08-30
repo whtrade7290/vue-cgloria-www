@@ -94,7 +94,7 @@ import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRoute, useRouter } from 'vue-router'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 const store = useStore()
 const router = useRouter()

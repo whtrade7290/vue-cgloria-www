@@ -24,7 +24,7 @@ import MainSectionTraining from '@/components/main/MainSectionTraining.vue'
 import MainSectionJumokja from '@/components/main/MainSectionJumokja.vue'
 import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
 import MainSectionBrother from '@/components/main/MainSectionBrother.vue'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 

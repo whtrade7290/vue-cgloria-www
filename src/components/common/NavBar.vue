@@ -409,7 +409,7 @@
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import router from '@/routes'
 import { useI18n } from 'vue-i18n'
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'

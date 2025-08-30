@@ -53,9 +53,10 @@
 
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import { formatDate } from '@/utils/dateFormat'
 
 defineProps({
   id: {
@@ -68,15 +69,6 @@ const route = useRoute()
 const store = useStore()
 const inputComment = ref('')
 const emit = defineEmits(['commentCount'])
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  return `${year}. ${month}. ${day}. `
-}
 
 const getUserNameFromSession = computed(() => {
   const curruntId = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.username

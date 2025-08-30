@@ -83,11 +83,13 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
+import { formatDate } from '@/utils/dateFormat'
+
 const staticPath = `${import.meta.env.VITE_API_URL}`
 const route = useRoute()
 const router = useRouter()
@@ -120,14 +122,6 @@ function stripHtmlTags(input) {
   return tempDiv.textContent || tempDiv.innerText || ''
 }
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  return `${year}. ${month}. ${day}. `
-}
 function goToBoardList() {
   router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
 }

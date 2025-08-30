@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import store from '@/store/index'
 import Swal from 'sweetalert2'
 

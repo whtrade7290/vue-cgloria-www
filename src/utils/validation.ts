@@ -13,7 +13,7 @@ export const VALIDATION_TITLE = (title: string): boolean => {
   return false
 }
 
-export const VALIDATION_CONTENT = (content) => {
+export const VALIDATION_CONTENT = (content: string): boolean => {
   if (content.length === 0) {
     Swal.fire({
       title: '글 내용을 입력해주세요.',
@@ -26,7 +26,16 @@ export const VALIDATION_CONTENT = (content) => {
   return false
 }
 
-export const VALIDATION_FILES = (files, newFiles) => {
+type File = {
+  lastModified: number
+  lastModifiedDate: object
+  name: string
+  size: number
+  type: string
+  webkitRelativePath: string
+}
+
+export const VALIDATION_FILES = (files: File[], newFiles: File[]): boolean => {
   const maxSizeInBytes = 5 * 1024 * 1024 // 5MB
   const allowedTypes = ['image/jpeg', 'image/png']
 
@@ -56,7 +65,7 @@ export const VALIDATION_FILES = (files, newFiles) => {
   }
 }
 
-export const VALIDATION_USERNAME = (username) => {
+export const VALIDATION_USERNAME = (username: string): boolean => {
   if (username.length < 4) {
     Swal.fire({
       title: '아이디를 4자리 이상 입력해주세요.',
@@ -69,7 +78,7 @@ export const VALIDATION_USERNAME = (username) => {
   return false
 }
 
-export const VALIDATION_PASSWORD = (password) => {
+export const VALIDATION_PASSWORD = (password: string): boolean => {
   if (password.length < 4) {
     Swal.fire({
       title: '비밀번호를 8자리 이상 입력해주세요.',

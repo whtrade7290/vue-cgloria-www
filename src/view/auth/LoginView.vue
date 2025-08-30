@@ -75,7 +75,7 @@ import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_USERNAME, VALIDATION_PASSWORD } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 

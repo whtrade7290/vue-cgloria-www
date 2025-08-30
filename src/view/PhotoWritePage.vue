@@ -101,7 +101,7 @@ import { ref } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 
 const store = useStore()

@@ -33,7 +33,7 @@ import ManageWithDiary from '@/view/admin/ManageWithDiary/ManageWithDiary.vue'
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
-import { getUserIdFromCookie } from '@/utils/cookie.js'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 const routes = [
   // main
