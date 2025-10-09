@@ -3,7 +3,7 @@
     <div class="container mt-sm-5">
       <div
         class="page-header min-vh-50 my-sm-3 mb-3 border-radius-xl"
-        :style="{ backgroundImage: `url('public/ref.jpg')` }"
+        :style="{ backgroundImage: `url('ref.jpg')` }"
       >
         <span class="mask bg-gradient-dark"></span>
         <div class="container">
