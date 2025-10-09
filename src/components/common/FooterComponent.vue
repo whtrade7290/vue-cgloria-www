@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-3 mb-3">
           <div style="text-align: center; color: #777777">
-            <img src="f_logo.png" style="width: 100px" /><br /><br />
+            <img src="/f_logo.png" style="width: 100px" /><br /><br />
             <strong>
               〒169-0074 東京都新宿区<br />北新宿３丁目１０−５<br /><br />
               TEL 03-5330-0090<br />
@@ -46,7 +46,7 @@
               <h4>
                 <strong style="color: #ffffff">{{ $t('FooterComponent.location') }}</strong>
               </h4>
-              <img style="height: 100px; width: 100%; border-radius: 5px" src="mini_map.png" />
+              <img style="height: 100px; width: 100%; border-radius: 5px" src="/mini_map.png" />
             </div>
           </div>
         </div>

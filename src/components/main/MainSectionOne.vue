@@ -71,7 +71,7 @@
         </div>
         <div class="col-lg-4 ms-auto me-auto p-lg-4 mt-lg-0 mt-4" style="padding-top: 0 !important">
           <div class="card card-background card-background-mask-primary tilt" data-tilt>
-            <div class="full-background" :style="{ backgroundImage: `url('cross1.jpeg')` }"></div>
+            <div class="full-background" :style="{ backgroundImage: `url('/cross1.jpeg')` }"></div>
             <div class="card-body pt-7 text-center">
               <h2 class="text-white up mb-0" style="text-align: left">
                 {{ $t('mainSectionOne.midnightWorship') }}<br />{{ $t('mainSectionOne.am') }} 5:50 ~

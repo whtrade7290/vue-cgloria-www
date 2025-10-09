@@ -3,7 +3,7 @@
     <HeaderComponent
       :main_msg="$t('withDiaryParams.mainTitle')"
       :sub_msg="$t('withDiaryParams.subTitle')"
-      :imgUrl="`sky1.jpeg`"
+      :imgUrl="`/sky1.jpeg`"
     ></HeaderComponent>
     <div class="container">
       <CardContainer title="withDiaryParams.mainTitle">

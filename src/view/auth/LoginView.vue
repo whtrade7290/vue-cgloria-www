@@ -134,7 +134,7 @@ onMounted(async () => {
 
 const apiBaseUrl = import.meta.env.VITE_API_URL
 
-document.documentElement.style.setProperty('--background-image-url', `url('jesus.png')`)
+document.documentElement.style.setProperty('--background-image-url', `url('/jesus.png')`)
 </script>
 
 <style scoped>

@@ -87,7 +87,12 @@
         </div>
         <div class="col-md-4">
           <div class="p-3" style="text-align: center; display: block">
-            <img class="border-radius-md" style="width: 100%" src="pastor.jpeg" alt="First slide" />
+            <img
+              class="border-radius-md"
+              style="width: 100%"
+              src="/pastor.jpeg"
+              alt="First slide"
+            />
           </div>
         </div>
       </div>
