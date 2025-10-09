@@ -23,7 +23,7 @@
           <a href="#">
             <img
               class="w-100 border-radius-lg shadow-lg"
-              :src="`${staticPath}ju2.jpg`"
+              src="/src/assets/img/main/ju2.jpeg"
               alt="Product Image"
             />
           </a>

@@ -8,7 +8,7 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-left rounded-3 img-fluid position-relative top-0 end-0 bg-cover"
-                  :src="`${staticPath}uploads/assets/jumok.jpg`"
+                  src="/src/assets/img/main/jumok.jpg"
                 />
               </div>
             </div>
@@ -19,7 +19,7 @@
               <div class="blur-shadow-image">
                 <img
                   class="image-container rounded-3 img-fluid position-relative bg-cover"
-                  :src="`${staticPath}uploads/assets/ju2.jpeg`"
+                  src="/src/assets/img/main/ju2.jpeg"
                 />
               </div>
             </div>
@@ -31,7 +31,7 @@
                 <img
                   class="image-right rounded-3 img-fluid position-relative bg-cover"
                   style="width: 70%"
-                  :src="`${staticPath}uploads/assets/ju1.png`"
+                  src="/src/assets/img/main/ju1.png"
                 />
               </div>
             </div>
