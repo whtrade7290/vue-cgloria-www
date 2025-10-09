@@ -23,7 +23,7 @@
           <a href="#">
             <img
               class="w-100 border-radius-lg shadow-lg"
-              src="/src/assets/img/main/ju2.jpeg"
+              src="/public/ju2.jpeg"
               alt="Product Image"
             />
           </a>

@@ -90,7 +90,7 @@
             <img
               class="border-radius-md"
               style="width: 100%"
-              src="/src/assets/img/main/pastor.jpeg"
+              src="/public/pastor.jpeg"
               alt="First slide"
             />
           </div>
