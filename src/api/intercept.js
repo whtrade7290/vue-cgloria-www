@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import store from '@/store/index'
 import Swal from 'sweetalert2'
-
+// test
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 2000
