@@ -1,0 +1,11 @@
+name: Deploy to ConoHa VPS
+uses: appleboy/ssh-action@v1.2.0
+
+with:
+  host: ${{ secrets.CONOHA_HOST }}
+  username: ${{ secrets.CONOHA_USER }}
+  key: ${{ secrets.CONOHA_SSH_KEY }}
+  port: 22
+
+script: |
+  echo "🔹 Connected to $(hostname)"
