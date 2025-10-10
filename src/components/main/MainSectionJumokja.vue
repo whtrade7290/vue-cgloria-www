@@ -21,11 +21,7 @@
         </div>
         <div class="col-md-5 col-12 my-auto">
           <a href="#">
-            <img
-              class="w-100 border-radius-lg shadow-lg"
-              src="/public/ju2.jpeg"
-              alt="Product Image"
-            />
+            <img class="w-100 border-radius-lg shadow-lg" src="/ju2.jpeg" alt="Product Image" />
           </a>
         </div>
       </div>

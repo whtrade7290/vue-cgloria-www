@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import MainView from '@/view/MainView.vue'
+import MainView from '@/view/common/MainView.vue'
 import ChurchIntro from '@/view/info/ChurchIntro.vue'
 import ChurchMap from '@/view/info/ChurchMap.vue'
 import PasterInfo from '@/view/info/PasterInfo.vue'
@@ -20,12 +20,12 @@ import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import SignUpView from '@/view/auth/SignUpView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
-import WritePage from '@/view/WritePage.vue'
-import EditPage from '@/view/EditPage.vue'
-import PhotoEditPage from '@/view/PhotoEditPage.vue'
-import PhotoWritePage from '@/view/PhotoWritePage.vue'
-import DetailPage from '@/view/DetailPage.vue'
-import PhotoDetailPage from '@/view/PhotoDetailPage.vue'
+import WritePage from '@/view/common/WritePage.vue'
+import EditPage from '@/view/common/EditPage.vue'
+import PhotoEditPage from '@/view/photo/PhotoEditPage.vue'
+import PhotoWritePage from '@/view/photo/PhotoWritePage.vue'
+import DetailPage from '@/view/common/DetailPage.vue'
+import PhotoDetailPage from '@/view/photo/PhotoDetailPage.vue'
 import MakeWithDiaryRoom from '@/view/admin/MakeWithDiary/MakeWithDiaryRoom.vue'
 import ApprovePage from '@/view/admin/Approve/ApprovePage.vue'
 import ManageWithDiary from '@/view/admin/ManageWithDiary/ManageWithDiary.vue'
@@ -40,18 +40,18 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: MainView,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      const payload = {
-        name: 'photo',
-        startRow: 0,
-        pageSize: 8
-      }
-      // await store.dispatch('FETCH_BOARDLIST', payload)
-      // await store.dispatch('FETCH_MAIN_CONTENTS')
-      await next()
-    }
+    component: MainView
+    // beforeEnter: async (to, from, next) => {
+    //   const store = useStore()
+    //   const payload = {
+    //     name: 'photo',
+    //     startRow: 0,
+    //     pageSize: 8
+    //   }
+    //   await store.dispatch('FETCH_BOARDLIST', payload)
+    //   await store.dispatch('FETCH_MAIN_CONTENTS')
+    //   await next()
+    // }
   },
   // auth
   { path: '/logIn', name: 'logIn', component: LoginView },

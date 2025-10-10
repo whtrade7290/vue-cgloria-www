@@ -5,13 +5,19 @@
       :main_msg="$t('mainMsg.main')"
       :sub_msg="$t('mainMsg.sub')"
     ></HeaderComponent>
-    <WeeklySermon></WeeklySermon>
-    <MainSectionOne></MainSectionOne>
-    <MainSectionTwo></MainSectionTwo>
-    <MainSectionTraining></MainSectionTraining>
-    <MainSectionJumokja></MainSectionJumokja>
-    <!-- <MainSectionPhoto></MainSectionPhoto> -->
-    <MainSectionBrother></MainSectionBrother>
+    <template v-if="inited">
+      <WeeklySermon :sermon="contents.sermon" :weekly="contents.weekly"></WeeklySermon>
+      <MainSectionOne
+        :column="contents.column"
+        :classMeeting="contents.classMeeting"
+        :testimony="contents.testimony"
+      ></MainSectionOne>
+      <MainSectionTwo></MainSectionTwo>
+      <MainSectionTraining></MainSectionTraining>
+      <MainSectionJumokja></MainSectionJumokja>
+      <MainSectionPhoto></MainSectionPhoto>
+      <MainSectionBrother></MainSectionBrother>
+    </template>
   </div>
 </template>
 
@@ -25,19 +31,34 @@ import MainSectionJumokja from '@/components/main/MainSectionJumokja.vue'
 import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
 import MainSectionBrother from '@/components/main/MainSectionBrother.vue'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
+import useGetMainContents from '@/view/common/composable/getMainContentsUsable.js'
 
 const store = useStore()
 
-const imgUrl = 'public/main01.jpg'
+const contents = ref({
+  sermon: null,
+  weekly: null,
+  column: null,
+  classMeeting: null,
+  testimony: null
+})
+
+const inited = ref(false)
+
+const imgUrl = '/main01.jpg'
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
-onMounted(() => {
-  store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+onMounted(async () => {
+  await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
+
+  const results = await useGetMainContents()
+  contents.value = results
+  inited.value = true
 })
 </script>
 

@@ -1,11 +1,30 @@
-name: Deploy to ConoHa VPS
-uses: appleboy/ssh-action@v1.2.0
+name: Front end depoly to vps
+on:
+  push:
+    branches:
+      - prod # 트리거 브랜치
 
-with:
-  host: ${{ secrets.CONOHA_HOST }}
-  username: ${{ secrets.CONOHA_USER }}
-  key: ${{ secrets.CONOHA_SSH_KEY }}
-  port: 22
+jobs: # ✅ 무조건 있어야 함
+  deploy: # job 이름
+    runs-on: ubuntu-latest
 
-script: |
-  echo "🔹 Connected to $(hostname)"
+    steps: # ✅ 단계 정의
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: SSH to VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.CONOHA_HOST }}
+          username: ${{ secrets.CONOHA_USER }}
+          key: ${{ secrets.CONOHA_SSH_KEY }}
+          port: 22
+          script: |
+            echo "Connected to $(hostname)"
+            cd /var/www/vue-cgloria-www
+            git fetch origin prod
+            git reset --hard origin/prod
+            npm ci
+            npm run build
+            sudo systemctl reload nginx
+            echo "$(hostname) 디플로이 완료"
