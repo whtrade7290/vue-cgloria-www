@@ -6,25 +6,25 @@
           <div class="row">
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
-                <!-- <h3>{{ formatDate(sermonItem.create_at) || '' }}</h3> -->
+                <h3>{{ formatDate(sermon?.create_at) || '' }}</h3>
                 <h5 class="mt-3">{{ $t('weeklySermon.sermon') }}</h5>
-                <!-- <p class="text-sm">{{ sermonItem.title || '' }}</p> -->
+                <p class="text-sm">{{ sermon?.title || '' }}</p>
               </div>
               <hr class="vertical dark" />
             </div>
             <div class="col-md-8 position-relative">
               <div class="p-3">
                 <h3 class="text-gradient text-primary">&nbsp;</h3>
-                <!-- <h5 class="mt-3">{{ weeklyItem.title || '' }}</h5> -->
-                <!-- <p class="text-sm" v-html="truncatedText(weeklyItem?.content ?? '', 160)"></p> -->
-                <!-- <template v-if="weeklyItem.id !== 999999">
+                <h5 class="mt-3">{{ weekly?.title || '' }}</h5>
+                <p class="text-sm" v-html="truncatedText(weekly?.content ?? '', 160)"></p>
+                <template v-if="weekly?.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(weeklyItem.id, 'weekly')"
+                    @click="intoDetail(weekly?.id, 'weekly')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >
-                </template> -->
+                </template>
               </div>
               <hr class="vertical dark" />
             </div>
@@ -36,14 +36,20 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const store = useStore()
 
-const sermonItem = store.state.mainContents[3]
-const weeklyItem = store.state.mainContents[4]
+const props = defineProps({
+  sermon: {
+    type: Object,
+    default: () => ({})
+  },
+  weekly: {
+    type: Object,
+    default: () => ({})
+  }
+})
 
 const truncatedText = (content, limit) => {
   const cleanedContent = content.replaceAll('<p>', '').replaceAll('</p>', '')
@@ -59,6 +65,7 @@ async function intoDetail(id, name) {
 }
 
 const formatDate = (dateString) => {
+  if (!dateString) return ''
   const date = new Date(dateString)
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')

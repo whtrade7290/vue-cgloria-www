@@ -11,18 +11,18 @@
                     {{ $t('mainSectionOne.column') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    <!-- {{ columnItem.title || '' }} -->
+                    {{ column?.title || '' }}
                   </h5>
                 </div>
-                <!-- <p v-html="truncatedText(columnItem?.content ?? '', 200)"></p> -->
-                <!-- <template v-if="columnItem.id !== 999999">
+                <p v-html="truncatedText(column?.content ?? '', 200)"></p>
+                <template v-if="column.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(columnItem.id, 'column')"
+                    @click="intoDetail(column.id, 'column')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >
-                </template> -->
+                </template>
               </div>
             </div>
             <div class="col-md-12">
@@ -32,18 +32,18 @@
                     {{ $t('mainSectionOne.classMeeting') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    <!-- {{ classMeetingItem.title || '' }} -->
+                    {{ classMeeting?.title || '' }}
                   </h5>
                 </div>
-                <!-- <p v-html="truncatedText(classMeetingItem.content, 300)"></p>
-                <template v-if="classMeetingItem.id !== 999999">
+                <p v-html="truncatedText(classMeeting?.content, 300)"></p>
+                <template v-if="classMeeting.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(classMeetingItem.id, 'classMeeting')"
+                    @click="intoDetail(classMeeting.id, 'classMeeting')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >
-                </template> -->
+                </template>
               </div>
             </div>
             <div class="col-md-12">
@@ -53,18 +53,18 @@
                     {{ $t('mainSectionOne.testimony') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    <!-- {{ testimonyItem.title || '' }} -->
+                    {{ testimony?.title || '' }}
                   </h5>
                 </div>
-                <!-- <p v-html="truncatedText(testimonyItem.content, 250)"></p>
-                <template v-if="classMeetingItem.id !== 999999">
+                <p v-html="truncatedText(testimony.content, 250)"></p>
+                <template v-if="testimony.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(testimonyItem.id, 'testimony')"
+                    @click="intoDetail(testimony.id, 'testimony')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >
-                </template> -->
+                </template>
               </div>
             </div>
           </div>
@@ -106,14 +106,25 @@ const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/`
 const store = useStore()
 const router = useRouter()
 
+const props = defineProps({
+  column: {
+    type: Object,
+    default: () => ({})
+  },
+  classMeeting: {
+    type: Object,
+    default: () => ({})
+  },
+  testimony: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
 const truncatedText = (content, limit) => {
   const cleanedContent = content.replaceAll('<p>', '').replaceAll('</p>', '')
   return cleanedContent.length > limit ? cleanedContent.slice(0, limit) + '...' : cleanedContent
 }
-
-const columnItem = store.state.mainContents[0]
-const classMeetingItem = store.state.mainContents[1]
-const testimonyItem = store.state.mainContents[2]
 
 async function intoDetail(id, name) {
   if (id) {
