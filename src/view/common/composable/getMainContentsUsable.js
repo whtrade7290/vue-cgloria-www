@@ -25,7 +25,7 @@ const defaultValue = {
 export default async function useGetMainContents() {
   const [sermon, weekly, column, classMeeting, testimony] = await Promise.allSettled([
     getMainSermon('sermon'),
-    getMainWeekly('weekly'),
+    getMainWeekly('weeklyWord'),
     getMainColumn('column'),
     getMainClassMeeting('classMeeting'),
     getMainTestimony('testimony')

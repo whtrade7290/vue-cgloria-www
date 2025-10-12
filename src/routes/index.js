@@ -54,7 +54,7 @@ const routes = [
     // }
   },
   // auth
-  { path: '/logIn', name: 'logIn', component: LoginView },
+  { path: '/login', name: 'login', component: LoginView },
   { path: '/signUp/:isQr?', name: 'signUp', component: SignUpView },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
@@ -102,27 +102,27 @@ const routes = [
     }
   },
   {
-    path: '/weekly',
-    name: 'weekly',
+    path: '/weeklyWord',
+    name: 'weeklyWord',
     component: WeeklySermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'weekly' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'weeklyWord' })
       await next()
     }
   },
   // 예배/훈련
-  { path: '/jumokja', name: 'jumokja', component: JumokjaView },
+  { path: '/jumok', name: 'jumok', component: JumokjaView },
   { path: '/training', name: 'training', component: TrainingView },
   // 주일학교
-  { path: '/schedule', name: 'schedule', component: EventSchedule },
+  { path: '/eventSchedule', name: 'eventSchedule', component: EventSchedule },
   {
-    path: '/school_photo',
-    name: 'school_photo',
+    path: '/schoolPhotoBoard',
+    name: 'schoolPhotoBoard',
     component: SchoolPhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'school_photo' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'schoolPhotoBoard' })
       await next()
     }
   },
@@ -137,15 +137,15 @@ const routes = [
     }
   },
   // 전도섬김
-  { path: '/evangelize', name: 'evangelize', component: EvangelizeView },
+  { path: '/evangelismAndVision', name: 'evangelismAndVision', component: EvangelizeView },
   // 교재마당
   {
-    path: '/photo',
-    name: 'photo',
+    path: '/photoBoard',
+    name: 'photoBoard',
     component: PhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'photo' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'photoBoard' })
       await next()
     }
   },
@@ -260,8 +260,8 @@ const routes = [
     }
   },
   {
-    path: '/make_withDiary',
-    name: 'make_withDiary',
+    path: '/makeWithDiary',
+    name: 'makeWithDiary',
     component: MakeWithDiaryRoom,
     beforeEnter: async (to, from, next) => {
       const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -279,8 +279,8 @@ const routes = [
     }
   },
   {
-    path: '/approve',
-    name: 'approve',
+    path: '/approvePage',
+    name: 'approvePage',
     component: ApprovePage,
     beforeEnter: async (to, from, next) => {
       const store = useStore()

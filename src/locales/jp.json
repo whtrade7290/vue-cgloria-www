@@ -1,7 +1,8 @@
 {
+  "main": "中央栄光教会",
   "button": {
     "withDiary": "イエス同行日記",
-    "logIn": "ログイン",
+    "login": "ログイン",
     "logout": "ログアウト",
     "write": "作成",
     "toList": "リストへ",
@@ -9,48 +10,66 @@
     "enterWithDiary": "入室"
   },
   "nav": {
-    "main": "中央栄光教会",
-    "intro": "教会紹介",
-    "class/word": "属会/御言葉",
-    "worship/training": "礼拝/訓練",
-    "evangelism/service": "伝道/奉仕",
-    "sundaySchool": "日曜学校",
-    "fellowshipArea": "交わりの場",
-    "adminPage": "管理者ページ",
-    "subTitle1": {
-      "intro": "教会紹介",
-      "paster": "牧師紹介",
-      "location": "教会地図",
-      "notice": "お知らせ"
+    "intro": {
+      "title": "教会紹介",
+      "subTitles": {
+        "intro": "教会紹介",
+        "paster": "牧師紹介",
+        "location": "教会地図",
+        "notice": "お知らせ"
+      }
     },
-    "subTitle2": {
-      "sermon": "説教",
-      "column": "コラム",
-      "weeklyWord": "今週の御言葉",
-      "classMeeting": "属会教材"
+    "classWord": {
+      "title": "属会/御言葉",
+      "subTitles": {
+        "sermon": "説教",
+        "column": "コラム",
+        "weeklyWord": "今週の御言葉",
+        "classMeeting": "属会教材"
+      }
     },
-    "subTitle3": {
-      "jumok": "主目者礼拝",
-      "training": "訓練"
+    "worshipTraining": {
+      "title": "礼拝/訓練",
+      "subTitles": {
+        "jumok": "主目者礼拝",
+        "training": "訓練"
+      }
     },
-    "subTitle4": {
-      "evangelismAndVision": "伝道のビジョン",
-      "readBible": "聖書通読"
+    "evangelismService": {
+      "title": "伝道/奉仕",
+      "subTitles": {
+        "evangelismAndVision": "伝道のビジョン"
+      }
     },
-    "subTitle5": {
-      "eventSchedule": "日程",
-      "schoolPhotoBoard": "日曜学校フォトギャラリー",
-      "library": "日曜学校資料"
+    "sundaySchool": {
+      "title": "日曜学校",
+      "subTitles": {
+        "eventSchedule": "日程",
+        "schoolPhotoBoard": "日曜学校フォトギャラリー",
+        "library": "日曜学校資料"
+      }
     },
-    "subTitle6": {
-      "generalFolum": "自由掲示板",
-      "photoBoard": "フォトギャラリー",
-      "testimony": "証し"
+    "fellowshipArea": {
+      "title": "交わりの場",
+      "subTitles": {
+        "generalForum": "自由掲示板",
+        "photoBoard": "フォトギャラリー",
+        "testimony": "証し"
+      }
     },
-    "subTitle7": {
-      "makeWithDiary": "イエス同行日記開設",
-      "approvePage": "新規登録承認ページ",
-      "manageWithDiary": "イエス同行日記ルーム管理"
+    "withDiary": {
+      "title": "イエス同行日記",
+      "subTitles": {
+        "withDiary": "イエス同行日記"
+      }
+    },
+    "adminPage": {
+      "title": "管理者ページ",
+      "subTitles": {
+        "makeWithDiary": "イエス同行日記開設",
+        "approvePage": "新規登録承認ページ",
+        "manageWithDiary": "イエス同行日記ルーム管理"
+      }
     }
   },
   "table": {
@@ -166,8 +185,8 @@
     "withDiaryRoom": "イエス同行日記を選択",
     "logout": "ログアウトしますか？",
     "logouted": "ログアウトできました。",
-    "logIn": "ログインできました。",
-    "logInFail": "ログインに失敗しました。",
+    "login": "ログインできました。",
+    "loginFail": "ログインに失敗しました。",
     "logined": "既にログインされています。",
     "makeWithDiary": "イエス同行日記掲示板が作成されました。",
     "failWithDiary": "イエス同行日記掲示板の作成に失敗しました。",
@@ -235,7 +254,7 @@
     },
     "evengelize": {
       "main1": "\"伝道は教会の本質です。\"",
-      "content1": "教会を教会らしくしたのはまさに伝道です。<br>教会は伝道を行うときに教会としての価値があります。<br>なぜならイエス様が教会に伝道を命じられたからです。",
+      "content1": "教会を教会らしくしたのはまさに伝道です。\n教会は伝道を行うときに教会としての価値があります。\nなぜならイエス様が教会に伝道を命じられたからです。",
       "main2": "\"伝道は教会の使命です。\"",
       "content2": "伝道は教会に託された使命です。教会はその使命を果たさなければなりません。伝道を通して、世に神の御心が成し遂げられ、神の国が建てられるようにしなければなりません。この地にイエスの命の働きがなされ、イエスの国が拡張されるようにすることが、まさに教会の使命です。イエス様は伝道のために弟子を召され、教会を建てられました。伝道はイエス様の生き様であり、主の最後の命令であり、教会の最大の使命です。最優先で関心を持つべきことです。伝道は初代教会の唯一の関心事でした。",
       "main3": "1. 伝道とは何でしようか。",

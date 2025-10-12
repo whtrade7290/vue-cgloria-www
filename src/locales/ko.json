@@ -1,7 +1,8 @@
 {
+  "main": "중앙영광교회",
   "button": {
     "withDiary": "예수동행일기",
-    "logIn": "로그인",
+    "login": "로그인",
     "logout": "로그아웃",
     "write": "글작성",
     "toList": "목록으로",
@@ -9,48 +10,66 @@
     "enterWithDiary": "들어가기"
   },
   "nav": {
-    "main": "중앙영광교회",
-    "intro": "교회소개",
-    "class/word": "속회/말씀",
-    "worship/training": "예배/훈련",
-    "evangelism/service": "전도/섬김",
-    "sundaySchool": "주일학교",
-    "fellowshipArea": "교제마당",
-    "adminPage": "관리자 페이지",
-    "subTitle1": {
-      "intro": "교회소개",
-      "paster": "목회자소개",
-      "location": "교회약도",
-      "notice": "공지사항"
+    "intro": {
+      "title": "교회소개",
+      "subTitles": {
+        "intro": "교회소개",
+        "paster": "목회자소개",
+        "location": "교회약도",
+        "notice": "공지사항"
+      }
     },
-    "subTitle2": {
-      "sermon": "설교",
-      "column": "칼럼",
-      "weeklyWord": "금주의성경말씀",
-      "classMeeting": "속회교재실"
+    "classWord": {
+      "title": "속회/말씀",
+      "subTitles": {
+        "sermon": "설교",
+        "column": "칼럼",
+        "weeklyWord": "금주의성경말씀",
+        "classMeeting": "속회교재실"
+      }
     },
-    "subTitle3": {
-      "jumok": "주목자예배",
-      "training": "훈련"
+    "worshipTraining": {
+      "title": "예배/훈련",
+      "subTitles": {
+        "jumok": "주목자예배",
+        "training": "훈련"
+      }
     },
-    "subTitle4": {
-      "evangelismAndVision": "전도비전",
-      "readBible": "성경통독"
+    "evangelismService": {
+      "title": "전도/섬김",
+      "subTitles": {
+        "evangelismAndVision": "전도비전"
+      }
     },
-    "subTitle5": {
-      "eventSchedule": "행사일정",
-      "schoolPhotoBoard": "주일학교 사진갤러리",
-      "library": "주일학교자료실"
+    "sundaySchool": {
+      "title": "주일학교",
+      "subTitles": {
+        "eventSchedule": "행사일정",
+        "schoolPhotoBoard": "주일학교 사진갤러리",
+        "library": "주일학교자료실"
+      }
     },
-    "subTitle6": {
-      "generalFolum": "자유게시판",
-      "photoBoard": "사진갤러리",
-      "testimony": "간증게시판"
+    "fellowshipArea": {
+      "title": "교제마당",
+      "subTitles": {
+        "generalForum": "자유게시판",
+        "photoBoard": "사진갤러리",
+        "testimony": "간증게시판"
+      }
     },
-    "subTitle7": {
-      "makeWithDiary": "예수동행일기 개설",
-      "approvePage": "회원가입 승인 페이지",
-      "manageWithDiary": "예수동행일기 방 관리"
+    "withDiary": {
+      "title": "예수동행일기",
+      "subTitles": {
+        "withDiary": "예수동행일기"
+      }
+    },
+    "adminPage": {
+      "title": "관리자 페이지",
+      "subTitles": {
+        "makeWithDiary": "예수동행일기 개설",
+        "approvePage": "회원가입 승인 페이지",
+        "manageWithDiary": "예수동행일기 방 관리"
+      }
     }
   },
   "table": {
@@ -164,8 +183,8 @@
     "withDiaryRoom": "예수동행일기 선택",
     "logout": "로그아웃 하시겠습니까?",
     "logouted": "로그아웃 되었습니다.",
-    "logIn": "로그인 되었습니다.",
-    "logInFail": "로그인에 실패하였습니다.",
+    "login": "로그인 되었습니다.",
+    "loginFail": "로그인에 실패하였습니다.",
     "logined": "이미 로그인 되었습니다.",
     "makeWithDiary": "예수동행일기 게시판이 생성되었습니다.",
     "failWithDiary": "예수동행일기 게시판 생성에 실패하였습니다.",
@@ -233,7 +252,7 @@
     },
     "evengelize": {
       "main1": "\"전도는 교회의 본질입니다.\"",
-      "content1": "교회를 교회되게 했던 것은 바로 전도입니다.<br>교회는 전도를 할 때 교회로서의 가치가 있는 것입니다.<br>왜냐하면 예수님께서 교회를 향하여 전도를 명하셨기 때문입니다.",
+      "content1": "교회를 교회되게 했던 것은 바로 전도입니다.\n교회는 전도를 할 때 교회로서의 가치가 있는 것입니다.\n왜냐하면 예수님께서 교회를 향하여 전도를 명하셨기 때문입니다.",
       "main2": "\"전도는 교회의 사명입니다.\"",
       "content2": "전도는 교회에 맡겨진 사명입니다. 교회는 사명을 감당하여야 합니다. 전도를 통하여 세상에 하나님의 뜻이 이루어진 하나님의 나라가 건설될 수 있도록 하여야 합니다. 이 땅에 예수의 생명의 역사가 이루어진 예수의 나라를 확장하여야 합니다. 그것이 바로 교회의 사명입니다. 예수님께서는 전도를 위하여 제자를 부르셨으며 교회를 세우셨습니다. 전도는 예수님의 삶의 모습이었고 주님의 마지막 명령이며 교회의 최대의 사명입니다. 최우선적으로 관심을 가져야 할 것입니다. 전도는 초대교회의 유일한 관심이었습니다.",
       "main3": "1. 전도란 무엇인가?",

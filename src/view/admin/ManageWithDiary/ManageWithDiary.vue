@@ -1,5 +1,5 @@
 <template>
-  <CardContainer title="nav.subTitle7.manageWithDiary">
+  <CardContainer :title="TITLE">
     <TableOrganisms>
       <template #header>
         <TableHead :header-list="MANAGE_WITHDIARY"></TableHead>
@@ -41,7 +41,9 @@ import { useRoute } from 'vue-router'
 import { ADMIN } from '@/data/sidemenu.js'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+import ko from '@/locales/ko.json'
 
+const TITLE = 'nav.adminPage.subTitles.approvePage'
 const route = useRoute()
 const store = useStore()
 

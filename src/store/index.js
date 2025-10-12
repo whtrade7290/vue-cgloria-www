@@ -41,7 +41,7 @@ export default createStore({
     training: {},
     count: 0,
     photoCount: 0,
-    isLogIned: false,
+    isLogin: false,
     detail: {},
     mainContents: [],
     CommentList: [],
@@ -277,7 +277,7 @@ export default createStore({
       state.photoCount = item
     },
     SET_LOGINED(state, item) {
-      state.isLogIned = item
+      state.isLogin = item
     },
     SET_DETAIL(state, item) {
       state.detail = item

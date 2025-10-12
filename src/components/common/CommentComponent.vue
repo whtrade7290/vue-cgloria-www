@@ -77,12 +77,7 @@ const getUserNameFromSession = computed(() => {
 })
 
 const writeComment = async () => {
-  console.log('excute')
-
   const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
-
-  console.log('user: ', user)
-
   if (!user) {
     return false
   }

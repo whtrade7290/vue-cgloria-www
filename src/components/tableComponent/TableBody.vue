@@ -26,8 +26,6 @@
 import { formatDate } from '@/utils/dateFormat.ts'
 
 const props = defineProps(['headerList', 'bodyList'])
-
-console.log('bodyList', typeof props.bodyList[0].update_at)
 </script>
 
 <style scoped>

@@ -230,9 +230,9 @@ const signUp = async () => {
 }
 
 onMounted(async () => {
-  if (store.state.isLogIned) return
+  if (store.state.isLogin) return
   await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
-  if (store.state.isLogIned) {
+  if (store.state.isLogin) {
     Swal.fire({
       title: '이미 로그인 되었습니다.',
       icon: 'success'

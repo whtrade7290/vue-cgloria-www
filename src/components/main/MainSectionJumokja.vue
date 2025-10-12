@@ -8,12 +8,9 @@
             {{ $t('MainSectionJumokja.content') }}
           </p>
           <div class="github-buttons">
-            <router-link
-              to="/jumokja"
-              rel="nofollow"
-              class="btn bg-gradient-primary mb-5 mb-sm-0"
-              >{{ $t('common.moveToPage') }}</router-link
-            >
+            <router-link to="/jumok" rel="nofollow" class="btn bg-gradient-primary mb-5 mb-sm-0">{{
+              $t('common.moveToPage')
+            }}</router-link>
             <div class="github-button">
               <span></span>
             </div>

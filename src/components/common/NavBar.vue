@@ -21,382 +21,86 @@
                 font-family: 'M PLUS Rounded 1c';
               "
             >
-              {{ $t('nav.main') }}
+              {{ $t('main') }}
             </router-link>
-            <button
-              class="navbar-toggler shadow-none ms-2"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navigation"
-              aria-controls="navigation"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler shadow-none ms-2" type="button" @click="toggleMenu">
               <span class="navbar-toggler-icon mt-2">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
                 <span class="navbar-toggler-bar bar3"></span>
               </span>
             </button>
-            <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
-              <ul class="navbar-nav navbar-nav-hover w-100">
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.intro') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/intro" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.intro') }}</span>
-                      </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예배 및 훈련시간</span>
-                      </a> -->
-                      <router-link to="/paster" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
-                      </router-link>
-                      <router-link to="/location" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
-                      </router-link>
-                      <router-link to="/notice" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/intro" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.intro') }}</span>
-                      </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예배 및 훈련시간</span>
-                      </a> -->
-                      <router-link to="/paster" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.paster') }}</span>
-                      </router-link>
-                      <router-link to="/location" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.location') }}</span>
-                      </router-link>
-                      <router-link to="/notice" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle1.notice') }}</span>
-                      </router-link>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.class/word') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/sermon" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.sermon') }}</span>
-                      </router-link>
-                      <router-link to="/column" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.column') }}</span>
-                      </router-link>
-                      <router-link to="/weekly" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.weeklyWord') }}</span>
-                      </router-link>
-                      <router-link to="/classMeeting" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.classMeeting') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/sermon" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.sermon') }}</span>
-                      </router-link>
-                      <router-link to="/column" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.column') }}</span>
-                      </router-link>
-                      <router-link to="/weekly" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.weeklyWord') }}</span>
-                      </router-link>
-                      <router-link to="/classMeeting" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle2.classMeeting') }}</span>
-                      </router-link>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.worship/training') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예배/훈련시간</span>
-                      </a> -->
-                      <router-link to="/jumokja" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle3.jumok') }}</span>
-                      </router-link>
-                      <router-link to="/training" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle3.training') }}</span>
-                      </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">중보기도</span>
-                      </a> -->
-                    </div>
-                    <div class="d-lg-none">
-                      <!-- <a href="./pages/about-us.html" class="dropdown-item border-radius-md">
-                        <span class="ps-3">예배/훈련시간</span>
-                      </a> -->
-                      <router-link to="/jumokja" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle3.jumok') }}</span>
-                      </router-link>
-                      <router-link to="/training" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle3.training') }}</span>
-                      </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">중보기도</span>
-                      </a> -->
-                    </div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.evangelism/service') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/evangelize" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle4.evangelismAndVision') }}</span>
-                      </router-link>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">4영리</span>
-                      </a> -->
-                      <a
-                        href="javascript:;"
-                        class="dropdown-item border-radius-md"
-                        @click="readyYet"
-                      >
-                        <span class="ps-3">{{ $t('nav.subTitle4.readBible') }}</span>
-                      </a>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/evangelize" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle4.evangelismAndVision') }}</span>
-                      </router-link>
-                      <a href="javascript:;" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle4.readBible') }}</span>
-                      </a>
-                      <!-- <a href="#" class="dropdown-item border-radius-md">
-                        <span class="ps-3">섬김</span>
-                      </a> -->
-                    </div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.sundaySchool') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/schedule" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.eventSchedule') }}</span>
-                      </router-link>
-                      <router-link to="/school_photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.schoolPhotoBoard') }}</span>
-                      </router-link>
-                      <router-link to="/library" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.library') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/schedule" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.eventSchedule') }}</span>
-                      </router-link>
-                      <router-link to="/school_photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.schoolPhotoBoard') }}</span>
-                      </router-link>
-                      <router-link to="/library" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle5.library') }}</span>
-                      </router-link>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {{ $t('nav.fellowshipArea') }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/generalForum" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.generalFolum') }}</span>
-                      </router-link>
-                      <router-link to="/photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.photoBoard') }}</span>
-                      </router-link>
-                      <router-link to="/testimony" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.testimony') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/generalForum" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.generalFolum') }}</span>
-                      </router-link>
-                      <router-link to="/photo" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.photoBoard') }}</span>
-                      </router-link>
-                      <router-link to="/testimony" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle6.testimony') }}</span>
-                      </router-link>
-                    </div>
-                  </div>
-                </li>
+            <div class="collapse navbar-collapse" id="navigation">
+              <ul class="navbar-nav navbar-nav-hover w-100 nav-container">
                 <li
                   class="nav-item dropdown dropdown-hover mx-2"
-                  v-if="store.state.role === 'ADMIN' || role === 'ADMIN'"
+                  v-for="menu in mainMenus"
+                  :key="menu.mainKey"
                 >
                   <a
                     class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                     href="javascript:;"
-                    id="dropdownMenuPages"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                    :id="`${menu.mainKey}Dropdown`"
+                    @click="toggleDropdown(menu.mainKey)"
                   >
-                    {{ $t('nav.adminPage') }}
+                    {{ $t(`nav.${menu.mainKey}.title`) }}&nbsp;
                     <DownArrowDarkVue></DownArrowDarkVue>
                   </a>
                   <div
                     class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
                     aria-labelledby="dropdownMenuPages"
                   >
-                    <div class="d-none d-lg-block">
-                      <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
-                      </router-link>
+                    <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
+                      <div
+                        @click="goToPage(subTitle)"
+                        class="dropdown-item border-radius-md nav-btn"
+                      >
+                        <span class="ps-3">{{
+                          $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
+                        }}</span>
+                      </div>
                     </div>
-                    <div class="d-none d-lg-block">
-                      <router-link to="/approve" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-none d-lg-block">
-                      <router-link to="/manageWithDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.manageWithDiary') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/make_withDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.makeWithDiary') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/approve" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.approvePage') }}</span>
-                      </router-link>
-                    </div>
-                    <div class="d-lg-none">
-                      <router-link to="/manageWithDiary" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{ $t('nav.subTitle7.manageWithDiary') }}</span>
-                      </router-link>
+                    <div class="d-lg-none" v-for="subTitle in menu.subTitles">
+                      <div @click="goToPage(subTitle)" class="dropdown-item border-radius-md">
+                        <span class="ps-3">{{
+                          $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
+                        }}</span>
+                      </div>
                     </div>
                   </div>
                 </li>
-                <template v-if="store.state.isLogIned">
-                  <li class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto" style="float: left">
-                    <a
-                      href="javascript:;"
-                      @click="goToWithDiary"
-                      class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      >{{ $t('button.withDiary') }}</a
-                    >
-                  </li>
-                  <li class="nav-item my-auto ms-3 ms-lg-0">
-                    <a
-                      href="javascript:;"
-                      class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      @click="logout"
-                      >{{ $t('button.logout') }}</a
-                    >
-                  </li>
-                  <li class="nav-item my-auto ms-3 ms-lg-0">
-                    <a
-                      href="javascript:;"
-                      class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                      @click="changeLanguage()"
-                      >{{ $t('button.lang') }}</a
-                    >
-                  </li>
-                </template>
-                <li v-else class="nav-item my-auto ms-3 ms-lg-0 ms-lg-auto">
-                  <router-link
-                    to="/logIn"
-                    class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                    >{{ $t('button.logIn') }}</router-link
-                  >
+              </ul>
+              <div class="nav-btn-container">
+                <template v-if="store.state.isLogin">
                   <a
                     href="javascript:;"
-                    class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                    class="btn bg-gradient-primary btn-round btn-style"
+                    @click="logout"
+                    >{{ $t('button.logout') }}</a
+                  >
+
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
                     @click="changeLanguage()"
                     >{{ $t('button.lang') }}</a
                   >
-                </li>
-              </ul>
+                </template>
+                <template v-else>
+                  <div
+                    @click="goToPage('login')"
+                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
+                  >
+                    {{ $t('button.login') }}
+                  </div>
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
+                    @click="changeLanguage()"
+                    >{{ $t('button.lang') }}</a
+                  >
+                </template>
+              </div>
             </div>
           </div>
         </nav>
@@ -406,16 +110,30 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
-import router from '@/routes'
 import { useI18n } from 'vue-i18n'
 import DownArrowDarkVue from '@/assets/img/svg/DownArrowDark.vue'
+import ko from '@/locales/ko.json'
+import { useRouter } from 'vue-router'
+import { Collapse, Dropdown } from 'bootstrap'
+
+const store = useStore()
+const router = useRouter()
+
+let bsCollapse = null
+const dropdownInstances = ref([])
+
+const mainMenus = Object.entries(ko.nav).map((mainMenu) => {
+  return {
+    mainKey: mainMenu[0],
+    subTitles: Object.keys(mainMenu[1].subTitles)
+  }
+})
 
 const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
-const store = useStore()
 const { locale, t } = useI18n()
 
 function getParsedStoredData() {
@@ -483,8 +201,10 @@ const changeLanguage = () => {
       const newLang = localStorage.getItem('getLanguage') === 'jp' ? 'ko' : 'jp'
       localStorage.setItem('getLanguage', newLang) // ✅ 변경된 언어를 localStorage에 저장
       locale.value = newLang // ✅ Vue I18n 언어 변경
-      window.document.title = t('nav.main')
+      window.document.title = t('main')
     }
+    toggleHide()
+    closeAllDropdowns()
   })
 }
 
@@ -501,19 +221,26 @@ const checkRoomAvailability = async () => {
   return true
 }
 
-// 예수동행일기 방 선택 및 이동
-const goToWithDiary = async () => {
-  try {
-    const { userId } = getParsedStoredData()
+const goToPage = async (path) => {
+  if (!path) return
 
-    await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId: userId })
+  toggleHide()
+  closeAllDropdowns()
 
-    if (!(await checkRoomAvailability())) return
+  if (path !== 'withDiary') {
+    router.push({ name: path })
+  } else {
+    try {
+      const { userId } = getParsedStoredData()
 
-    const roomList = store.state.rooms
+      await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId: userId })
 
-    const optionsHtml =
-      `
+      if (!(await checkRoomAvailability())) return
+
+      const roomList = store.state.rooms
+
+      const optionsHtml =
+        `
       <style>
         .custom-radio-label {
           display: inline-block;
@@ -546,54 +273,76 @@ const goToWithDiary = async () => {
         }
       </style>
     ` +
-      roomList
-        .map(
-          (room) =>
-            `
+        roomList
+          .map(
+            (room) =>
+              `
      <label class="custom-radio-label">
         <input type="radio" name="radioOption" value="${room.diaryRoom.id}">
         <span class="custom-radio-button">${room.diaryRoom.roomName}</span>
     </label><br>
     `
-        )
-        .join('')
+          )
+          .join('')
 
-    const result = await Swal.fire({
-      title: t('modalMsg.withDiaryRoom'),
-      html: optionsHtml,
-      showCancelButton: true,
-      cancelButtonText: '취소',
-      confirmButtonText: t('button.enterWithDiary'),
-      preConfirm: () => {
-        const selectedOption = document.querySelector('input[name="radioOption"]:checked')
-        if (!selectedOption) {
-          Swal.showValidationMessage('일기방을 선택해주세요.')
+      const result = await Swal.fire({
+        title: t('modalMsg.withDiaryRoom'),
+        html: optionsHtml,
+        showCancelButton: true,
+        cancelButtonText: '취소',
+        confirmButtonText: t('button.enterWithDiary'),
+        preConfirm: () => {
+          const selectedOption = document.querySelector('input[name="radioOption"]:checked')
+          if (!selectedOption) {
+            Swal.showValidationMessage('일기방을 선택해주세요.')
+          }
+          return selectedOption ? selectedOption.value : null
         }
-        return selectedOption ? selectedOption.value : null
+      })
+
+      if (result.isConfirmed) {
+        await router.push({ name: 'withDiary', query: { roomId: result.value, pageNum: 1 } })
+        await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId: result.value })
+
+        let payload = {
+          name: 'withDiary',
+          startRow: 0,
+          pageSize: 5,
+          roomId: store.state.room.id
+        }
+
+        await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
+        await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
       }
-    })
-
-    if (result.isConfirmed) {
-      await router.push({ name: 'withDiary', query: { roomId: result.value, pageNum: 1 } })
-      await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId: result.value })
-
-      let payload = {
-        name: 'withDiary',
-        startRow: 0,
-        pageSize: 5,
-        roomId: store.state.room.id
-      }
-
-      await store.dispatch('FETCH_WITHDIARY_BOARDCOUNT', store.state.room.id)
-      await store.dispatch('FETCH_WITHDIARY_DATALIST', payload)
+    } catch (error) {
+      console.error('Error in withDiary:', error)
     }
-  } catch (error) {
-    console.error('Error in withDiary:', error)
+  }
+}
+
+const toggleMenu = () => {
+  bsCollapse?.toggle()
+}
+
+const toggleHide = () => {
+  bsCollapse?.hide()
+}
+
+const closeAllDropdowns = () => {
+  dropdownInstances.value.forEach((dropdown) => dropdown.hide())
+}
+
+const toggleDropdown = (id) => {
+  const target = dropdownInstances.value.find((_, i) => mainMenus[i].mainKey === id)
+
+  if (target) {
+    target.toggle()
   }
 }
 
 // 토큰 검사 실행
 onMounted(async () => {
+  await nextTick()
   await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken }) // ✅ 비동기 액션 대기
   getParsedStoredData()
 
@@ -605,6 +354,19 @@ onMounted(async () => {
   } else {
     locale.value = storedLang // ✅ 기존 값 사용
   }
+
+  const collapseEl = document.getElementById('navigation')
+  bsCollapse = new Collapse(collapseEl, { toggle: false })
+
+  dropdownInstances.value = mainMenus
+    .map((menu) => {
+      const el = document.getElementById(`${menu.mainKey}Dropdown`)
+      if (el) {
+        return new Dropdown(el, { autoClose: true })
+      }
+      return null
+    })
+    .filter(Boolean)
 })
 </script>
 
@@ -618,5 +380,22 @@ onMounted(async () => {
 
 .custom-radio-label input[type='radio'] {
   margin-right: 10px;
+}
+.nav-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.nav-btn-container {
+  display: flex;
+  justify-content: end;
+  margin-top: 16px;
+  gap: 10px;
+}
+.btn-style {
+  display: flex;
+  align-items: center; /* 세로 가운데 */
+  justify-content: center; /* 가로 가운데 */
+  width: 120px;
+  height: 35px;
 }
 </style>

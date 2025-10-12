@@ -8,12 +8,12 @@ const INFO_JP = [
 const SMALLGROUP = [
   { title: '설교', icon: 'church', path: 'sermon' },
   { title: '칼럼', icon: 'book', path: 'column' },
-  { title: '금주의 성경말씀', icon: 'attribution', path: 'weekly' },
+  { title: '금주의 성경말씀', icon: 'attribution', path: 'weeklyWord' },
   { title: '속회교재실', icon: 'pin_drop', path: 'classMeeting' }
 ]
 const WORSHIP = [
   { title: '예배/훈련시간', icon: 'church', path: '' },
-  { title: '주목자 예배', icon: 'book', path: 'jumokja' },
+  { title: '주목자 예배', icon: 'book', path: 'jumok' },
   { title: '훈련', icon: 'attribution', path: 'training' },
   { title: '중보기도', icon: 'pin_drop', path: '' }
 ]

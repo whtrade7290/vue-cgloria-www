@@ -1,5 +1,5 @@
 <template>
-  <CardContainer title="nav.subTitle7.approvePage">
+  <CardContainer :title="TITLE">
     <TableOrganisms>
       <template #header>
         <TableHead :header-list="APPROVE"></TableHead>
@@ -32,6 +32,8 @@ import { ADMIN } from '@/data/sidemenu.js'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 import Swal from 'sweetalert2'
+
+const TITLE = 'nav.adminPage.subTitles.approvePage'
 
 const route = useRoute()
 const store = useStore()

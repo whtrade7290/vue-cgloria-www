@@ -39,7 +39,11 @@
     /* ================================
      * 타입 지원 (Node, Vite)
      * ================================ */
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts", // TS 파일

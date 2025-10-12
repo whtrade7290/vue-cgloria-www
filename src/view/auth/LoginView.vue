@@ -100,7 +100,7 @@ async function login() {
   })
   if (response && response.success && localStorage.getItem(response.user.id)) {
     Swal.fire({
-      title: t('modalMsg.logIn'),
+      title: t('modalMsg.login'),
       icon: 'success'
     }).then(async () => {
       await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
@@ -110,7 +110,7 @@ async function login() {
     })
   } else {
     Swal.fire({
-      title: t('modalMsg.logInFail'),
+      title: t('modalMsg.loginFail'),
       icon: 'error'
     }).then(() => {
       username.value = ''
@@ -120,9 +120,9 @@ async function login() {
 }
 
 onMounted(async () => {
-  if (store.state.isLogIned) return
+  if (store.state.isLogin) return
   await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
-  if (store.state.isLogIned) {
+  if (store.state.isLogin) {
     Swal.fire({
       title: t('modalMsg.logined'),
       icon: 'success'
