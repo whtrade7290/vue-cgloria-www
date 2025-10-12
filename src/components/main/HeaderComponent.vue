@@ -10,7 +10,7 @@
             <!-- <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ sub_msg }}</h1> -->
             <p
               class="text-white gugi-regular"
-              style="margin-top: -1.5rem"
+              style="padding-left: 5vw"
               :class="[sub_msg === '예수동행일기' ? 'diary-font' : 'main-font']"
             >
               {{ main_msg }}
