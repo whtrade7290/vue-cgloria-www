@@ -3,7 +3,9 @@
     <div class="page-header min-vh-100">
       <div class="container">
         <div class="row">
-          <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+          <div
+            class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto signup-container"
+          >
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h4 class="font-weight-bolder">회원가입</h4>
@@ -261,5 +263,8 @@ document.documentElement.style.setProperty('--background-image-url', `url('/jesu
 .green {
   color: green;
   font-size: 0.8rem;
+}
+.page-header {
+  background-color: #fff;
 }
 </style>
