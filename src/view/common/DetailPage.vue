@@ -66,7 +66,7 @@
           >
         </div>
       </div>
-      <CommentComponent v-if="isSignIn" @commentCount="handleCommentCount"></CommentComponent>
+      <CommentComponent v-if="isLogin" @commentCount="handleCommentCount"></CommentComponent>
     </div>
   </section>
 </template>
@@ -85,7 +85,7 @@ const router = useRouter()
 const store = useStore()
 const commentCount = ref(0)
 
-const isSignIn = computed(() => {
+const isLogin = computed(() => {
   return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
 })
 

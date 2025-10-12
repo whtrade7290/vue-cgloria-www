@@ -40,11 +40,7 @@
         <div class="content-box">
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
-              <a
-                :href="`${staticPath}/${item?.filename}`"
-                data-fancybox
-                :data-caption="item.filename"
-              >
+              <a :href="`${staticPath}/${item?.filename}`" data-fancybox>
                 <img :src="`${staticPath}/${item?.filename}`" alt="img" />
               </a>
             </div>
@@ -73,7 +69,7 @@
             >글삭제</a
           >
         </div>
-        <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
+        <CommentComponent v-if="isLogin" @commentCount="handleCommentCount"></CommentComponent>
       </div>
     </div>
   </section>
@@ -167,6 +163,9 @@ const isWriter = computed(() => {
     store.state.detail.writer
   )
 })
+const isLogin = computed(() => {
+  return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
+})
 
 const imageUrl = ref(null)
 
@@ -187,8 +186,6 @@ onMounted(() => {
     Carousel: {
       infinite: false
     }
-
-    // 기타 옵션 추가 가능
   })
 
   if (store.state.files) {
@@ -242,7 +239,6 @@ onMounted(() => {
 .img-container {
   height: 100%;
   overflow: hidden;
-  display: flex;
 }
 
 .img-container img {

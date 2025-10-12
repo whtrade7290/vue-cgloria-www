@@ -15,7 +15,7 @@
       <MainSectionTwo></MainSectionTwo>
       <MainSectionTraining></MainSectionTraining>
       <MainSectionJumokja></MainSectionJumokja>
-      <MainSectionPhoto></MainSectionPhoto>
+      <MainSectionPhoto :photos="contents.photoBoard"></MainSectionPhoto>
       <MainSectionBrother></MainSectionBrother>
     </template>
   </div>

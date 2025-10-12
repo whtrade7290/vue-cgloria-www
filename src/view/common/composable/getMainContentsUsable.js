@@ -3,7 +3,8 @@ import {
   getMainClassMeeting,
   getMainTestimony,
   getMainSermon,
-  getMainWeekly
+  getMainWeekly,
+  getBoardList
 } from '@/api/index'
 
 const defaultValue = {
@@ -23,12 +24,18 @@ const defaultValue = {
 }
 
 export default async function useGetMainContents() {
-  const [sermon, weekly, column, classMeeting, testimony] = await Promise.allSettled([
+  const payload = {
+    name: 'photoBoard',
+    startRow: 0,
+    pageSize: 8
+  }
+  const [sermon, weekly, column, classMeeting, testimony, photoBoard] = await Promise.allSettled([
     getMainSermon('sermon'),
     getMainWeekly('weeklyWord'),
     getMainColumn('column'),
     getMainClassMeeting('classMeeting'),
-    getMainTestimony('testimony')
+    getMainTestimony('testimony'),
+    getBoardList(payload)
   ]).then((results) => {
     return results.map((result) => {
       if (result.status === 'fulfilled') return result.value.data
@@ -36,5 +43,5 @@ export default async function useGetMainContents() {
     })
   })
 
-  return { sermon, weekly, column, classMeeting, testimony }
+  return { sermon, weekly, column, classMeeting, testimony, photoBoard }
 }

@@ -7,21 +7,23 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-3 col-sm-6" v-for="item in processedDataList" :key="item">
+        <div class="col-lg-3 col-sm-6" v-for="photo in photoList" :key="photo">
           <div class="card card-plain card-blog">
             <div class="card-image border-radius-lg position-relative">
-              <a href="javascript:;" @click="intoDetail(item.id)">
+              <a href="javascript:;" @click="intoDetail(photo.id)">
                 <img
                   class="w-100 border-radius-lg move-on-hover shadow"
                   style="height: 15rem"
-                  :src="item.url"
+                  :src="`${staticPath}/${photo.files[0].filename}`"
                 />
               </a>
             </div>
             <div class="card-body px-0" style="padding-top: 10px">
               <h6>
-                <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title || '' }}</a>
-                {{ item.id || '' }}
+                <a href="javascript:;" class="text-dark font-weight-bold">{{
+                  photo.title || ''
+                }}</a>
+                {{ photo.id || '' }}
               </h6>
             </div>
           </div>
@@ -32,12 +34,32 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const router = useRouter()
 const store = useStore()
+
+const props = defineProps({
+  photos: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const photoList = ref([])
+
+photoList.value = props.photos.map((photo) => {
+  return {
+    ...photo,
+    files: JSON.parse(photo.files)
+  }
+})
+
+console.log('photoList.value: ', photoList.value)
+
+const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 
 const processedDataList = computed(() => {
   return store.state.dataList.map((item) => {
@@ -69,7 +91,7 @@ async function intoDetail(id) {
   if (id) {
     await router.push({
       name: 'photoDetail',
-      params: { name: 'photo', id: id },
+      params: { name: 'photoBoard', id: id },
       query: { pageNum: 1 }
     })
   }
