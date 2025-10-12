@@ -35,8 +35,9 @@
                 <template v-for="menu in mainMenus" :key="menu.mainKey">
                   <li
                     v-if="
-                      menu.mainKey !== 'adminPage' ||
-                      (menu.mainKey === 'adminPage' && store.state.isLogin && role === 'ADMIN')
+                      (menu.mainKey === 'adminPage' && store.state.isLogin && role === 'ADMIN') ||
+                      (menu.mainKey === 'withDiary' && store.state.isLogin) ||
+                      (menu.mainKey !== 'adminPage' && menu.mainKey !== 'withDiary')
                     "
                     class="nav-item dropdown dropdown-hover mx-2"
                   >
