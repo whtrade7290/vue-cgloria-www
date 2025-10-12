@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
@@ -99,6 +99,7 @@ async function login() {
     username: username.value,
     password: password.value
   })
+  await nextTick()
   if (response && response.success && localStorage.getItem(response.user.id)) {
     Swal.fire({
       title: t('modalMsg.login'),

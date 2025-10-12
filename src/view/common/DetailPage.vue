@@ -1,5 +1,5 @@
 <template>
-  <section style="padding-left: 3rem; padding-right: 3rem">
+  <section>
     <div class="container">
       <div class="detail-card">
         <div>
@@ -14,7 +14,7 @@
                 </span>
               </div> -->
               <div>
-                <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
+                <p style="margin-top: 0.15rem; font-size: 1.3rem; font-weight: 700">
                   {{ store.state.detail.writer_name ?? store.state.detail.writer }}
                 </p>
               </div>
@@ -46,20 +46,20 @@
         <div class="button-box">
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             @click="goToBoardList"
             >목록으로</a
           >
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="goToEditPage"
             >글수정</a
           >
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="deleteBoard"
             >글삭제</a
@@ -227,7 +227,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 12rem;
+  margin-top: 7rem;
   margin-bottom: 5rem;
   border-radius: 1.5rem;
   padding: 3rem;
@@ -274,8 +274,28 @@ onMounted(() => {
   margin-top: 2rem;
 }
 
+.btn-style {
+  width: 110px;
+  height: 100%;
+}
+
 p {
   word-wrap: break-word; /* 긴 단어를 자동으로 줄바꿈 */
   white-space: normal; /* 기본적인 줄바꿈 설정 */
+}
+@media (max-width: 425px) {
+  .container {
+    padding: 1.5rem;
+  }
+  .btn-style {
+    font-size: 0.48rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  section {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
 </style>

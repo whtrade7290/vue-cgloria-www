@@ -14,7 +14,7 @@
                 </span>
               </div>
               <div>
-                <p style="margin-top: 0.15rem; font-size: 1.7rem; font-weight: 700">
+                <p style="margin-top: 0.15rem; font-size: 1.3rem; font-weight: 700">
                   {{ store.state.detail.writer_name ?? store.state.detail?.writer ?? '' }}
                 </p>
               </div>
@@ -50,20 +50,20 @@
         <div class="button-box">
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             @click="goToBoardList"
             >목록으로</a
           >
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="goToEditPage"
             >글수정</a
           >
           <a
             href="javascript:;"
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="deleteBoard"
             >글삭제</a
@@ -201,7 +201,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 3rem;
   margin-bottom: 5rem;
 }
 .detail-card {
@@ -249,5 +248,19 @@ onMounted(() => {
 }
 .content-container {
   margin-top: 2rem;
+}
+
+.btn-style {
+  width: 110px;
+  height: 100%;
+}
+
+@media (max-width: 425px) {
+  .detail-card {
+    padding: 1.5rem;
+  }
+  .btn-style {
+    font-size: 0.48rem;
+  }
 }
 </style>
