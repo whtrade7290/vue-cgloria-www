@@ -73,9 +73,9 @@
             >글삭제</a
           >
         </div>
+        <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
       </div>
     </div>
-    <CommentComponent @commentCount="handleCommentCount"></CommentComponent>
   </section>
 </template>
 
@@ -200,16 +200,23 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin-top: 3rem;
   margin-bottom: 5rem;
 }
 .detail-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 7rem;
-  width: 70%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 1.5rem;
 }
 .user-info {
   display: flex;

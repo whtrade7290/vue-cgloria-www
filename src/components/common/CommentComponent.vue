@@ -145,8 +145,6 @@ onMounted(async () => {
   background-color: #fff;
   display: flex;
   justify-content: center;
-  border-radius: 1rem;
-  padding: 1rem;
 }
 .comment-info-box {
   width: 55rem;

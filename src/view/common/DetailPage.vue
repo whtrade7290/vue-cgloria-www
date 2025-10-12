@@ -179,7 +179,7 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
   if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
-    imageUrl.value = `${import.meta.env.VITE_API_URL}/${store.state.detail.uuid}_${store.state.detail.filename}`
+    imageUrl.value = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
     console.log('imageUrl.value: ', imageUrl.value)
   }
 })
@@ -230,12 +230,11 @@ onMounted(() => {
   margin-top: 12rem;
   margin-bottom: 5rem;
   border-radius: 1.5rem;
-  padding-bottom: 3rem;
+  padding: 3rem;
   overflow-x: hidden;
   background-color: #fff;
 }
 .detail-card {
-  margin-top: 7rem;
   width: 100%;
   height: 80%;
 }
