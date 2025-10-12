@@ -1,7 +1,7 @@
 <template>
   <CardContainer :title="obj.title">
     <div>
-      <div class="container" style="padding: 30px 50px 0 50px">
+      <div class="container">
         <div class="row align-items-center">
           <div class="col-md-7 mb-md-0 mb-4">
             <h3 class="text-gradient text-primary mb-0 mt-2">

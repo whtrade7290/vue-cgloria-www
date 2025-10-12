@@ -1,7 +1,7 @@
 <template>
   <CardContainer :title="obj.title">
     <section class="py-5">
-      <div class="container" style="padding: 30px 60px">
+      <div class="container">
         <div class="row">
           <div class="col-md-6 position-relative">
             <div class="position-relative ms-md-5 me-md-n5">

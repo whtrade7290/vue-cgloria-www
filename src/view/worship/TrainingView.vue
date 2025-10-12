@@ -1,7 +1,7 @@
 <template>
   <CardContainer :title="obj.title">
     <section class="py-5">
-      <div class="container" style="padding: 0 60px">
+      <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <h3>{{ $t('webContents.training.main') }}</h3>
