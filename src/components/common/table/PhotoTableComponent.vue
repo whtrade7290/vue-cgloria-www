@@ -211,4 +211,87 @@ async function searchPost() {
   height: 11rem; /* 이미지의 고정 높이 */
   object-fit: cover; /* 이미지가 카드에 맞게 조정됨 */
 }
+
+/* ✅ 검색 영역 전체 */
+.d-flex.justify-content-center.mt-5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+/* ✅ input wrapper */
+.w-25 {
+  width: 25% !important;
+  min-width: 220px;
+  max-width: 350px; /* PC에서 너무 길지 않게 */
+}
+
+/* ✅ input 기본 스타일 */
+.form-control.form-control-lg {
+  height: 46px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.form-control.form-control-lg:focus {
+  border-color: #d4a88c;
+  box-shadow: 0 0 0 3px rgba(212, 168, 140, 0.2);
+}
+
+/* ✅ 버튼 스타일 */
+.btn.bg-gradient-primary {
+  height: 46px;
+  padding: 0 1.2rem;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #eecbb0, #e2b290);
+  font-weight: 600;
+  border: none;
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.btn.bg-gradient-primary:hover {
+  background: linear-gradient(45deg, #e2b290, #d9a77b);
+}
+
+/* ✅ 반응형 - 태블릿 (길이 조절) */
+@media (max-width: 992px) {
+  .w-25 {
+    width: 45% !important;
+    max-width: 300px;
+  }
+}
+
+/* ✅ 반응형 - 모바일 (한 줄 유지) */
+@media (max-width: 768px) {
+  .w-25 {
+    width: 60% !important;
+    max-width: 250px;
+  }
+
+  .d-flex.justify-content-center.mt-5 {
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .btn.bg-gradient-primary {
+    height: 42px;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+}
+
+/* ✅ 반응형 - 아주 작은 모바일 */
+@media (max-width: 480px) {
+  .w-25 {
+    width: 70% !important;
+    max-width: 220px;
+  }
+}
 </style>

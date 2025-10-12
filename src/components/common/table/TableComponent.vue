@@ -106,14 +106,13 @@
         </li>
       </ul>
     </nav>
+
     <div class="d-flex justify-content-center mt-5">
       <div class="mb-3 w-25">
         <input
           type="text"
           class="form-control form-control-lg mr-1"
           placeholder="search"
-          aria-label="Email"
-          aria-describedby="email-addon"
           v-model="searchWord"
         />
       </div>
@@ -279,50 +278,47 @@ async function searchPost() {
 </script>
 
 <style scoped>
-.selected {
-  border: 3px solid #c5b5aa;
-  background-color: rgba(0, 0, 0, 0.1);
-  pointer-events: none;
+/* ✅ 검색 영역 wrapper */
+/* ✅ 기본 (데스크탑 기준) */
+.w-25 {
+  width: 25% !important;
+  min-width: 220px;
+  max-width: 350px; /* PC에서는 너무 길지 않게 제한 */
 }
 
-.no-results {
-  text-align: center;
-  vertical-align: middle;
-  height: 200px;
-  background-color: #f8f9fa; /* 연한 회색 배경 */
-  border: 1px solid #ddd; /* 테두리 */
-}
-
-.result-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.result-text {
-  font-size: 18px;
-  font-weight: bold;
-  color: #555; /* 어두운 회색 */
-  margin-top: 10px;
-}
-
-i {
-  font-size: 30px;
-  color: #777; /* 아이콘 색상 */
-}
-
-/* 부드러운 페이드인 애니메이션 */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+/* ✅ 태블릿 (768px~992px) */
+@media (max-width: 992px) {
+  .w-25 {
+    width: 45% !important; /* 기존 60% → 45%로 축소 */
+    max-width: 300px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* ✅ 모바일 (≤768px) */
+@media (max-width: 768px) {
+  .w-25 {
+    width: 60% !important;
+    max-width: 250px;
+  }
+
+  .d-flex.justify-content-center.mt-5 {
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .btn.bg-gradient-primary {
+    height: 42px;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+}
+
+/* ✅ 아주 작은 모바일 (≤480px) */
+@media (max-width: 480px) {
+  .w-25 {
+    width: 70% !important;
+    max-width: 220px;
   }
 }
 </style>
