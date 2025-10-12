@@ -115,7 +115,19 @@ const routes = [
   { path: '/jumok', name: 'jumok', component: JumokjaView },
   { path: '/training', name: 'training', component: TrainingView },
   // 주일학교
-  { path: '/eventSchedule', name: 'eventSchedule', component: EventSchedule },
+  {
+    path: '/eventSchedule',
+    name: 'eventSchedule',
+    component: EventSchedule,
+    beforeEnter: async (from, next) => {
+      await Swal.fire({
+        title: '준비중입니다.',
+        icon: 'warning'
+      })
+
+      await next(from)
+    }
+  },
   {
     path: '/schoolPhotoBoard',
     name: 'schoolPhotoBoard',
