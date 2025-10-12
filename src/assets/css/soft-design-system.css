@@ -21266,7 +21266,7 @@ fieldset:disabled .btn {
   }
 
   .navbar-toggler + .navbar-collapse .dropdown.nav-item .dropdown-menu {
-    background-color: transparent;
+    /* background-color: transparent; */
     overflow: scroll;
     position: relative;
     transform: none !important;
@@ -21339,6 +21339,8 @@ fieldset:disabled .btn {
     transform: perspective(999px) rotateX(0deg) translateZ(0) translate3d(0, 0px, 5px) !important;
     box-shadow: none;
     margin-bottom: 1rem;
+    height: 100%;
+    transition: height 1.3s ease;
   }
 }
 
@@ -21406,6 +21408,9 @@ fieldset:disabled .btn {
   .dropdown-lg-responsive {
     min-width: 19rem;
   }
+  .navbar-toggler + .navbar-collapse .dropdown.nav-item .dropdown-menu {
+    background-color: transparent;
+  }
 }
 
 .dropup .dropdown-menu {
@@ -21460,7 +21465,7 @@ fieldset:disabled .btn {
   display: flex;
   align-items: center;
   background-size: cover;
-  background-position: 50%;
+  background-position: 75%;
 }
 
 .page-header .container {

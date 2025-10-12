@@ -51,7 +51,7 @@
                       <DownArrowDarkVue></DownArrowDarkVue>
                     </a>
                     <div
-                      class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+                      class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md p-3 border-radius-xl mt-0 mt-lg-3 test"
                     >
                       <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
                         <div
@@ -162,8 +162,6 @@ function getParsedStoredData() {
 
 const { accessToken, refreshToken, storedRole } = getParsedStoredData()
 const role = ref(storedRole)
-
-console.log('role: ', role)
 
 // 로그아웃 함수
 function logout() {
@@ -373,6 +371,22 @@ onMounted(async () => {
       return null
     })
     .filter(Boolean)
+
+  document.addEventListener('click', (e) => {
+    const navEl = document.getElementById('navigation')
+    const toggler = document.querySelector('.navbar-toggler')
+
+    // 내부 클릭이면 무시
+    if (navEl.contains(e.target) || toggler.contains(e.target)) return
+
+    // Collapse 닫기
+    if (navEl.classList.contains('show')) {
+      bsCollapse?.hide()
+    }
+
+    // Dropdown 닫기
+    dropdownInstances.value.forEach((dropdown) => dropdown.hide())
+  })
 })
 </script>
 
@@ -403,5 +417,13 @@ onMounted(async () => {
   justify-content: center; /* 가로 가운데 */
   width: 120px;
   height: 35px;
+}
+.dropdown-menu.show {
+  width: 100%;
+}
+@media (min-width: 992px) {
+  .data-bs-popper .test {
+    background-color: #67748e;
+  }
 }
 </style>

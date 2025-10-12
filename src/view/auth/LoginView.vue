@@ -29,6 +29,7 @@
                       aria-label="Password"
                       aria-describedby="password-addon"
                       v-model="password"
+                      @keyup.enter="login"
                     />
                   </div>
                   <div class="text-center">
@@ -131,6 +132,10 @@ onMounted(async () => {
     })
   }
 })
+
+const onEnter = () => {
+  console.log('test')
+}
 
 const apiBaseUrl = import.meta.env.VITE_API_URL
 

@@ -2,7 +2,7 @@
   <header class="header-2">
     <div
       class="page-header min-vh-75 relative main-bg"
-      :style="isMobile ? {} : { backgroundImage: `url(${imgUrl})` }"
+      :style="{ backgroundImage: `url(${imgUrl})` }"
     >
       <div class="container">
         <div class="row">
@@ -64,21 +64,6 @@ defineProps({
     type: String,
     default: ''
   }
-})
-
-const isMobile = ref(false)
-
-function checkIsMobile() {
-  isMobile.value = window.innerWidth < 768
-}
-
-onMounted(() => {
-  checkIsMobile()
-  window.addEventListener('resize', checkIsMobile)
-})
-
-onBeforeMount(() => {
-  window.removeEventListener('resize', checkIsMobile)
 })
 
 // const styleProps = ref({
