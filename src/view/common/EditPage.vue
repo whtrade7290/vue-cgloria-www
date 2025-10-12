@@ -152,7 +152,7 @@ const file = ref(null)
 const isMainContent = ref(store.state.detail.mainContent)
 
 const isDisplay = computed(() => {
-  const routeNames = ['sermon', 'column', 'weekly', 'classMeeting', 'testimony']
+  const routeNames = ['sermon', 'column', 'weeklyWord', 'classMeeting', 'testimony']
   return routeNames.some((name) => {
     return route.query?.name === name
   })
