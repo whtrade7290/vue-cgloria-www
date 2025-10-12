@@ -99,10 +99,7 @@ const props = defineProps({
   }
 })
 
-const staticPath =
-  import.meta.env.VITE_API_URL === 'http://localhost:3000/'
-    ? `${import.meta.env.VITE_API_URL}uploads`
-    : `${import.meta.env.VITE_API_URL}uploads/api`
+const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 let searchWord = ref('')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))

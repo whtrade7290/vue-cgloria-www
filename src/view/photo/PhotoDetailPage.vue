@@ -90,11 +90,7 @@ import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
 
-const staticPath =
-  import.meta.env.VITE_API_URL === 'http://localhost:3000/'
-    ? `${import.meta.env.VITE_API_URL}uploads`
-    : `${import.meta.env.VITE_API_URL}uploads/api`
-console.log('import.meta.env.VITE_API_URL: ', import.meta.env.VITE_API_URL)
+const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 
 const route = useRoute()
 const router = useRouter()
