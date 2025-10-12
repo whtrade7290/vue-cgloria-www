@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="padding-left: 3rem; padding-right: 3rem">
     <div class="container">
       <div class="detail-card">
         <div>
@@ -228,10 +228,10 @@ onMounted(() => {
   flex-direction: column;
   margin-top: 12rem;
   margin-bottom: 5rem;
-  border: #d2d6da solid 1px;
   border-radius: 1.5rem;
   padding-bottom: 3rem;
   overflow-x: hidden;
+  background-color: #fff;
 }
 .detail-card {
   margin-top: 7rem;

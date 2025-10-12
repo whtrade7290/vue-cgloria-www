@@ -1,8 +1,5 @@
 <template>
-  <section
-    class="pt-3 pt-md-5 pb-md-5 pt-lg-7 mt-5 mb-7"
-    style="border-radius: 1.5rem; background-color: #f6f6f6"
-  >
+  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7 mt-5 mb-7">
     <div class="container">
       <div class="row">
         <SideMenu class="display-sideMenu"></SideMenu>
@@ -39,6 +36,10 @@ defineProps({
   justify-content: end;
   margin-right: 2rem;
   margin-bottom: 1rem;
+}
+
+.display-sideMenu {
+  height: 100%;
 }
 
 @media (max-width: 991px) {

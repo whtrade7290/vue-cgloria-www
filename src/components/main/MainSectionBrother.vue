@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container brother-container">
       <div class="row">
         <div class="col-lg-3 px-lg-1 mt-lg-0 mt-3">
           <div class="info-horizontal bg-gray-100 border-radius-xl p-5">
@@ -86,4 +86,9 @@
 const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.brother-container {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+</style>

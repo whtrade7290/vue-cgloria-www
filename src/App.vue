@@ -1,8 +1,10 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
-  <NavBarVue></NavBarVue>
-  <router-view></router-view>
-  <FooterComponentVue></FooterComponentVue>
+  <div class="wrapper">
+    <LoadingSpinner v-if="isLoading" />
+    <NavBarVue></NavBarVue>
+    <router-view class="main-content"></router-view>
+    <FooterComponentVue></FooterComponentVue>
+  </div>
 </template>
 
 <script setup>
@@ -36,4 +38,19 @@ onMounted(async () => {
 @import url('@/assets/css/nucleo-icons.css');
 @import url('@/assets/css/nucleo-svg.css');
 @import url('@/assets/css/soft-design-system.css');
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f6f6f6;
+}
+.main-content {
+  flex: 1; /* 콘텐츠가 화면보다 짧을 경우, footer를 아래로 밀어줌 */
+}
 </style>

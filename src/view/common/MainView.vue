@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <HeaderComponent
       :imgUrl="imgUrl"
       :main_msg="$t('mainMsg.main')"
@@ -62,4 +62,8 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  background-color: #fff;
+}
+</style>

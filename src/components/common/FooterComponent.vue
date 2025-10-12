@@ -1,6 +1,5 @@
 <template>
-  <footer class="footer pt-0 mt-5" style="background-color: #2b2b2b">
-    <hr class="horizontal dark mb-5" />
+  <footer class="footer pt-0" style="background-color: #2b2b2b">
     <div class="container">
       <div class="row">
         <div class="col-md-3 mb-3">
@@ -54,7 +53,7 @@
 
       <div class="col-12">
         <div class="text-center">
-          <p class="my-4 text-sm" style="color: #ffffff">All Right Reserved © 중앙영광교회 LLC.</p>
+          <p class="text-sm" style="color: #ffffff">All Right Reserved © 중앙영광교회 LLC.</p>
         </div>
       </div>
     </div>
@@ -65,4 +64,8 @@
 const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.container {
+  padding-top: 4rem;
+}
+</style>
