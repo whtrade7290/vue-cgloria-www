@@ -99,7 +99,6 @@ async function login() {
     username: username.value,
     password: password.value
   })
-  await nextTick()
   if (response && response.success && localStorage.getItem(response.user.id)) {
     Swal.fire({
       title: t('modalMsg.login'),
