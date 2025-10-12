@@ -20,7 +20,7 @@
                 <template v-if="weekly?.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(weekly?.id, 'weekly')"
+                    @click="intoDetail(weekly?.id, 'weeklyWord')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >
