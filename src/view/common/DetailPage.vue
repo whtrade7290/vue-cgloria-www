@@ -179,7 +179,8 @@ const imageUrl = ref(null)
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
   if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
-    imageUrl.value = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
+    imageUrl.value = `${import.meta.env.VITE_API_URL}/${store.state.detail.uuid}_${store.state.detail.filename}`
+    console.log('imageUrl.value: ', imageUrl.value)
   }
 })
 </script>

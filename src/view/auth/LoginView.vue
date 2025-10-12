@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="background-color: #fff">
     <div class="page-header min-vh-100">
       <div class="container">
         <div class="row">
@@ -143,5 +143,9 @@ document.documentElement.style.setProperty('--background-image-url', `url('/jesu
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;
+}
+
+.container {
+  background-color: #fff;
 }
 </style>

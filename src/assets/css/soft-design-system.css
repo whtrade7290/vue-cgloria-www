@@ -21088,7 +21088,7 @@ fieldset:disabled .btn {
   margin-bottom: 24px;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .dropdown .dropdown-menu,
   .dropup .dropdown-menu,
   .dropstart .dropdown-menu,

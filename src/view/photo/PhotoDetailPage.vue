@@ -41,11 +41,11 @@
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
               <a
-                :href="`${staticPath}uploads/${item?.filename}`"
+                :href="`${staticPath}/${item?.filename}`"
                 data-fancybox
                 :data-caption="item.filename"
               >
-                <img :src="`${staticPath}uploads/${item?.filename}`" alt="img" />
+                <img :src="`${staticPath}/${item?.filename}`" alt="img" />
               </a>
             </div>
           </div>
@@ -90,7 +90,12 @@ import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
 
-const staticPath = `${import.meta.env.VITE_API_URL}`
+const staticPath =
+  import.meta.env.VITE_API_URL === 'http://localhost:3000/'
+    ? `${import.meta.env.VITE_API_URL}uploads`
+    : `${import.meta.env.VITE_API_URL}uploads/api`
+console.log('import.meta.env.VITE_API_URL: ', import.meta.env.VITE_API_URL)
+
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -191,7 +196,8 @@ onMounted(() => {
   })
 
   if (store.state.files) {
-    imageUrl.value = `${staticPath}uploads/${item?.filename}`
+    imageUrl.value = `${staticPath}/${item?.filename}`
+    console.log('imageUrl.value: ', imageUrl.value)
   }
 })
 </script>

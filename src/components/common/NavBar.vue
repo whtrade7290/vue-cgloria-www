@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-12">
         <nav
-          class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4"
+          class="navbar navbar-expand-xl blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4"
         >
           <div class="container-fluid px-0">
             <img src="/f_logo.png" style="width: 50px" />
@@ -32,43 +32,46 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav navbar-nav-hover w-100 nav-container">
-                <li
-                  class="nav-item dropdown dropdown-hover mx-2"
-                  v-for="menu in mainMenus"
-                  :key="menu.mainKey"
-                >
-                  <a
-                    class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                    href="javascript:;"
-                    :id="`${menu.mainKey}Dropdown`"
-                    @click="toggleDropdown(menu.mainKey)"
+                <template v-for="menu in mainMenus" :key="menu.mainKey">
+                  <li
+                    v-if="
+                      menu.mainKey !== 'adminPage' ||
+                      (menu.mainKey === 'adminPage' && store.state.isLogin && role === 'ADMIN')
+                    "
+                    class="nav-item dropdown dropdown-hover mx-2"
                   >
-                    {{ $t(`nav.${menu.mainKey}.title`) }}&nbsp;
-                    <DownArrowDarkVue></DownArrowDarkVue>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                    aria-labelledby="dropdownMenuPages"
-                  >
-                    <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
-                      <div
-                        @click="goToPage(subTitle)"
-                        class="dropdown-item border-radius-md nav-btn"
-                      >
-                        <span class="ps-3">{{
-                          $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
-                        }}</span>
+                    <a
+                      class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
+                      href="javascript:;"
+                      :id="`${menu.mainKey}Dropdown`"
+                      @click="toggleDropdown(menu.mainKey)"
+                    >
+                      {{ $t(`nav.${menu.mainKey}.title`) }}&nbsp;
+                      <DownArrowDarkVue></DownArrowDarkVue>
+                    </a>
+                    <div
+                      class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+                    >
+                      <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
+                        <div
+                          @click="goToPage(subTitle)"
+                          class="dropdown-item border-radius-md nav-btn"
+                        >
+                          <span class="ps-3">{{
+                            $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
+                          }}</span>
+                        </div>
+                      </div>
+                      <div class="d-lg-none" v-for="subTitle in menu.subTitles">
+                        <div @click="goToPage(subTitle)" class="dropdown-item border-radius-md">
+                          <span class="ps-3">{{
+                            $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
+                          }}</span>
+                        </div>
                       </div>
                     </div>
-                    <div class="d-lg-none" v-for="subTitle in menu.subTitles">
-                      <div @click="goToPage(subTitle)" class="dropdown-item border-radius-md">
-                        <span class="ps-3">{{
-                          $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                </template>
               </ul>
               <div class="nav-btn-container">
                 <template v-if="store.state.isLogin">
@@ -158,6 +161,8 @@ function getParsedStoredData() {
 
 const { accessToken, refreshToken, storedRole } = getParsedStoredData()
 const role = ref(storedRole)
+
+console.log('role: ', role)
 
 // 로그아웃 함수
 function logout() {

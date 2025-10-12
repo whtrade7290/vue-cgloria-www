@@ -98,6 +98,11 @@ const props = defineProps({
     default: ''
   }
 })
+
+const staticPath =
+  import.meta.env.VITE_API_URL === 'http://localhost:3000/'
+    ? `${import.meta.env.VITE_API_URL}uploads`
+    : `${import.meta.env.VITE_API_URL}uploads/api`
 let searchWord = ref('')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))
@@ -163,7 +168,7 @@ const parsedFiles = computed(() => {
       writer: data.writer,
       content: data.content,
       files: files,
-      thumnailUrl: `https://cgloria.work:443/uploads/${files[0]?.filename}`,
+      thumnailUrl: `${staticPath}/${files[0]?.filename}`,
       update_at: data.update_at,
       create_at: data.create_at,
       deleted: data.deleted
