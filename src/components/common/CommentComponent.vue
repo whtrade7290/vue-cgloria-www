@@ -128,8 +128,6 @@ onMounted(async () => {
 }
 .comment-display-box {
   font-size: 1.2rem;
-  width: 50rem;
-  /* height: 20rem; */
   margin: 2rem 0 0 2.5rem;
   overflow-y: scroll;
 }
