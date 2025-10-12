@@ -1,10 +1,10 @@
 <template>
-  <div style="display: flex; justify-content: center; background-color: #e9ecef">
+  <div class="container" style="display: flex; justify-content: center">
     <div
       style="
         margin-top: 7rem;
         margin-bottom: 5rem;
-        width: 50%;
+        width: 100%;
         background-color: #fff;
         border-radius: 1.5rem;
       "
@@ -206,6 +206,9 @@ const isDisplay = computed(() => {
 </script>
 
 <style scoped>
+.container {
+  padding: 1.5rem;
+}
 .input-title {
   width: 100%;
   border: 1px solid #ccced1;

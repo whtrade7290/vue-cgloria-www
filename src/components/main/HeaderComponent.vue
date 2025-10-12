@@ -7,7 +7,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7mx-auto">
-            <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ sub_msg }}</h1>
+            <!-- <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ sub_msg }}</h1> -->
             <p
               class="text-white gugi-regular"
               style="margin-top: -1.5rem"

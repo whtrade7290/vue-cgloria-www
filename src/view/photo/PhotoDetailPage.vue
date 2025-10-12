@@ -196,6 +196,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+section {
+  overflow-x: hidden;
+}
 .container {
   width: 100%;
   display: flex;

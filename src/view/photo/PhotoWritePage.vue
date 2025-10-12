@@ -1,10 +1,10 @@
 <template>
-  <div style="display: flex; justify-content: center; background-color: #e9ecef">
+  <div class="container" style="display: flex; justify-content: center">
     <div
       style="
         margin-top: 7rem;
         margin-bottom: 5rem;
-        width: 50%;
+        width: 100%;
         background-color: #fff;
         border-radius: 1.5rem;
       "
@@ -77,7 +77,7 @@
           v-model="editorData"
           :config="editorConfig"
         ></ckeditor>
-        <div style="margin-top: 1rem; margin-left;: 2.5rem; display: flex; justify-content: end;">
+        <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
           <a
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
@@ -186,6 +186,9 @@ function changeImage(event) {
 </script>
 
 <style scoped>
+.container {
+  padding: 1rem;
+}
 .input-title {
   width: 100%;
   border: 1px solid #ccced1;

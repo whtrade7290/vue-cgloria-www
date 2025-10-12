@@ -50,12 +50,14 @@ const props = defineProps({
 
 const photoList = ref([])
 
-photoList.value = props.photos.map((photo) => {
-  return {
-    ...photo,
-    files: JSON.parse(photo.files)
-  }
-})
+photoList.value = props.photos
+  .map((photo) => {
+    return {
+      ...photo,
+      files: photo.files ? JSON.parse(photo.files) : null
+    }
+  })
+  .filter((photo) => photo.files && photo.files.length > 0)
 
 console.log('photoList.value: ', photoList.value)
 
