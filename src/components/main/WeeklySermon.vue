@@ -7,8 +7,8 @@
             <div class="col-md-4 position-relative">
               <div class="p-3 text-center">
                 <h3>{{ formatDate(sermon?.create_at) || '' }}</h3>
-                <h5 class="mt-3">{{ $t('weeklySermon.sermon') }}</h5>
-                <p class="text-sm">{{ sermon?.title || '' }}</p>
+                <h5 class="mt-3 h4">{{ $t('weeklySermon.sermon') }}</h5>
+                <p class="h5">{{ sermon?.title || '' }}</p>
               </div>
               <hr class="vertical dark" />
             </div>

@@ -118,7 +118,7 @@ const deleteUser = (id) => {
 .search-button {
   margin-bottom: 0 !important;
   margin-left: 2rem;
-  width: 20%;
+  width: 30%;
 }
 
 .added-people-container {
