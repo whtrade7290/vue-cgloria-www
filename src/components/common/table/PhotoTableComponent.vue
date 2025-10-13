@@ -15,6 +15,8 @@
               :src="item.thumnailUrl"
               :alt="item.title"
               loading="lazy"
+              decoding="async"
+              fetchpriority="low"
               width="300"
               height="200"
             />
