@@ -41,7 +41,16 @@
           <div class="img-container">
             <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
               <a :href="`${staticPath}/${item?.filename}`" data-fancybox>
-                <img :src="`${staticPath}/${item?.filename}`" alt="img" />
+                <img
+                  :key="item.id"
+                  :src="`${staticPath}/${item?.filename}`"
+                  :alt="item.title"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  width="300"
+                  height="200"
+                />
               </a>
             </div>
           </div>

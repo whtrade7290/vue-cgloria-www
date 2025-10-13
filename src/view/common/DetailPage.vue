@@ -39,7 +39,16 @@
         </div>
         <div class="content-box">
           <div v-show="imageUrl" class="img-container">
-            <img :src="imageUrl" alt="img" />
+            <img
+              :key="store.state.detail.id"
+              :src="imageUrl"
+              :alt="store.state.detail.title"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+              width="300"
+              height="200"
+            />
           </div>
           <div class="content-container" v-html="store.state.detail.content"></div>
         </div>
