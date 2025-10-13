@@ -9,7 +9,15 @@
       <div class="card card-plain card-blog">
         <div class="card-image border-radius-lg position-relative">
           <a href="javascript:;" @click="intoDetail(item.id)">
-            <img class="w-100 border-radius-lg move-on-hover shadow" :src="item.thumnailUrl" />
+            <img
+              class="w-100 border-radius-lg move-on-hover shadow"
+              :key="item.id"
+              :src="item.thumnailUrl"
+              :alt="item.title"
+              loading="lazy"
+              width="300"
+              height="200"
+            />
           </a>
         </div>
         <div class="card-body px-0" style="padding: 10px 0 0 0">
