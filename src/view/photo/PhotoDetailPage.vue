@@ -158,10 +158,11 @@ const deleteBoard = () => {
 }
 
 const isWriter = computed(() => {
-  return (
-    JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.username ===
-    store.state.detail.writer
-  )
+  const localUser = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
+
+  if (!localUser) return false
+
+  return localUser.username === store.state.detail.writer || localUser.role === 'ADMIN'
 })
 const isLogin = computed(() => {
   return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
