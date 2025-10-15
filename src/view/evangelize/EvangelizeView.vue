@@ -7,10 +7,9 @@
             <h3 class="text-gradient text-primary mb-0 mt-2">
               {{ $t('webContents.evengelize.main1') }}
             </h3>
-            <p
-              style="line-height: 40px; padding: 0 10px"
-              v-html="$t('webContents.evengelize.content1')"
-            ></p>
+            <p style="line-height: 40px; padding: 0 10px">
+              {{ $t('webContents.evengelize.content1') }}
+            </p>
             <h3 class="text-gradient text-primary mb-0 mt-2">
               {{ $t('webContents.evengelize.main2') }}
             </h3>

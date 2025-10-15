@@ -16,7 +16,7 @@
               <div class="p-3">
                 <h3 class="text-gradient text-primary">&nbsp;</h3>
                 <h5 class="mt-3">{{ weekly?.title || '' }}</h5>
-                <p class="text-sm" v-html="truncatedText(weekly?.content ?? '', 160)"></p>
+                <p class="text-sm">{{ $t(truncatedText(column?.content ?? '', 160)) }}</p>
                 <template v-if="weekly?.id !== 999999">
                   <a
                     href="javascript:;"

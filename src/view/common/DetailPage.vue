@@ -50,7 +50,7 @@
               height="200"
             />
           </div>
-          <div class="content-container" v-html="store.state.detail.content"></div>
+          <div class="content-container">{{ store.state.detail.content }}</div>
         </div>
         <div class="button-box">
           <a
@@ -282,6 +282,7 @@ onMounted(() => {
 }
 .content-container {
   margin-top: 2rem;
+  white-space: pre-line;
 }
 
 .btn-style {

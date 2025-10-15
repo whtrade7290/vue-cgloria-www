@@ -91,7 +91,7 @@
           </div>
           <div style="display: grid; padding-bottom: 30px">
             <span>{{ $t('webContents.churchIntro.kawaguchiName') }}</span>
-            <span v-html="$t('webContents.churchIntro.kawaguchiInfo')"></span>
+            <span>{{ $t('webContents.churchIntro.kawaguchiInfo') }}</span>
           </div>
         </div>
       </div>

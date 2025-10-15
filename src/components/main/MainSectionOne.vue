@@ -14,7 +14,7 @@
                     {{ column?.title || '' }}
                   </h5>
                 </div>
-                <p v-html="truncatedText(column?.content ?? '', 200)"></p>
+                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
                 <template v-if="column.id !== 999999">
                   <a
                     href="javascript:;"
@@ -35,7 +35,7 @@
                     {{ classMeeting?.title || '' }}
                   </h5>
                 </div>
-                <p v-html="truncatedText(classMeeting?.content, 300)"></p>
+                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
                 <template v-if="classMeeting.id !== 999999">
                   <a
                     href="javascript:;"
@@ -56,7 +56,7 @@
                     {{ testimony?.title || '' }}
                   </h5>
                 </div>
-                <p v-html="truncatedText(testimony.content, 250)"></p>
+                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
                 <template v-if="testimony.id !== 999999">
                   <a
                     href="javascript:;"
