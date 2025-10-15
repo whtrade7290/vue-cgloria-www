@@ -51,12 +51,12 @@
                       <DownArrowDarkVue></DownArrowDarkVue>
                     </a>
                     <div
-                      class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md p-3 border-radius-xl mt-0 mt-lg-3 test"
+                      class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md border-radius-xl mt-0 bg-color"
                     >
                       <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
                         <div
                           @click="goToPage(subTitle)"
-                          class="dropdown-item border-radius-md nav-btn"
+                          class="dropdown-item border-radius-md nav-btn cursor-pointer"
                         >
                           <span class="ps-3">{{
                             $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
@@ -422,7 +422,7 @@ onMounted(async () => {
   width: 100%;
 }
 @media (min-width: 992px) {
-  .data-bs-popper .test {
+  .data-bs-popper .bg-color {
     background-color: #67748e;
   }
 }
