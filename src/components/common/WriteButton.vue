@@ -14,12 +14,19 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
+const props = defineProps({
+  isPhoto: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const router = useRouter()
 const route = useRoute()
 const store = useStore()
 
 function moveWritePage() {
-  if (route.name === 'photo' || route.name === 'school_photo') {
+  if (props.isPhoto) {
     router.push({ name: 'photo_write', query: { name: route.name } })
   } else {
     router.push({ name: 'write', query: { name: route.name } })

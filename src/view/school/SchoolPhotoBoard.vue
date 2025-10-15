@@ -1,7 +1,7 @@
 <template>
   <CardContainer :title="obj.title">
     <PhotoTableComponentVue :called="route.name"></PhotoTableComponentVue>
-    <WriteButton></WriteButton>
+    <WriteButton :isPhoto="true"></WriteButton>
   </CardContainer>
 </template>
 
