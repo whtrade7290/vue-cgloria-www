@@ -100,8 +100,8 @@ export default createStore({
       }
       return res
     },
-    async SIGN_UP({ commit }, { username, password, name }) {
-      const result = await signUp(username, password, name)
+    async SIGN_UP({ commit }, { username, password, name, email }) {
+      const result = await signUp(username, password, name, email)
 
       if (result.data && result.status === 200) {
         return result.data

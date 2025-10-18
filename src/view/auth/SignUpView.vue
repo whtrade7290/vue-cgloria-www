@@ -51,9 +51,17 @@
                     <input
                       type="text"
                       class="form-control form-control-lg"
+                      placeholder="email"
+                      v-model="email"
+                      @focusout="checkingEmail"
+                    />
+                    <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
+                  </div>
+                  <div class="mb-3">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
                       placeholder="name"
-                      aria-label="Email"
-                      aria-describedby="email-addon"
                       v-model="name"
                       @focusout="checkingName"
                     />
@@ -115,49 +123,73 @@ const name = ref('')
 const nameClass = ref(false)
 const nameMsg = ref('')
 
-let confirmUsername = false
-let confirmPassword = false
-let confirmName = false
+const email = ref('')
+const emailClass = ref(false)
+const emailMsg = ref('')
+
+const confirmUsername = ref(false)
+const confirmPassword = ref(false)
+const confirmName = ref(false)
+const confirmEmail = ref(false)
 
 const checkingUsername = async () => {
   const usernameRegex = /^[a-zA-Z0-9_]{4,16}$/
 
   if (username.value === '') {
-    confirmUsername = false
+    confirmUsername.value = false
     usernameMsg.value = '계정을 4자 이상 입력해주세요.'
     usernameClass.value = true
   } else if (!usernameRegex.test(username.value)) {
-    confirmUsername = false
+    confirmUsername.value = false
     usernameClass.value = true
     usernameMsg.value = '계정은 4자 이상 16자 이하의 영문자, 숫자, 밑줄(_)만 사용할 수 있습니다.'
   } else {
     await store.dispatch('SEARCH_USER', { searchUser: username.value })
 
     if (store.state.user) {
-      confirmUsername = false
+      confirmUsername.value = false
       usernameClass.value = true
       usernameMsg.value = '이미 사용중인 계정입니다..'
     } else {
       usernameClass.value = false
       usernameMsg.value = '사용 가능한 계정입니다.'
-      confirmUsername = true
+      confirmUsername.value = true
     }
   }
 }
 
 const checkingPassword = async () => {
   if (password1.value.length < 4) {
-    confirmPassword = false
+    confirmPassword.value = false
     passwordClass.value = true
     passwordMsg.value = '비밀번호는 4자리 이상 입력해주세요.'
   } else if (password1.value !== password2.value) {
-    confirmPassword = false
+    confirmPassword.value = false
     passwordClass.value = true
     passwordMsg.value = '비밀번호가 일치하지 않습니다.'
   } else {
     passwordClass.value = false
     passwordMsg.value = '사용가능한 패스워드 입니다.'
-    confirmPassword = true
+    confirmPassword.value = true
+  }
+}
+
+const checkingEmail = async () => {
+  // 이메일 형식 검증용 정규식
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/
+
+  if (email.value.length === 0) {
+    confirmEmail.value = false
+    emailClass.value = true
+    emailMsg.value = '메일을 입력해주세요.'
+  } else if (!emailRegex.test(email.value)) {
+    confirmEmail.value = false
+    emailClass.value = true
+    emailMsg.value = '메일이 올바르지 않습니다.'
+  } else {
+    confirmEmail.value = true
+    emailClass.value = false
+    emailMsg.value = '사용 가능한 메일입니다.'
   }
 }
 
@@ -165,17 +197,17 @@ const checkingName = async () => {
   const nameRegex = /^[\u3040-\u30FF\uAC00-\uD7A3\u4E00-\u9FFFa-zA-Z]+$/
 
   if (name.value.length === 0) {
-    confirmName = false
+    confirmName.value = false
     nameClass.value = true
     nameMsg.value = '이름을 입력해주세요.'
   } else if (!nameRegex.test(name.value)) {
-    confirmName = false
+    confirmName.value = false
     nameClass.value = true
     nameMsg.value = '이름은 히라가나, 가타카나, 한글, 한자, 영문자만 포함할 수 있습니다.'
   } else {
     nameClass.value = false
     nameMsg.value = '사용가능한 이름 입니다.'
-    confirmName = true
+    confirmName.value = true
   }
 }
 
@@ -184,10 +216,11 @@ const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
 const signUp = async () => {
-  if (confirmUsername && confirmPassword && confirmName) {
+  if (confirmUsername.value && confirmPassword.value && confirmName.value) {
     const result = await store.dispatch('SIGN_UP', {
       username: username.value,
       password: password1.value,
+      email: email.value,
       name: name.value
     })
 
@@ -208,9 +241,10 @@ const signUp = async () => {
         })
       }
 
-      confirmUsername = false
-      confirmPassword = false
-      confirmName = false
+      confirmUsername.value = false
+      confirmPassword.value = false
+      confirmName.value = false
+      confirmEmail.value = false
       username.value = ''
       password1.value = ''
       password2.value = ''

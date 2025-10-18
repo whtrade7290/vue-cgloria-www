@@ -5,212 +5,155 @@ const config = {
   baseUrl: import.meta.env.VITE_API_URL
 }
 
-function getBoardList(obj) {
+/* ------------------------- 게시판 관련 ------------------------- */
+export async function getBoardList(obj) {
   const { name, startRow, pageSize, searchWord } = obj
-  return instance.post(`${name}/${name}`, {
-    startRow: startRow,
-    pageSize: pageSize,
-    searchWord: searchWord
-  })
+  return await instance.post(`${name}/${name}`, { startRow, pageSize, searchWord })
 }
-function getBoardCount({ name, searchWord }) {
-  return instance.get(`${name}/${name}_count`, {
-    params: {
-      searchWord: searchWord
-    }
-  })
+
+export async function getBoardCount({ name, searchWord }) {
+  return await instance.get(`${name}/${name}_count`, { params: { searchWord } })
 }
-async function requestLogin(username, password) {
+
+/* ------------------------- 로그인 / 회원 ------------------------- */
+export async function requestLogin(username, password) {
   try {
-    const response = await axios.post(`${config.baseUrl}signIn`, {
-      username: username,
-      password: password
-    })
+    const response = await axios.post(`${config.baseUrl}signIn`, { username, password })
     return response.data
   } catch (error) {
     console.error(error, 'error login')
   }
 }
-function getWithDiaryBoardList(obj) {
+
+export async function signUp(username, password, name, email) {
+  return await instance.post('/signUp', { username, password, name, email })
+}
+
+/* ------------------------- withDiary 관련 ------------------------- */
+export async function getWithDiaryBoardList(obj) {
   const { startRow, pageSize, roomId } = obj
-  return instance.post(`withDiary/withDiary`, {
-    startRow: startRow,
-    pageSize: pageSize,
-    roomId: roomId
-  })
-}
-function getWithDiaryBoardCount(id) {
-  return instance.post(`withDiary/withDiary_count`, {
-    id: id
-  })
-}
-function getWithDiaryAll() {
-  return instance.get(`withDiary/withDiary_all`)
-}
-function writeBoard(formData, name) {
-  if (name === 'withDiary') {
-    formData.append(
-      'withDiaryNum',
-      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
-    )
-  }
-  return instance.post(`${name}/${name}_write`, formData)
-}
-function getContentById(name, id) {
-  return instance.post(`${name}/${name}_detail`, {
-    id: id
-  })
-}
-function getPhotoContentById(name, id) {
-  return instance.post(`${name}/${name}_detail`, {
-    id: id
-  })
+  return await instance.post('withDiary/withDiary', { startRow, pageSize, roomId })
 }
 
-function deleteBoard(name, id, deleteKey) {
-  return instance.post(`${name}/${name}_delete`, {
-    id: id,
-    deleteKey: deleteKey
-  })
+export async function getWithDiaryBoardCount(id) {
+  return await instance.post('withDiary/withDiary_count', { id })
 }
 
-function deletePhotoBoard(name, id, deleteKeyList) {
-  return instance.post(`${name}/${name}_delete`, {
-    id: id,
-    deleteKeyList: deleteKeyList
-  })
+export async function getWithDiaryAll() {
+  return await instance.get('withDiary/withDiary_all')
 }
 
-function editBoard(formData, name) {
-  if (name === 'withDiary') {
-    formData.append(
-      'withDiaryNum',
-      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
-    )
-  }
-  return instance.post(`${name}/${name}_edit`, formData)
-}
-
-function editPhotoBoard(formData, name) {
-  return instance.post(`${name}/${name}_edit`, formData)
-}
-
-function getMainColumn(name) {
-  return instance.get(`${name}/main_${name}`)
-}
-
-function getMainClassMeeting(name) {
-  return instance.get(`${name}/main_${name}`)
-}
-
-function getMainTestimony(name) {
-  return instance.get(`${name}/main_${name}`)
-}
-
-function getMainSermon(name) {
-  return instance.get(`${name}/main_${name}`)
-}
-
-function getMainWeekly(name) {
-  return instance.get(`${name}/main_${name}`)
-}
-
-function writeComment(boardId, boardName, comment, writerName, writer) {
-  return instance.post(`comment/comment_write`, {
-    boardId: boardId,
-    boardName: boardName,
-    comment: comment,
-    writerName: writerName,
-    writer: writer
-  })
-}
-
-function getCommentList(boardId, boardName) {
-  return instance.post(`comment/comment`, { boardId: boardId, boardName: boardName })
-}
-
-function checkToken(accessToken, refreshToken) {
-  return instance.post(`/check_Token`, {
-    accessToken,
-    refreshToken
-  })
-}
-
-function getUserByUsername(username) {
-  return instance.post('/find_user', {
-    username: username
-  })
-}
-
-function makeWithDiary(teamName, userIdList) {
+export async function makeWithDiary(teamName, userIdList) {
   const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
-  if (!user) {
-    return null
-  }
-  return instance.post('/withDiary/make_withDiary', {
-    teamName: teamName,
-    userIdList: userIdList,
+  if (!user) return null
+
+  return await instance.post('/withDiary/make_withDiary', {
+    teamName,
+    userIdList,
     creator: user.id ?? 0,
     creator_name: user.name ?? ''
   })
 }
 
-function fetchWithDiaryRoomList(userId) {
-  return instance.post('/withDiary/fetch_withDiaryList', {
-    userId: userId
+export async function fetchWithDiaryRoomList(userId) {
+  return await instance.post('/withDiary/fetch_withDiaryList', { userId })
+}
+
+export async function fetchWithDiaryRoom(roomId) {
+  return await instance.post('/withDiary/fetch_withDiary', { roomId })
+}
+
+/* ------------------------- 게시판 CRUD ------------------------- */
+export async function writeBoard(formData, name) {
+  if (name === 'withDiary') {
+    formData.append(
+      'withDiaryNum',
+      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+    )
+  }
+  return await instance.post(`${name}/${name}_write`, formData)
+}
+
+export async function editBoard(formData, name) {
+  if (name === 'withDiary') {
+    formData.append(
+      'withDiaryNum',
+      JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user.withDiary
+    )
+  }
+  return await instance.post(`${name}/${name}_edit`, formData)
+}
+
+export async function editPhotoBoard(formData, name) {
+  return await instance.post(`${name}/${name}_edit`, formData)
+}
+
+export async function getContentById(name, id) {
+  return await instance.post(`${name}/${name}_detail`, { id })
+}
+
+export async function getPhotoContentById(name, id) {
+  return await instance.post(`${name}/${name}_detail`, { id })
+}
+
+export async function deleteBoard(name, id, deleteKey) {
+  return await instance.post(`${name}/${name}_delete`, { id, deleteKey })
+}
+
+export async function deletePhotoBoard(name, id, deleteKeyList) {
+  return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList })
+}
+
+/* ------------------------- 메인 콘텐츠 ------------------------- */
+export async function getMainColumn(name) {
+  return await instance.get(`${name}/main_${name}`)
+}
+
+export async function getMainClassMeeting(name) {
+  return await instance.get(`${name}/main_${name}`)
+}
+
+export async function getMainTestimony(name) {
+  return await instance.get(`${name}/main_${name}`)
+}
+
+export async function getMainSermon(name) {
+  return await instance.get(`${name}/main_${name}`)
+}
+
+export async function getMainWeekly(name) {
+  return await instance.get(`${name}/main_${name}`)
+}
+
+/* ------------------------- 댓글 ------------------------- */
+export async function writeComment(boardId, boardName, comment, writerName, writer) {
+  return await instance.post('comment/comment_write', {
+    boardId,
+    boardName,
+    comment,
+    writerName,
+    writer
   })
 }
 
-function fetchWithDiaryRoom(roomId) {
-  return instance.post('/withDiary/fetch_withDiary', {
-    roomId: roomId
-  })
+export async function getCommentList(boardId, boardName) {
+  return await instance.post('comment/comment', { boardId, boardName })
 }
 
-function signUp(username, password, name) {
-  return instance.post('/signUp', {
-    username: username,
-    password: password,
-    name: name
-  })
+/* ------------------------- 토큰 / 유저 ------------------------- */
+export async function checkToken(accessToken, refreshToken) {
+  return await instance.post('/check_Token', { accessToken, refreshToken })
 }
 
-function fetchDisapproveUsers() {
-  return instance.get('/disapproveUsers')
+export async function getUserByUsername(username) {
+  return await instance.post('/find_user', { username })
 }
 
-function updateApproveStatus(id) {
-  return instance.post('/updateApproveStatus', {
-    id: id
-  })
+/* ------------------------- 승인 관리 ------------------------- */
+export async function fetchDisapproveUsers() {
+  return await instance.get('/disapproveUsers')
 }
-export {
-  getBoardList,
-  requestLogin,
-  getWithDiaryBoardList,
-  getBoardCount,
-  getWithDiaryBoardCount,
-  getWithDiaryAll,
-  writeBoard,
-  getContentById,
-  getPhotoContentById,
-  deleteBoard,
-  deletePhotoBoard,
-  editBoard,
-  editPhotoBoard,
-  getMainColumn,
-  getMainClassMeeting,
-  getMainTestimony,
-  getMainSermon,
-  getMainWeekly,
-  writeComment,
-  getCommentList,
-  checkToken,
-  getUserByUsername,
-  makeWithDiary,
-  fetchWithDiaryRoomList,
-  fetchWithDiaryRoom,
-  signUp,
-  fetchDisapproveUsers,
-  updateApproveStatus
+
+export async function updateApproveStatus(id) {
+  return await instance.post('/updateApproveStatus', { id })
 }
