@@ -68,7 +68,8 @@
       "subTitles": {
         "makeWithDiary": "예수동행일기 개설",
         "approvePage": "회원가입 승인 페이지",
-        "manageWithDiary": "예수동행일기 방 관리"
+        "manageWithDiary": "예수동행일기 방 관리",
+        "userApprove": "유저 관리"
       }
     }
   },

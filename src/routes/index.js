@@ -29,7 +29,7 @@ import PhotoDetailPage from '@/view/photo/PhotoDetailPage.vue'
 import MakeWithDiaryRoom from '@/view/admin/MakeWithDiary/MakeWithDiaryRoom.vue'
 import ApprovePage from '@/view/admin/Approve/ApprovePage.vue'
 import ManageWithDiary from '@/view/admin/ManageWithDiary/ManageWithDiary.vue'
-
+import UserApproveTable from '@/components/admin/UserApproveTable.vue'
 // sweetalert2
 import Swal from 'sweetalert2'
 import { useStore } from 'vuex'
@@ -335,7 +335,8 @@ const routes = [
         await next()
       }
     }
-  }
+  },
+  { path: '/userApprove', name: 'userApprove', component: UserApproveTable }
 ]
 
 const router = createRouter({

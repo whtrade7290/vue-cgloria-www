@@ -68,7 +68,8 @@
       "subTitles": {
         "makeWithDiary": "イエス同行日記開設",
         "approvePage": "新規登録承認ページ",
-        "manageWithDiary": "イエス同行日記ルーム管理"
+        "manageWithDiary": "イエス同行日記ルーム管理",
+        "userApprove": "ユーザー管理"
       }
     }
   },
