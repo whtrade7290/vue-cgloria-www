@@ -24,7 +24,7 @@
       "subTitles": {
         "sermon": "설교",
         "column": "칼럼",
-        "weeklyWord": "금주의성경말씀",
+        "weekly_bible_verse": "금주의성경말씀",
         "classMeeting": "속회교재실"
       }
     },
@@ -46,7 +46,7 @@
       "subTitles": {
         "eventSchedule": "행사일정",
         "schoolPhotoBoard": "주일학교 사진갤러리",
-        "library": "주일학교자료실"
+        "sunday_school_resource": "주일학교자료실"
       }
     },
     "fellowshipArea": {

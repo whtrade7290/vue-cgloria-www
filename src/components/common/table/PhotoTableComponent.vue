@@ -132,7 +132,8 @@ function fetchList(num) {
     name: props.called,
     startRow: (num - 1) * pageSize,
     pageSize: pageSize,
-    searchWord: searchWord.value
+    searchWord: searchWord.value,
+    board: route.name
   }
   store.dispatch('FETCH_PHOTO_DATALIST', payload)
   pageNum.value = num
@@ -200,7 +201,8 @@ async function searchPost() {
     name: props.called,
     startRow: 0,
     pageSize: pageSize,
-    searchWord: searchWord.value
+    searchWord: searchWord.value,
+    board: route.name
   }
 
   // 글 갯수 조회

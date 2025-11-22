@@ -8,11 +8,11 @@ const config = {
 /* ------------------------- 게시판 관련 ------------------------- */
 export async function getBoardList(obj) {
   const { name, startRow, pageSize, searchWord } = obj
-  return await instance.post(`${name}/${name}`, { startRow, pageSize, searchWord })
+  return await instance.post(`${name}/${name}`, { startRow, pageSize, searchWord, board: name })
 }
 
 export async function getBoardCount({ name, searchWord }) {
-  return await instance.get(`${name}/${name}_count`, { params: { searchWord } })
+  return await instance.post(`${name}/${name}_count`, { searchWord, board: name })
 }
 
 /* ------------------------- 로그인 / 회원 ------------------------- */
@@ -89,11 +89,11 @@ export async function editPhotoBoard(formData, name) {
 }
 
 export async function getContentById(name, id) {
-  return await instance.post(`${name}/${name}_detail`, { id })
+  return await instance.post(`${name}/${name}_detail`, { id, board: name })
 }
 
 export async function getPhotoContentById(name, id) {
-  return await instance.post(`${name}/${name}_detail`, { id })
+  return await instance.post(`${name}/${name}_detail`, { id, board: name })
 }
 
 export async function deleteBoard(name, id, deleteKey) {
@@ -101,7 +101,7 @@ export async function deleteBoard(name, id, deleteKey) {
 }
 
 export async function deletePhotoBoard(name, id, deleteKeyList) {
-  return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList })
+  return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList, board: name })
 }
 
 /* ------------------------- 메인 콘텐츠 ------------------------- */

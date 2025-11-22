@@ -8,7 +8,7 @@ const INFO_JP = [
 const SMALLGROUP = [
   { title: '설교', icon: 'church', path: 'sermon' },
   { title: '칼럼', icon: 'book', path: 'column' },
-  { title: '금주의 성경말씀', icon: 'attribution', path: 'weeklyWord' },
+  { title: '금주의 성경말씀', icon: 'attribution', path: 'weekly_bible_verse' },
   { title: '속회교재실', icon: 'pin_drop', path: 'classMeeting' }
 ]
 const WORSHIP = [
@@ -25,7 +25,7 @@ const TESTIMONY = [
 const SCHOOL = [
   { title: '행사일정', icon: 'church', path: 'schedule' },
   { title: '주일학교 사진갤러리', icon: 'book', path: 'school_photo' },
-  { title: '주일학교 자료실', icon: 'attribution', path: 'library' }
+  { title: '주일학교 자료실', icon: 'attribution', path: 'sunday_school_resource' }
 ]
 const SOCIALIZE = [
   { title: '자유게시판', icon: 'church', path: 'generalForum' },

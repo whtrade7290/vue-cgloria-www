@@ -198,7 +198,7 @@ const changeImage = (event) => {
 }
 
 const isDisplay = computed(() => {
-  const routeNames = ['sermon', 'column', 'weeklyWord', 'classMeeting', 'testimony']
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'classMeeting', 'testimony']
   return routeNames.some((name) => {
     return route.query?.name === name
   })

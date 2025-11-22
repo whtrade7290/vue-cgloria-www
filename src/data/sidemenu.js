@@ -8,7 +8,11 @@ const INFO = [
 const SMALLGROUP = [
   { title: 'nav.classWord.subTitles.sermon', icon: 'church', path: 'sermon' },
   { title: 'nav.classWord.subTitles.column', icon: 'book', path: 'column' },
-  { title: 'nav.classWord.subTitles.weeklyWord', icon: 'attribution', path: 'weeklyWord' },
+  {
+    title: 'nav.classWord.subTitles.weekly_bible_verse',
+    icon: 'attribution',
+    path: 'weekly_bible_verse'
+  },
   { title: 'nav.classWord.subTitles.classMeeting', icon: 'pin_drop', path: 'classMeeting' }
 ]
 const WORSHIP = [
@@ -26,7 +30,11 @@ const TESTIMONY = [
 const SCHOOL = [
   { title: 'nav.sundaySchool.subTitles.eventSchedule', icon: 'church', path: 'eventSchedule' },
   { title: 'nav.sundaySchool.subTitles.schoolPhotoBoard', icon: 'book', path: 'schoolPhotoBoard' },
-  { title: 'nav.sundaySchool.subTitles.library', icon: 'attribution', path: 'library' }
+  {
+    title: 'nav.sundaySchool.subTitles.sunday_school_resource',
+    icon: 'attribution',
+    path: 'sunday_school_resource'
+  }
 ]
 const SOCIALIZE = [
   { title: 'nav.fellowshipArea.subTitles.generalForum', icon: 'church', path: 'generalForum' },

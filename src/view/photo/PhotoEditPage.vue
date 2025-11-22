@@ -169,6 +169,8 @@ const edit = async () => {
     }
   }
 
+  formData.append('board', route.query.name)
+
   files.value.forEach((file) => {
     formData.append('fileField', file)
   })

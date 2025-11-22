@@ -142,6 +142,7 @@ async function write() {
   formData.append('content', editorData.value)
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
+  formData.append('board', route.query.name)
 
   files.value.forEach((file) => {
     formData.append('fileField', file)

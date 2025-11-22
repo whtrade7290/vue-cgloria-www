@@ -15,7 +15,7 @@
       <MainSectionTwo></MainSectionTwo>
       <MainSectionTraining></MainSectionTraining>
       <MainSectionJumokja></MainSectionJumokja>
-      <MainSectionPhoto :photos="contents.photoBoard"></MainSectionPhoto>
+      <!-- <MainSectionPhoto :photos="contents.photoBoard"></MainSectionPhoto> -->
       <MainSectionBrother></MainSectionBrother>
     </template>
   </div>
@@ -28,7 +28,7 @@ import MainSectionOne from '@/components/main/MainSectionOne.vue'
 import MainSectionTwo from '@/components/main/MainSectionTwo.vue'
 import MainSectionTraining from '@/components/main/MainSectionTraining.vue'
 import MainSectionJumokja from '@/components/main/MainSectionJumokja.vue'
-import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
+// import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
 import MainSectionBrother from '@/components/main/MainSectionBrother.vue'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { onMounted, ref } from 'vue'

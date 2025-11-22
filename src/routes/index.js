@@ -102,12 +102,12 @@ const routes = [
     }
   },
   {
-    path: '/weeklyWord',
-    name: 'weeklyWord',
+    path: '/weekly_bible_verse',
+    name: 'weekly_bible_verse',
     component: WeeklySermonBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'weeklyWord' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'weekly_bible_verse' })
       await next()
     }
   },
@@ -139,12 +139,12 @@ const routes = [
     }
   },
   {
-    path: '/library',
-    name: 'library',
+    path: '/sunday_school_resource',
+    name: 'sunday_school_resource',
     component: SchoolLibrary,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'library' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'sunday_school_resource' })
       await next()
     }
   },

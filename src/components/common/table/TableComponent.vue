@@ -216,13 +216,9 @@ function settingPageNumber() {
 
 async function intoDetail(id) {
   await router.push({
-    name: 'detail',
-    query: {
-      pageNum: pageNum.value,
-      roomId: roomId.value,
-      ...(searchWord.value && { searchWord: searchWord.value })
-    }, // roomId를 query로 설정
-    params: { name: route.name, id: id }
+    name: 'photoDetail',
+    params: { name: route.name, id: id },
+    query: { pageNum: pageNum.value }
   })
 }
 
