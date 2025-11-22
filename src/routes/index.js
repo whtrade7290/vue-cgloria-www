@@ -129,12 +129,12 @@ const routes = [
     }
   },
   {
-    path: '/schoolPhotoBoard',
-    name: 'schoolPhotoBoard',
+    path: '/school_photo_board',
+    name: 'school_photo_board',
     component: SchoolPhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'schoolPhotoBoard' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'school_photo_board' })
       await next()
     }
   },
@@ -152,12 +152,12 @@ const routes = [
   { path: '/evangelismAndVision', name: 'evangelismAndVision', component: EvangelizeView },
   // 교재마당
   {
-    path: '/photoBoard',
-    name: 'photoBoard',
+    path: '/photo_board',
+    name: 'photo_board',
     component: PhotoBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'photoBoard' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'photo_board' })
       await next()
     }
   },

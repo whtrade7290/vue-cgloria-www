@@ -45,7 +45,7 @@
       "title": "日曜学校",
       "subTitles": {
         "eventSchedule": "日程",
-        "schoolPhotoBoard": "日曜学校フォトギャラリー",
+        "school_photo_board": "日曜学校フォトギャラリー",
         "sunday_school_resource": "日曜学校資料"
       }
     },
@@ -53,7 +53,7 @@
       "title": "交わりの場",
       "subTitles": {
         "generalForum": "自由掲示板",
-        "photoBoard": "フォトギャラリー",
+        "photo_board": "フォトギャラリー",
         "testimony": "証し"
       }
     },

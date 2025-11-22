@@ -93,7 +93,7 @@ async function intoDetail(id) {
   if (id) {
     await router.push({
       name: 'photoDetail',
-      params: { name: 'photoBoard', id: id },
+      params: { name: 'photo_board', id: id },
       query: { pageNum: 1 }
     })
   }

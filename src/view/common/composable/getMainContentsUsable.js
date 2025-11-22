@@ -25,7 +25,7 @@ const defaultValue = {
 
 export default async function useGetMainContents() {
   const payload = {
-    name: 'photoBoard',
+    name: 'photo_board',
     startRow: 0,
     pageSize: 8
   }

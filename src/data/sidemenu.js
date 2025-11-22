@@ -29,7 +29,11 @@ const TESTIMONY = [
 ]
 const SCHOOL = [
   { title: 'nav.sundaySchool.subTitles.eventSchedule', icon: 'church', path: 'eventSchedule' },
-  { title: 'nav.sundaySchool.subTitles.schoolPhotoBoard', icon: 'book', path: 'schoolPhotoBoard' },
+  {
+    title: 'nav.sundaySchool.subTitles.school_photo_board',
+    icon: 'book',
+    path: 'school_photo_board'
+  },
   {
     title: 'nav.sundaySchool.subTitles.sunday_school_resource',
     icon: 'attribution',
@@ -38,7 +42,7 @@ const SCHOOL = [
 ]
 const SOCIALIZE = [
   { title: 'nav.fellowshipArea.subTitles.generalForum', icon: 'church', path: 'generalForum' },
-  { title: 'nav.fellowshipArea.subTitles.photoBoard', icon: 'book', path: 'photoBoard' },
+  { title: 'nav.fellowshipArea.subTitles.photo_board', icon: 'book', path: 'photo_board' },
   { title: 'nav.fellowshipArea.subTitles.testimony', icon: 'attribution', path: 'testimony' }
 ]
 const ADMIN = [
