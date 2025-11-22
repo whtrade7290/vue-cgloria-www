@@ -33,7 +33,7 @@ export default async function useGetMainContents() {
     getMainSermon('sermon'),
     getMainWeekly('weekly_bible_verse'),
     getMainColumn('column'),
-    getMainClassMeeting('classMeeting'),
+    getMainClassMeeting('class_meeting'),
     getMainTestimony('testimony'),
     getBoardList(payload)
   ]).then((results) => {

@@ -92,12 +92,12 @@ const routes = [
     }
   },
   {
-    path: '/classMeeting',
-    name: 'classMeeting',
+    path: '/class_meeting',
+    name: 'class_meeting',
     component: SmallGroup,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'classMeeting' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'class_meeting' })
       await next()
     }
   },

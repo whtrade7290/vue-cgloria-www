@@ -29,7 +29,7 @@
               <div class="info mb-3">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
-                    {{ $t('mainSectionOne.classMeeting') }}
+                    {{ $t('mainSectionOne.class_meeting') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
                     {{ classMeeting?.title || '' }}
@@ -39,7 +39,7 @@
                 <template v-if="classMeeting.id !== 999999">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(classMeeting.id, 'classMeeting')"
+                    @click="intoDetail(classMeeting.id, 'class_meeting')"
                     style="color: #d4a59a; font-size: 1.2rem"
                     >{{ $t('common.more') }}</a
                   >

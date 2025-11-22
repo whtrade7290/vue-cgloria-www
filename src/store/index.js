@@ -13,11 +13,6 @@ import {
   deleteBoard,
   editBoard,
   editPhotoBoard,
-  getMainColumn,
-  getMainClassMeeting,
-  getMainTestimony,
-  getMainSermon,
-  getMainWeekly,
   writeComment,
   getCommentList,
   checkToken,
@@ -155,6 +150,7 @@ export default createStore({
           content: res.data.content,
           writer: res.data.writer,
           files: fileUrlList,
+          mainContent: res.data.mainContent,
           create_at: res.data.create_at,
           update_at: res.data.update_at,
           deleted: res.data.deleted
@@ -181,20 +177,6 @@ export default createStore({
     async EDIT_PHOTO_BOARD({ commit }, { formData, name }) {
       const res = await editPhotoBoard(formData, name)
       return res.status === 200
-    },
-    async FETCH_MAIN_CONTENTS({ commit }) {
-      const sermon = await getMainSermon('sermon')
-      const weekly = await getMainWeekly('weekly')
-      const column = await getMainColumn('column')
-      const classMeeting = await getMainClassMeeting('classMeeting')
-      const testimony = await getMainTestimony('testimony')
-
-      const res = [column.data, classMeeting.data, testimony.data, sermon.data, weekly.data]
-
-      if (column.status === 200 && classMeeting.status === 200 && testimony.status == 200) {
-        commit('SET_MAIN_CONTENTS', res)
-      }
-      return res
     },
     async WRITE_COMMENT({ commit }, { boardId, boardName, comment, writerName, writer }) {
       const res = await writeComment(boardId, boardName, comment, writerName, writer)

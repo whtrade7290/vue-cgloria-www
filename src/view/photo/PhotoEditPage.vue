@@ -52,6 +52,15 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
+        <div v-if="isDisplay">
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
+            $t('writePage.mainContent')
+          }}</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="mainContent" v-model="isMainContent" />
+            <span class="slider"></span>
+          </label>
+        </div>
         <label for="image">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
@@ -112,7 +121,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -144,6 +153,9 @@ const editorConfig = {
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
 
+const isMainContent = ref(false)
+isMainContent.value = store.state.detail.mainContent
+
 const route = useRoute()
 const router = useRouter()
 const files = ref([])
@@ -159,6 +171,7 @@ const edit = async () => {
   formData.append('title', inputTitle.value)
   formData.append('content', editorData.value)
   formData.append('id', route.query.id)
+  formData.append('mainContent', isMainContent.value)
 
   if (files.value.length > 0) {
     const deleteKeyList = store.state.detail.files.map((file) => file.filename)
@@ -212,6 +225,12 @@ const changeImage = (event) => {
     }
   }
 }
+const isDisplay = computed(() => {
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
+  return routeNames.some((name) => {
+    return route.query?.name === name
+  })
+})
 </script>
 
 <style scoped>

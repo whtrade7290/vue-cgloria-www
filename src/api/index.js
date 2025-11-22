@@ -106,23 +106,23 @@ export async function deletePhotoBoard(name, id, deleteKeyList) {
 
 /* ------------------------- 메인 콘텐츠 ------------------------- */
 export async function getMainColumn(name) {
-  return await instance.get(`${name}/main_${name}`)
+  return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
 export async function getMainClassMeeting(name) {
-  return await instance.get(`${name}/main_${name}`)
+  return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
 export async function getMainTestimony(name) {
-  return await instance.get(`${name}/main_${name}`)
+  return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
 export async function getMainSermon(name) {
-  return await instance.get(`${name}/main_${name}`)
+  return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
 export async function getMainWeekly(name) {
-  return await instance.get(`${name}/main_${name}`)
+  return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
 /* ------------------------- 댓글 ------------------------- */

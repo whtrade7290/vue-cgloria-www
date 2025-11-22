@@ -51,6 +51,15 @@
           placeholder=" 제목을 입력하세요."
           v-model="inputTitle"
         /><br />
+        <div v-if="isDisplay">
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
+            $t('writePage.mainContent')
+          }}</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="mainContent" v-model="isMainContent" />
+            <span class="slider"></span>
+          </label>
+        </div>
         <label for="image">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="files.length !== 0">
@@ -97,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
@@ -107,6 +116,7 @@ import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
+const isMainContent = ref(false)
 
 const editor = ClassicEditor
 const editorData = ref('')
@@ -143,6 +153,7 @@ async function write() {
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
   formData.append('board', route.query.name)
+  formData.append('mainContent', isMainContent.value)
 
   files.value.forEach((file) => {
     formData.append('fileField', file)
@@ -184,6 +195,12 @@ function changeImage(event) {
     }
   }
 }
+const isDisplay = computed(() => {
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
+  return routeNames.some((name) => {
+    return route.query?.name === name
+  })
+})
 </script>
 
 <style scoped>

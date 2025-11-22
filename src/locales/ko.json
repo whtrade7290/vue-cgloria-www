@@ -25,7 +25,7 @@
         "sermon": "설교",
         "column": "칼럼",
         "weekly_bible_verse": "금주의성경말씀",
-        "classMeeting": "속회교재실"
+        "class_meeting": "속회교재실"
       }
     },
     "worshipTraining": {
@@ -105,7 +105,7 @@
   },
   "mainSectionOne": {
     "column": "칼럼",
-    "classMeeting": "속회교재실",
+    "class_meeting": "속회교재실",
     "testimony": "간증",
     "midnightWorship": "새벽예배",
     "sundayWorsip1": "주일1부예배",

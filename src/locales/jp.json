@@ -25,7 +25,7 @@
         "sermon": "説教",
         "column": "コラム",
         "weekly_bible_verse": "今週の御言葉",
-        "classMeeting": "属会教材"
+        "class_meeting": "属会教材"
       }
     },
     "worshipTraining": {
@@ -105,7 +105,7 @@
   },
   "mainSectionOne": {
     "column": "コラム",
-    "classMeeting": "属会教材",
+    "class_meeting": "属会教材",
     "testimony": "証し",
     "midnightWorship": "早天礼拝",
     "sundayWorsip1": "主日礼拝 1",
