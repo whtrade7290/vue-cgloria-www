@@ -149,11 +149,16 @@ async function write() {
   if (VALIDATION_CONTENT(editorData.value)) return
 
   formData.append('title', inputTitle.value)
-  formData.append('content', editorData.value)
+  const pureText = stripHtml(editorData.value)
+  formData.append('content', pureText)
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
   formData.append('board', route.query.name)
   formData.append('mainContent', isMainContent.value)
+
+  if (route.query?.name === 'withDiary') {
+    formData.append('diaryRoomId', route.query.roomId)
+  }
 
   files.value.forEach((file) => {
     formData.append('fileField', file)
@@ -164,7 +169,14 @@ async function write() {
     name: route.query.name
   })
   if (result) {
-    router.push(`/${route.query.name}`)
+    if (route.query?.name === 'withDiary') {
+      router.push({
+        name: `${route.query.name}`,
+        query: { roomId: route.query.roomId, pageNum: 1 }
+      })
+    } else {
+      router.push(`/${route.query.name}`)
+    }
   }
 }
 
@@ -201,6 +213,12 @@ const isDisplay = computed(() => {
     return route.query?.name === name
   })
 })
+
+const stripHtml = (html) => {
+  const temp = document.createElement('div')
+  temp.innerHTML = html
+  return temp.textContent || temp.innerText || ''
+}
 </script>
 
 <style scoped>

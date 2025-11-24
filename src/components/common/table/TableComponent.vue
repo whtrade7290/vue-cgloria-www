@@ -218,7 +218,7 @@ async function intoDetail(id) {
   await router.push({
     name: 'photoDetail',
     params: { name: route.name, id: id },
-    query: { pageNum: pageNum.value }
+    query: { pageNum: pageNum.value, roomId: roomId.value }
   })
 }
 

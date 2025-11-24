@@ -8,7 +8,7 @@
     <div class="container">
       <CardContainer title="withDiaryParams.mainTitle">
         <TableComponent :called="route.name"></TableComponent>
-        <WriteButton></WriteButton>
+        <WriteButton :roomId="route.query.roomId"></WriteButton>
       </CardContainer>
     </div>
   </div>

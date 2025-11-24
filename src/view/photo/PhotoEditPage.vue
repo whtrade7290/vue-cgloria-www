@@ -169,7 +169,8 @@ const edit = async () => {
   let formData = new FormData()
 
   formData.append('title', inputTitle.value)
-  formData.append('content', editorData.value)
+  const pureText = stripHtml(editorData.value)
+  formData.append('content', pureText)
   formData.append('id', route.query.id)
   formData.append('mainContent', isMainContent.value)
 
@@ -194,7 +195,14 @@ const edit = async () => {
   })
 
   if (result) {
-    router.push(`/${route.query.name}`)
+    if (route.query?.name === 'withDiary') {
+      router.push({
+        name: `${route.query.name}`,
+        query: { roomId: route.query.roomId, pageNum: 1 }
+      })
+    } else {
+      router.push(`/${route.query.name}`)
+    }
   }
 }
 
@@ -231,6 +239,11 @@ const isDisplay = computed(() => {
     return route.query?.name === name
   })
 })
+const stripHtml = (html) => {
+  const temp = document.createElement('div')
+  temp.innerHTML = html
+  return temp.textContent || temp.innerText || ''
+}
 </script>
 
 <style scoped>

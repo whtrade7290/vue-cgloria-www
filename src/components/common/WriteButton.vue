@@ -14,12 +14,27 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
+const props = defineProps({
+  roomId: {
+    type: Number,
+    default: 0
+  }
+})
+
 const router = useRouter()
 const route = useRoute()
 const store = useStore()
 
+const queryObj = {
+  name: route.name
+}
+
+if (props.roomId !== 0) {
+  queryObj.roomId = props.roomId
+}
+
 function moveWritePage() {
-  router.push({ name: 'photo_write', query: { name: route.name } })
+  router.push({ name: 'photo_write', query: queryObj })
 }
 </script>
 

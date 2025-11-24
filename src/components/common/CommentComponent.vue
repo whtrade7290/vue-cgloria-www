@@ -57,6 +57,7 @@ import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { formatDate } from '@/utils/dateFormat'
+import { VALIDATION_CONTENT } from '@/utils/validation'
 
 defineProps({
   id: {
@@ -81,6 +82,8 @@ const writeComment = async () => {
   if (!user) {
     return false
   }
+
+  if (VALIDATION_CONTENT(inputComment.value)) return
 
   // 댓글 작성 요청
   const result = await store.dispatch('WRITE_COMMENT', {

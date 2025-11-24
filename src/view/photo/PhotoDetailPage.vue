@@ -129,13 +129,20 @@ function stripHtmlTags(input) {
 }
 
 function goToBoardList() {
-  router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
+  if (route.params.name === 'withDiary') {
+    router.push({
+      name: route.params.name,
+      query: { roomId: route.query.roomId, pageNum: route.query.pageNum }
+    })
+  } else {
+    router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
+  }
 }
 
 const goToEditPage = () => {
   router.push({
     name: 'photo_edit',
-    query: { name: route.params.name, id: store.state.detail.id }
+    query: { name: route.params.name, id: store.state.detail.id, roomId: route.query.roomId }
   })
 }
 
