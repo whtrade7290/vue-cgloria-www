@@ -1,37 +1,111 @@
-# vue-cgloria-www
+# 📘 CGLORIA Website Renewal
 
-This template should help get you started developing with Vue 3 in Vite.
+**（東京・新宿 中央栄光教会 ホームページ リニューアルプロジェクト）**
 
-JIRA https://cgloria.atlassian.net/jira/software/projects/KAN/boards/1/timeline?shared=&atlOrigin=eyJpIjoiMzkxYWI5YzMyYmJjNDAwMDhmMjZhY2I1ZWE0ODY3MjMiLCJwIjoiaiJ9
+## 📝 プロジェクト概要
 
-## Recommended IDE Setup
+東京・新宿にある中央栄光教会の既存ホームページを、最新技術を用いて全面的にリニューアルするプロジェクトです。  
+バックエンドとフロントエンドを完全分離したモダン構成を採用しています。  
+現在、**約100名の利用者を対象としたサービス**として運用を予定しています。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Customize configuration
+## 🛠 使用技術
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### **バックエンド**
 
-## Project Setup
+- Node.js
+- Express
+- Prisma
+- MySQL
+- REST API
+- JWT 認証
 
-```sh
-npm install
-```
+### **フロントエンド**
 
-### Compile and Hot-Reload for Development
+- Vue 3
+- Vite
 
-```sh
-npm run dev
-```
+### **インフラ / DevOps**
 
-### Compile and Minify for Production
+- ConoHa VPS
+- Nginx（フロントエンド配信）
+- PM2（バックエンド常駐管理）
+- GitHub Actions（自動デプロイ）
 
-```sh
-npm run build
-```
+---
 
-### Lint with [ESLint](https://eslint.org/)
+## 📂 アーキテクチャ構成
 
-```sh
-npm run lint
-```
+バックエンドとフロントエンドは**分離構成**。
+
+- `/backend` — Express.js / Prisma / MySQL
+- `/frontend` — Vue 3 / Vite
+
+---
+
+## ✨ 主な機能一覧
+
+### 🔸 掲示板・コンテンツ管理
+
+- 各種ファイル掲示板 CRUD
+- チーム日記（活動記録）掲示板
+- 公開 / 非公開設定
+- 画像・ファイルアップロード対応
+
+### 🔸 認証 / セキュリティ
+
+- JWT ログイン
+- アクセストークン / リフレッシュトークン運用
+- 認証ミドルウェアによる API 保護
+
+### 🔸 管理者機能
+
+- 記事管理
+- 掲示板設定
+- ユーザー管理（予定）
+
+---
+
+## 🚀 デプロイ環境
+
+- **ConoHa VPS**
+- **Nginx**：フロントエンド（Vue）配信
+- **PM2**：バックエンド常駐管理
+- **GitHub Actions**：push 時に自動デプロイ
+
+---
+
+## 📦 ディレクトリ構成（簡易版）
+
+project-root/
+├── backend/ # Express / Prisma / REST API
+│ ├── src/
+│ ├── prisma/
+│ └── package.json
+├── frontend/ # Vue 3 / Vite
+│ ├── src/
+│ └── package.json
+└── README.md
+
+---
+
+## 🔄 現在の進行状況
+
+- ✔ ユーザーテスト実施中
+- ✔ テスト完了後、本番反映予定
+- 🔧 今後 **TypeScript** の段階的導入を計画中
+- 🔧 全体的なリファクタリングを順次実施予定
+
+---
+
+## 📌 今後の改善計画
+
+- TypeScript 化（バックエンド → フロントエンド 順）
+- Prisma モデル整理
+- API 構造の最適化
+- UI / UX の改善
+- 画像管理（NAS or S3）
+- CI/CD 自動化の強化
+
+---
