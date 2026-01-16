@@ -11,7 +11,7 @@ export const instance = axios.create({
 // request header에 토큰 추가
 instance.interceptors.request.use(
   async (config) => {
-    if (config.data.skipAuth) return config
+    if (config.headers['x-skip-auth'] === 'true') return config
     const storedData = localStorage.getItem(getUserIdFromCookie())
 
     const accessToken = storedData ? JSON.parse(storedData).token : ''

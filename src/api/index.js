@@ -146,7 +146,15 @@ export async function getCommentList(boardId, boardName) {
 
 /* ------------------------- 토큰 / 유저 ------------------------- */
 export async function checkToken(accessToken, refreshToken) {
-  return await instance.post('/check_Token', { accessToken, refreshToken, skipAuth: true })
+  return await instance.post(
+    '/check_Token',
+    { accessToken, refreshToken, skipAuth: true },
+    {
+      headers: {
+        'x-skip-auth': 'true'
+      }
+    }
+  )
 }
 
 export async function getUserByUsername(username) {
