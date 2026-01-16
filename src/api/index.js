@@ -29,6 +29,10 @@ export async function signUp(username, password, name, email) {
   return await instance.post('/signUp', { username, password, name, email })
 }
 
+export async function editPassword(username, password, name, email) {
+  return await instance.post('/editPassword', { username, password, name, email })
+}
+
 /* ------------------------- withDiary 관련 ------------------------- */
 export async function getWithDiaryBoardList(obj) {
   const { startRow, pageSize, roomId } = obj

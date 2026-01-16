@@ -21,6 +21,7 @@ import {
   fetchWithDiaryRoomList,
   fetchWithDiaryRoom,
   signUp,
+  editPassword,
   fetchDisapproveUsers,
   updateApproveStatus,
   deletePhotoBoard
@@ -104,6 +105,16 @@ export default createStore({
         return false
       }
     },
+    async EDIT_PASSWORD({ commit }, { username, password, name, email }) {
+      const result = await editPassword(username, password, name, email)
+
+      if (result.data && result.status === 200) {
+        return result.data
+      } else {
+        return false
+      }
+    },
+
     async CHECKING_TOKEN({ commit }, { accessToken, refreshToken }) {
       const result = await checkToken(accessToken, refreshToken)
 

@@ -19,6 +19,7 @@ import JumokjaView from '@/view/worship/JumokjaView.vue'
 import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import SignUpView from '@/view/auth/SignUpView.vue'
+import EditPassword from '@/view/auth/EditPassword.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/common/WritePage.vue'
 import EditPage from '@/view/common/EditPage.vue'
@@ -56,6 +57,7 @@ const routes = [
   // auth
   { path: '/login', name: 'login', component: LoginView },
   { path: '/signUp/:isQr?', name: 'signUp', component: SignUpView },
+  { path: '/edit_password', name: 'edit_password', component: EditPassword },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
   { path: '/location', name: 'location', component: ChurchMap },
