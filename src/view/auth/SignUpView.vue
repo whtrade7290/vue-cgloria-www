@@ -226,7 +226,7 @@ const signUp = async () => {
 
     if (result) {
       if (route.params.isQr) {
-        const updatedUser = await store.dispatch('UPDATE_APPROVE_STATUS', result.id)
+        const updatedUser = await store.dispatch('APPROVE_USER', result.id)
         if (updatedUser.isApproved) {
           await Swal.fire({
             title: '회원가입이 완료 되었습니다.',

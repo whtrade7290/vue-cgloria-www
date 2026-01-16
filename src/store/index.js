@@ -23,7 +23,7 @@ import {
   signUp,
   editPassword,
   fetchDisapproveUsers,
-  updateApproveStatus,
+  approveUser,
   deletePhotoBoard,
   fetchDiaryRoomUsers,
   removeDiaryRoomUser,
@@ -273,8 +273,8 @@ export default createStore({
         commit('SET_DISAPPROVE_USERS', res.data)
       }
     },
-    async UPDATE_APPROVE_STATUS({ commit }, id) {
-      const res = await updateApproveStatus(id)
+    async APPROVE_USER({ commit }, id) {
+      const res = await approveUser(id)
 
       return res.data
     }

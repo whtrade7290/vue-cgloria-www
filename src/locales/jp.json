@@ -84,7 +84,10 @@
       "account": "アカウント名",
       "name": "名前",
       "role": "権限",
-      "approve": "承認可否"
+      "approve": "承認可否",
+      "approveAction": "承認",
+      "roleSelect": "権限変更",
+      "restrictAction": "使用制限"
     },
     "manageWithDiary": {
       "id": "ID",
@@ -180,6 +183,7 @@
       "loading": "メンバー情報を読み込んでいます…",
       "fetchError": "メンバー情報の取得中にエラーが発生しました。",
       "noMembers": "登録されたメンバーがありません。",
+      "memberAction": "メンバー確認",
       "membersTitle": "{room} のメンバー",
       "defaultRoomName": "ルーム",
       "memberUnknown": "情報なし",
@@ -191,6 +195,14 @@
       "confirmRemoveRoom": "「{room}」ルームを削除しますか？",
       "removeRoomSuccess": "ルームを削除しました。",
       "removeRoomFail": "ルームの削除に失敗しました。"
+    },
+    "memberAction": "メンバー確認",
+    "userApprove": {
+      "roleLabel": "権限変更",
+      "roleUser": "USER",
+      "roleAdmin": "ADMIN",
+      "roleSuccess": "権限が変更されました。",
+      "roleFail": "権限の変更に失敗しました。"
     }
   },
   "comments": {
@@ -255,7 +267,13 @@
     "logined": "既にログインされています。",
     "makeWithDiary": "イエス同行日記掲示板が作成されました。",
     "failWithDiary": "イエス同行日記掲示板の作成に失敗しました。",
-    "changeLang": "한국어로 변경하시겠습니까?"
+    "changeLang": "한국어로 변경하시겠습니까?",
+    "restrictConfirm": "このユーザーを制限しますか？",
+    "restrictSuccess": "ユーザーを制限しました。",
+    "restrictFail": "ユーザーの制限に失敗しました。",
+    "approveConfirm": "会員登録を承認しますか？",
+    "approveSuccess": "承認しました。",
+    "approveFail": "承認に失敗しました。"
   },
   "webContents": {
     "training": {

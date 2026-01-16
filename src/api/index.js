@@ -128,6 +128,18 @@ export async function updateCommentRequest({ commentId, boardId, boardName, comm
   return await instance.post('comment/comment_edit', { commentId, boardId, boardName, comment })
 }
 
+export async function fetchApprovedUsers({ startRow = 0, pageSize = 20, searchWord = '' }) {
+  return await instance.post('/approvedUsers', { startRow, pageSize, searchWord })
+}
+
+export async function updateUserRoleRequest({ id, role }) {
+  return await instance.post('/updateUserRole', { id, role })
+}
+
+export async function revokeApproveStatusRequest(id) {
+  return await instance.post('/revokeApproveStatus', { id })
+}
+
 /* ------------------------- 메인 콘텐츠 ------------------------- */
 export async function getMainColumn(name) {
   return await instance.post(`${name}/main_${name}`, { board: name })
@@ -186,6 +198,6 @@ export async function fetchDisapproveUsers() {
   return await instance.get('/disapproveUsers')
 }
 
-export async function updateApproveStatus(id) {
-  return await instance.post('/updateApproveStatus', { id })
+export async function approveUser(id) {
+  return await instance.post('/approveUser', { id })
 }

@@ -84,7 +84,10 @@
       "account": "계정명",
       "name": "이름",
       "role": "권한",
-      "approve": "승인여부"
+      "approve": "승인여부",
+      "approveAction": "승인",
+      "roleSelect": "권한 변경",
+      "restrictAction": "사용 제한"
     },
     "manageWithDiary": {
       "id": "ID",
@@ -179,6 +182,7 @@
       "loading": "구성원 정보를 불러오는 중입니다...",
       "fetchError": "구성원 조회 중 오류가 발생했습니다.",
       "noMembers": "등록된 구성원이 없습니다.",
+      "memberAction": "멤버 확인",
       "membersTitle": "{room} 구성원",
       "defaultRoomName": "방",
       "memberUnknown": "정보 없음",
@@ -190,6 +194,14 @@
       "confirmRemoveRoom": "'{room}' 방을 삭제하시겠습니까?",
       "removeRoomSuccess": "방을 삭제했습니다.",
       "removeRoomFail": "방 삭제에 실패했습니다."
+    },
+    "memberAction": "멤버 확인",
+    "userApprove": {
+      "roleLabel": "권한 변경",
+      "roleUser": "USER",
+      "roleAdmin": "ADMIN",
+      "roleSuccess": "권한이 변경되었습니다.",
+      "roleFail": "권한 변경에 실패했습니다."
     }
   },
   "comments": {
@@ -254,7 +266,13 @@
     "logined": "이미 로그인 되었습니다.",
     "makeWithDiary": "예수동행일기 게시판이 생성되었습니다.",
     "failWithDiary": "예수동행일기 게시판 생성에 실패하였습니다.",
-    "changeLang": "日本語に切り替えますか？"
+    "changeLang": "日本語に切り替えますか？",
+    "restrictConfirm": "해당 사용자를 제한하시겠습니까?",
+    "restrictSuccess": "사용자를 제한했습니다.",
+    "restrictFail": "사용자 제한에 실패했습니다.",
+    "approveConfirm": "회원가입을 승인하시겠습니까?",
+    "approveSuccess": "승인되었습니다.",
+    "approveFail": "승인에 실패했습니다."
   },
   "webContents": {
     "training": {

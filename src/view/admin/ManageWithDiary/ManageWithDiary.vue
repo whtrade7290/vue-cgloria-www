@@ -8,20 +8,14 @@
         <TableBody :body-list="store.state.rooms" :header-list="MANAGE_WITHDIARY">
           <template #btn="{ body, header }">
             <template v-if="header.key === 'member'">
-              <button
-                class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                @click="checkMember(body)"
-              >
-                구성원
-              </button>
+              <a href="javascript:;" class="table-action-link" @click="checkMember(body)">
+                {{ $t('admin.manageWithDiary.memberAction') }}
+              </a>
             </template>
             <template v-else>
-              <button
-                class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-                @click="deleteRoom(body)"
-              >
+              <a href="javascript:;" class="table-action-link danger" @click="deleteRoom(body)">
                 {{ $t('admin.manageWithDiary.removeRoomAction') }}
-              </button>
+              </a>
             </template>
           </template>
         </TableBody>
@@ -43,7 +37,7 @@ import { ref } from 'vue'
 import Swal from 'sweetalert2'
 import { useI18n } from 'vue-i18n'
 
-const TITLE = 'nav.adminPage.subTitles.approvePage'
+const TITLE = 'nav.adminPage.subTitles.manageWithDiary'
 const route = useRoute()
 const store = useStore()
 const { t } = useI18n()
@@ -297,5 +291,17 @@ const deleteRoom = async (roomInfo) => {
   cursor: pointer;
   min-width: 80px;
   text-align: right;
+}
+:global(.table-action-link) {
+  color: #475569;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+:global(.table-action-link.danger) {
+  color: #f87171;
+}
+:global(.table-action-link:hover) {
+  opacity: 0.9;
 }
 </style>
