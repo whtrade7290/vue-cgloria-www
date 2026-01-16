@@ -57,7 +57,7 @@
             <td colspan="4" class="no-results">
               <div class="result-container">
                 <i class="fas fa-search"></i>
-                <p class="result-text">검색 결과가 없습니다.</p>
+                <p class="result-text">{{ $t('common.noResults') }}</p>
               </div>
             </td>
           </tr>

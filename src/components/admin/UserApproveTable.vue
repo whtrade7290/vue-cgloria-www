@@ -26,7 +26,7 @@
             <td :colspan="APPROVE.length" class="no-results">
               <div class="result-container">
                 <i class="fas fa-search" aria-hidden="true"></i>
-                <p class="result-text mb-0">검색 결과가 없습니다.</p>
+                <p class="result-text mb-0">{{ $t('common.noResults') }}</p>
               </div>
             </td>
           </tr>

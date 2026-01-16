@@ -119,7 +119,8 @@
   },
   "mainSectionTwo": {
     "main": "말씀과 동행하는 교회",
-    "sub": "”성령의 능력으로 예배, 전도, 섬김, 교제를 회복하여 목적이 이끄는 초대 교회의 모습을 되찾는 사명”"
+    "sub": "”성령의 능력으로 예배, 전도, 섬김, 교제를 회복하여 목적이 이끄는 초대 교회의 모습을 되찾는 사명”",
+    "heading": "말씀과 동행하는 교회"
   },
   "MainSectionTraining": {
     "title": "제자훈련",
@@ -168,7 +169,14 @@
   },
   "common": {
     "more": "...더보기",
-    "moveToPage": "바로가기"
+    "moveToPage": "바로가기",
+    "noResults": "검색 결과가 없습니다."
+  },
+  "comments": {
+    "header": "댓글 {count}",
+    "placeholder": "댓글 내용을 입력하세요.",
+    "submit": "작성",
+    "loginRequired": "로그인이 필요한 기능입니다."
   },
   "discriptions": {
     "intro": "하나님이 사랑하시는 중앙영광교회"

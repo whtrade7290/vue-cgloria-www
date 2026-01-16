@@ -170,7 +170,14 @@
   },
   "common": {
     "more": "...もっと見る",
-    "moveToPage": "もっと見る"
+    "moveToPage": "もっと見る",
+    "noResults": "検索結果がありません。"
+  },
+  "comments": {
+    "header": "コメント {count}",
+    "placeholder": "コメント内容を入力してください。",
+    "submit": "投稿",
+    "loginRequired": "ログインが必要な機能です。"
   },
   "discriptions": {
     "intro": "神様に愛される中央栄光教会"

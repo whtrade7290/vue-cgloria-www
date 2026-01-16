@@ -3,7 +3,9 @@
     <div class="comment-container">
       <div class="comment-box">
         <div>
-          <div class="comment-info-box">댓글 {{ commentList.length }}</div>
+          <div class="comment-info-box">
+            {{ $t('comments.header', { count: commentList.length }) }}
+          </div>
           <div class="comment-text-container">
             <div class="comment-textarea-box">
               <div class="mt-2 d-flex justify-content-start">
@@ -17,11 +19,16 @@
                 </div>
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" v-model="inputComment" rows="5"></textarea>
+                <textarea
+                  class="form-control"
+                  v-model="inputComment"
+                  rows="5"
+                  :placeholder="$t('comments.placeholder')"
+                ></textarea>
               </div>
               <div class="d-flex justify-content-end">
                 <button class="btn btn-sm bg-gradient-primary btn-round" @click="writeComment">
-                  작성
+                  {{ $t('comments.submit') }}
                 </button>
               </div>
             </div>
@@ -58,6 +65,7 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { formatDate } from '@/utils/dateFormat'
 import { VALIDATION_CONTENT } from '@/utils/validation'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   id: {
@@ -76,16 +84,20 @@ const getUserNameFromSession = computed(() => {
   const curruntName = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.name
   return curruntName !== '' ? curruntName : curruntId
 })
+const { t } = useI18n()
 
 const writeComment = async () => {
   const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
   if (!user) {
+    Swal.fire({
+      title: t('comments.loginRequired'),
+      icon: 'warning'
+    })
     return false
   }
 
   if (VALIDATION_CONTENT(inputComment.value)) return
 
-  // 댓글 작성 요청
   const result = await store.dispatch('WRITE_COMMENT', {
     boardId: store.state.detail.id,
     boardName: route.params.name,
@@ -95,16 +107,14 @@ const writeComment = async () => {
   })
 
   if (result) {
-    // 댓글이 성공적으로 작성되면 최신 댓글 목록을 다시 가져옴
     const updatedComments = await store.dispatch('FETCH_COMMENT', {
       boardId: store.state.detail.id,
       boardName: route.params.name
     })
 
-    // 댓글 목록 갱신
     commentList.value = updatedComments.data
 
-    inputComment.value = '' // 입력 필드 초기화
+    inputComment.value = ''
 
     emit('commentCount', commentList.value.length)
   }
