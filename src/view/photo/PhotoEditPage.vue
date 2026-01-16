@@ -65,12 +65,28 @@
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="displayImagePreviews.length !== 0">
             <div class="image-wrapper" v-for="item in displayImagePreviews" :key="item.id">
+              <button
+                type="button"
+                class="remove-btn"
+                aria-label="파일 삭제"
+                @click="removeSelectedFile(item)"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
               <img :src="item.src" :alt="item.name" width="200" class="image" />
             </div>
           </div>
         </div>
         <div class="file-chip-list" v-if="displayPdfPreviews.length !== 0">
           <div class="file-chip" v-for="item in displayPdfPreviews" :key="item.id">
+            <button
+              type="button"
+              class="remove-btn remove-btn--chip"
+              aria-label="파일 삭제"
+              @click="removeSelectedFile(item)"
+            >
+              <span class="material-symbols-outlined">close</span>
+            </button>
             <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
             <span class="file-chip__name">{{ item.name }}</span>
           </div>
@@ -152,36 +168,74 @@ const route = useRoute()
 const router = useRouter()
 const files = ref([])
 const previewItems = ref([])
+const removedExistingFilenames = ref([])
+
 const newImagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
 )
 const newPdfPreviewItems = computed(() => previewItems.value.filter((item) => item.type === 'pdf'))
 
-const existingImagePreviews = computed(() => {
-  return (store.state.detail.files ?? [])
+const filteredExistingFiles = computed(() =>
+  (store.state.detail.files ?? []).filter(
+    (file) => !removedExistingFilenames.value.includes(file.filename)
+  )
+)
+
+const existingImagePreviews = computed(() =>
+  filteredExistingFiles.value
     .filter((file) => (file.extension || '').replace('.', '').toLowerCase() !== 'pdf')
     .map((file) => ({
       id: file.filename,
       name: file.filename,
-      src: `${staticPath}uploads/${file?.filename}`
+      src: `${staticPath}uploads/${file?.filename}`,
+      type: 'image',
+      origin: 'existing',
+      filename: file.filename
     }))
-})
+)
 
-const existingPdfPreviews = computed(() => {
-  return (store.state.detail.files ?? [])
+const existingPdfPreviews = computed(() =>
+  filteredExistingFiles.value
     .filter((file) => (file.extension || '').replace('.', '').toLowerCase() === 'pdf')
     .map((file) => ({
       id: file.filename,
-      name: file.filename
+      name: file.filename,
+      type: 'pdf',
+      origin: 'existing',
+      filename: file.filename
     }))
-})
+)
 
-const displayImagePreviews = computed(() =>
-  files.value.length !== 0 ? newImagePreviewItems.value : existingImagePreviews.value
-)
-const displayPdfPreviews = computed(() =>
-  files.value.length !== 0 ? newPdfPreviewItems.value : existingPdfPreviews.value
-)
+const displayImagePreviews = computed(() => [
+  ...existingImagePreviews.value,
+  ...newImagePreviewItems.value
+])
+const displayPdfPreviews = computed(() => [
+  ...existingPdfPreviews.value,
+  ...newPdfPreviewItems.value
+])
+
+const removeSelectedFile = (item) => {
+  if (item.origin === 'existing') {
+    if (!removedExistingFilenames.value.includes(item.filename)) {
+      removedExistingFilenames.value.push(item.filename)
+    }
+  } else {
+    previewItems.value = previewItems.value.filter((preview) => preview.id !== item.id)
+    files.value = files.value.filter(
+      (file) => `${file.name}-${file.lastModified}` !== item.id
+    )
+
+    if (files.value.length === 0) {
+      previewItems.value = []
+    }
+  }
+
+  const input = document.getElementById('fileUpload')
+  if (input) {
+    input.value = ''
+  }
+}
 
 const edit = async () => {
   if (VALIDATION_TITLE(inputTitle.value)) return
@@ -196,13 +250,9 @@ const edit = async () => {
   formData.append('id', route.query.id)
   formData.append('mainContent', isMainContent.value)
 
-  if (files.value.length > 0) {
-    const deleteKeyList = store.state.detail.files.map((file) => file.filename)
-
-    if (deleteKeyList.length > 0) {
-      const jsonDeleteKeys = JSON.stringify(deleteKeyList)
-      formData.append('jsonDeleteKeys', jsonDeleteKeys)
-    }
+  if (removedExistingFilenames.value.length > 0) {
+    const jsonDeleteKeys = JSON.stringify(removedExistingFilenames.value)
+    formData.append('jsonDeleteKeys', jsonDeleteKeys)
   }
 
   formData.append('board', route.query.name)
@@ -248,7 +298,8 @@ const changeImage = (event) => {
           previewItems.value.push({
             id: fileId,
             type: 'pdf',
-            name: file.name
+            name: file.name,
+            origin: 'new'
           })
         }
       } else {
@@ -260,7 +311,8 @@ const changeImage = (event) => {
               id: fileId,
               type: 'image',
               src,
-              name: file.name
+              name: file.name,
+              origin: 'new'
             })
           }
         }
@@ -317,6 +369,7 @@ const stripHtml = (html) => {
   margin: 5px;
   box-sizing: border-box;
   padding: 1rem;
+  position: relative;
 }
 .image {
   width: 100%;
@@ -346,6 +399,7 @@ const stripHtml = (html) => {
   text-align: center;
   color: #344767;
   background-color: #f8f9fc;
+  position: relative;
 }
 .file-chip__icon {
   font-size: 2rem;
@@ -355,5 +409,33 @@ const stripHtml = (html) => {
 .file-chip__name {
   font-size: 0.85rem;
   word-break: break-all;
+}
+.remove-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+.remove-btn span {
+  font-size: 1rem;
+}
+.remove-btn--chip {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  background: transparent;
+  color: #8392ab;
+  z-index: 2;
 }
 </style>

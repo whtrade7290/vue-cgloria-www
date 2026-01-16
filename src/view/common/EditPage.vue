@@ -66,12 +66,28 @@
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="previewItem">
+            <button
+              type="button"
+              class="remove-btn"
+              aria-label="파일 삭제"
+              @click="removeSelectedFile"
+            >
+              <span class="material-symbols-outlined">close</span>
+            </button>
             <img
               v-if="previewItem.type === 'image'"
               :src="previewItem.src"
               :alt="previewItem.name"
             />
             <div v-else class="file-chip">
+              <button
+                type="button"
+                class="remove-btn remove-btn--chip"
+                aria-label="파일 삭제"
+                @click="removeSelectedFile"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
               <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
               <span class="file-chip__name">{{ previewItem.name }}</span>
             </div>
@@ -259,6 +275,16 @@ onMounted(() => {
 
   imageUrl.value = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
 })
+
+const removeSelectedFile = () => {
+  previewItem.value = null
+  file.value = null
+  files.value = []
+  const input = document.getElementById('image')
+  if (input) {
+    input.value = ''
+  }
+}
 </script>
 
 <style scoped>
@@ -287,6 +313,7 @@ onMounted(() => {
   margin-top: 0.2rem;
   margin-bottom: 0.7rem;
   border-radius: 0.7rem;
+  position: relative;
 }
 .image-container img {
   width: 100%;
@@ -306,6 +333,7 @@ onMounted(() => {
   text-align: center;
   color: #344767;
   background-color: #f8f9fc;
+  position: relative;
 }
 .file-chip__icon {
   font-size: 2.5rem;
@@ -315,6 +343,29 @@ onMounted(() => {
 .file-chip__name {
   font-size: 0.9rem;
   word-break: break-all;
+}
+.remove-btn {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.remove-btn span {
+  font-size: 1rem;
+}
+.remove-btn--chip {
+  background: transparent;
+  color: #8392ab;
 }
 
 /* 전체 토글 스위치 */

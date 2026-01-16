@@ -64,12 +64,28 @@
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="imagePreviewItems.length !== 0">
             <div class="image-wrapper" v-for="item in imagePreviewItems" :key="item.id">
+              <button
+                type="button"
+                class="remove-btn"
+                aria-label="파일 삭제"
+                @click="removeSelectedFile(item.id)"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
               <img :src="item.src" :alt="item.name" width="200" class="image" />
             </div>
           </div>
         </div>
         <div class="file-chip-list" v-if="pdfPreviewItems.length !== 0">
           <div class="file-chip" v-for="item in pdfPreviewItems" :key="item.id">
+            <button
+              type="button"
+              class="remove-btn remove-btn--chip"
+              aria-label="파일 삭제"
+              @click="removeSelectedFile(item.id)"
+            >
+              <span class="material-symbols-outlined">close</span>
+            </button>
             <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
             <span class="file-chip__name">{{ item.name }}</span>
           </div>
@@ -151,6 +167,15 @@ const imagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
 )
 const pdfPreviewItems = computed(() => previewItems.value.filter((item) => item.type === 'pdf'))
+
+const removeSelectedFile = (previewId) => {
+  previewItems.value = previewItems.value.filter((item) => item.id !== previewId)
+  files.value = files.value.filter((file) => `${file.name}-${file.lastModified}` !== previewId)
+  const input = document.getElementById('fileUpload')
+  if (input) {
+    input.value = ''
+  }
+}
 
 async function write() {
   const formData = new FormData()
@@ -278,6 +303,7 @@ const stripHtml = (html) => {
   flex: 1 0 21%;
   margin: 5px;
   box-sizing: border-box;
+  position: relative;
 }
 .image {
   width: 100%;
@@ -307,6 +333,7 @@ const stripHtml = (html) => {
   text-align: center;
   color: #344767;
   background-color: #f8f9fc;
+  position: relative;
 }
 .file-chip__icon {
   font-size: 2rem;
@@ -316,6 +343,34 @@ const stripHtml = (html) => {
 .file-chip__name {
   font-size: 0.85rem;
   word-break: break-all;
+}
+.remove-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+.remove-btn span {
+  font-size: 1rem;
+}
+.remove-btn--chip {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  background: transparent;
+  color: #8392ab;
+  z-index: 2;
 }
 .hidden-file-input {
   display: none; /* 파일 입력창 완전히 숨기기 */
