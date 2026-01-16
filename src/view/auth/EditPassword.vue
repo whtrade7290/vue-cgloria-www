@@ -279,7 +279,7 @@ const logout = async () => {
   localStorage.removeItem(getUserIdFromCookie())
   document.cookie = 'userId=;'
   await Swal.fire({
-    title: t('modalMsg.logouted'),
+    title: t('modalMsg.editPasswordlogouted'),
     icon: 'success'
   }).then(async () => {
     await store.dispatch('CHECKING_TOKEN', { accessToken: '', refreshToken: '' })

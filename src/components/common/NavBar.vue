@@ -173,6 +173,7 @@ function logout() {
     if (result.isConfirmed) {
       localStorage.removeItem(getUserIdFromCookie())
       document.cookie = 'userId=;'
+      sessionStorage.setItem('logoutAlerted', 0) // 알림이 뜬 상태 기록
       await Swal.fire({
         title: t('modalMsg.logouted'),
         icon: 'success'

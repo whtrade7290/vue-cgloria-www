@@ -8,18 +8,16 @@ export const instance = axios.create({
   // timeout: 2000
 })
 
-let isAccessTokenValid = false
-
 // request header에 토큰 추가
 instance.interceptors.request.use(
   async (config) => {
+    if (config.data.skipAuth) return config
     const storedData = localStorage.getItem(getUserIdFromCookie())
 
     const accessToken = storedData ? JSON.parse(storedData).token : ''
     const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
-    if (!isAccessTokenValid) {
-      isAccessTokenValid = true
+    if (accessToken && refreshToken) {
       const result = await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
       // 1 이면 refresh / access 둘다 만료
       if (result.success === 1) {

@@ -184,6 +184,7 @@
     "withDiaryRoom": "예수동행일기 선택",
     "logout": "로그아웃 하시겠습니까?",
     "logouted": "로그아웃 되었습니다.",
+    "editPasswordlogouted": "재설정한 비밀번호로 로그인 해주세요.",
     "login": "로그인 되었습니다.",
     "loginFail": "로그인에 실패하였습니다.",
     "logined": "이미 로그인 되었습니다.",

@@ -186,6 +186,7 @@
     "withDiaryRoom": "イエス同行日記を選択",
     "logout": "ログアウトしますか？",
     "logouted": "ログアウトできました。",
+    "editPasswordlogouted": "設定したパスワードでログインしてください。",
     "login": "ログインできました。",
     "loginFail": "ログインに失敗しました。",
     "logined": "既にログインされています。",
