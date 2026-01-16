@@ -49,17 +49,29 @@
               width="300"
               height="200"
             />
+            <button
+              type="button"
+              class="download-link"
+              @click="downloadAttachment(imageUrl, store.state.detail.filename)"
+            >
+              <span class="material-symbols-outlined">download</span>
+              <span>{{ $t('button.download') }}</span>
+            </button>
           </div>
-          <a
-            v-else-if="pdfAttachment"
-            class="file-chip"
-            :href="pdfAttachment.url"
-            target="_blank"
-            rel="noopener"
-          >
-            <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
-            <span class="file-chip__name">{{ pdfAttachment.name }}</span>
-          </a>
+          <div v-else-if="pdfAttachment" class="file-chip-group">
+            <a class="file-chip" :href="pdfAttachment.url" target="_blank" rel="noopener">
+              <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+              <span class="file-chip__name">{{ pdfAttachment.name }}</span>
+            </a>
+            <button
+              type="button"
+              class="download-link download-link--chip"
+              @click="downloadAttachment(pdfAttachment.url, pdfAttachment.name)"
+            >
+              <span class="material-symbols-outlined">download</span>
+              <span>{{ $t('button.download') }}</span>
+            </button>
+          </div>
           <div class="content-container">{{ store.state.detail.content }}</div>
         </div>
         <div class="button-box">
@@ -199,6 +211,28 @@ const deleteBoard = () => {
 const imageUrl = ref(null)
 const pdfAttachment = ref(null)
 
+const downloadAttachment = async (url, filename) => {
+  try {
+    const response = await fetch(url)
+    if (!response.ok) throw new Error('Download failed')
+    const blob = await response.blob()
+    const objectUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = objectUrl
+    link.download = filename || 'download'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(objectUrl)
+  } catch (error) {
+    console.error('download error', error)
+    await Swal.fire({
+      title: t('alerts.downloadError'),
+      icon: 'error'
+    })
+  }
+}
+
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
   if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
@@ -297,12 +331,22 @@ onMounted(() => {
   height: 100%;
   overflow: hidden;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .img-container img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+}
+.file-chip-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 .file-chip {
   width: 100%;
@@ -329,6 +373,25 @@ onMounted(() => {
 .file-chip__name {
   font-size: 1rem;
   word-break: break-all;
+}
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #344767;
+  border: 1px solid rgba(52, 71, 103, 0.2);
+  background-color: rgba(248, 249, 252, 0.9);
+}
+.download-link--chip {
+  width: 100%;
+  justify-content: center;
+}
+.download-link span.material-symbols-outlined {
+  font-size: 1.1rem;
 }
 .content-container {
   margin-top: 2rem;

@@ -9,6 +9,7 @@
     "delete": "削除",
     "cancel": "キャンセル",
     "toList": "リストへ",
+    "download": "ダウンロード",
     "lang": "한국어",
     "enterWithDiary": "入室"
   },
@@ -200,6 +201,7 @@
     "deleteConfirmYes": "はい",
     "deleteConfirmNo": "いいえ",
     "deleteSuccess": "削除しました！",
+    "downloadError": "ファイルをダウンロードできませんでした。もう一度お試しください。",
     "comingSoon": "準備中です。",
     "adminOnly": "管理者専用掲示板です。"
   },

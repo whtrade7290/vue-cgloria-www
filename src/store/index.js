@@ -151,7 +151,8 @@ export default createStore({
             // fileUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${file.date}${file.filename}${file.extension}`,
             filename: file.filename,
             date: file.date,
-            extension: file.extension
+            extension: file.extension,
+            originalName: file.originalname
           }
         })
 
