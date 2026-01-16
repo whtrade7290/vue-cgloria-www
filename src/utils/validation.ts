@@ -37,7 +37,7 @@ type File = {
 
 export const VALIDATION_FILES = (files: File[], newFiles: File[]): boolean => {
   const maxSizeInBytes = 5 * 1024 * 1024 // 5MB
-  const allowedTypes = ['image/jpeg', 'image/png']
+  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']
 
   const filesExceedLimit = newFiles.some((file) => file.size > maxSizeInBytes)
   const hasInvalidFileType = newFiles.some((file) => !allowedTypes.includes(file.type))
@@ -56,7 +56,7 @@ export const VALIDATION_FILES = (files: File[], newFiles: File[]): boolean => {
     return false
   } else if (hasInvalidFileType) {
     Swal.fire({
-      title: '업로드 가능한 파일 형식은 JPEG, PNG입니다.',
+      title: '업로드 가능한 파일 형식은 JPEG, PNG, PDF입니다.',
       icon: 'warning'
     })
     return false

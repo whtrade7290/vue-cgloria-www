@@ -62,10 +62,16 @@
         </div>
         <label for="image">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
-          <div class="image-container" v-if="files.length !== 0">
-            <div class="image-wrapper" v-for="(img, index) in imageData" :key="index">
-              <img :src="img" :alt="'Image ' + (index + 1)" width="200" class="image" />
+          <div class="image-container" v-if="imagePreviewItems.length !== 0">
+            <div class="image-wrapper" v-for="item in imagePreviewItems" :key="item.id">
+              <img :src="item.src" :alt="item.name" width="200" class="image" />
             </div>
+          </div>
+        </div>
+        <div class="file-chip-list" v-if="pdfPreviewItems.length !== 0">
+          <div class="file-chip" v-for="item in pdfPreviewItems" :key="item.id">
+            <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+            <span class="file-chip__name">{{ item.name }}</span>
           </div>
         </div>
         <label for="fileUpload" class="btn btn-sm btn-outline-primary mb-0 me-1 mt-2 mt-md-0"
@@ -140,7 +146,11 @@ const editorConfig = {
 
 const inputTitle = ref('')
 const files = ref([])
-const imageData = ref([])
+const previewItems = ref([])
+const imagePreviewItems = computed(() =>
+  previewItems.value.filter((item) => item.type === 'image')
+)
+const pdfPreviewItems = computed(() => previewItems.value.filter((item) => item.type === 'pdf'))
 
 async function write() {
   const formData = new FormData()
@@ -188,23 +198,37 @@ function changeImage(event) {
   const newFiles = Array.from(event.target.files)
 
   if (VALIDATION_FILES(files.value, newFiles)) {
-    files.value = files.value.concat(
-      newFiles.filter(
-        (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
-      )
+    const filteredFiles = newFiles.filter(
+      (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
     )
+    files.value = files.value.concat(filteredFiles)
 
-    if (files.value.length > 0) {
-      files.value.forEach((file) => {
+    filteredFiles.forEach((file) => {
+      const fileId = `${file.name}-${file.lastModified}`
+      if (file.type === 'application/pdf') {
+        if (!previewItems.value.some((item) => item.id === fileId)) {
+          previewItems.value.push({
+            id: fileId,
+            type: 'pdf',
+            name: file.name
+          })
+        }
+      } else {
         const reader = new FileReader()
         reader.onload = (e) => {
-          if (!imageData.value.includes(e.target.result)) {
-            imageData.value.push(e.target.result)
+          const src = e.target?.result
+          if (!previewItems.value.some((item) => item.id === fileId)) {
+            previewItems.value.push({
+              id: fileId,
+              type: 'image',
+              src,
+              name: file.name
+            })
           }
         }
         reader.readAsDataURL(file)
-      })
-    }
+      }
+    })
   }
 }
 const isDisplay = computed(() => {
@@ -257,8 +281,41 @@ const stripHtml = (html) => {
 }
 .image {
   width: 100%;
-  height: auto;
+  height: 160px;
+  object-fit: cover;
   display: block;
+  border-radius: 0.5rem;
+}
+.file-chip-list {
+  width: 80%;
+  margin: 1rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.file-chip {
+  width: 220px;
+  min-height: 110px;
+  border: 1px dashed #c0c4d5;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  text-align: center;
+  color: #344767;
+  background-color: #f8f9fc;
+}
+.file-chip__icon {
+  font-size: 2rem;
+  margin-bottom: 0.35rem;
+  color: #f5365c;
+}
+.file-chip__name {
+  font-size: 0.85rem;
+  word-break: break-all;
 }
 .hidden-file-input {
   display: none; /* 파일 입력창 완전히 숨기기 */

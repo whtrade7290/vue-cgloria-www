@@ -65,15 +65,27 @@
         </div>
         <label for="image" class="form-label mt-3">이미지 첨부</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
-          <div class="image-container" v-if="files.length !== 0">
-            <img :src="imageData" alt="img" />
+          <div class="image-container" v-if="previewItem">
+            <img
+              v-if="previewItem.type === 'image'"
+              :src="previewItem.src"
+              :alt="previewItem.name"
+            />
+            <div v-else class="file-chip">
+              <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+              <span class="file-chip__name">{{ previewItem.name }}</span>
+            </div>
           </div>
-          <div
-            class="image-container"
-            v-if="files.length === 0 && store.state.detail.filename && store.state.detail.extension"
-          >
-            <img :src="imageUrl" alt="img" />
-            {{ store.state.detail.filename || '' }}
+          <div class="image-container" v-else-if="existingPreview">
+            <img
+              v-if="existingPreview.type === 'image'"
+              :src="existingPreview.src"
+              :alt="existingPreview.name"
+            />
+            <div v-else class="file-chip">
+              <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+              <span class="file-chip__name">{{ existingPreview.name }}</span>
+            </div>
           </div>
         </div>
         <div class="mb-3">
@@ -147,7 +159,7 @@ const editorConfig = {
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
 const files = ref([])
-const imageData = ref(null)
+const previewItem = ref(null)
 const file = ref(null)
 const isMainContent = ref(store.state.detail.mainContent)
 
@@ -202,22 +214,45 @@ const backPage = () => {
 }
 
 const changeImage = (event) => {
-  files.value = event.target?.files
+  const selectedFiles = event.target?.files
+  if (!selectedFiles || selectedFiles.length === 0) {
+    return
+  }
 
-  if (files.value.length > 0) {
-    const fileObject = files.value[0]
+  const selectedFile = selectedFiles[0]
+  files.value = [selectedFile]
+  file.value = selectedFile
 
-    const reader = new FileReader()
-    file.value = files.value[0]
-
-    reader.onload = (e) => {
-      imageData.value = e.target.result
+  if (selectedFile.type === 'application/pdf') {
+    previewItem.value = {
+      type: 'pdf',
+      name: selectedFile.name
     }
-    reader.readAsDataURL(fileObject)
+  } else {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      previewItem.value = {
+        type: 'image',
+        src: e.target?.result,
+        name: selectedFile.name
+      }
+    }
+    reader.readAsDataURL(selectedFile)
   }
 }
 
 const imageUrl = ref(null)
+const existingPreview = computed(() => {
+  if (!store.state.detail.filename || !store.state.detail.extension) return null
+
+  const normalizedExtension = store.state.detail.extension.replace('.', '').toLowerCase()
+  const isPdf = normalizedExtension === 'pdf'
+  return {
+    type: isPdf ? 'pdf' : 'image',
+    name: store.state.detail.filename,
+    src: isPdf ? null : imageUrl.value
+  }
+})
 
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
@@ -257,6 +292,29 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+}
+.file-chip {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed #c0c4d5;
+  border-radius: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  text-align: center;
+  color: #344767;
+  background-color: #f8f9fc;
+}
+.file-chip__icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #f5365c;
+}
+.file-chip__name {
+  font-size: 0.9rem;
+  word-break: break-all;
 }
 
 /* 전체 토글 스위치 */

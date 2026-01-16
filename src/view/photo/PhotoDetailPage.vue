@@ -39,18 +39,29 @@
         </div>
         <div class="content-box">
           <div class="img-container">
-            <div v-for="item in store.state.detail.files" :key="item" style="margin: 1rem">
-              <a :href="`${staticPath}/${item?.filename}`" data-fancybox>
-                <img
-                  :key="item.id"
-                  :src="`${staticPath}/${item?.filename}`"
-                  :alt="item.title"
-                  loading="lazy"
-                  decoding="async"
-                  fetchpriority="low"
-                  width="300"
-                  height="200"
-                />
+            <div class="attachment-wrapper" v-for="item in filePreviewItems" :key="item.id">
+              <template v-if="item.type === 'image'">
+                <a :href="item.url" data-fancybox>
+                  <img
+                    :src="item.url"
+                    :alt="item.name"
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
+                    width="300"
+                    height="200"
+                  />
+                </a>
+              </template>
+              <a
+                v-else
+                class="file-chip"
+                :href="item.url"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+                <span class="file-chip__name">{{ item.name }}</span>
               </a>
             </div>
           </div>
@@ -101,6 +112,20 @@ const route = useRoute()
 const router = useRouter()
 const store = useStore()
 const commentCount = ref(0)
+const filePreviewItems = computed(() => {
+  return (store.state.detail.files ?? []).map((file, index) => {
+    const normalizedExtension = (file?.extension || '').toString().replace('.', '').toLowerCase()
+    const isPdf = normalizedExtension === 'pdf'
+    const url = `${staticPath}/${file?.filename}`
+
+    return {
+      id: `${file?.filename}-${index}`,
+      type: isPdf ? 'pdf' : 'image',
+      url,
+      name: file?.filename
+    }
+  })
+})
 
 const handleCommentCount = (count) => {
   commentCount.value = count
@@ -184,8 +209,6 @@ const isLogin = computed(() => {
   return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
 })
 
-const imageUrl = ref(null)
-
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', {
     Thumbs: {
@@ -204,11 +227,6 @@ onMounted(() => {
       infinite: false
     }
   })
-
-  if (store.state.files) {
-    imageUrl.value = `${staticPath}/${item?.filename}`
-    console.log('imageUrl.value: ', imageUrl.value)
-  }
 })
 </script>
 
@@ -265,6 +283,36 @@ section {
   height: 100%;
   object-fit: cover;
   border-radius: 0.5rem;
+}
+.attachment-wrapper {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.file-chip {
+  width: 300px;
+  min-height: 200px;
+  border: 1px dashed #c0c4d5;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  color: #344767;
+  background-color: #f8f9fc;
+  text-decoration: none;
+}
+.file-chip__icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: #f5365c;
+}
+.file-chip__name {
+  font-size: 1rem;
+  word-break: break-all;
 }
 .content-container {
   margin-top: 2rem;

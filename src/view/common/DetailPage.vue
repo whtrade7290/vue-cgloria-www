@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="content-box">
-          <div v-show="imageUrl" class="img-container">
+          <div v-if="imageUrl" class="img-container">
             <img
               :key="store.state.detail.id"
               :src="imageUrl"
@@ -50,6 +50,16 @@
               height="200"
             />
           </div>
+          <a
+            v-else-if="pdfAttachment"
+            class="file-chip"
+            :href="pdfAttachment.url"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+            <span class="file-chip__name">{{ pdfAttachment.name }}</span>
+          </a>
           <div class="content-container">{{ store.state.detail.content }}</div>
         </div>
         <div class="button-box">
@@ -185,12 +195,24 @@ const deleteBoard = () => {
 }
 
 const imageUrl = ref(null)
+const pdfAttachment = ref(null)
 
 onMounted(() => {
   // 컴포넌트가 마운트된 후에 이미지 URL을 설정
   if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
-    imageUrl.value = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
-    console.log('imageUrl.value: ', imageUrl.value)
+    const fileUrl = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
+    const normalizedExtension = store.state.detail.extension.replace('.', '').toLowerCase()
+
+    if (normalizedExtension === 'pdf') {
+      pdfAttachment.value = {
+        url: fileUrl,
+        name: store.state.detail.filename
+      }
+      imageUrl.value = null
+    } else {
+      imageUrl.value = fileUrl
+      pdfAttachment.value = null
+    }
   }
 })
 </script>
@@ -279,6 +301,32 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+}
+.file-chip {
+  width: 100%;
+  max-width: 22rem;
+  min-height: 17rem;
+  border: 1px dashed #c0c4d5;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: 1rem auto 0;
+  text-align: center;
+  color: #344767;
+  background-color: #f8f9fc;
+  text-decoration: none;
+}
+.file-chip__icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: #f5365c;
+}
+.file-chip__name {
+  font-size: 1rem;
+  word-break: break-all;
 }
 .content-container {
   margin-top: 2rem;
