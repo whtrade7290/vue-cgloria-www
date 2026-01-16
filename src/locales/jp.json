@@ -197,7 +197,14 @@
     "header": "コメント {count}",
     "placeholder": "コメント内容を入力してください。",
     "submit": "投稿",
-    "loginRequired": "ログインが必要な機能です。"
+    "loginRequired": "ログインが必要な機能です。",
+    "deleteConfirm": "このコメントを削除しますか？",
+    "deleteSuccess": "コメントを削除しました。",
+    "deleteFail": "コメントの削除に失敗しました。",
+    "editConfirm": "このコメントを修正しますか？",
+    "editSuccess": "コメントを修正しました。",
+    "editFail": "コメントの修正に失敗しました。",
+    "editEmpty": "修正する内容を入力してください。"
   },
   "discriptions": {
     "intro": "神様に愛される中央栄光教会"

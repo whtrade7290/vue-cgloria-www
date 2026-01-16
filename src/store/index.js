@@ -27,7 +27,9 @@ import {
   deletePhotoBoard,
   fetchDiaryRoomUsers,
   removeDiaryRoomUser,
-  removeDiaryRoom
+  removeDiaryRoom,
+  deleteCommentRequest,
+  updateCommentRequest
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
@@ -243,6 +245,14 @@ export default createStore({
     },
     async REMOVE_DIARY_ROOM(_, diaryRoomId) {
       const res = await removeDiaryRoom(diaryRoomId)
+      return res.data
+    },
+    async DELETE_COMMENT(_, payload) {
+      const res = await deleteCommentRequest(payload)
+      return res.data
+    },
+    async UPDATE_COMMENT(_, payload) {
+      const res = await updateCommentRequest(payload)
       return res.data
     },
     async CLEAR_STATE({ commit }) {

@@ -196,7 +196,14 @@
     "header": "댓글 {count}",
     "placeholder": "댓글 내용을 입력하세요.",
     "submit": "작성",
-    "loginRequired": "로그인이 필요한 기능입니다."
+    "loginRequired": "로그인이 필요한 기능입니다.",
+    "deleteConfirm": "이 댓글을 삭제하시겠습니까?",
+    "deleteSuccess": "댓글을 삭제했습니다.",
+    "deleteFail": "댓글 삭제에 실패했습니다.",
+    "editConfirm": "이 댓글을 수정하시겠습니까?",
+    "editSuccess": "댓글을 수정했습니다.",
+    "editFail": "댓글 수정에 실패했습니다.",
+    "editEmpty": "수정할 내용을 입력해주세요."
   },
   "discriptions": {
     "intro": "하나님이 사랑하시는 중앙영광교회"

@@ -120,6 +120,14 @@ export async function deletePhotoBoard(name, id, deleteKeyList) {
   return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList, board: name })
 }
 
+export async function deleteCommentRequest({ commentId, boardId, boardName }) {
+  return await instance.post('comment/comment_delete', { commentId, boardId, boardName })
+}
+
+export async function updateCommentRequest({ commentId, boardId, boardName, comment }) {
+  return await instance.post('comment/comment_edit', { commentId, boardId, boardName, comment })
+}
+
 /* ------------------------- 메인 콘텐츠 ------------------------- */
 export async function getMainColumn(name) {
   return await instance.post(`${name}/main_${name}`, { board: name })
