@@ -5,6 +5,9 @@
     "login": "ログイン",
     "logout": "ログアウト",
     "write": "作成",
+    "edit": "編集",
+    "delete": "削除",
+    "cancel": "キャンセル",
     "toList": "リストへ",
     "lang": "한국어",
     "enterWithDiary": "入室"
@@ -181,6 +184,30 @@
       "title": " タイトルを入力してください。.",
       "content": " 内容を入力してください。"
     }
+  },
+  "photoPage": {
+    "writeHeader": "投稿 (ファイル添付)",
+    "writeDescription": "中央栄光教会の歴史と兄弟教会紹介",
+    "editHeader": "写真投稿の編集",
+    "editDescription": "中央栄光教会の歴史と兄弟教会紹介",
+    "uploadButton": "ファイルアップロード",
+    "removeFile": "ファイル削除"
+  },
+  "alerts": {
+    "copySuccess": "コピーしました。",
+    "deleteConfirmTitle": "本当に削除しますか？",
+    "deleteConfirmText": "この投稿は元に戻せません。",
+    "deleteConfirmYes": "はい",
+    "deleteConfirmNo": "いいえ",
+    "deleteSuccess": "削除しました！",
+    "comingSoon": "準備中です。",
+    "adminOnly": "管理者専用掲示板です。"
+  },
+  "navBar": {
+    "readyYet": "準備中です^^;",
+    "withDiaryMissing": "イエス同行日記のグループがありません。",
+    "withDiarySelectRoom": "日記ルームを選択してください。",
+    "cancel": "キャンセル"
   },
   "modalMsg": {
     "withDiaryRoom": "イエス同行日記を選択",

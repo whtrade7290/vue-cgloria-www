@@ -13,8 +13,8 @@
         class="card-header bg-gradient-primary p-5 position-relative"
         style="border-radius: 1rem"
       >
-        <h3 class="text-white mb-0">글수정</h3>
-        <p class="text-white opacity-8 mb-4">중앙 영광교회 교회 역사와 형제교회 소개</p>
+        <h3 class="text-white mb-0">{{ $t('button.edit') }}</h3>
+        <p class="text-white opacity-8 mb-4">{{ $t('photoPage.editDescription') }}</p>
         <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
           <svg
             class="waves"
@@ -43,16 +43,18 @@
         </div>
       </div>
       <div style="padding: 1.5rem">
-        <label for="title">제목</label><br />
+        <label for="title">{{ $t('writePage.title') }}</label><br />
         <input
           type="text"
           id="title"
           class="input-title"
-          placeholder=" 제목을 입력하세요."
+          :placeholder="$t('writePage.placeholder.title')"
           v-model="inputTitle"
         /><br />
         <div v-if="isDisplay">
-          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">메인콘텐츠</label>
+          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
+            $t('writePage.mainContent')
+          }}</label>
           <label class="toggle-switch">
             <input
               type="checkbox"
@@ -63,13 +65,13 @@
             <span class="slider"></span>
           </label>
         </div>
-        <label for="image" class="form-label mt-3">이미지 첨부</label><br />
+        <label for="image" class="form-label mt-3">{{ $t('writePage.addImage') }}</label><br />
         <div style="width: 100%; display: flex; justify-content: center">
           <div class="image-container" v-if="previewItem">
             <button
               type="button"
               class="remove-btn"
-              aria-label="파일 삭제"
+              :aria-label="$t('photoPage.removeFile')"
               @click="removeSelectedFile"
             >
               <span class="material-symbols-outlined">close</span>
@@ -83,7 +85,7 @@
               <button
                 type="button"
                 class="remove-btn remove-btn--chip"
-                aria-label="파일 삭제"
+                :aria-label="$t('photoPage.removeFile')"
                 @click="removeSelectedFile"
               >
                 <span class="material-symbols-outlined">close</span>
@@ -113,7 +115,7 @@
             name="fileField"
           />
         </div>
-        <label for="content">내용</label><br />
+        <label for="content">{{ $t('writePage.content') }}</label><br />
         <ckeditor
           id="content"
           class="ck_contents"
@@ -126,13 +128,13 @@
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
             @click="edit"
-            >글수정</a
+            >{{ $t('button.edit') }}</a
           >
           <a
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
             @click="backPage"
-            >취소하기</a
+            >{{ $t('button.cancel') }}</a
           >
         </div>
       </div>
@@ -146,6 +148,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
+import { useI18n } from 'vue-i18n'
 
 // 상태 선언
 const store = useStore()
@@ -154,8 +157,9 @@ const router = useRouter()
 const editor = ref(ClassicEditor)
 const editorData = ref('')
 editorData.value = store.state.detail.content
+const { t } = useI18n()
 const editorConfig = {
-  placeholder: '글 내용을 입력하세요.',
+  placeholder: t('writePage.placeholder.content'),
   toolbar: [
     'heading',
     '|',

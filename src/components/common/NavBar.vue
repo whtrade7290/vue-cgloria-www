@@ -190,7 +190,7 @@ function logout() {
 // 준비중입니다 알림
 const readyYet = () => {
   Swal.fire({
-    title: '준비중입니다^^;',
+    title: t('navBar.readyYet'),
     icon: 'info'
   })
 }
@@ -218,7 +218,7 @@ const checkRoomAvailability = async () => {
   const rooms = store.state.rooms
   if (!rooms || rooms.length === 0) {
     await Swal.fire({
-      title: '예수동행일기 그룹이 존재하지 않습니다.',
+      title: t('navBar.withDiaryMissing'),
       icon: 'warning'
     })
     return false
@@ -294,12 +294,12 @@ const goToPage = async (path) => {
         title: t('modalMsg.withDiaryRoom'),
         html: optionsHtml,
         showCancelButton: true,
-        cancelButtonText: '취소',
+        cancelButtonText: t('navBar.cancel'),
         confirmButtonText: t('button.enterWithDiary'),
         preConfirm: () => {
           const selectedOption = document.querySelector('input[name="radioOption"]:checked')
           if (!selectedOption) {
-            Swal.showValidationMessage('일기방을 선택해주세요.')
+            Swal.showValidationMessage(t('navBar.withDiarySelectRoom'))
           }
           return selectedOption ? selectedOption.value : null
         }

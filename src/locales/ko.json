@@ -5,6 +5,9 @@
     "login": "로그인",
     "logout": "로그아웃",
     "write": "글작성",
+    "edit": "글수정",
+    "delete": "글삭제",
+    "cancel": "취소하기",
     "toList": "목록으로",
     "lang": "日本語",
     "enterWithDiary": "들어가기"
@@ -179,6 +182,30 @@
       "title": " 제목을 입력하세요.",
       "content": " 내용을 입력하세요."
     }
+  },
+  "photoPage": {
+    "writeHeader": "글 작성 (파일 첨부)",
+    "writeDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
+    "editHeader": "사진 글 수정",
+    "editDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
+    "uploadButton": "파일 업로드",
+    "removeFile": "파일 삭제"
+  },
+  "alerts": {
+    "copySuccess": "복사되었습니다.",
+    "deleteConfirmTitle": "정말 삭제하시겠습니까?",
+    "deleteConfirmText": "이 글을 다시 볼 수 없게 됩니다.",
+    "deleteConfirmYes": "네",
+    "deleteConfirmNo": "아니오",
+    "deleteSuccess": "삭제되었습니다!",
+    "comingSoon": "준비중입니다.",
+    "adminOnly": "관리자 전용 게시판입니다."
+  },
+  "navBar": {
+    "readyYet": "준비중입니다^^;",
+    "withDiaryMissing": "예수동행일기 그룹이 존재하지 않습니다.",
+    "withDiarySelectRoom": "일기방을 선택해주세요.",
+    "cancel": "취소"
   },
   "modalMsg": {
     "withDiaryRoom": "예수동행일기 선택",

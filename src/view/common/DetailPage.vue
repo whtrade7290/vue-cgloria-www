@@ -67,21 +67,21 @@
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             @click="goToBoardList"
-            >목록으로</a
+            >{{ $t('button.toList') }}</a
           >
           <a
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="goToEditPage"
-            >글수정</a
+            >{{ $t('button.edit') }}</a
           >
           <a
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
             v-show="isWriter"
             @click="deleteBoard"
-            >글삭제</a
+            >{{ $t('button.delete') }}</a
           >
         </div>
       </div>
@@ -98,10 +98,12 @@ import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
+const { t } = useI18n()
 const commentCount = ref(0)
 
 const isLogin = computed(() => {
@@ -117,7 +119,7 @@ const contentCopy = async () => {
   navigator.clipboard.writeText(stripHtmlTags(content))
 
   await Swal.fire({
-    title: '복사되었습니다.',
+    title: t('alerts.copySuccess'),
     icon: 'success'
   })
 }
@@ -163,12 +165,12 @@ const goToEditPage = () => {
 
 const deleteBoard = () => {
   Swal.fire({
-    title: '정말 삭제하시겠습니까?',
-    text: '이 글을 다시 볼 수 없게 됩니다.',
+    title: t('alerts.deleteConfirmTitle'),
+    text: t('alerts.deleteConfirmText'),
     icon: 'warning',
     showCancelButton: true,
-    cancelButtonText: '아니오',
-    confirmButtonText: '네'
+    cancelButtonText: t('alerts.deleteConfirmNo'),
+    confirmButtonText: t('alerts.deleteConfirmYes')
   }).then(async (result) => {
     if (result.isConfirmed) {
       let deleteKey = ''
@@ -184,7 +186,7 @@ const deleteBoard = () => {
       })
       if (result) {
         Swal.fire({
-          title: '삭제되었습니다!',
+          title: t('alerts.deleteSuccess'),
           icon: 'success'
         }).then(() => {
           router.go(-1)
