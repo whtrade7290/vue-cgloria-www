@@ -9,6 +9,7 @@
     "delete": "削除",
     "cancel": "キャンセル",
     "toList": "リストへ",
+    "confirm": "確認",
     "download": "ダウンロード",
     "lang": "한국어",
     "enterWithDiary": "入室"
@@ -172,6 +173,25 @@
     "more": "...もっと見る",
     "moveToPage": "もっと見る",
     "noResults": "検索結果がありません。"
+  },
+  "admin": {
+    "manageWithDiary": {
+      "noRoom": "ルーム情報を見つけられません。",
+      "loading": "メンバー情報を読み込んでいます…",
+      "fetchError": "メンバー情報の取得中にエラーが発生しました。",
+      "noMembers": "登録されたメンバーがありません。",
+      "membersTitle": "{room} のメンバー",
+      "defaultRoomName": "ルーム",
+      "memberUnknown": "情報なし",
+      "removeAction": "削除",
+      "confirmRemove": "{name} さんを削除しますか？",
+      "removeSuccess": "メンバーを削除しました。",
+      "removeFail": "メンバーの削除に失敗しました。",
+      "removeRoomAction": "ルーム削除",
+      "confirmRemoveRoom": "「{room}」ルームを削除しますか？",
+      "removeRoomSuccess": "ルームを削除しました。",
+      "removeRoomFail": "ルームの削除に失敗しました。"
+    }
   },
   "comments": {
     "header": "コメント {count}",

@@ -9,6 +9,7 @@
     "delete": "글삭제",
     "cancel": "취소하기",
     "toList": "목록으로",
+    "confirm": "확인",
     "download": "다운로드",
     "lang": "日本語",
     "enterWithDiary": "들어가기"
@@ -171,6 +172,25 @@
     "more": "...더보기",
     "moveToPage": "바로가기",
     "noResults": "검색 결과가 없습니다."
+  },
+  "admin": {
+    "manageWithDiary": {
+      "noRoom": "방 정보를 찾을 수 없습니다.",
+      "loading": "구성원 정보를 불러오는 중입니다...",
+      "fetchError": "구성원 조회 중 오류가 발생했습니다.",
+      "noMembers": "등록된 구성원이 없습니다.",
+      "membersTitle": "{room} 구성원",
+      "defaultRoomName": "방",
+      "memberUnknown": "정보 없음",
+      "removeAction": "삭제",
+      "confirmRemove": "{name} 님을 삭제하시겠습니까?",
+      "removeSuccess": "구성원을 삭제했습니다.",
+      "removeFail": "구성원 삭제에 실패했습니다.",
+      "removeRoomAction": "방 삭제",
+      "confirmRemoveRoom": "'{room}' 방을 삭제하시겠습니까?",
+      "removeRoomSuccess": "방을 삭제했습니다.",
+      "removeRoomFail": "방 삭제에 실패했습니다."
+    }
   },
   "comments": {
     "header": "댓글 {count}",

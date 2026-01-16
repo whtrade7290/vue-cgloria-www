@@ -24,7 +24,10 @@ import {
   editPassword,
   fetchDisapproveUsers,
   updateApproveStatus,
-  deletePhotoBoard
+  deletePhotoBoard,
+  fetchDiaryRoomUsers,
+  removeDiaryRoomUser,
+  removeDiaryRoom
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
@@ -229,6 +232,18 @@ export default createStore({
     async FETCH_WITHDIARY_ALL({ commit }) {
       const res = await getWithDiaryAll()
       commit('SET_ROOMS', res.data)
+    },
+    async FETCH_DIARY_ROOM_USERS(_, diaryRoomId) {
+      const res = await fetchDiaryRoomUsers(diaryRoomId)
+      return res.data
+    },
+    async REMOVE_DIARY_ROOM_USER(_, { diaryRoomId, userId }) {
+      const res = await removeDiaryRoomUser({ diaryRoomId, userId })
+      return res.data
+    },
+    async REMOVE_DIARY_ROOM(_, diaryRoomId) {
+      const res = await removeDiaryRoom(diaryRoomId)
+      return res.data
     },
     async CLEAR_STATE({ commit }) {
       commit('SET_BOARDLIST', [])

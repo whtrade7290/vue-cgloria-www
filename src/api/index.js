@@ -67,6 +67,18 @@ export async function fetchWithDiaryRoom(roomId) {
   return await instance.post('/withDiary/fetch_withDiary', { roomId })
 }
 
+export async function fetchDiaryRoomUsers(diaryRoomId) {
+  return await instance.post('/withDiary/fetch_withDiary_room_users', { diaryRoomId })
+}
+
+export async function removeDiaryRoomUser({ diaryRoomId, userId }) {
+  return await instance.post('/withDiary/remove_withDiary_room_user', { diaryRoomId, userId })
+}
+
+export async function removeDiaryRoom(diaryRoomId) {
+  return await instance.post('/withDiary/remove_withDiary_room', { diaryRoomId })
+}
+
 /* ------------------------- 게시판 CRUD ------------------------- */
 export async function writeBoard(formData, name) {
   if (name === 'withDiary') {
