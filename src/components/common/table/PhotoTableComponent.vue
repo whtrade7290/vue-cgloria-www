@@ -1,5 +1,25 @@
 <template>
   <div class="row">
+    <!-- ✅ 모바일/태블릿(≤991px) 검색창: 위쪽 -->
+    <div class="d-lg-none w-100 px-3 pt-3">
+      <div class="mobile-search">
+        <input
+          type="text"
+          class="form-control form-control-sm-custom"
+          placeholder="search"
+          v-model="searchWord"
+        />
+        <button
+          type="button"
+          class="btn bg-gradient-primary btn-sm-custom mb-0"
+          @click="searchPost"
+        >
+          검색
+        </button>
+      </div>
+    </div>
+
+    <!-- ✅ 카드 리스트 -->
     <div
       class="col-lg-3 col-sm-6"
       style="padding: 20px 30px 0 30px"
@@ -22,21 +42,25 @@
             />
           </a>
         </div>
+
         <div class="card-body px-0" style="padding: 10px 0 0 0">
           <span>
             <a href="javascript:;" class="text-dark font-weight-bold">{{ item.title }}</a>
           </span>
         </div>
+
         <div style="display: flex; justify-content: space-between">
-          <span
-            ><a href="javascript:;" class="text-dark" style="font-size: 14px; line-height: 16px">{{
-              formatDate(item.create_at)
-            }}</a>
+          <span>
+            <a href="javascript:;" class="text-dark" style="font-size: 14px; line-height: 16px">
+              {{ formatDate(item.create_at) }}
+            </a>
           </span>
-          <span> {{ item.writer_name ?? item.writer }} </span>
+          <span>{{ item.writer_name ?? item.writer }}</span>
         </div>
       </div>
     </div>
+
+    <!-- ✅ 페이지네이션 -->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item">
@@ -51,6 +75,7 @@
             <i class="material-icons" style="font-size: 1rem">arrow_back_ios</i>
           </a>
         </li>
+
         <li class="page-item" v-for="page in pageList" :key="page">
           <a
             class="page-link"
@@ -74,7 +99,9 @@
         </li>
       </ul>
     </nav>
-    <div class="d-flex justify-content-center mt-5">
+
+    <!-- ✅ 데스크탑(≥992px) 검색창: 아래쪽 유지 -->
+    <div class="d-none d-lg-flex justify-content-center mt-5">
       <div class="mb-3 w-25">
         <input
           type="text"
@@ -85,7 +112,7 @@
           v-model="searchWord"
         />
       </div>
-      <div style="margin-left: 0.5rem; margin-top: 0.15rem">
+      <div style="margin-left: 0.5rem">
         <button type="button" class="btn bg-gradient-primary" @click="searchPost">검색</button>
       </div>
     </div>
@@ -305,5 +332,30 @@ async function searchPost() {
     width: 70% !important;
     max-width: 220px;
   }
+}
+
+/* ===================== */
+/* 모바일(≤991px) 검색 상단 */
+/* ===================== */
+.mobile-search {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-control-sm-custom {
+  height: 40px;
+  font-size: 0.9rem;
+  padding: 0 0.75rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.btn-sm-custom {
+  height: 40px;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  white-space: nowrap;
 }
 </style>

@@ -1,123 +1,135 @@
 <template>
   <div class="table-responsive p-0">
-    <table class="table align-items-center justify-content-center mb-3">
-      <thead>
-        <tr>
-          <th
-            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-            style="width: 10%; text-align: center"
-          >
-            {{ $t('table.tableComponent.number') }}
-          </th>
-          <th
-            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-            style="width: 40%; text-align: center"
-          >
-            {{ $t('table.tableComponent.title') }}
-          </th>
-          <th
-            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-            style="width: 10%; text-align: center"
-          >
-            {{ $t('table.tableComponent.writer') }}
-          </th>
-          <th
-            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
-            style="width: 20%; text-align: center"
-          >
-            {{ $t('table.tableComponent.date') }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-if="store.state.dataList.length > 0">
-          <tr v-for="(item, idx) in store.state.dataList" :key="idx">
-            <td style="width: 10%; text-align: center">
-              <p class="text-sm font-weight-bold mb-0 text-center">{{ item.id }}</p>
-            </td>
-            <td style="width: 40%; text-align: left">
-              <p class="text-sm font-weight-bold mb-0">
-                <a href="javascript:;" @click="intoDetail(item.id)">{{ item.title }}</a>
-              </p>
-            </td>
-            <td style="width: 10%; text-align: center">
-              <p class="text-sm font-weight-bold mb-0 text-center">
-                {{ item.writer_name ?? item.writer }}
-              </p>
-            </td>
-            <td style="width: 20%; text-align: center">
-              <p class="text-sm font-weight-bold mb-0 text-center">
-                {{ formatDate(item.create_at) }}
-              </p>
-            </td>
-          </tr>
-        </template>
-        <template v-else>
-          <tr>
-            <td colspan="4" class="no-results">
-              <div class="result-container">
-                <i class="fas fa-search"></i>
-                <p class="result-text">{{ $t('common.noResults') }}</p>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a
-            class="page-link"
-            :class="[pageNum === 1 ? 'disabled' : '']"
-            href="javascript:;"
-            tabindex="-1"
-            @click="fetchList((pageNum = pageNum - 1))"
-          >
-            <i class="fa fa-angle-left"></i>
-            <i class="material-icons" style="font-size: 1rem">arrow_back_ios</i>
-          </a>
-        </li>
-        <li class="page-item" v-for="page in pageList" :key="page">
-          <a
-            class="page-link"
-            :class="[pageNum === page ? 'selected' : '']"
-            href="javascript:;"
-            @click="fetchList(page)"
-            >{{ page }}</a
-          >
-        </li>
-
-        <li class="page-item">
-          <a
-            class="page-link"
-            :class="[
-              pageNum === Math.ceil(store.state.count / pageSize) ||
-              Math.ceil(store.state.count / pageSize) === 0
-                ? 'disabled'
-                : ''
-            ]"
-            href="javascript:;"
-            @click="fetchList((pageNum = pageNum + 1))"
-          >
-            <i class="fa fa-angle-right"></i>
-            <i class="material-icons" style="font-size: 1rem">arrow_forward_ios</i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="d-flex justify-content-center mt-5">
-      <div class="mb-3 w-25">
+    <!-- ===================== -->
+    <!-- 모바일 (≤ 991px) -->
+    <!-- ===================== -->
+    <div class="d-lg-none px-3 pt-3">
+      <!-- 검색 -->
+      <div class="mobile-search">
         <input
           type="text"
-          class="form-control form-control-lg mr-1"
+          class="form-control form-control-lg"
           placeholder="search"
           v-model="searchWord"
         />
+        <button class="btn bg-gradient-primary mb-0" @click="searchPost">검색</button>
       </div>
-      <div style="margin-left: 0.5rem; margin-top: 0.15rem">
-        <button type="button" class="btn bg-gradient-primary" @click="searchPost">검색</button>
+
+      <!-- 리스트 -->
+      <ul class="list-group list-group-flush mt-3">
+        <li
+          v-for="item in store.state.dataList"
+          :key="item.id"
+          class="list-group-item mobile-item"
+          @click="intoDetail(item.id)"
+        >
+          <p class="mobile-title">{{ item.title }}</p>
+          <p class="mobile-meta">
+            {{ formatDate(item.create_at) }}
+            <span>|</span>
+            {{ item.writer_name ?? item.writer }}
+          </p>
+        </li>
+
+        <li v-if="store.state.dataList.length === 0" class="list-group-item text-center text-muted">
+          {{ $t('common.noResults') }}
+        </li>
+      </ul>
+
+      <!-- 페이지네이션 -->
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: pageNum === 1 }"
+              href="javascript:;"
+              @click="fetchList(pageNum - 1)"
+            >
+              ‹
+            </a>
+          </li>
+
+          <li class="page-item" v-for="page in pageList" :key="page">
+            <a
+              class="page-link"
+              :class="{ selected: pageNum === page }"
+              href="javascript:;"
+              @click="fetchList(page)"
+            >
+              {{ page }}
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: pageNum === Math.ceil(store.state.count / pageSize) }"
+              href="javascript:;"
+              @click="fetchList(pageNum + 1)"
+            >
+              ›
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ===================== -->
+    <!-- 데스크탑 (≥ 992px) -->
+    <!-- ===================== -->
+    <div class="d-none d-lg-block">
+      <table class="table align-items-center justify-content-center mb-3">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 10%">
+              {{ $t('table.tableComponent.number') }}
+            </th>
+            <th style="width: 40%">
+              {{ $t('table.tableComponent.title') }}
+            </th>
+            <th class="text-center" style="width: 10%">
+              {{ $t('table.tableComponent.writer') }}
+            </th>
+            <th class="text-center" style="width: 20%">
+              {{ $t('table.tableComponent.date') }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="item in store.state.dataList" :key="item.id">
+            <td class="text-center">{{ item.id }}</td>
+            <td>
+              <a href="javascript:;" @click="intoDetail(item.id)">
+                {{ item.title }}
+              </a>
+            </td>
+            <td class="text-center">{{ item.writer_name ?? item.writer }}</td>
+            <td class="text-center">{{ formatDate(item.create_at) }}</td>
+          </tr>
+
+          <tr v-if="store.state.dataList.length === 0">
+            <td colspan="4" class="text-center text-muted">
+              {{ $t('common.noResults') }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 기존 검색 -->
+      <div class="d-flex justify-content-center mt-5">
+        <div class="mb-3 w-25">
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="search"
+            v-model="searchWord"
+          />
+        </div>
+        <div style="margin-left: 10px">
+          <button class="btn bg-gradient-primary test" @click="searchPost">검색</button>
+        </div>
       </div>
     </div>
   </div>
@@ -316,5 +328,42 @@ async function searchPost() {
     width: 70% !important;
     max-width: 220px;
   }
+}
+
+/* 모바일 검색 */
+.mobile-search {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mobile-search input {
+  flex: 1;
+}
+
+@media (max-width: 992px) {
+  .mobile-search-btn {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* 모바일 리스트 */
+.mobile-item {
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+}
+
+.mobile-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-meta {
+  font-size: 1rem;
+  color: #999;
+}
+
+.mobile-meta span {
+  margin: 0 0.25rem;
 }
 </style>
