@@ -78,6 +78,17 @@
       }
     }
   },
+  "school": {
+    "eventSchedule": {
+      "events": {
+        "newMonthDawnService": "新月早天礼拝",
+        "familyCellMeeting": "家族セル",
+        "birthdayWooHyun": "ウヒョン誕生日",
+        "newYearVisionMeeting": "新年ビジョン集会（当会）",
+        "newYearSpecialDawn": "新年特別早天礼拝"
+      }
+    }
+  },
   "table": {
     "approvePage": {
       "id": "ID",
@@ -175,7 +186,9 @@
   "common": {
     "more": "...もっと見る",
     "moveToPage": "もっと見る",
-    "noResults": "検索結果がありません。"
+    "noResults": "検索結果がありません。",
+    "searchAction": "検索",
+    "searchPlaceholder": "検索ワードを入力してください"
   },
   "admin": {
     "manageWithDiary": {
@@ -195,6 +208,30 @@
       "confirmRemoveRoom": "「{room}」ルームを削除しますか？",
       "removeRoomSuccess": "ルームを削除しました。",
       "removeRoomFail": "ルームの削除に失敗しました。"
+    },
+    "makeWithDiary": {
+      "searchLabel": "聖徒検索",
+      "searchPlaceholder": "アカウント名を入力してください",
+      "joinDate": "登録日",
+      "empty": "聖徒を追加してください。",
+      "teamNameLabel": "チーム名設定",
+      "teamNamePlaceholder": "チーム名",
+      "confirmTeamName": "確定",
+      "prev": "戻る",
+      "next": "次へ",
+      "register": "登録",
+      "teamNameRequired": "チーム名を入力してください。",
+      "memberRequired": "メンバーを入力してください。",
+      "usernameRequired": "アカウント名を入力してください。",
+      "foundConfirm": "聖徒を見つけました。追加しますか？",
+      "added": "追加しました。",
+      "alreadyAdded": "すでに追加されたユーザーです。",
+      "notFound": "聖徒を見つけられませんでした。",
+      "searchError": "検索中にエラーが発生しました。",
+      "networkError": "サーバーとの接続が切断されました。",
+      "deleted": "削除しました。",
+      "confirmYes": "はい",
+      "confirmNo": "いいえ"
     },
     "memberAction": "メンバー確認",
     "userApprove": {
@@ -371,5 +408,59 @@
   "withDiaryParams": {
     "mainTitle": "イエス同行日記",
     "subTitle": "中央栄光教会"
+  },
+  "auth": {
+    "signUpTitle": "会員登録",
+    "signUpDescription": "God is my light in darkness",
+    "accountPlaceholder": "アカウント名を入力してください",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "emailPlaceholder": "メールアドレスを入力してください",
+    "namePlaceholder": "名前を入力してください",
+    "signUpButton": "会員登録",
+    "verse": "\"ですから、だれでもキリストのうちにあるなら、その人は新しく造られた者です。古いものは過ぎ去って、見よ、すべてが新しくなりました。\"",
+    "verseReference": "コリント人への手紙 第二 5:17",
+    "warnings": {
+      "usernameRequired": "アカウントは4文字以上で入力してください。",
+      "usernameInvalid": "アカウントは4～16文字の英数字とアンダーバー(_)のみ使用できます。",
+      "usernameDuplicate": "すでに使用されているアカウントです。",
+      "usernameAvailable": "使用可能なアカウントです。",
+      "passwordShort": "パスワードは4文字以上で入力してください。",
+      "passwordMismatch": "パスワードが一致しません。",
+      "passwordAvailable": "使用可能なパスワードです。",
+      "emailRequired": "メールアドレスを入力してください。",
+      "emailInvalid": "メールアドレスが正しくありません。",
+      "emailAvailable": "使用可能なメールです。",
+      "nameRequired": "名前を入力してください。",
+      "nameInvalid": "名前はひらがな、カタカナ、漢字、英字のみ使用できます。",
+      "nameAvailable": "使用可能な名前です。"
+    },
+    "signUpAlerts": {
+      "successImmediate": "会員登録が完了しました。",
+      "successPending": "会員登録の申請が完了しました。\n管理者の承認後に有効になりますので、少々お待ちください。",
+      "fail": "会員登録に問題が発生しました。\n管理者にお問い合わせください。",
+      "invalidInput": "入力した会員情報をもう一度確認してください。"
+    },
+    "editPassword": {
+      "title": "パスワード再設定",
+      "description": "God is my light in darkness",
+      "usernamePlaceholder": "アカウント名を入力してください",
+      "passwordPlaceholder": "パスワードを入力してください",
+      "emailPlaceholder": "メールアドレスを入力してください",
+      "namePlaceholder": "名前を入力してください",
+      "button": "パスワード再設定",
+      "usernameFound": "IDを見つけました。",
+      "usernameNotFound": "登録されていないIDです。",
+      "success": "パスワードの再設定が完了しました。",
+      "fail": "パスワード再設定中に問題が発生しました。\n管理者にお問い合わせください。",
+      "invalidInput": "入力した会員情報をもう一度確認してください。"
+    },
+    "login": {
+      "title": "ログイン",
+      "description": "闇の中での私の光は神様です。",
+      "usernamePlaceholder": "アカウント名を入力してください",
+      "passwordPlaceholder": "パスワードを入力してください",
+      "usernameAria": "アカウント入力欄",
+      "passwordAria": "パスワード入力欄"
+    }
   }
 }

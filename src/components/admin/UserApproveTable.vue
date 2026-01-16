@@ -6,12 +6,16 @@
         <input
           type="text"
           class="form-control form-control-sm-custom"
-          placeholder="search"
+          :placeholder="$t('common.searchPlaceholder')"
           v-model="searchWord"
           @keyup.enter="searchUsers"
         />
-        <button type="button" class="btn bg-gradient-primary btn-sm-custom" @click="searchUsers">
-          검색
+        <button
+          type="button"
+          class="btn bg-gradient-primary btn-sm-custom mb-0"
+          @click="searchUsers"
+        >
+          {{ $t('common.searchAction') }}
         </button>
       </div>
 
@@ -45,7 +49,11 @@
           </div>
 
           <div class="mobile-actions">
-            <a href="javascript:;" class="table-action-link danger" @click="confirmApprove(user.id)">
+            <a
+              href="javascript:;"
+              class="table-action-link danger"
+              @click="confirmApprove(user.id)"
+            >
               {{ $t('table.approvePage.restrictAction') }}
             </a>
           </div>
@@ -80,7 +88,11 @@
                 </div>
               </template>
               <template v-else>
-                <a href="javascript:;" class="table-action-link danger" @click="confirmApprove(body.id)">
+                <a
+                  href="javascript:;"
+                  class="table-action-link danger"
+                  @click="confirmApprove(body.id)"
+                >
                   {{ $t('table.approvePage.restrictAction') }}
                 </a>
               </template>
@@ -146,12 +158,14 @@
         <input
           type="text"
           class="form-control form-control-lg"
-          placeholder="search"
+          :placeholder="$t('common.searchPlaceholder')"
           v-model="searchWord"
           @keyup.enter="searchUsers"
         />
       </div>
-      <button class="btn bg-gradient-primary search-button" @click="searchUsers">검색</button>
+      <button class="btn bg-gradient-primary search-button mb-0" @click="searchUsers">
+        {{ $t('common.searchAction') }}
+      </button>
     </div>
   </CardContainer>
 </template>
@@ -164,11 +178,7 @@ import CardContainer from '@/components/common/card/CardContainer.vue'
 import TableOrganisms from '@/components/tableComponent/TableOrganisms.vue'
 import TableHead from '@/components/tableComponent/TableHead.vue'
 import TableBody from '@/components/tableComponent/TableBody.vue'
-import {
-  fetchApprovedUsers,
-  updateUserRoleRequest,
-  revokeApproveStatusRequest
-} from '@/api/index'
+import { fetchApprovedUsers, updateUserRoleRequest, revokeApproveStatusRequest } from '@/api/index'
 import { useI18n } from 'vue-i18n'
 
 const TITLE = 'nav.adminPage.subTitles.userApprove'

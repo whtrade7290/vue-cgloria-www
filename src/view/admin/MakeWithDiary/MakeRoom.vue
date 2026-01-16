@@ -1,13 +1,13 @@
 <template>
   <div class="team-name-container">
     <div>
-      <label>팀명 설정</label>
+      <label>{{ t('admin.makeWithDiary.teamNameLabel') }}</label>
       <div class="team-name-box">
         <input
           v-if="!isDecided"
           type="text"
           class="form-control decide-team-name"
-          placeholder="팀명"
+          :placeholder="t('admin.makeWithDiary.teamNamePlaceholder')"
           v-model="name"
         />
         <h4 v-else class="decide-team-name decided">{{ name }}</h4>
@@ -16,7 +16,7 @@
           class="btn bg-gradient-primary team-name-button"
           @click="decidedTeamName"
         >
-          확정
+          {{ t('admin.makeWithDiary.confirmTeamName') }}
         </button>
       </div>
     </div>
@@ -26,8 +26,10 @@
 <script setup>
 import Swal from 'sweetalert2'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['team-name'])
+const { t } = useI18n()
 
 const isDecided = ref(false)
 const name = ref('')
@@ -37,7 +39,7 @@ const decidedTeamName = () => {
     emit('emit-info', { name: name.value, isDecided: isDecided.value })
   } else {
     Swal.fire({
-      title: '팀이름을 입력하여주세요.',
+      title: t('admin.makeWithDiary.teamNameRequired'),
       icon: 'error'
     })
   }

@@ -6,8 +6,8 @@
           <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
-                <h4 class="font-weight-bolder">로그인</h4>
-                <p class="mb-0">God is my light in darkness</p>
+                <h4 class="font-weight-bolder">{{ t('auth.login.title') }}</h4>
+                <p class="mb-0">{{ t('auth.login.description') }}</p>
               </div>
               <div class="card-body">
                 <form role="form">
@@ -15,8 +15,8 @@
                     <input
                       type="text"
                       class="form-control form-control-lg"
-                      placeholder="acount"
-                      aria-label="Email"
+                      :placeholder="t('auth.login.usernamePlaceholder')"
+                      :aria-label="t('auth.login.usernameAria')"
                       aria-describedby="email-addon"
                       v-model="username"
                     />
@@ -25,8 +25,8 @@
                     <input
                       type="password"
                       class="form-control form-control-lg"
-                      placeholder="Password"
-                      aria-label="Password"
+                      :placeholder="t('auth.login.passwordPlaceholder')"
+                      :aria-label="t('auth.login.passwordAria')"
                       aria-describedby="password-addon"
                       v-model="password"
                       @keyup.enter="login"
@@ -38,7 +38,7 @@
                       class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
                       @click="login"
                     >
-                      로그인
+                      {{ t('button.login') }}
                     </button>
                   </div>
                 </form>
@@ -46,7 +46,7 @@
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <p class="mb-4 text-sm mx-auto">
                   <router-link to="/signUp" class="text-primary text-gradient font-weight-bold"
-                    >회원가입</router-link
+                    >{{ t('auth.signUpButton') }}</router-link
                   >
                 </p>
               </div>
@@ -59,10 +59,9 @@
               class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center bg-img"
             >
               <h4 class="mt-5 text-white font-weight-bolder">
-                "그런즉 누구든지 그리스도 안에 있으면 새로운 피조물이라 이전 것은 지나갔으니 보라 새
-                것이 되었도다"
+                {{ t('auth.verse') }}
               </h4>
-              <p class="text-white">고린도후서 5장 17절</p>
+              <p class="text-white">{{ t('auth.verseReference') }}</p>
             </div>
           </div>
         </div>

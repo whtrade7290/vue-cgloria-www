@@ -9,7 +9,9 @@
     />
     <div class="button-group">
       <div class="next-button-box pr-10" v-if="currentTab === 'MakeRoom'">
-        <button type="button" class="btn bg-gradient-primary" @click="handleBack">이전</button>
+        <button type="button" class="btn bg-gradient-primary" @click="handleBack">
+          {{ t('admin.makeWithDiary.prev') }}
+        </button>
       </div>
       <div class="next-button-box pr-10" v-if="userList.length > 0">
         <button
@@ -18,7 +20,7 @@
           @click="next"
           :disabled="!isMakeUserList && !isEnabled"
         >
-          {{ isMakeUserList ? '다음' : '등록' }}
+          {{ isMakeUserList ? t('admin.makeWithDiary.next') : t('admin.makeWithDiary.register') }}
         </button>
       </div>
     </div>
@@ -35,12 +37,14 @@ import { ADMIN } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { formatDate } from '@/utils/dateFormat'
+import { useI18n } from 'vue-i18n'
 
 const tabs = { MakeUserList, MakeRoom }
 const currentTab = ref('MakeUserList')
 const isMakeUserList = ref(true)
 const teamName = ref('')
 const isEnabled = ref(false)
+const { t } = useI18n()
 
 const getEmitInfo = ({ name, isDecided }) => {
   teamName.value = name
@@ -51,7 +55,7 @@ const next = async () => {
   if (!isMakeUserList.value) {
     if (teamName.value.trim() === '') {
       Swal.fire({
-        title: '팀이름을 입력하여주세요.',
+        title: t('admin.makeWithDiary.teamNameRequired'),
         icon: 'error'
       })
       return
@@ -59,7 +63,7 @@ const next = async () => {
 
     if (userList.value.length === 0) {
       Swal.fire({
-        title: '팀원을 입력하여주세요.',
+        title: t('admin.makeWithDiary.memberRequired'),
         icon: 'error'
       })
       return
@@ -75,7 +79,7 @@ const next = async () => {
     })
     if (result) {
       Swal.fire({
-        title: '동행일기방이 개설되었습니다.',
+        title: t('modalMsg.makeWithDiary'),
         icon: 'success'
       }).then(() => {
         userList.value = []
@@ -105,19 +109,19 @@ const handleBack = () => {
 const search = async (searchUser) => {
   if (searchUser.trim() === '') {
     Swal.fire({
-      title: '아이디를 입력해주세요',
+      title: t('admin.makeWithDiary.usernameRequired'),
       icon: 'error'
     })
     return
   }
 
   try {
-    // 사용자 검색 요청
+    // Request user search
     await store.dispatch('SEARCH_USER', { searchUser: searchUser })
 
-    const resUser = store.state.user // 사용자 정보 가져오기
+    const resUser = store.state.user // Retrieved user info
 
-    // 검색 결과가 있을 때
+    // When user exists
     if (resUser && resUser.id) {
       const optionsHtml = `
   <style>
@@ -157,19 +161,19 @@ const search = async (searchUser) => {
   <div class="modal-info-container">
     <table class="modal-info-table">
       <tr>
-        <td class="modal-info-label">계정명</td>
+        <td class="modal-info-label">${t('table.approvePage.account')}</td>
         <td class="modal-info-value">${resUser.username}</td>
       </tr>
       <tr>
-        <td class="modal-info-label">이름</td>
+        <td class="modal-info-label">${t('table.approvePage.name')}</td>
         <td class="modal-info-value">${resUser.name}</td>
       </tr>
       <tr>
-        <td class="modal-info-label">권한</td>
+        <td class="modal-info-label">${t('table.approvePage.role')}</td>
         <td class="modal-info-value">${resUser.role}</td>
       </tr>
       <tr>
-        <td class="modal-info-label">가입날짜</td>
+        <td class="modal-info-label">${t('admin.makeWithDiary.joinDate')}</td>
         <td class="modal-info-value">${formatDate(resUser.create_at)}</td>
       </tr>
     </table>
@@ -177,45 +181,45 @@ const search = async (searchUser) => {
 `
 
       Swal.fire({
-        title: '성도를 찾았습니다. 추가하시겠습니까?',
+        title: t('admin.makeWithDiary.foundConfirm'),
         icon: 'info',
         showCancelButton: true,
         confirmButtonColor: '#f5c6aa',
         cancelButtonColor: '#f5d7c7',
-        confirmButtonText: '예',
-        cancelButtonText: '아니오',
+        confirmButtonText: t('admin.makeWithDiary.confirmYes'),
+        cancelButtonText: t('admin.makeWithDiary.confirmNo'),
         html: optionsHtml
       }).then(async (result) => {
         if (result.isConfirmed) {
-          // 기존 사용자 리스트에서 중복된 사용자가 있는지 확인
+          // Prevent duplicate additions
           const isExsistUser = userList.value.some((item) => item.id === resUser.id)
           if (!isExsistUser) {
             userList.value = [...userList.value, resUser]
 
-            // 사용자 추가 알림
+            // Show success feedback
             await Swal.fire({
-              title: '추가되었습니다.',
+              title: t('admin.makeWithDiary.added'),
               icon: 'success'
             })
           } else {
             Swal.fire({
-              title: '이미 추가된 사용자입니다',
+              title: t('admin.makeWithDiary.alreadyAdded'),
               icon: 'info'
             })
           }
         }
       })
     } else {
-      // 검색 결과가 없는 경우
+      // No user found
       Swal.fire({
-        title: '성도를 찾을 수 없습니다',
-        showCancelButton: true
+        title: t('admin.makeWithDiary.notFound'),
+        icon: 'info'
       })
     }
   } catch (error) {
     Swal.fire({
-      title: '검색 중 오류가 발생했습니다',
-      text: error.response?.data?.message || '서버와의 연결이 끊겼습니다',
+      title: t('admin.makeWithDiary.searchError'),
+      text: error.response?.data?.message || t('admin.makeWithDiary.networkError'),
       icon: 'error'
     })
   }
@@ -223,7 +227,7 @@ const search = async (searchUser) => {
 
 const deleteUser = (id) => {
   Swal.fire({
-    title: '삭제되었습니다.',
+    title: t('admin.makeWithDiary.deleted'),
     icon: 'success'
   }).then(() => {
     userList.value = userList.value.filter((user) => user.id !== id)

@@ -2,11 +2,16 @@
   <div class="container">
     <div class="search-people-container">
       <div>
-        <label>성도검색</label>
+        <label>{{ t('admin.makeWithDiary.searchLabel') }}</label>
         <div class="search-box">
-          <input type="text" class="form-control" placeholder="acount" v-model="acount" />
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="t('admin.makeWithDiary.searchPlaceholder')"
+            v-model="acount"
+          />
           <button type="button" class="btn bg-gradient-primary search-button" @click="searchUser">
-            검색
+            {{ t('common.searchAction') }}
           </button>
         </div>
       </div>
@@ -19,31 +24,31 @@
               class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               style="width: 10%; text-align: center"
             >
-              번호
+              {{ t('table.tableComponent.number') }}
             </th>
             <th
               class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               style="width: 25%; text-align: center"
             >
-              계정명
+              {{ t('table.approvePage.account') }}
             </th>
             <th
               class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               style="width: 25%; text-align: center"
             >
-              이름
+              {{ t('table.approvePage.name') }}
             </th>
             <th
               class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               style="width: 20%; text-align: center"
             >
-              가입날짜
+              {{ t('admin.makeWithDiary.joinDate') }}
             </th>
             <th
               class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
               style="width: 10%; text-align: center"
             >
-              삭제
+              {{ t('button.delete') }}
             </th>
           </tr>
         </thead>
@@ -66,7 +71,9 @@
               </td>
               <td style="width: 10%; text-align: center">
                 <a href="javascript:;" @click="deleteUser(item.id)"
-                  ><p class="text-sm font-weight-bold mb-0 text-center text-danger">삭제</p></a
+                  ><p class="text-sm font-weight-bold mb-0 text-center text-danger">
+                    {{ t('button.delete') }}
+                  </p></a
                 >
               </td>
             </tr>
@@ -76,7 +83,7 @@
               <td colspan="5" class="no-results">
                 <div class="result-container">
                   <i class="fas fa-search"></i>
-                  <p class="result-text">성도를 추가해주세요.</p>
+                  <p class="result-text">{{ t('admin.makeWithDiary.empty') }}</p>
                 </div>
               </td>
             </tr>
@@ -90,6 +97,7 @@
 <script setup>
 import { formatDate } from '@/utils/dateFormat'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const acount = ref('')
 const emit = defineEmits(['search-user'])
@@ -97,6 +105,8 @@ const emit = defineEmits(['search-user'])
 const props = defineProps({
   userList: Array
 })
+
+const { t } = useI18n()
 
 const searchUser = () => {
   emit('search-user', acount.value)
