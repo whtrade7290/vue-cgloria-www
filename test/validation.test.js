@@ -66,13 +66,20 @@ it('사이즈5mb초과', () => {
   })
 })
 
+it('HEIF 허용', () => {
+  const files = []
+  const newFiles = [createFile(1024, 'image/heic')]
+
+  expect(VALIDATION_FILES(files, newFiles)).toBe(true)
+})
+
 it('파일 형식체크', () => {
   const files = [createFile(1024, 'zip')]
   const newFiles = [createFile(1024, 'zip')]
 
   expect(VALIDATION_FILES(files, newFiles)).toBe(false)
   expect(Swal.fire).toHaveBeenCalledWith({
-    title: '업로드 가능한 파일 형식은 JPEG, PNG입니다.',
+    title: '업로드 가능한 파일 형식은 JPEG, PNG, PDF, HEIF입니다.',
     icon: 'warning'
   })
 })

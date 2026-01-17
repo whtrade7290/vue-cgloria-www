@@ -113,6 +113,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
+import { compressImageFiles } from '@/utils/imageCompression'
 
 const editor = ClassicEditor
 const editorData = ref('')
@@ -181,19 +182,37 @@ const backPage = () => {
   router.back()
 }
 
-const changeImage = (event) => {
-  files.value = event.target?.files
+const changeImage = async (event) => {
+  try {
+    const selectedFiles = event.target?.files
 
-  if (files.value.length > 0) {
-    const selectedFile = files.value[0]
+    if (!selectedFiles || selectedFiles.length === 0) {
+      files.value = []
+      file.value = null
+      imageData.value = null
+      return
+    }
+
+    const [processedFile] = await compressImageFiles(selectedFiles)
+    if (!processedFile) {
+      return
+    }
+
+    files.value = [processedFile]
+    file.value = processedFile
+
+    if (processedFile.type === 'application/pdf') {
+      imageData.value = null
+      return
+    }
 
     const reader = new FileReader()
-    file.value = files.value[0]
-
     reader.onload = (e) => {
-      imageData.value = e.target.result
+      imageData.value = e.target?.result
     }
-    reader.readAsDataURL(selectedFile)
+    reader.readAsDataURL(processedFile)
+  } catch (error) {
+    console.error('Failed to process selected file', error)
   }
 }
 

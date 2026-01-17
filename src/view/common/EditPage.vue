@@ -149,6 +149,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
+import { compressImageFiles } from '@/utils/imageCompression'
 
 // 상태 선언
 const store = useStore()
@@ -233,31 +234,39 @@ const backPage = () => {
   router.back()
 }
 
-const changeImage = (event) => {
-  const selectedFiles = event.target?.files
-  if (!selectedFiles || selectedFiles.length === 0) {
-    return
-  }
-
-  const selectedFile = selectedFiles[0]
-  files.value = [selectedFile]
-  file.value = selectedFile
-
-  if (selectedFile.type === 'application/pdf') {
-    previewItem.value = {
-      type: 'pdf',
-      name: selectedFile.name
+const changeImage = async (event) => {
+  try {
+    const selectedFiles = event.target?.files
+    if (!selectedFiles || selectedFiles.length === 0) {
+      return
     }
-  } else {
-    const reader = new FileReader()
-    reader.onload = (e) => {
+
+    const [processedFile] = await compressImageFiles(selectedFiles)
+    if (!processedFile) {
+      return
+    }
+
+    files.value = [processedFile]
+    file.value = processedFile
+
+    if (processedFile.type === 'application/pdf') {
       previewItem.value = {
-        type: 'image',
-        src: e.target?.result,
-        name: selectedFile.name
+        type: 'pdf',
+        name: processedFile.name
       }
+    } else {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        previewItem.value = {
+          type: 'image',
+          src: e.target?.result,
+          name: processedFile.name
+        }
+      }
+      reader.readAsDataURL(processedFile)
     }
-    reader.readAsDataURL(selectedFile)
+  } catch (error) {
+    console.error('Failed to process selected file', error)
   }
 }
 

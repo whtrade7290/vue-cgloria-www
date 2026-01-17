@@ -135,6 +135,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
+import { compressImageFiles } from '@/utils/imageCompression'
 
 const staticPath = `${import.meta.env.VITE_API_URL}`
 const store = useStore()
@@ -284,43 +285,53 @@ const backPage = () => {
   router.back()
 }
 
-const changeImage = (event) => {
-  const newFiles = Array.from(event.target.files)
+const changeImage = async (event) => {
+  try {
+    const selectedFiles = event.target?.files
 
-  if (VALIDATION_FILES(files.value, newFiles)) {
-    const filteredFiles = newFiles.filter(
-      (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
-    )
-    files.value = files.value.concat(filteredFiles)
+    if (!selectedFiles || selectedFiles.length === 0) {
+      return
+    }
 
-    filteredFiles.forEach((file) => {
-      const fileId = `${file.name}-${file.lastModified}`
-      if (file.type === 'application/pdf') {
-        if (!previewItems.value.some((item) => item.id === fileId)) {
-          previewItems.value.push({
-            id: fileId,
-            type: 'pdf',
-            name: file.name,
-            origin: 'new'
-          })
-        }
-      } else {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          const src = e.target?.result
+    const processedFiles = await compressImageFiles(selectedFiles)
+
+    if (VALIDATION_FILES(files.value, processedFiles)) {
+      const filteredFiles = processedFiles.filter(
+        (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
+      )
+      files.value = files.value.concat(filteredFiles)
+
+      filteredFiles.forEach((file) => {
+        const fileId = `${file.name}-${file.lastModified}`
+        if (file.type === 'application/pdf') {
           if (!previewItems.value.some((item) => item.id === fileId)) {
             previewItems.value.push({
               id: fileId,
-              type: 'image',
-              src,
+              type: 'pdf',
               name: file.name,
               origin: 'new'
             })
           }
+        } else {
+          const reader = new FileReader()
+          reader.onload = (e) => {
+            const src = e.target?.result
+            if (!previewItems.value.some((item) => item.id === fileId)) {
+              previewItems.value.push({
+                id: fileId,
+                type: 'image',
+                src,
+                name: file.name,
+                origin: 'new'
+              })
+            }
+          }
+          reader.readAsDataURL(file)
         }
-        reader.readAsDataURL(file)
-      }
-    })
+      })
+    }
+  } catch (error) {
+    console.error('Failed to process selected images', error)
   }
 }
 const isDisplay = computed(() => {
