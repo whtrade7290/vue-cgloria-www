@@ -1,26 +1,68 @@
 <template>
   <CardContainer :title="TITLE">
-    <TableOrganisms>
-      <template #header>
-        <TableHead :header-list="MANAGE_WITHDIARY"></TableHead>
-      </template>
-      <template #body>
-        <TableBody :body-list="store.state.rooms" :header-list="MANAGE_WITHDIARY">
-          <template #btn="{ body, header }">
-            <template v-if="header.key === 'member'">
-              <a href="javascript:;" class="table-action-link" @click="checkMember(body)">
-                {{ $t('admin.manageWithDiary.memberAction') }}
-              </a>
+    <!-- Mobile Cards -->
+    <div class="d-lg-none px-3 pt-3">
+      <ul class="list-group list-group-flush">
+        <li
+          v-for="room in store.state.rooms"
+          :key="normalizeRoomId(room) ?? room.roomName"
+          class="list-group-item mobile-item"
+        >
+          <div class="mobile-grid-row">
+            <span class="mobile-label">{{ $t('table.manageWithDiary.id') }}</span>
+            <span class="mobile-value">{{ getDisplayRoomId(room) }}</span>
+          </div>
+          <div class="mobile-grid-row">
+            <span class="mobile-label">{{ $t('table.manageWithDiary.roomName') }}</span>
+            <span class="mobile-value">{{ resolveRoomName(room) }}</span>
+          </div>
+          <div class="mobile-grid-row">
+            <span class="mobile-label">{{ $t('table.manageWithDiary.creator_name') }}</span>
+            <span class="mobile-value">{{ getCreatorName(room) }}</span>
+          </div>
+          <div class="mobile-grid-row">
+            <span class="mobile-label">{{ $t('table.manageWithDiary.update_at') }}</span>
+            <span class="mobile-value">{{ getUpdatedAt(room) }}</span>
+          </div>
+          <div class="mobile-actions">
+            <a href="javascript:;" class="table-action-link" @click="checkMember(room)">
+              {{ $t('admin.manageWithDiary.memberAction') }}
+            </a>
+            <a href="javascript:;" class="table-action-link danger" @click="deleteRoom(room)">
+              {{ $t('admin.manageWithDiary.removeRoomAction') }}
+            </a>
+          </div>
+        </li>
+        <li v-if="!store.state.rooms || store.state.rooms.length === 0" class="list-group-item">
+          <p class="result-text mb-0 text-center">{{ $t('common.noResults') }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Desktop Table -->
+    <div class="d-none d-lg-block">
+      <TableOrganisms>
+        <template #header>
+          <TableHead :header-list="MANAGE_WITHDIARY"></TableHead>
+        </template>
+        <template #body>
+          <TableBody :body-list="store.state.rooms" :header-list="MANAGE_WITHDIARY">
+            <template #btn="{ body, header }">
+              <template v-if="header.key === 'member'">
+                <a href="javascript:;" class="table-action-link" @click="checkMember(body)">
+                  {{ $t('admin.manageWithDiary.memberAction') }}
+                </a>
+              </template>
+              <template v-else>
+                <a href="javascript:;" class="table-action-link danger" @click="deleteRoom(body)">
+                  {{ $t('admin.manageWithDiary.removeRoomAction') }}
+                </a>
+              </template>
             </template>
-            <template v-else>
-              <a href="javascript:;" class="table-action-link danger" @click="deleteRoom(body)">
-                {{ $t('admin.manageWithDiary.removeRoomAction') }}
-              </a>
-            </template>
-          </template>
-        </TableBody>
-      </template>
-    </TableOrganisms>
+          </TableBody>
+        </template>
+      </TableOrganisms>
+    </div>
   </CardContainer>
 </template>
 
@@ -63,6 +105,18 @@ const resolveRoomName = (room) => {
     t('admin.manageWithDiary.defaultRoomName')
   )
 }
+
+const getCreatorName = (room) =>
+  room?.creator_name ||
+  room?.creatorName ||
+  room?.creator?.name ||
+  room?.diaryRoom?.creator_name ||
+  t('admin.manageWithDiary.memberUnknown')
+
+const getUpdatedAt = (room) =>
+  room?.update_at || room?.updated_at || room?.updatedAt || room?.diaryRoom?.update_at || '-'
+
+const getDisplayRoomId = (room) => normalizeRoomId(room) ?? '-'
 
 const checkMember = async (roomInfo) => {
   const roomId = normalizeRoomId(roomInfo)
@@ -303,5 +357,51 @@ const deleteRoom = async (roomInfo) => {
 }
 :global(.table-action-link:hover) {
   opacity: 0.9;
+}
+
+.mobile-item {
+  padding: 1rem 0.9rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 0;
+}
+.mobile-grid-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.35rem 0;
+}
+.mobile-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+.mobile-value {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mobile-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.result-text {
+  color: #94a3b8;
+}
+@media (max-width: 360px) {
+  .mobile-grid-row {
+    grid-template-columns: 78px 1fr;
+  }
+  .mobile-actions {
+    flex-direction: column;
+    align-items: flex-end;
+  }
 }
 </style>
