@@ -151,6 +151,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 // 상태 선언
@@ -203,7 +204,7 @@ const edit = async () => {
     const formData = new FormData()
 
     formData.append('title', inputTitle.value)
-    formData.append('content', editorData.value)
+    formData.append('content', sanitizeHtml(editorData.value))
     formData.append('id', store.state.detail.id)
     formData.append('mainContent', isMainContent.value)
 

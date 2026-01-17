@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <div class="content-container">{{ store.state.detail.content }}</div>
+          <div class="content-container" v-html="sanitizedContent"></div>
         </div>
         <div class="button-box">
           <a
@@ -114,6 +114,7 @@ import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
 const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 
@@ -137,6 +138,8 @@ const filePreviewItems = computed(() => {
     }
   })
 })
+
+const sanitizedContent = computed(() => sanitizeHtml(store.state.detail.content || ''))
 
 const downloadFile = async (url, filename) => {
   try {

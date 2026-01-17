@@ -72,7 +72,7 @@
               <span>{{ $t('button.download') }}</span>
             </button>
           </div>
-          <div class="content-container">{{ store.state.detail.content }}</div>
+          <div class="content-container" v-html="sanitizedContent"></div>
         </div>
         <div class="button-box">
           <a
@@ -111,6 +111,7 @@ import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
 const route = useRoute()
 const router = useRouter()
@@ -121,6 +122,8 @@ const commentCount = ref(0)
 const isLogin = computed(() => {
   return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
 })
+
+const sanitizedContent = computed(() => sanitizeHtml(store.state.detail.content || ''))
 
 const handleCommentCount = (count) => {
   commentCount.value = count

@@ -137,6 +137,7 @@ import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const store = useStore()
@@ -189,8 +190,7 @@ async function write() {
 
   const formData = new FormData()
   formData.append('title', inputTitle.value)
-  const pureText = stripHtml(editorData.value)
-  formData.append('content', pureText)
+  formData.append('content', sanitizeHtml(editorData.value))
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
   formData.append('board', route.query.name)
@@ -283,11 +283,6 @@ const isDisplay = computed(() => {
   })
 })
 
-const stripHtml = (html) => {
-  const temp = document.createElement('div')
-  temp.innerHTML = html
-  return temp.textContent || temp.innerText || ''
-}
 </script>
 
 <style scoped>

@@ -115,6 +115,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 import { compressImageFiles } from '@/utils/imageCompression'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const editor = ClassicEditor
@@ -153,7 +154,7 @@ const write = async () => {
   let formData = new FormData()
 
   formData.append('title', inputTitle.value)
-  formData.append('content', editorData.value)
+  formData.append('content', sanitizeHtml(editorData.value))
   formData.append('mainContent', isMainContent.value)
   formData.append('fileField', file.value)
 

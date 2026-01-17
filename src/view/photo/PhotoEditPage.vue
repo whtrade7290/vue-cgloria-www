@@ -137,6 +137,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const staticPath = `${import.meta.env.VITE_API_URL}`
@@ -250,8 +251,7 @@ const edit = async () => {
   let formData = new FormData()
 
   formData.append('title', inputTitle.value)
-  const pureText = stripHtml(editorData.value)
-  formData.append('content', pureText)
+  formData.append('content', sanitizeHtml(editorData.value))
   formData.append('id', route.query.id)
   formData.append('mainContent', isMainContent.value)
 
@@ -347,11 +347,6 @@ const isDisplay = computed(() => {
     return route.query?.name === name
   })
 })
-const stripHtml = (html) => {
-  const temp = document.createElement('div')
-  temp.innerHTML = html
-  return temp.textContent || temp.innerText || ''
-}
 </script>
 
 <style scoped>
