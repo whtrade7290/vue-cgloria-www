@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isSubmitting" />
   <div class="container" style="display: flex; justify-content: center">
     <div
       style="
@@ -136,6 +137,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const staticPath = `${import.meta.env.VITE_API_URL}`
 const store = useStore()
@@ -172,6 +174,7 @@ const router = useRouter()
 const files = ref([])
 const previewItems = ref([])
 const removedExistingFilenames = ref([])
+const isSubmitting = ref(false)
 
 const newImagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
@@ -243,7 +246,6 @@ const removeSelectedFile = (item) => {
 const edit = async () => {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
-  // if (VALIDATION_FILES(files.value)) return
 
   let formData = new FormData()
 
@@ -264,20 +266,25 @@ const edit = async () => {
     formData.append('fileField', file)
   })
 
-  const result = await store.dispatch('EDIT_PHOTO_BOARD', {
-    formData: formData,
-    name: route.query.name
-  })
+  try {
+    isSubmitting.value = true
+    const result = await store.dispatch('EDIT_PHOTO_BOARD', {
+      formData: formData,
+      name: route.query.name
+    })
 
-  if (result) {
-    if (route.query?.name === 'withDiary') {
-      router.push({
-        name: `${route.query.name}`,
-        query: { roomId: route.query.roomId, pageNum: 1 }
-      })
-    } else {
-      router.push(`/${route.query.name}`)
+    if (result) {
+      if (route.query?.name === 'withDiary') {
+        router.push({
+          name: `${route.query.name}`,
+          query: { roomId: route.query.roomId, pageNum: 1 }
+        })
+      } else {
+        router.push(`/${route.query.name}`)
+      }
     }
+  } finally {
+    isSubmitting.value = false
   }
 }
 

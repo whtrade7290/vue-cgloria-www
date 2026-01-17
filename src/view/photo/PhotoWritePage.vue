@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isSubmitting" />
   <div class="container" style="display: flex; justify-content: center">
     <div
       style="
@@ -136,6 +137,7 @@ import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const store = useStore()
 const route = useRoute()
@@ -166,6 +168,7 @@ const editorConfig = {
 const inputTitle = ref('')
 const files = ref([])
 const previewItems = ref([])
+const isSubmitting = ref(false)
 const imagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
 )
@@ -181,11 +184,10 @@ const removeSelectedFile = (previewId) => {
 }
 
 async function write() {
-  const formData = new FormData()
-
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
 
+  const formData = new FormData()
   formData.append('title', inputTitle.value)
   const pureText = stripHtml(editorData.value)
   formData.append('content', pureText)
@@ -202,19 +204,24 @@ async function write() {
     formData.append('fileField', file)
   })
 
-  const result = await store.dispatch('WRITE_BOARD', {
-    formData,
-    name: route.query.name
-  })
-  if (result) {
-    if (route.query?.name === 'withDiary') {
-      router.push({
-        name: `${route.query.name}`,
-        query: { roomId: route.query.roomId, pageNum: 1 }
-      })
-    } else {
-      router.push(`/${route.query.name}`)
+  try {
+    isSubmitting.value = true
+    const result = await store.dispatch('WRITE_BOARD', {
+      formData,
+      name: route.query.name
+    })
+    if (result) {
+      if (route.query?.name === 'withDiary') {
+        router.push({
+          name: `${route.query.name}`,
+          query: { roomId: route.query.roomId, pageNum: 1 }
+        })
+      } else {
+        router.push(`/${route.query.name}`)
+      }
     }
+  } finally {
+    isSubmitting.value = false
   }
 }
 

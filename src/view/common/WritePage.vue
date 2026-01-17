@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isSubmitting" />
   <div class="container" style="display: flex; justify-content: center">
     <div
       style="
@@ -114,6 +115,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 import { compressImageFiles } from '@/utils/imageCompression'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 const editor = ClassicEditor
 const editorData = ref('')
@@ -139,6 +141,7 @@ const files = ref([])
 const imageData = ref(null)
 const file = ref(null)
 const isMainContent = ref(false)
+const isSubmitting = ref(false)
 
 const store = useStore()
 const route = useRoute()
@@ -168,6 +171,7 @@ const write = async () => {
   }
 
   try {
+    isSubmitting.value = true
     await store.dispatch('WRITE_BOARD', {
       formData: formData,
       name: route.query.name
@@ -175,6 +179,8 @@ const write = async () => {
     router.push({ name: `${route.query.name}`, query: { roomId: store.state.room.id, pageNum: 1 } })
   } catch (error) {
     console.error('Error during WRITE_BOARD dispatch:', error)
+  } finally {
+    isSubmitting.value = false
   }
 }
 

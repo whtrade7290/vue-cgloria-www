@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isSubmitting" />
   <div class="container" style="display: flex; justify-content: center">
     <div
       style="
@@ -150,6 +151,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
 import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 
 // 상태 선언
 const store = useStore()
@@ -183,6 +185,7 @@ const files = ref([])
 const previewItem = ref(null)
 const file = ref(null)
 const isMainContent = ref(store.state.detail.mainContent)
+const isSubmitting = ref(false)
 
 const isDisplay = computed(() => {
   const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'classMeeting', 'testimony']
@@ -214,6 +217,7 @@ const edit = async () => {
 
     formData.append('fileField', file.value)
 
+    isSubmitting.value = true
     const result = await store.dispatch('EDIT_BOARD', {
       formData: formData,
       name: route.query?.name
@@ -227,6 +231,8 @@ const edit = async () => {
     }
   } catch (error) {
     console.error('Error writing board:', error)
+  } finally {
+    isSubmitting.value = false
   }
 }
 
