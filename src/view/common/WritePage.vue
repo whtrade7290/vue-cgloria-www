@@ -132,6 +132,7 @@ const editorConfig = {
     'bulletedList',
     'numberedList',
     'blockQuote',
+    'mediaEmbed',
     'insertTable',
     '|',
     'undo',
