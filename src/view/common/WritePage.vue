@@ -159,6 +159,7 @@ const write = async () => {
   formData.append('title', inputTitle.value)
   formData.append('content', sanitizeHtml(editorData.value))
   formData.append('mainContent', isMainContent.value)
+  formData.append('board', route.query?.name || route.params?.name || '')
   formData.append('fileField', file.value)
 
   const storedData = localStorage.getItem(getUserIdFromCookie())

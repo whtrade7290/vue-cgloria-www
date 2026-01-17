@@ -263,7 +263,14 @@ const edit = async () => {
     formData.append('jsonDeleteKeys', jsonDeleteKeys)
   }
 
-  formData.append('board', route.query.name)
+  const boardName = route.query?.name || route.params?.name || ''
+  if (!boardName) {
+    console.error('게시판 이름이 없어 업로드를 중단했습니다.')
+    isSubmitting.value = false
+    return
+  }
+
+  formData.append('board', boardName)
 
   files.value.forEach((file) => {
     formData.append('fileField', file)

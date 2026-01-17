@@ -14,43 +14,39 @@
               <div class="col-lg-3 col-6">
                 <img
                   class="w-100 border-radius-lg shadow mt-0 mt-lg-7"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/desire.jpg"
+                  src="@/assets/img/intro/1.jpeg"
                   alt=""
                 />
               </div>
               <div class="col-lg-3 col-6">
-                <img
-                  class="w-100 border-radius-lg shadow"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/chair.jpg"
-                  alt=""
-                />
+                <img class="w-100 border-radius-lg shadow" src="@/assets/img/intro/2.jpeg" alt="" />
                 <img
                   class="w-100 border-radius-lg shadow mt-4"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/facade.jpg"
+                  src="@/assets/img/intro/3.jpeg"
                   alt=""
                 />
               </div>
               <div class="col-lg-3 col-6">
                 <img
                   class="w-100 border-radius-lg shadow mt-0 mt-lg-5"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/architecture.jpg"
+                  src="@/assets/img/intro/4.jpeg"
                   alt=""
                 />
                 <img
                   class="w-100 border-radius-lg shadow mt-4"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/baloon.jpg"
+                  src="@/assets/img/intro/5.jpeg"
                   alt=""
                 />
               </div>
               <div class="col-lg-3 col-6">
                 <img
                   class="w-100 border-radius-lg shadow mt-3"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/seaside.jpg"
+                  src="@/assets/img/intro/6.jpeg"
                   alt=""
                 />
                 <img
                   class="w-100 border-radius-lg shadow mt-4"
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/medusa.jpg"
+                  src="@/assets/img/intro/7.jpeg"
                   alt=""
                 />
               </div>

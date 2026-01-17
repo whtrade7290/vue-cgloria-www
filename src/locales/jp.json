@@ -57,7 +57,7 @@
     "fellowshipArea": {
       "title": "交わりの場",
       "subTitles": {
-        "generalForum": "自由掲示板",
+        "general_forum": "自由掲示板",
         "photo_board": "フォトギャラリー",
         "testimony": "証し"
       }

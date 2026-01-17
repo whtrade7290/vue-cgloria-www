@@ -196,7 +196,12 @@ async function write() {
   formData.append('content', sanitizeHtml(editorData.value))
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
-  formData.append('board', route.query.name)
+  const boardName = route.query?.name || route.params?.name || ''
+  if (!boardName) {
+    console.error('게시판 이름이 없어 업로드를 중단했습니다.')
+    return
+  }
+  formData.append('board', boardName)
   formData.append('mainContent', isMainContent.value)
 
   if (route.query?.name === 'withDiary') {

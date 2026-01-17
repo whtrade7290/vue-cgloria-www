@@ -41,7 +41,7 @@ const SCHOOL = [
   }
 ]
 const SOCIALIZE = [
-  { title: 'nav.fellowshipArea.subTitles.generalForum', icon: 'church', path: 'generalForum' },
+  { title: 'nav.fellowshipArea.subTitles.general_forum', icon: 'church', path: 'general_forum' },
   { title: 'nav.fellowshipArea.subTitles.photo_board', icon: 'book', path: 'photo_board' },
   { title: 'nav.fellowshipArea.subTitles.testimony', icon: 'attribution', path: 'testimony' }
 ]

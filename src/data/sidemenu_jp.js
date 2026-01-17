@@ -28,7 +28,7 @@ const SCHOOL = [
   { title: '주일학교 자료실', icon: 'attribution', path: 'sunday_school_resource' }
 ]
 const SOCIALIZE = [
-  { title: '자유게시판', icon: 'church', path: 'generalForum' },
+  { title: '자유게시판', icon: 'church', path: 'general_forum' },
   { title: '사진갤러리', icon: 'book', path: 'photo' },
   { title: '간증게시판', icon: 'attribution', path: 'testimony' }
 ]

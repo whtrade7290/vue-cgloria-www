@@ -164,12 +164,12 @@ const routes = [
     }
   },
   {
-    path: '/generalForum',
-    name: 'generalForum',
+    path: '/general_forum',
+    name: 'general_forum',
     component: FreeBoard,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
-      await store.dispatch('FETCH_BOARDCOUNT', { name: 'generalForum' })
+      await store.dispatch('FETCH_BOARDCOUNT', { name: 'general_forum' })
       await next()
     }
   },

@@ -57,7 +57,7 @@
     "fellowshipArea": {
       "title": "교제마당",
       "subTitles": {
-        "generalForum": "자유게시판",
+        "general_forum": "자유게시판",
         "photo_board": "사진갤러리",
         "testimony": "간증게시판"
       }
