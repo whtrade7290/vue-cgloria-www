@@ -1,6 +1,7 @@
 <template>
-  <LoadingSpinner v-if="isSubmitting" />
-  <div class="container" style="display: flex; justify-content: center">
+  <div class="page-wrapper">
+    <LoadingSpinner v-if="isSubmitting" />
+    <div class="container" style="display: flex; justify-content: center">
     <div
       style="
         margin-top: 7rem;
@@ -140,6 +141,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -207,6 +209,7 @@ const edit = async () => {
     formData.append('content', sanitizeHtml(editorData.value))
     formData.append('id', store.state.detail.id)
     formData.append('mainContent', isMainContent.value)
+    formData.append('board', route.query?.name || route.params?.name || '')
 
     let deleteKey = ''
 

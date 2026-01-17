@@ -1,6 +1,7 @@
 <template>
-  <LoadingSpinner v-if="isSubmitting" />
-  <div class="container" style="display: flex; justify-content: center">
+  <div class="page-wrapper">
+    <LoadingSpinner v-if="isSubmitting" />
+    <div class="container" style="display: flex; justify-content: center">
     <div
       style="
         margin-top: 7rem;
@@ -88,7 +89,7 @@
           v-model="editorData"
           :config="editorConfig"
         ></ckeditor>
-        <div style="margin-top: 1rem; margin-left;: 2.5rem; display: flex; justify-content: end;">
+        <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
           <a
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
             href="javascript:;"
@@ -103,6 +104,7 @@
           >
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>

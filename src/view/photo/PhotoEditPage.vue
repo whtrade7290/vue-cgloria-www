@@ -1,6 +1,7 @@
 <template>
-  <LoadingSpinner v-if="isSubmitting" />
-  <div class="container" style="display: flex; justify-content: center">
+  <div class="page-wrapper">
+    <LoadingSpinner v-if="isSubmitting" />
+    <div class="container" style="display: flex; justify-content: center">
     <div
       style="
         margin-top: 7rem;
@@ -125,6 +126,7 @@
           >
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>

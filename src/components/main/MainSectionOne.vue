@@ -14,7 +14,7 @@
                     {{ column?.title || '' }}
                   </h5>
                 </div>
-                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
+                <div class="main-content" v-html="safeTruncated(column?.content ?? '')"></div>
                 <template v-if="column.id !== 999999">
                   <a
                     href="javascript:;"
@@ -35,7 +35,7 @@
                     {{ classMeeting?.title || '' }}
                   </h5>
                 </div>
-                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
+                <div class="main-content" v-html="safeTruncated(classMeeting?.content ?? '')"></div>
                 <template v-if="classMeeting.id !== 999999">
                   <a
                     href="javascript:;"
@@ -56,7 +56,7 @@
                     {{ testimony?.title || '' }}
                   </h5>
                 </div>
-                <p>{{ $t(truncatedText(column?.content ?? '', 200)) }}</p>
+                <div class="main-content" v-html="safeTruncated(testimony?.content ?? '')"></div>
                 <template v-if="testimony.id !== 999999">
                   <a
                     href="javascript:;"
@@ -102,6 +102,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
 const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/`
 const store = useStore()
 const router = useRouter()
@@ -121,9 +122,22 @@ const props = defineProps({
   }
 })
 
-const truncatedText = (content, limit) => {
-  const cleanedContent = content.replaceAll('<p>', '').replaceAll('</p>', '')
-  return cleanedContent.length > limit ? cleanedContent.slice(0, limit) + '...' : cleanedContent
+const TRUNCATE_LIMIT = 200
+
+const safeTruncated = (content) => {
+  if (!content) return ''
+  const sanitized = sanitizeHtml(content)
+  const temp = document.createElement('div')
+  temp.innerHTML = sanitized
+  const text = temp.textContent || temp.innerText || ''
+  const truncated = text.length > TRUNCATE_LIMIT ? `${text.slice(0, TRUNCATE_LIMIT)}...` : text
+  const escaped = truncated
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+  return escaped.replace(/\n/g, '<br />').replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
 }
 
 async function intoDetail(id, name) {

@@ -16,7 +16,7 @@
               <div class="p-3">
                 <h3 class="text-gradient text-primary">&nbsp;</h3>
                 <h5 class="mt-3">{{ weekly?.title || '' }}</h5>
-                <p class="text-sm">{{ $t(truncatedText(column?.content ?? '', 160)) }}</p>
+                <div class="text-sm" v-html="safeTruncated(weekly?.content ?? '')"></div>
                 <template v-if="weekly?.id !== 999999">
                   <a
                     href="javascript:;"
@@ -51,9 +51,22 @@ const props = defineProps({
   }
 })
 
-const truncatedText = (content, limit) => {
-  const cleanedContent = content.replaceAll('<p>', '').replaceAll('</p>', '')
-  return cleanedContent.length > limit ? cleanedContent.slice(0, limit) + '...' : cleanedContent
+import { sanitizeHtml } from '@/utils/sanitizeHtml'
+
+const TRUNCATE_LIMIT = 160
+
+const safeTruncated = (content) => {
+  if (!content) return ''
+  const sanitized = sanitizeHtml(content)
+  const temp = document.createElement('div')
+  temp.innerHTML = sanitized
+  const text = temp.textContent || temp.innerText || ''
+  const truncated = text.length > TRUNCATE_LIMIT ? `${text.slice(0, TRUNCATE_LIMIT)}...` : text
+  const escaped = truncated
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+  return escaped.replace(/\n/g, '<br />').replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
 }
 
 async function intoDetail(id, name) {
