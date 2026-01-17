@@ -366,4 +366,20 @@ async function searchPost() {
 .mobile-meta span {
   margin: 0 0.25rem;
 }
+
+.pagination .page-link.selected {
+  background-color: #f8f9fa;
+  border-color: transparent;
+  color: #f08da0;
+  font-weight: 700;
+  pointer-events: none;
+  cursor: default;
+}
+
+.pagination .page-link.disabled,
+.pagination .page-link[aria-disabled='true'] {
+  pointer-events: none;
+  opacity: 0.45;
+  cursor: default;
+}
 </style>
