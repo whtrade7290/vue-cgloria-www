@@ -331,6 +331,7 @@
     "deleteSuccess": "削除しました！",
     "downloadError": "ファイルをダウンロードできませんでした。もう一度お試しください。",
     "comingSoon": "準備中です。",
+    "loginRequired": "ログインが必要です。",
     "adminOnly": "管理者専用掲示板です。"
   },
   "navBar": {
@@ -506,6 +507,37 @@
       "passwordPlaceholder": "パスワードを入力してください",
       "usernameAria": "アカウント入力欄",
       "passwordAria": "パスワード入力欄"
+    }
+  },
+  "profile": {
+    "title": "プロフィール編集",
+    "description": "会員情報を更新してください。",
+    "fields": {
+      "image": "プロフィール写真",
+      "imagePlaceholder": "画像を選択してください",
+      "username": "アカウント名",
+      "name": "名前",
+      "email": "メール",
+      "password": "新しいパスワード",
+      "confirmPassword": "新しいパスワード確認"
+    },
+    "actions": {
+      "save": "保存",
+      "reset": "リセット",
+      "cancel": "キャンセル",
+      "uploadImage": "画像を選択",
+      "removeImage": "画像を削除"
+    },
+    "alerts": {
+      "notLoggedIn": "ログインが必要です。",
+      "invalidName": "名前は日本語、韓国語、英字のみ使用できます。",
+      "invalidEmail": "メール形式を確認してください。",
+      "passwordShort": "パスワードは4文字以上入力してください。",
+      "passwordMismatch": "パスワードが一致しません。",
+      "imageType": "画像ファイル（JPG/PNG/WEBP）のみアップロードできます。",
+      "imageSize": "画像は5MB以下でアップロードしてください。",
+      "success": "プロフィールが更新されました。",
+      "fail": "更新中にエラーが発生しました。"
     }
   }
 }

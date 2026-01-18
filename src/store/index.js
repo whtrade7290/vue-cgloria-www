@@ -22,6 +22,7 @@ import {
   fetchWithDiaryRoom,
   signUp,
   editPassword,
+  updateProfile,
   fetchDisapproveUsers,
   approveUser,
   deletePhotoBoard,
@@ -96,7 +97,15 @@ export default createStore({
 
       if (res && res.success) {
         const { user } = res
-        localStorage.setItem(user.id, JSON.stringify(res))
+        const profileImageUrl =
+          user?.profileImageUrl ||
+          user?.profile_image_url ||
+          user?.writerProfileImageUrl ||
+          user?.writer_profile_image_url ||
+          ''
+        const normalizedUser = { ...user, profileImageUrl }
+        const normalizedResponse = { ...res, user: normalizedUser }
+        localStorage.setItem(user.id, JSON.stringify(normalizedResponse))
         document.cookie = `userId=${user.id};`
       }
       return res
@@ -118,6 +127,10 @@ export default createStore({
       } else {
         return false
       }
+    },
+    async UPDATE_PROFILE(_, payload) {
+      const res = await updateProfile(payload)
+      return res.data
     },
 
     async CHECKING_TOKEN({ commit }, { accessToken, refreshToken }) {
@@ -166,6 +179,8 @@ export default createStore({
           title: res.data.title,
           content: res.data.content,
           writer: res.data.writer,
+          writer_name: res.data.writer_name,
+          writerProfileImageUrl: res.data.writerProfileImageUrl,
           files: fileUrlList,
           mainContent: res.data.mainContent,
           create_at: res.data.create_at,

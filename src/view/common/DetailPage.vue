@@ -5,17 +5,18 @@
         <div>
           <h2>{{ store.state.detail.title || '' }}</h2>
         </div>
-        <div style="display: flex; justify-content: space-between">
+        <div class="detail-meta">
           <div>
-            <div class="d-flex justify-content-start">
-              <!-- <div style="margin-right: 0.8rem">
-                <span style="font-size: 3rem" class="material-symbols-outlined">
-                  account_circle
-                </span>
-              </div> -->
+            <div class="writer-profile">
+              <div v-if="writerProfileImage" class="writer-avatar">
+                <img :src="writerProfileImage" :alt="writerName" />
+              </div>
+              <div v-else class="writer-avatar writer-avatar--placeholder">
+                {{ writerInitial }}
+              </div>
               <div>
-                <p style="margin-top: 0.15rem; font-size: 1.3rem; font-weight: 700">
-                  {{ store.state.detail.writer_name ?? store.state.detail.writer }}
+                <p class="writer-name">
+                  {{ writerName }}
                 </p>
               </div>
             </div>
@@ -124,6 +125,37 @@ const isLogin = computed(() => {
 })
 
 const sanitizedContent = computed(() => sanitizeHtml(store.state.detail.content || ''))
+const writerName = computed(
+  () => store.state.detail.writer_name ?? store.state.detail.writer ?? ''
+)
+const normalizeProfileImage = (value) => {
+  if (!value || typeof value !== 'string') return ''
+  const trimmedValue = value.trim()
+  if (!trimmedValue) return ''
+  if (/^https?:\/\//i.test(trimmedValue)) return trimmedValue
+  if (/^\/\//.test(trimmedValue)) {
+    return `${window?.location?.protocol || 'https:'}${trimmedValue}`
+  }
+  if (/^[\w.-]+:\d+\//.test(trimmedValue)) {
+    return `${window?.location?.protocol || 'https:'}//${trimmedValue.replace(/^\/+/, '')}`
+  }
+  const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const normalizedPath = trimmedValue.replace(/^\/+/, '')
+  return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`
+}
+
+const writerProfileImage = computed(() => {
+  const detail = store.state.detail || {}
+  const rawValue =
+    detail.writerProfileImageUrl ||
+    detail.writer_profile_image_url ||
+    ''
+  return normalizeProfileImage(rawValue)
+})
+const writerInitial = computed(() => {
+  if (!writerName.value) return 'C'
+  return writerName.value.trim().charAt(0).toUpperCase()
+})
 
 const handleCommentCount = (count) => {
   commentCount.value = count
@@ -308,6 +340,45 @@ onMounted(() => {
 .detail-card {
   width: 100%;
   height: 80%;
+}
+.detail-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.writer-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.writer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #f5c6aa;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.writer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.writer-avatar--placeholder {
+  background: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.writer-name {
+  margin: 0.15rem 0 0;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 .user-info {
   display: flex;

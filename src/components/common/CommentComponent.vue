@@ -8,14 +8,15 @@
           </div>
           <div class="comment-text-container">
             <div class="comment-textarea-box">
-              <div class="mt-2 d-flex justify-content-start">
-                <!-- <span style="font-size: 2.7rem" class="material-symbols-outlined">
-                  account_circle
-                </span> -->
-                <div>
-                  <div style="margin-top: 0.3rem; margin-left: 0.5rem; font-size: 1.3rem">
-                    {{ getUserNameFromSession }}
-                  </div>
+              <div class="mt-2 d-flex justify-content-start align-items-center gap-3">
+                <div v-if="currentUserProfileImage" class="comment-avatar">
+                  <img :src="currentUserProfileImage" :alt="getUserNameFromSession || 'user'" />
+                </div>
+                <div v-else class="comment-avatar comment-avatar--placeholder">
+                  {{ currentUserInitial }}
+                </div>
+                <div class="comment-writer-name">
+                  {{ getUserNameFromSession }}
                 </div>
               </div>
               <div class="form-group mt-3">
@@ -36,15 +37,18 @@
 
           <div class="border-line" v-for="item in commentList" :key="item.id">
             <div class="mt-2 d-flex justify-content-between align-items-start">
-              <div class="d-flex justify-content-start">
-                <span style="font-size: 3rem" class="material-symbols-outlined">
-                  account_circle
-                </span>
+              <div class="d-flex justify-content-start align-items-center gap-3">
+                <div v-if="getCommentProfileImage(item)" class="comment-avatar">
+                  <img :src="getCommentProfileImage(item)" :alt="item.writer_name ?? item.writer" />
+                </div>
+                <div v-else class="comment-avatar comment-avatar--placeholder">
+                  {{ getCommentInitial(item) }}
+                </div>
                 <div>
-                  <div style="margin-top: 0.3rem; margin-left: 0.5rem; font-size: 1.3rem">
+                  <div class="comment-writer-name">
                     {{ item.writer_name ?? item.writer }}
                   </div>
-                  <div style="margin-top: 0.2rem; margin-left: 0.5rem; font-size: 0.8rem">
+                  <div class="comment-date">
                     {{ formatDate(item.create_at) }}
                   </div>
                 </div>
@@ -116,6 +120,49 @@ const getUserNameFromSession = computed(() => {
 })
 const currentUser = computed(() => JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user)
 const { t } = useI18n()
+
+const normalizeProfileImage = (value) => {
+  if (!value || typeof value !== 'string') return ''
+  const trimmedValue = value.trim()
+  if (!trimmedValue) return ''
+  if (/^https?:\/\//i.test(trimmedValue)) return trimmedValue
+  if (/^\/\//.test(trimmedValue)) {
+    return `${window?.location?.protocol || 'https:'}${trimmedValue}`
+  }
+  if (/^[\w.-]+:\d+\//.test(trimmedValue)) {
+    return `${window?.location?.protocol || 'https:'}//${trimmedValue.replace(/^\/+/, '')}`
+  }
+  const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const normalizedPath = trimmedValue.replace(/^\/+/, '')
+  return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`
+}
+
+const resolveProfileImageValue = (entity) => {
+  if (!entity) return ''
+  return (
+    entity.profileImageUrl ||
+    entity.profile_image_url ||
+    entity.writerProfileImageUrl ||
+    entity.writer_profile_image_url ||
+    ''
+  )
+}
+
+const currentUserProfileImage = computed(() =>
+  normalizeProfileImage(resolveProfileImageValue(currentUser.value))
+)
+
+const currentUserInitial = computed(() => {
+  const name = getUserNameFromSession.value || ''
+  return name.trim().charAt(0).toUpperCase() || 'C'
+})
+
+const getCommentProfileImage = (comment) => normalizeProfileImage(resolveProfileImageValue(comment))
+
+const getCommentInitial = (comment) => {
+  const name = comment?.writer_name || comment?.writer || ''
+  return name.trim().charAt(0).toUpperCase() || 'C'
+}
 
 const writeComment = async () => {
   const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
@@ -307,6 +354,38 @@ section {
 
 .comment-box > div {
   width: 100%;
+}
+.comment-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #f5c6aa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.comment-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.comment-avatar--placeholder {
+  background: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.comment-writer-name {
+  margin: 0.2rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.comment-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.15rem;
 }
 .delete-icon,
 .edit-icon {

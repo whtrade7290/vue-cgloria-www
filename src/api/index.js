@@ -33,6 +33,10 @@ export async function editPassword(username, password, name, email) {
   return await instance.post('/editPassword', { username, password, name, email })
 }
 
+export async function updateProfile(payload) {
+  return await instance.post('/updateProfile', payload)
+}
+
 /* ------------------------- withDiary 관련 ------------------------- */
 export async function getWithDiaryBoardList(obj) {
   const { startRow, pageSize, roomId } = obj

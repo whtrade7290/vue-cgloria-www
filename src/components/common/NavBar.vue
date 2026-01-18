@@ -78,6 +78,12 @@
                 <template v-if="store.state.isLogin">
                   <a
                     href="javascript:;"
+                    class="btn btn-outline-primary btn-round btn-style"
+                    @click="goToProfile"
+                    >{{ $t('button.profile') }}</a
+                  >
+                  <a
+                    href="javascript:;"
                     class="btn bg-gradient-primary btn-round btn-style"
                     @click="logout"
                     >{{ $t('button.logout') }}</a
@@ -211,6 +217,12 @@ const changeLanguage = () => {
     toggleHide()
     closeAllDropdowns()
   })
+}
+
+const goToProfile = () => {
+  toggleHide()
+  closeAllDropdowns()
+  router.push({ name: 'profile' })
 }
 
 // 예수동행일기 그룹 존재 여부 확인

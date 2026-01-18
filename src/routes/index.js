@@ -20,6 +20,7 @@ import TrainingView from '@/view/worship/TrainingView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import SignUpView from '@/view/auth/SignUpView.vue'
 import EditPassword from '@/view/auth/EditPassword.vue'
+import ProfileEditView from '@/view/user/ProfileEditView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/common/WritePage.vue'
 import EditPage from '@/view/common/EditPage.vue'
@@ -58,6 +59,25 @@ const routes = [
   { path: '/login', name: 'login', component: LoginView },
   { path: '/signUp/:isQr?', name: 'signUp', component: SignUpView },
   { path: '/edit_password', name: 'edit_password', component: EditPassword },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileEditView,
+    beforeEnter: async (to, from, next) => {
+      const storedData = localStorage.getItem(getUserIdFromCookie())
+      const storageUser = storedData ? JSON.parse(storedData) : {}
+
+      if (!storageUser?.user?.id) {
+        await Swal.fire({
+          title: window.i18n?.global?.t('alerts.loginRequired'),
+          icon: 'warning'
+        })
+        await next({ name: 'login' })
+      } else {
+        await next()
+      }
+    }
+  },
   // 교회소개
   { path: '/intro', name: 'intro', component: ChurchIntro },
   { path: '/location', name: 'location', component: ChurchMap },
