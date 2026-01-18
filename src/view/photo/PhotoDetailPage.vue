@@ -38,39 +38,47 @@
           </div>
         </div>
         <div class="content-box">
-          <div class="img-container">
-            <div class="attachment-wrapper" v-for="item in filePreviewItems" :key="item.id">
-              <template v-if="item.type === 'image'">
-                <a :href="item.url" data-fancybox>
-                  <img
-                    :src="item.url"
-                    :alt="item.name"
-                    loading="lazy"
-                    decoding="async"
-                    fetchpriority="low"
-                    width="300"
-                    height="200"
-                  />
-                </a>
-                <button type="button" class="download-link" @click="handleDownload(item)">
-                  <span class="material-symbols-outlined">download</span>
-                  <span>{{ $t('button.download') }}</span>
-                </button>
-              </template>
-              <div v-else class="file-chip-group">
-                <a class="file-chip" :href="item.url" target="_blank" rel="noopener">
-                  <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
-                  <span class="file-chip__name">{{ item.name }}</span>
-                </a>
-                <button
-                  type="button"
-                  class="download-link download-link--chip"
-                  @click="handleDownload(item)"
-                >
-                  <span class="material-symbols-outlined">download</span>
-                  <span>{{ $t('button.download') }}</span>
-                </button>
-              </div>
+          <div class="image-attachment-list">
+            <div
+              class="attachment-wrapper"
+              v-for="item in filePreviewItems.filter((file) => file.type === 'image')"
+              :key="item.id"
+            >
+              <a :href="item.url" data-fancybox>
+                <img
+                  :src="item.url"
+                  :alt="item.name"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  width="300"
+                  height="200"
+                />
+              </a>
+              <button type="button" class="download-link" @click="handleDownload(item)">
+                <span class="material-symbols-outlined">download</span>
+                <span>{{ $t('button.download') }}</span>
+              </button>
+            </div>
+          </div>
+          <div class="pdf-attachment-list">
+            <div
+              class="file-chip-group"
+              v-for="item in filePreviewItems.filter((file) => file.type === 'pdf')"
+              :key="item.id"
+            >
+              <a class="file-chip" :href="item.url" target="_blank" rel="noopener" data-fancybox>
+                <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+                <span class="file-chip__name">{{ item.name }}</span>
+              </a>
+              <button
+                type="button"
+                class="download-link download-link--chip"
+                @click="handleDownload(item)"
+              >
+                <span class="material-symbols-outlined">download</span>
+                <span>{{ $t('button.download') }}</span>
+              </button>
             </div>
           </div>
           <div class="content-container" v-html="sanitizedContent"></div>
@@ -123,18 +131,24 @@ const router = useRouter()
 const store = useStore()
 const commentCount = ref(0)
 const { t } = useI18n()
+const resolveFileType = (file) => {
+  const extensionSource =
+    file?.extension || file?.filename?.split('.').pop() || file?.originalName?.split('.').pop() || ''
+  const normalizedExtension = extensionSource.toString().replace('.', '').toLowerCase()
+  if (normalizedExtension === 'pdf') return 'pdf'
+  return 'image'
+}
+
 const filePreviewItems = computed(() => {
   return (store.state.detail.files ?? []).map((file, index) => {
-    const normalizedExtension = (file?.extension || '').toString().replace('.', '').toLowerCase()
-    const isPdf = normalizedExtension === 'pdf'
     const url = `${staticPath}/${file?.filename}`
 
     return {
       id: `${file?.filename}-${index}`,
-      type: isPdf ? 'pdf' : 'image',
+      type: resolveFileType(file),
       url,
       name: file?.filename,
-      originalName: file?.originalName
+      originalName: file?.originalname || file?.originalName || file?.filename
     }
   })
 })
@@ -313,16 +327,16 @@ section {
   justify-content: center;
   margin-top: 4rem;
 }
-.img-container {
-  height: 100%;
-  overflow: hidden;
+.image-attachment-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-
-.img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.5rem;
+.pdf-attachment-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
 }
 .attachment-wrapper {
   margin: 1rem;
@@ -332,34 +346,36 @@ section {
   flex-direction: column;
 }
 .file-chip {
-  width: 300px;
-  min-height: 200px;
+  min-width: 200px;
+  min-height: auto;
   border: 1px dashed #c0c4d5;
   border-radius: 0.75rem;
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  text-align: center;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+  text-align: left;
   color: #344767;
   background-color: #f8f9fc;
   text-decoration: none;
+  gap: 0.5rem;
 }
 .file-chip-group {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 .file-chip__icon {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0;
   color: #f5365c;
 }
 .file-chip__name {
   font-size: 1rem;
   word-break: break-all;
+  text-decoration: underline;
 }
 .download-link {
   display: inline-flex;
