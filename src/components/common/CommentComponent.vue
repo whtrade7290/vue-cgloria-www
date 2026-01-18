@@ -112,13 +112,14 @@ const route = useRoute()
 const store = useStore()
 const inputComment = ref('')
 const emit = defineEmits(['commentCount'])
-
-const getUserNameFromSession = computed(() => {
-  const curruntId = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.username
-  const curruntName = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user?.name
-  return curruntName !== '' ? curruntName : curruntId
+const currentUserProfile = ref(null)
+const currentUsername = computed(() => {
+  const storedData = localStorage.getItem(getUserIdFromCookie())
+  const user = storedData ? JSON.parse(storedData)?.user : null
+  return user?.username || ''
 })
-const currentUser = computed(() => JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user)
+const getUserNameFromSession = computed(() => currentUserProfile.value?.name || currentUsername.value)
+const currentUser = computed(() => currentUserProfile.value)
 const { t } = useI18n()
 
 const normalizeProfileImage = (value) => {
@@ -164,8 +165,34 @@ const getCommentInitial = (comment) => {
   return name.trim().charAt(0).toUpperCase() || 'C'
 }
 
+const loadCurrentUser = async () => {
+  const username = currentUsername.value
+  if (!username) {
+    currentUserProfile.value = null
+    return null
+  }
+  try {
+    const result = await store.dispatch('SEARCH_USER', { searchUser: username })
+    if (result?.status === 200) {
+      currentUserProfile.value = result.data
+    } else {
+      currentUserProfile.value = null
+    }
+    return currentUserProfile.value
+  } catch (error) {
+    console.error('Failed to fetch user profile', error)
+    currentUserProfile.value = null
+    return null
+  }
+}
+
+const ensureCurrentUser = async () => {
+  if (currentUserProfile.value) return currentUserProfile.value
+  return await loadCurrentUser()
+}
+
 const writeComment = async () => {
-  const user = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
+  const user = await ensureCurrentUser()
   if (!user) {
     Swal.fire({
       title: t('comments.loginRequired'),
@@ -180,7 +207,7 @@ const writeComment = async () => {
     boardId: store.state.detail.id,
     boardName: route.params.name,
     comment: inputComment.value,
-    writerName: user.name,
+    writerName: user.name || user.username,
     writer: user.username
   })
 
@@ -203,7 +230,7 @@ const editingCommentId = ref(null)
 const editingContent = ref('')
 
 onMounted(async () => {
-  await refreshComments()
+  await Promise.all([loadCurrentUser(), refreshComments()])
 })
 
 const refreshComments = async () => {

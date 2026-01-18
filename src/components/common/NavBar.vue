@@ -420,16 +420,18 @@ onMounted(async () => {
 }
 .nav-btn-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 16px;
-  gap: 10px;
 }
 .btn-style {
-  display: flex;
-  align-items: center; /* 세로 가운데 */
-  justify-content: center; /* 가로 가운데 */
-  width: 120px;
-  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  padding: 0.45rem 1rem;
+  height: auto;
 }
 .dropdown-menu.show {
   width: 100%;
@@ -437,6 +439,21 @@ onMounted(async () => {
 @media (min-width: 992px) {
   .data-bs-popper .bg-color {
     background-color: #67748e;
+  }
+  .nav-btn-container {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .nav-btn-container {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .btn-style {
+    width: 100%;
   }
 }
 </style>
