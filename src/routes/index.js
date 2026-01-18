@@ -120,15 +120,15 @@ const routes = [
   {
     path: '/eventSchedule',
     name: 'eventSchedule',
-    component: EventSchedule,
-    beforeEnter: async (from, next) => {
-      await Swal.fire({
-        title: '준비중입니다.',
-        icon: 'warning'
-      })
+    component: EventSchedule
+    // beforeEnter: async (from, next) => {
+    //   await Swal.fire({
+    //     title: '준비중입니다.',
+    //     icon: 'warning'
+    //   })
 
-      await next(from)
-    }
+    //   await next(from)
+    // }
   },
   {
     path: '/school_photo_board',

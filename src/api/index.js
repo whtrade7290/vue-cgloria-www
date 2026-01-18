@@ -198,6 +198,11 @@ export async function fetchDisapproveUsers() {
   return await instance.get('/disapproveUsers')
 }
 
+/* ------------------------- 스케줄 ------------------------- */
+export async function createSchedule(payload) {
+  return await instance.post('/schedule/single', payload)
+}
+
 export async function approveUser(id) {
   return await instance.post('/approveUser', { id })
 }
