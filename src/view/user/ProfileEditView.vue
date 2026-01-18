@@ -125,6 +125,42 @@ const form = reactive({
   profileImageUrl: ''
 })
 
+const getRelativeProfilePath = (value) => {
+  if (!value || typeof value !== 'string') return ''
+  const trimmedValue = value.trim()
+  if (!trimmedValue) return ''
+  const toRelative = (path) => {
+    const idx = path.indexOf('/uploads/profile/')
+    return idx !== -1 ? path.slice(idx) : path
+  }
+  if (/^https?:\/\//i.test(trimmedValue)) {
+    const url = new URL(trimmedValue)
+    return toRelative(url.pathname)
+  }
+  if (/^\/\//.test(trimmedValue)) {
+    return toRelative(trimmedValue.replace(/^\/\/[^/]+/, ''))
+  }
+  if (/^[\w.-]+:\d+\//.test(trimmedValue)) {
+    return toRelative(trimmedValue.replace(/^[\w.-]+:\d+/, ''))
+  }
+  const normalizedPath = trimmedValue.replace(/^\/+/, '')
+  if (normalizedPath.startsWith('uploads/profile/')) {
+    return `/${normalizedPath}`
+  }
+  return normalizedPath ? `/${normalizedPath}` : ''
+}
+
+const buildProfileImageUrl = (value) => {
+  if (!value) return ''
+  if (value.startsWith('blob:')) return value
+  const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const relative = getRelativeProfilePath(value)
+  if (relative) {
+    return `${baseUrl}${relative}`
+  }
+  return baseUrl ? `${baseUrl}/${value.replace(/^\/+/, '')}` : value
+}
+
 const loading = ref(false)
 const original = ref({ name: '', email: '', profileImageUrl: '' })
 const imageFile = ref(null)
@@ -132,7 +168,9 @@ const imagePreview = ref('')
 const removeImageFlag = ref(false)
 const fileInput = ref(null)
 
-const currentImage = computed(() => imagePreview.value || form.profileImageUrl)
+const currentImage = computed(
+  () => imagePreview.value || buildProfileImageUrl(form.profileImageUrl)
+)
 
 const loadProfile = async () => {
   const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -160,13 +198,14 @@ const loadProfile = async () => {
     form.email = fetchedUser.email ?? parsed.user.email ?? ''
     form.password = ''
     form.confirmPassword = ''
-    form.profileImageUrl =
+    form.profileImageUrl = getRelativeProfilePath(
       fetchedUser.profileImageUrl ??
-      fetchedUser.profile_image_url ??
-      fetchedUser.writerProfileImageUrl ??
-      fetchedUser.writer_profile_image_url ??
-      parsed.user.profileImageUrl ??
-      ''
+        fetchedUser.profile_image_url ??
+        fetchedUser.writerProfileImageUrl ??
+        fetchedUser.writer_profile_image_url ??
+        parsed.user.profileImageUrl ??
+        ''
+    )
     removeImageFlag.value = false
     original.value = {
       name: form.name,
@@ -203,7 +242,7 @@ const updateStoredUser = (name, email, profileImageUrl) => {
     parsed.user.name = name
     parsed.user.email = email
     if (profileImageUrl !== undefined) {
-      parsed.user.profileImageUrl = profileImageUrl
+      parsed.user.profileImageUrl = getRelativeProfilePath(profileImageUrl)
     }
     localStorage.setItem(getUserIdFromCookie(), JSON.stringify(parsed))
   }
@@ -316,12 +355,13 @@ const submitForm = async () => {
     const updatedEmail = result.user?.email ?? basePayload.email
     const updatedImage =
       result.user?.profileImageUrl ?? result.profileImageUrl ?? form.profileImageUrl
+    const normalizedImage = getRelativeProfilePath(updatedImage)
 
-    updateStoredUser(updatedName, updatedEmail, updatedImage)
+    updateStoredUser(updatedName, updatedEmail, normalizedImage)
     form.name = updatedName
     form.email = updatedEmail
-    form.profileImageUrl = updatedImage
-    original.value = { name: updatedName, email: updatedEmail, profileImageUrl: updatedImage }
+    form.profileImageUrl = normalizedImage
+    original.value = { name: updatedName, email: updatedEmail, profileImageUrl: normalizedImage }
     removeImageFlag.value = false
     form.password = ''
     form.confirmPassword = ''
