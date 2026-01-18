@@ -3,19 +3,24 @@
     <div class="manual-form" v-if="isAdmin">
       <div class="row">
         <div class="col-md-4 mb-3">
-          <label class="form-label">제목</label>
-          <input v-model="form.title" type="text" class="form-control" placeholder="이벤트 제목" />
+          <label class="form-label">{{ t('eventSchedule.form.title') }}</label>
+          <input
+            v-model="form.title"
+            type="text"
+            class="form-control"
+            :placeholder="t('eventSchedule.form.titlePlaceholder')"
+          />
         </div>
         <div class="col-md-4 mb-3">
-          <label class="form-label">시작일</label>
+          <label class="form-label">{{ t('eventSchedule.form.start') }}</label>
           <input v-model="form.start" type="date" class="form-control" />
         </div>
         <div class="col-md-4 mb-3">
-          <label class="form-label">종료일</label>
+          <label class="form-label">{{ t('eventSchedule.form.end') }}</label>
           <input v-model="form.end" type="date" class="form-control" />
         </div>
         <div class="col-12 mb-3">
-          <label class="form-label d-block">색상</label>
+          <label class="form-label d-block">{{ t('eventSchedule.form.color') }}</label>
           <div class="color-palette">
             <button
               v-for="color in colorOptions"
@@ -31,10 +36,14 @@
       </div>
       <div class="text-end d-flex gap-2 justify-content-end">
         <button class="btn btn-outline-secondary" @click="downloadCsvSample">
-          CSV 샘플 다운로드
+          {{ t('eventSchedule.form.sample') }}
         </button>
-        <button class="btn btn-outline-secondary" @click="openCsvModal">CSV 일괄등록</button>
-        <button class="btn btn-primary" @click="openModal">스케줄 등록</button>
+        <button class="btn btn-outline-secondary" @click="openCsvModal">
+          {{ t('eventSchedule.form.upload') }}
+        </button>
+        <button class="btn btn-primary" @click="openModal">
+          {{ t('eventSchedule.form.register') }}
+        </button>
       </div>
     </div>
     <div class="calendar-wrapper">
@@ -54,12 +63,15 @@ import { useRoute } from 'vue-router'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { ScheduleApi } from '@/api/schedule'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SCHOOL)
 obj.value = SCHOOL.find((o) => route.name === o.path)
+
+const { t } = useI18n()
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const storageUser = storedData ? JSON.parse(storedData) : {}
@@ -119,28 +131,28 @@ const openModal = async () => {
   const color = form.value.color
 
   if (!title || !start) {
-    await Swal.fire('알림', '제목과 시작일을 입력해주세요.', 'warning')
+    await Swal.fire(t('eventSchedule.alerts.missingFields'), '', 'warning')
     return
   }
 
   const result = await Swal.fire({
-    title: '입력 내용 확인',
+    title: t('eventSchedule.modal.createTitle'),
     html: `
       <div class="swal-review">
-        <p><strong>제목:</strong> ${title}</p>
-        <p><strong>시작일:</strong> ${start}</p>
-        <p><strong>종료일:</strong> ${end}</p>
-        <p><strong>색상:</strong> <span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #ccc;margin-right:6px;"></span>${color}</p>
+        <p><strong>${t('eventSchedule.form.title')}:</strong> ${title}</p>
+        <p><strong>${t('eventSchedule.form.start')}:</strong> ${start}</p>
+        <p><strong>${t('eventSchedule.form.end')}:</strong> ${end}</p>
+        <p><strong>${t('eventSchedule.form.color')}:</strong> <span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #ccc;margin-right:6px;"></span>${color}</p>
       </div>
     `,
-    confirmButtonText: '확인',
+    confirmButtonText: t('eventSchedule.modal.confirm'),
     showCancelButton: true,
-    cancelButtonText: '취소'
+    cancelButtonText: t('eventSchedule.modal.cancel')
   })
 
   if (result.isConfirmed) {
     if (!adminId) {
-      await Swal.fire('오류', '사용자 정보를 확인할 수 없습니다.', 'error')
+      await Swal.fire(t('eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
       return
     }
     try {
@@ -155,22 +167,22 @@ const openModal = async () => {
         await fetchSchedules(currentRange.value.start, currentRange.value.end)
       }
       form.value = { title: '', start: '', end: '', color: colorOptions[0] }
-      await Swal.fire('등록 완료', '이벤트가 등록되었습니다.', 'success')
+      await Swal.fire(t('eventSchedule.alerts.registerSuccess'), '', 'success')
     } catch (error) {
       console.error(error)
-      await Swal.fire('오류', '스케줄 등록 중 문제가 발생했습니다.', 'error')
+      await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
     }
   }
 }
 
 const openCsvModal = async () => {
   if (!adminId) {
-    await Swal.fire('오류', '사용자 정보를 확인할 수 없습니다.', 'error')
+    await Swal.fire(t('eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
     return
   }
 
   const { value: file } = await Swal.fire({
-    title: 'CSV 업로드',
+    title: t('eventSchedule.form.upload'),
     html: `
       <div class="swal-form">
         <input id="csv-input" type="file" accept=".csv,text/csv" class="form-control" />
@@ -178,13 +190,13 @@ const openCsvModal = async () => {
     `,
     focusConfirm: false,
     showCancelButton: true,
-    confirmButtonText: '업로드',
-    cancelButtonText: '취소',
+    confirmButtonText: t('eventSchedule.form.upload'),
+    cancelButtonText: t('eventSchedule.modal.cancel'),
     preConfirm: () => {
       const input = document.getElementById('csv-input')
       const selectedFile = input?.files?.[0]
       if (!selectedFile) {
-        Swal.showValidationMessage('CSV 파일을 선택해주세요.')
+        Swal.showValidationMessage(t('eventSchedule.alerts.csvSelect'))
         return false
       }
       return selectedFile
@@ -204,20 +216,20 @@ const openCsvModal = async () => {
     }
 
     const message = `
-      <p>성공: ${data.successCount}</p>
-      <p>실패: ${data.failCount}</p>
+      <p>${t('eventSchedule.result.success')}: ${data.successCount}</p>
+      <p>${t('eventSchedule.result.fail')}: ${data.failCount}</p>
       ${
         data.errors?.length
-          ? `<hr /><p><strong>오류 목록</strong></p>${data.errors
-              .map((err) => `<p>행 ${err.row}: ${err.reason}</p>`)
+          ? `<hr /><p><strong>${t('eventSchedule.result.errorList')}</strong></p>${data.errors
+              .map((err) => `<p>${t('eventSchedule.result.row')} ${err.row}: ${err.reason}</p>`)
               .join('')}`
           : ''
       }
     `
-    await Swal.fire('업로드 결과', message, 'info')
+    await Swal.fire(t('eventSchedule.alerts.csvResult'), message, 'info')
   } catch (error) {
     console.error('CSV upload failed', error)
-    await Swal.fire('오류', 'CSV 업로드 중 문제가 발생했습니다.', 'error')
+    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
   }
 }
 
@@ -233,7 +245,7 @@ const downloadCsvSample = async () => {
     URL.revokeObjectURL(url)
   } catch (error) {
     console.error('Failed to download sample', error)
-    await Swal.fire('오류', '샘플 다운로드 중 문제가 발생했습니다.', 'error')
+    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.downloadError'), 'error')
   }
 }
 
@@ -267,15 +279,15 @@ const handleEventClick = (info) => {
     title: event.title,
     html: `
       <div class="swal-review">
-        <p><strong>시작일:</strong> ${toDateOnly(event.start)}</p>
-        <p><strong>종료일:</strong> ${toDateOnly(event.end || event.start)}</p>
+        <p><strong>${t('eventSchedule.modal.start')}:</strong> ${toDateOnly(event.start)}</p>
+        <p><strong>${t('eventSchedule.modal.end')}:</strong> ${toDateOnly(event.end || event.start)}</p>
       </div>
     `,
     showCancelButton: true,
     showDenyButton: true,
-    confirmButtonText: '수정',
-    denyButtonText: '삭제',
-    cancelButtonText: '닫기'
+    confirmButtonText: t('eventSchedule.modal.editAction'),
+    denyButtonText: t('eventSchedule.modal.deleteAction'),
+    cancelButtonText: t('eventSchedule.modal.close')
   }).then((result) => {
     if (result.isConfirmed) {
       openEditModal(event)
@@ -288,16 +300,16 @@ const handleEventClick = (info) => {
 const openEditModal = async (event) => {
   let selectedColor = event.extendedProps.color || '#0F2854'
   const { value: formValues } = await Swal.fire({
-    title: '스케줄 수정',
+    title: t('eventSchedule.modal.editTitle'),
     html: `
       <div class="swal-form">
-        <label class="form-label">제목</label>
+        <label class="form-label">${t('eventSchedule.form.title')}</label>
         <input id="edit-title" class="form-control" value="${event.title}" />
-        <label class="form-label mt-2">시작일</label>
+        <label class="form-label mt-2">${t('eventSchedule.form.start')}</label>
         <input id="edit-start" type="date" class="form-control" value="${toDateOnly(event.start)}" />
-        <label class="form-label mt-2">종료일</label>
+        <label class="form-label mt-2">${t('eventSchedule.form.end')}</label>
         <input id="edit-end" type="date" class="form-control" value="${toDateOnly(event.end || event.start)}" />
-        <label class="form-label mt-2 d-block">색상</label>
+        <label class="form-label mt-2 d-block">${t('eventSchedule.form.color')}</label>
         <div class="color-palette" id="edit-color-palette">
           ${colorOptions
             .map(
@@ -315,8 +327,8 @@ const openEditModal = async (event) => {
     `,
     focusConfirm: false,
     showCancelButton: true,
-    confirmButtonText: '저장',
-    cancelButtonText: '취소',
+    confirmButtonText: t('eventSchedule.modal.save'),
+    cancelButtonText: t('eventSchedule.modal.cancel'),
     didOpen: () => {
       const palette = document.getElementById('edit-color-palette')
       if (palette) {
@@ -336,7 +348,7 @@ const openEditModal = async (event) => {
       const color = selectedColor || '#0F2854'
 
       if (!title || !start) {
-        Swal.showValidationMessage('제목과 시작일을 입력해주세요.')
+        Swal.showValidationMessage(t('eventSchedule.alerts.missingFields'))
         return false
       }
 
@@ -354,21 +366,20 @@ const openEditModal = async (event) => {
     if (currentRange.value.start) {
       await fetchSchedules(currentRange.value.start, currentRange.value.end)
     }
-    Swal.fire('수정 완료', '스케줄이 수정되었습니다.', 'success')
+    Swal.fire(t('eventSchedule.alerts.updateSuccess'), '', 'success')
   } catch (error) {
     console.error('Update failed', error)
-    await Swal.fire('오류', '스케줄 수정 중 문제가 발생했습니다.', 'error')
+    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
   }
 }
 
 const confirmDelete = async (event) => {
   const confirm = await Swal.fire({
-    title: '삭제 확인',
-    text: '정말 삭제하시겠습니까?',
+    title: t('eventSchedule.modal.deleteConfirm'),
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: '삭제',
-    cancelButtonText: '취소'
+    confirmButtonText: t('eventSchedule.modal.deleteAction'),
+    cancelButtonText: t('eventSchedule.modal.cancel')
   })
 
   if (!confirm.isConfirmed || !adminId) return
@@ -378,10 +389,10 @@ const confirmDelete = async (event) => {
     if (currentRange.value.start) {
       await fetchSchedules(currentRange.value.start, currentRange.value.end)
     }
-    Swal.fire('삭제 완료', '스케줄이 삭제되었습니다.', 'success')
+    Swal.fire(t('eventSchedule.alerts.deleteSuccess'), '', 'success')
   } catch (error) {
     console.error('Delete failed', error)
-    await Swal.fire('오류', '스케줄 삭제 중 문제가 발생했습니다.', 'error')
+    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
   }
 }
 

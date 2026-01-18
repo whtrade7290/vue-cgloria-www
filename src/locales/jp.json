@@ -12,7 +12,8 @@
     "confirm": "確認",
     "download": "ダウンロード",
     "lang": "한국어",
-    "enterWithDiary": "入室"
+    "enterWithDiary": "入室",
+    "profile": "プロフィール編集"
   },
   "nav": {
     "intro": {
@@ -86,6 +87,50 @@
         "birthdayWooHyun": "ウヒョン誕生日",
         "newYearVisionMeeting": "新年ビジョン集会（当会）",
         "newYearSpecialDawn": "新年特別早天礼拝"
+      },
+      "form": {
+        "title": "タイトル",
+        "titlePlaceholder": "イベントタイトル",
+        "start": "開始日",
+        "end": "終了日",
+        "color": "色",
+        "sample": "CSVサンプルダウンロード",
+        "upload": "CSV一括登録",
+        "register": "スケジュール登録"
+      },
+      "modal": {
+        "createTitle": "入力内容の確認",
+        "editTitle": "スケジュール編集",
+        "detailTitle": "スケジュール情報",
+        "start": "開始日",
+        "end": "終了日",
+        "color": "色",
+        "confirm": "確認",
+        "cancel": "キャンセル",
+        "save": "保存",
+        "deleteAction": "削除",
+        "editAction": "編集",
+        "close": "閉じる",
+        "deleteConfirm": "本当に削除しますか？"
+      },
+      "alerts": {
+        "missingFields": "タイトルと開始日を入力してください。",
+        "registerSuccess": "イベントが登録されました。",
+        "updateSuccess": "スケジュールが更新されました。",
+        "deleteSuccess": "スケジュールを削除しました。",
+        "downloadError": "サンプルのダウンロード中に問題が発生しました。",
+        "uploadError": "CSVアップロード中に問題が発生しました。",
+        "generalError": "スケジュール処理中に問題が発生しました。",
+        "csvResult": "アップロード結果",
+        "csvSelect": "CSVファイルを選択してください。",
+        "error": "エラー"
+      },
+      "result": {
+        "success": "成功",
+        "fail": "失敗",
+        "errorList": "エラー一覧",
+        "row": "行",
+        "reason": "理由"
       }
     }
   },

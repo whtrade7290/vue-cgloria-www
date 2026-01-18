@@ -12,7 +12,8 @@
     "confirm": "확인",
     "download": "다운로드",
     "lang": "日本語",
-    "enterWithDiary": "들어가기"
+    "enterWithDiary": "들어가기",
+    "profile": "내 정보 수정"
   },
   "nav": {
     "intro": {
@@ -86,6 +87,50 @@
         "birthdayWooHyun": "우현생일",
         "newYearVisionMeeting": "신년Vision모임(당회)",
         "newYearSpecialDawn": "신년특별새벽예배"
+      },
+      "form": {
+        "title": "제목",
+        "titlePlaceholder": "이벤트 제목",
+        "start": "시작일",
+        "end": "종료일",
+        "color": "색상",
+        "sample": "CSV 샘플 다운로드",
+        "upload": "CSV 일괄등록",
+        "register": "스케줄 등록"
+      },
+      "modal": {
+        "createTitle": "입력 내용 확인",
+        "editTitle": "스케줄 수정",
+        "detailTitle": "스케줄 정보",
+        "start": "시작일",
+        "end": "종료일",
+        "color": "색상",
+        "confirm": "확인",
+        "cancel": "취소",
+        "save": "저장",
+        "deleteAction": "삭제",
+        "editAction": "수정",
+        "close": "닫기",
+        "deleteConfirm": "정말 삭제하시겠습니까?"
+      },
+      "alerts": {
+        "missingFields": "제목과 시작일을 입력해주세요.",
+        "registerSuccess": "이벤트가 등록되었습니다.",
+        "updateSuccess": "스케줄이 수정되었습니다.",
+        "deleteSuccess": "스케줄이 삭제되었습니다.",
+        "downloadError": "샘플 다운로드 중 문제가 발생했습니다.",
+        "uploadError": "CSV 업로드 중 문제가 발생했습니다.",
+        "generalError": "스케줄 처리 중 문제가 발생했습니다.",
+        "csvResult": "업로드 결과",
+        "csvSelect": "CSV 파일을 선택해주세요.",
+        "error": "오류"
+      },
+      "result": {
+        "success": "성공",
+        "fail": "실패",
+        "errorList": "오류 목록",
+        "row": "행",
+        "reason": "사유"
       }
     }
   },
