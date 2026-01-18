@@ -19,7 +19,7 @@
               <strong style="color: #ffffff">{{ $t('FooterComponent.worshipTime') }}</strong>
             </h4>
             {{ $t('FooterComponent.midnightWorship') }}<br />
-            {{ $t('FooterComponent.everyDay') }} 05:50 ~ 06:40<br /><br />
+            {{ $t('FooterComponent.everyDay') }} 05:40 ~ 06:40<br /><br />
             {{ $t('FooterComponent.worship1') }}<br />
             08:05~10:00
             <br /><br />

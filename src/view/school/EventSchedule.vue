@@ -30,7 +30,9 @@
         </div>
       </div>
       <div class="text-end d-flex gap-2 justify-content-end">
-        <button class="btn btn-outline-secondary" @click="downloadCsvSample">CSV 샘플 다운로드</button>
+        <button class="btn btn-outline-secondary" @click="downloadCsvSample">
+          CSV 샘플 다운로드
+        </button>
         <button class="btn btn-outline-secondary" @click="openCsvModal">CSV 일괄등록</button>
         <button class="btn btn-primary" @click="openModal">스케줄 등록</button>
       </div>
@@ -105,7 +107,9 @@ const calendarOptions = computed(() => ({
       currentRange.value = { start, end }
       fetchSchedules(start, end)
     }
-  }
+  },
+  eventClick: (info) => handleEventClick(info),
+  eventClassNames: () => (isAdmin.value ? ['fc-admin-event'] : [])
 }))
 
 const openModal = async () => {
@@ -116,11 +120,6 @@ const openModal = async () => {
 
   if (!title || !start) {
     await Swal.fire('알림', '제목과 시작일을 입력해주세요.', 'warning')
-    return
-  }
-
-  if (!isValidRange(start, end)) {
-    await Swal.fire('경고', '시작일과 종료일은 최대 31일 이내여야 합니다.', 'warning')
     return
   }
 
@@ -249,27 +248,140 @@ const toDateOnly = (value) => {
   return `${year}-${month}-${day}`
 }
 
-const isValidRange = (start, end) => {
-  const startDate = new Date(start)
-  const endDate = new Date(end)
-  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
-    return false
-  }
-
-  if (endDate < startDate) {
-    return false
-  }
-
-  const diffDays = (endDate - startDate) / (1000 * 60 * 60 * 24)
-  return diffDays <= 31
-}
-
 const fetchSchedules = async (start, end) => {
   try {
     const { data } = await ScheduleApi.fetchByRange(start, end)
     events.value = data ?? []
   } catch (error) {
     console.error('Failed to fetch schedules', error)
+  }
+}
+
+const handleEventClick = (info) => {
+  const event = info.event
+  if (!isAdmin.value) {
+    return
+  }
+
+  Swal.fire({
+    title: event.title,
+    html: `
+      <div class="swal-review">
+        <p><strong>시작일:</strong> ${toDateOnly(event.start)}</p>
+        <p><strong>종료일:</strong> ${toDateOnly(event.end || event.start)}</p>
+      </div>
+    `,
+    showCancelButton: true,
+    showDenyButton: true,
+    confirmButtonText: '수정',
+    denyButtonText: '삭제',
+    cancelButtonText: '닫기'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      openEditModal(event)
+    } else if (result.isDenied) {
+      confirmDelete(event)
+    }
+  })
+}
+
+const openEditModal = async (event) => {
+  let selectedColor = event.extendedProps.color || '#0F2854'
+  const { value: formValues } = await Swal.fire({
+    title: '스케줄 수정',
+    html: `
+      <div class="swal-form">
+        <label class="form-label">제목</label>
+        <input id="edit-title" class="form-control" value="${event.title}" />
+        <label class="form-label mt-2">시작일</label>
+        <input id="edit-start" type="date" class="form-control" value="${toDateOnly(event.start)}" />
+        <label class="form-label mt-2">종료일</label>
+        <input id="edit-end" type="date" class="form-control" value="${toDateOnly(event.end || event.start)}" />
+        <label class="form-label mt-2 d-block">색상</label>
+        <div class="color-palette" id="edit-color-palette">
+          ${colorOptions
+            .map(
+              (color) => `
+              <button
+                type="button"
+                class="color-swatch ${color === selectedColor ? 'selected' : ''}"
+                style="background-color: ${color}"
+                data-color="${color}"
+              ></button>`
+            )
+            .join('')}
+        </div>
+      </div>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: '저장',
+    cancelButtonText: '취소',
+    didOpen: () => {
+      const palette = document.getElementById('edit-color-palette')
+      if (palette) {
+        palette.querySelectorAll('.color-swatch').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            palette.querySelectorAll('.color-swatch').forEach((b) => b.classList.remove('selected'))
+            btn.classList.add('selected')
+            selectedColor = btn.dataset.color
+          })
+        })
+      }
+    },
+    preConfirm: () => {
+      const title = document.getElementById('edit-title').value.trim()
+      const start = document.getElementById('edit-start').value
+      const end = document.getElementById('edit-end').value || start
+      const color = selectedColor || '#0F2854'
+
+      if (!title || !start) {
+        Swal.showValidationMessage('제목과 시작일을 입력해주세요.')
+        return false
+      }
+
+      return { title, start, end, color }
+    }
+  })
+
+  if (!formValues || !adminId) return
+
+  try {
+    await ScheduleApi.update(event.id, {
+      userId: adminId,
+      ...formValues
+    })
+    if (currentRange.value.start) {
+      await fetchSchedules(currentRange.value.start, currentRange.value.end)
+    }
+    Swal.fire('수정 완료', '스케줄이 수정되었습니다.', 'success')
+  } catch (error) {
+    console.error('Update failed', error)
+    await Swal.fire('오류', '스케줄 수정 중 문제가 발생했습니다.', 'error')
+  }
+}
+
+const confirmDelete = async (event) => {
+  const confirm = await Swal.fire({
+    title: '삭제 확인',
+    text: '정말 삭제하시겠습니까?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소'
+  })
+
+  if (!confirm.isConfirmed || !adminId) return
+
+  try {
+    await ScheduleApi.remove(event.id, adminId)
+    if (currentRange.value.start) {
+      await fetchSchedules(currentRange.value.start, currentRange.value.end)
+    }
+    Swal.fire('삭제 완료', '스케줄이 삭제되었습니다.', 'success')
+  } catch (error) {
+    console.error('Delete failed', error)
+    await Swal.fire('오류', '스케줄 삭제 중 문제가 발생했습니다.', 'error')
   }
 }
 
@@ -293,6 +405,7 @@ onMounted(() => {
 }
 .color-palette {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
 }
 .color-swatch {
@@ -306,5 +419,32 @@ onMounted(() => {
   border-color: #f7e7dc;
   border-width: 3px;
   transform: scale(1.5);
+}
+:global(.fc-admin-event) {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+:global(.fc-admin-event:hover) {
+  transform: scale(1.04);
+}
+:global(.swal2-popup .color-palette) {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+:global(.swal2-popup .color-swatch) {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+:global(.swal2-popup .color-swatch.selected) {
+  border-color: #f7e7dc;
+  border-width: 3px;
+  transform: scale(1.2);
 }
 </style>

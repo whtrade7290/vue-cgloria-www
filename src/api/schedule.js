@@ -12,5 +12,11 @@ export const ScheduleApi = {
   },
   uploadCsv(formData) {
     return instance.post('/schedule/csv_upload', formData)
+  },
+  update(id, payload) {
+    return instance.put(`/schedule/${id}`, payload)
+  },
+  remove(id, userId) {
+    return instance.delete(`/schedule/${id}`, { data: { userId } })
   }
 }

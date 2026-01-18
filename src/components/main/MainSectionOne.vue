@@ -74,7 +74,7 @@
             <div class="full-background" :style="{ backgroundImage: `url('/cross1.jpeg')` }"></div>
             <div class="card-body pt-7 text-center">
               <h2 class="text-white up mb-0" style="text-align: left">
-                {{ $t('mainSectionOne.midnightWorship') }}<br />{{ $t('mainSectionOne.am') }} 5:50 ~
+                {{ $t('mainSectionOne.midnightWorship') }}<br />{{ $t('mainSectionOne.am') }} 5:40 ~
                 06:30
               </h2>
               <h2 class="text-white up mb-0" style="text-align: left">
@@ -137,7 +137,9 @@ const safeTruncated = (content) => {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
-  return escaped.replace(/\n/g, '<br />').replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
+  return escaped
+    .replace(/\n/g, '<br />')
+    .replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
 }
 
 async function intoDetail(id, name) {
