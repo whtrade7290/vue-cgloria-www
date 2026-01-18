@@ -398,10 +398,14 @@ onMounted(() => {
 .manual-form {
   margin-top: 2rem;
 }
-.calendar-wrapper {
+:deep(.calendar-wrapper) {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid #eee;
+  overflow-x: auto;
+}
+:deep(.calendar-wrapper .fc) {
+  min-width: 600px;
 }
 .color-palette {
   display: flex;
