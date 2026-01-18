@@ -25,8 +25,8 @@ export async function requestLogin(username, password) {
   }
 }
 
-export async function signUp(username, password, name, email) {
-  return await instance.post('/signUp', { username, password, name, email })
+export async function signUp(payload) {
+  return await instance.post('/signUp', payload)
 }
 
 export async function editPassword(username, password, name, email) {

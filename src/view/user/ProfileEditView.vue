@@ -138,7 +138,7 @@ const loadProfile = async () => {
   const storedData = localStorage.getItem(getUserIdFromCookie())
   const parsed = storedData ? JSON.parse(storedData) : null
 
-  if (!parsed?.user?.id) {
+  if (!parsed?.user?.username) {
     await Swal.fire({
       title: t('profile.alerts.notLoggedIn'),
       icon: 'warning'
@@ -147,20 +147,42 @@ const loadProfile = async () => {
     return false
   }
 
-  form.id = parsed.user.id
-  form.username = parsed.user.username ?? ''
-  form.name = parsed.user.name ?? ''
-  form.email = parsed.user.email ?? ''
-  form.password = ''
-  form.confirmPassword = ''
-  form.profileImageUrl = parsed.user.profileImageUrl ?? ''
-  removeImageFlag.value = false
-  original.value = {
-    name: form.name,
-    email: form.email,
-    profileImageUrl: form.profileImageUrl
+  try {
+    const response = await store.dispatch('SEARCH_USER', { searchUser: parsed.user.username })
+    const fetchedUser = response?.data
+    if (!fetchedUser?.id) {
+      throw new Error('User not found')
+    }
+
+    form.id = fetchedUser.id
+    form.username = fetchedUser.username ?? parsed.user.username ?? ''
+    form.name = fetchedUser.name ?? parsed.user.name ?? ''
+    form.email = fetchedUser.email ?? parsed.user.email ?? ''
+    form.password = ''
+    form.confirmPassword = ''
+    form.profileImageUrl =
+      fetchedUser.profileImageUrl ??
+      fetchedUser.profile_image_url ??
+      fetchedUser.writerProfileImageUrl ??
+      fetchedUser.writer_profile_image_url ??
+      parsed.user.profileImageUrl ??
+      ''
+    removeImageFlag.value = false
+    original.value = {
+      name: form.name,
+      email: form.email,
+      profileImageUrl: form.profileImageUrl
+    }
+    return true
+  } catch (error) {
+    console.error('Failed to fetch user profile', error)
+    await Swal.fire({
+      title: t('profile.alerts.fail'),
+      icon: 'error'
+    })
+    router.push({ name: 'login' })
+    return false
   }
-  return true
 }
 
 const resetForm = () => {

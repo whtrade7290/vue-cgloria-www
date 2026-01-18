@@ -154,6 +154,7 @@ const confirmName = ref(false)
 const confirmEmail = ref(false)
 const avatarInput = ref(null)
 const avatarPreview = ref('')
+const avatarFile = ref(null)
 const isSubmitting = ref(false)
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
@@ -255,6 +256,7 @@ const handleAvatarSelect = (event) => {
     return
   }
   clearAvatar()
+  avatarFile.value = file
   avatarPreview.value = URL.createObjectURL(file)
   event.target.value = ''
 }
@@ -264,6 +266,7 @@ const clearAvatar = () => {
     URL.revokeObjectURL(avatarPreview.value)
   }
   avatarPreview.value = ''
+  avatarFile.value = null
   if (avatarInput.value) {
     avatarInput.value.value = ''
   }
@@ -278,12 +281,16 @@ const signUp = async () => {
   if (confirmUsername.value && confirmPassword.value && confirmName.value) {
     isSubmitting.value = true
     try {
-      const result = await store.dispatch('SIGN_UP', {
-        username: username.value,
-        password: password1.value,
-        email: email.value,
-        name: name.value
-      })
+      const formData = new FormData()
+      formData.append('username', username.value)
+      formData.append('password', password1.value)
+      formData.append('email', email.value)
+      formData.append('name', name.value)
+      if (avatarFile.value) {
+        formData.append('profileImage', avatarFile.value)
+      }
+
+      const result = await store.dispatch('SIGN_UP', formData)
 
       if (result) {
         if (route.params.isQr) {
@@ -310,6 +317,7 @@ const signUp = async () => {
         password2.value = ''
         name.value = ''
         clearAvatar()
+        avatarFile.value = null
 
         await router.push('/')
       } else {
