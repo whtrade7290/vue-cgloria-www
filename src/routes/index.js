@@ -281,9 +281,9 @@ const routes = [
       const storedData = localStorage.getItem(getUserIdFromCookie())
       const storageUser = storedData ? JSON.parse(storedData) : {}
 
-      if (storageUser.user.role !== 'ADMIN') {
+      if (storageUser?.user?.role !== 'ADMIN') {
         await Swal.fire({
-          title: '관리자 전용 게시판입니다.',
+          title: window.i18n.global.t('alerts.adminOnly'),
           icon: 'warning'
         })
         await next(from)
@@ -302,9 +302,9 @@ const routes = [
 
       const storageUser = storedData ? JSON.parse(storedData) : {}
 
-      if (storageUser.user.role !== 'ADMIN') {
+      if (storageUser?.user?.role !== 'ADMIN') {
         await Swal.fire({
-          title: '관리자 전용 게시판입니다.',
+          title: window.i18n.global.t('alerts.adminOnly'),
           icon: 'warning'
         })
         await next(from)
@@ -325,9 +325,9 @@ const routes = [
 
       const storageUser = storedData ? JSON.parse(storedData) : {}
 
-      if (storageUser.user.role !== 'ADMIN') {
+      if (storageUser?.user?.role !== 'ADMIN') {
         await Swal.fire({
-          title: '관리자 전용 게시판입니다.',
+          title: window.i18n.global.t('alerts.adminOnly'),
           icon: 'warning'
         })
         await next(from)
@@ -338,7 +338,29 @@ const routes = [
       }
     }
   },
-  { path: '/userApprove', name: 'userApprove', component: UserApproveTable }
+  {
+    path: '/userApprove',
+    name: 'userApprove',
+    component: UserApproveTable,
+    beforeEnter: async (to, from, next) => {
+      const store = useStore()
+      const storedData = localStorage.getItem(getUserIdFromCookie())
+
+      const storageUser = storedData ? JSON.parse(storedData) : {}
+
+      if (storageUser?.user?.role !== 'ADMIN') {
+        await Swal.fire({
+          title: window.i18n.global.t('alerts.adminOnly'),
+          icon: 'warning'
+        })
+        await next(from)
+      } else {
+        await store.dispatch('FIND_DISAPPROVE_USERS')
+
+        await next()
+      }
+    }
+  }
 ]
 
 const router = createRouter({

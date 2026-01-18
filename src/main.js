@@ -15,6 +15,7 @@ const emitter = mitt()
 const app = createApp(App)
 
 app.config.globalProperties.emitter = emitter
+window.i18n = i18n
 
 app.use(i18n)
 app.use(router)
