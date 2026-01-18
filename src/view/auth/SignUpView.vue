@@ -1,110 +1,126 @@
 <template>
-  <section>
-    <div class="page-header min-vh-100">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto signup-container"
-          >
-            <div class="card card-plain">
-              <div class="card-header pb-0 text-left">
-                <h4 class="font-weight-bolder">{{ $t('auth.signUpTitle') }}</h4>
-                <p class="mb-0">{{ $t('auth.signUpDescription') }}</p>
-              </div>
-              <div class="card-body">
-                <form role="form">
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="$t('auth.accountPlaceholder')"
-                      aria-label="Email"
-                      aria-describedby="email-addon"
-                      v-model="username"
-                      @focusout="checkingUsername"
-                    />
-                    <span :class="usernameClass ? 'red' : 'green'">{{ usernameMsg }}</span>
-                  </div>
-
-                  <div class="mb-3">
-                    <input
-                      type="password"
-                      class="form-control form-control-lg"
-                      :placeholder="$t('auth.passwordPlaceholder')"
-                      aria-label="Password"
-                      aria-describedby="password-addon"
-                      v-model="password1"
-                      @focusout="checkingPassword"
-                    />
-                    <input
-                      type="password"
-                      class="form-control form-control-lg mt-2"
-                      :placeholder="$t('auth.passwordPlaceholder')"
-                      aria-label="Password"
-                      aria-describedby="password-addon"
-                      v-model="password2"
-                      @focusout="checkingPassword"
-                    />
-                    <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="$t('auth.emailPlaceholder')"
-                      v-model="email"
-                      @focusout="checkingEmail"
-                    />
-                    <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="$t('auth.namePlaceholder')"
-                      v-model="name"
-                      @focusout="checkingName"
-                    />
-                    <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
-                  </div>
-                  <div class="text-center">
-                    <button
-                      type="button"
-                      class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
-                      @click="signUp"
-                    >
-                      {{ $t('auth.signUpButton') }}
-                    </button>
-                  </div>
-                </form>
-              </div>
+  <AuthCardLayout :title="$t('auth.signUpTitle')" :description="$t('auth.signUpDescription')">
+    <template #default>
+      <form role="form">
+        <div class="mb-4">
+          <label class="form-label">
+            {{ $t('profile.fields.image') }}
+            <span class="label-optional">({{ $t('profile.fields.optional') }})</span>
+          </label>
+          <div class="avatar-wrapper">
+            <div class="avatar-preview" :class="{ empty: !avatarPreview }">
+              <img v-if="avatarPreview" :src="avatarPreview" alt="avatar preview" />
+              <span v-else>{{ $t('profile.fields.imagePlaceholder') }}</span>
             </div>
-          </div>
-          <div
-            class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column"
-          >
-            <div
-              class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center bg-img"
-            >
-              <h4 class="mt-5 text-white font-weight-bolder">
-                {{ $t('auth.verse') }}
-              </h4>
-              <p class="text-white">{{ $t('auth.verseReference') }}</p>
+            <div class="d-flex gap-3 flex-wrap align-items-center">
+              <input
+                ref="avatarInput"
+                type="file"
+                class="d-none"
+                accept="image/*"
+                :disabled="isSubmitting"
+                @change="handleAvatarSelect"
+              />
+              <button
+                type="button"
+                class="image-link text-highlight"
+                :disabled="isSubmitting"
+                @click="triggerAvatarSelect"
+              >
+                {{ $t('profile.actions.uploadImage') }}
+              </button>
+              <button
+                type="button"
+                class="image-link text-danger"
+                :class="{ disabled: isSubmitting || !avatarPreview }"
+                :disabled="isSubmitting || !avatarPreview"
+                @click="clearAvatar"
+              >
+                {{ $t('profile.actions.removeImage') }}
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="mb-3">
+          <label class="form-label">{{ $t('authLabels.username') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="$t('auth.accountPlaceholder')"
+            aria-label="Email"
+            aria-describedby="email-addon"
+            v-model="username"
+            @focusout="checkingUsername"
+          />
+          <span :class="usernameClass ? 'red' : 'green'">{{ usernameMsg }}</span>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ $t('authLabels.password') }}</label>
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            :placeholder="$t('auth.passwordPlaceholder')"
+            aria-label="Password"
+            aria-describedby="password-addon"
+            v-model="password1"
+            @focusout="checkingPassword"
+          />
+          <input
+            type="password"
+            class="form-control form-control-lg mt-2"
+            :placeholder="$t('auth.passwordPlaceholder')"
+            aria-label="Password"
+            aria-describedby="password-addon"
+            v-model="password2"
+            @focusout="checkingPassword"
+          />
+          <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ $t('authLabels.email') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="$t('auth.emailPlaceholder')"
+            v-model="email"
+            @focusout="checkingEmail"
+          />
+          <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ $t('authLabels.name') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="$t('auth.namePlaceholder')"
+            v-model="name"
+            @focusout="checkingName"
+          />
+          <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
+            @click="signUp"
+          >
+            {{ $t('auth.signUpButton') }}
+          </button>
+        </div>
+      </form>
+    </template>
+  </AuthCardLayout>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { useI18n } from 'vue-i18n'
+import AuthCardLayout from '@/components/auth/AuthCardLayout.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -136,6 +152,11 @@ const confirmUsername = ref(false)
 const confirmPassword = ref(false)
 const confirmName = ref(false)
 const confirmEmail = ref(false)
+const avatarInput = ref(null)
+const avatarPreview = ref('')
+const isSubmitting = ref(false)
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 
 const checkingUsername = async () => {
   const usernameRegex = /^[a-zA-Z0-9_]{4,16}$/
@@ -220,46 +241,85 @@ const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
+const handleAvatarSelect = (event) => {
+  const [file] = event.target.files || []
+  if (!file) return
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    Swal.fire({ title: t('profile.alerts.imageType'), icon: 'warning' })
+    event.target.value = ''
+    return
+  }
+  if (file.size > MAX_IMAGE_SIZE) {
+    Swal.fire({ title: t('profile.alerts.imageSize'), icon: 'warning' })
+    event.target.value = ''
+    return
+  }
+  clearAvatar()
+  avatarPreview.value = URL.createObjectURL(file)
+  event.target.value = ''
+}
+
+const clearAvatar = () => {
+  if (avatarPreview.value) {
+    URL.revokeObjectURL(avatarPreview.value)
+  }
+  avatarPreview.value = ''
+  if (avatarInput.value) {
+    avatarInput.value.value = ''
+  }
+}
+
+const triggerAvatarSelect = () => {
+  if (isSubmitting.value) return
+  avatarInput.value?.click()
+}
+
 const signUp = async () => {
   if (confirmUsername.value && confirmPassword.value && confirmName.value) {
-    const result = await store.dispatch('SIGN_UP', {
-      username: username.value,
-      password: password1.value,
-      email: email.value,
-      name: name.value
-    })
+    isSubmitting.value = true
+    try {
+      const result = await store.dispatch('SIGN_UP', {
+        username: username.value,
+        password: password1.value,
+        email: email.value,
+        name: name.value
+      })
 
-    if (result) {
-      if (route.params.isQr) {
-        const updatedUser = await store.dispatch('APPROVE_USER', result.id)
-        if (updatedUser.isApproved) {
+      if (result) {
+        if (route.params.isQr) {
+          const updatedUser = await store.dispatch('APPROVE_USER', result.id)
+          if (updatedUser.isApproved) {
+            await Swal.fire({
+              title: t('auth.signUpAlerts.successImmediate'),
+              icon: 'success'
+            })
+          }
+        } else {
           await Swal.fire({
-            title: t('auth.signUpAlerts.successImmediate'),
+            title: t('auth.signUpAlerts.successPending'),
             icon: 'success'
           })
         }
+
+        confirmUsername.value = false
+        confirmPassword.value = false
+        confirmName.value = false
+        confirmEmail.value = false
+        username.value = ''
+        password1.value = ''
+        password2.value = ''
+        name.value = ''
+        clearAvatar()
+
+        await router.push('/')
       } else {
         await Swal.fire({
-          title: t('auth.signUpAlerts.successPending'),
-          icon: 'success'
+          title: t('auth.signUpAlerts.fail'),
+          icon: 'error'
         })
       }
-
-      confirmUsername.value = false
-      confirmPassword.value = false
-      confirmName.value = false
-      confirmEmail.value = false
-      username.value = ''
-      password1.value = ''
-      password2.value = ''
-      name.value = ''
-
-      await router.push('/')
-    } else {
-      await Swal.fire({
-        title: t('auth.signUpAlerts.fail'),
-        icon: 'error'
-      })
+    } finally {
+      isSubmitting.value = false
     }
   } else {
     await Swal.fire({
@@ -282,14 +342,16 @@ onMounted(async () => {
   }
 })
 
-const apiBaseUrl = import.meta.env.VITE_API_URL
-
-document.documentElement.style.setProperty('--background-image-url', `url('/jesus.png')`)
+onBeforeUnmount(() => {
+  if (avatarPreview.value) {
+    URL.revokeObjectURL(avatarPreview.value)
+  }
+})
 </script>
 
 <style scoped>
 .bg-img {
-  background-image: var(--background-image-url);
+  background-image: url('/jesus.png');
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;
@@ -302,7 +364,65 @@ document.documentElement.style.setProperty('--background-image-url', `url('/jesu
   color: green;
   font-size: 0.8rem;
 }
-.page-header {
-  background-color: #fff;
+.avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.avatar-preview {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px dashed #ced4da;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #fdfdfd;
+  margin-bottom: 0.5rem;
+}
+.avatar-preview.empty span {
+  color: #adb5bd;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.image-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.image-link:not(:disabled):hover {
+  transform: scale(1.05);
+}
+.image-link.text-highlight {
+  color: #e49c7f !important;
+  font-weight: 700;
+}
+.image-link.text-danger {
+  color: #c53030 !important;
+  font-weight: 700;
+}
+.image-link.text-danger.disabled {
+  color: #adb5bd !important;
+  -webkit-text-fill-color: #adb5bd !important;
+  transform: none;
 }
 </style>

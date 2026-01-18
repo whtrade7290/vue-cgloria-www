@@ -509,11 +509,18 @@
       "passwordAria": "パスワード入力欄"
     }
   },
+  "authLabels": {
+    "username": "アカウント名",
+    "password": "パスワード",
+    "email": "メール",
+    "name": "名前"
+  },
   "profile": {
     "title": "プロフィール編集",
     "description": "会員情報を更新してください。",
     "fields": {
       "image": "プロフィール写真",
+      "optional": "任意",
       "imagePlaceholder": "画像を選択してください",
       "username": "アカウント名",
       "name": "名前",

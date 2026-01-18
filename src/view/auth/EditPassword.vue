@@ -1,101 +1,80 @@
 <template>
-  <section>
-    <div class="page-header min-vh-100">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto signup-container"
-          >
-            <div class="card card-plain">
-              <div class="card-header pb-0 text-left">
-                <h4 class="font-weight-bolder">{{ t('auth.editPassword.title') }}</h4>
-                <p class="mb-0">{{ t('auth.editPassword.description') }}</p>
-              </div>
-              <div class="card-body">
-                <form role="form">
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="t('auth.editPassword.usernamePlaceholder')"
-                      :aria-label="t('auth.editPassword.usernamePlaceholder')"
-                      aria-describedby="email-addon"
-                      v-model="username"
-                      @focusout="checkingUsername"
-                    />
-                    <span :class="usernameClass ? 'green' : 'red'">{{ usernameMsg }}</span>
-                  </div>
-
-                  <div class="mb-3">
-                    <input
-                      type="password"
-                      class="form-control form-control-lg"
-                      :placeholder="t('auth.editPassword.passwordPlaceholder')"
-                      :aria-label="t('auth.editPassword.passwordPlaceholder')"
-                      aria-describedby="password-addon"
-                      v-model="password1"
-                      @focusout="checkingPassword"
-                    />
-                    <input
-                      type="password"
-                      class="form-control form-control-lg mt-2"
-                      :placeholder="t('auth.editPassword.passwordPlaceholder')"
-                      :aria-label="t('auth.editPassword.passwordPlaceholder')"
-                      aria-describedby="password-addon"
-                      v-model="password2"
-                      @focusout="checkingPassword"
-                    />
-                    <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="t('auth.editPassword.emailPlaceholder')"
-                      v-model="email"
-                      @focusout="checkingEmail"
-                    />
-                    <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      :placeholder="t('auth.editPassword.namePlaceholder')"
-                      v-model="name"
-                      @focusout="checkingName"
-                    />
-                    <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
-                  </div>
-                  <div class="text-center">
-                    <button
-                      type="button"
-                      class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
-                      @click="editPassword"
-                    >
-                      {{ t('auth.editPassword.button') }}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column"
-          >
-            <div
-              class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center bg-img"
-            >
-              <h4 class="mt-5 text-white font-weight-bolder">
-                {{ t('auth.verse') }}
-              </h4>
-              <p class="text-white">{{ t('auth.verseReference') }}</p>
-            </div>
-          </div>
+  <AuthCardLayout
+    :title="t('auth.editPassword.title')"
+    :description="t('auth.editPassword.description')"
+  >
+    <template #default>
+      <form role="form">
+        <div class="mb-3">
+          <label class="form-label">{{ t('authLabels.username') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="t('auth.editPassword.usernamePlaceholder')"
+            :aria-label="t('auth.editPassword.usernamePlaceholder')"
+            aria-describedby="email-addon"
+            v-model="username"
+            @focusout="checkingUsername"
+          />
+          <span :class="usernameClass ? 'green' : 'red'">{{ usernameMsg }}</span>
         </div>
-      </div>
-    </div>
-  </section>
+
+        <div class="mb-3">
+          <label class="form-label">{{ t('authLabels.password') }}</label>
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            :placeholder="t('auth.editPassword.passwordPlaceholder')"
+            :aria-label="t('auth.editPassword.passwordPlaceholder')"
+            aria-describedby="password-addon"
+            v-model="password1"
+            @focusout="checkingPassword"
+          />
+          <input
+            type="password"
+            class="form-control form-control-lg mt-2"
+            :placeholder="t('auth.editPassword.passwordPlaceholder')"
+            :aria-label="t('auth.editPassword.passwordPlaceholder')"
+            aria-describedby="password-addon"
+            v-model="password2"
+            @focusout="checkingPassword"
+          />
+          <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ t('authLabels.email') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="t('auth.editPassword.emailPlaceholder')"
+            v-model="email"
+            @focusout="checkingEmail"
+          />
+          <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ t('authLabels.name') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="t('auth.editPassword.namePlaceholder')"
+            v-model="name"
+            @focusout="checkingName"
+          />
+          <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
+            @click="editPassword"
+          >
+            {{ t('auth.editPassword.button') }}
+          </button>
+        </div>
+      </form>
+    </template>
+  </AuthCardLayout>
 </template>
 
 <script setup>
@@ -105,6 +84,7 @@ import Swal from 'sweetalert2'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 import { useI18n } from 'vue-i18n'
+import AuthCardLayout from '@/components/auth/AuthCardLayout.vue'
 
 const { t } = useI18n()
 
@@ -290,15 +270,11 @@ const logout = async () => {
     router.push('/')
   })
 }
-
-const apiBaseUrl = import.meta.env.VITE_API_URL
-
-document.documentElement.style.setProperty('--background-image-url', `url('/jesus.png')`)
 </script>
 
 <style scoped>
 .bg-img {
-  background-image: var(--background-image-url);
+  background-image: url('/jesus.png');
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;
@@ -310,8 +286,5 @@ document.documentElement.style.setProperty('--background-image-url', `url('/jesu
 .green {
   color: green;
   font-size: 0.8rem;
-}
-.page-header {
-  background-color: #fff;
 }
 </style>

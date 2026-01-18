@@ -1,125 +1,102 @@
 <template>
-  <section class="profile-edit">
-    <div class="page-header min-vh-100">
-      <div class="container py-6">
-        <div class="row justify-content-center">
-          <div class="col-xl-5 col-lg-6 col-md-8">
-            <div class="card card-plain shadow-sm">
-              <div class="card-header pb-0 text-left">
-                <h4 class="font-weight-bolder">{{ t('profile.title') }}</h4>
-                <p class="mb-0 text-muted">{{ t('profile.description') }}</p>
-              </div>
-              <div class="card-body">
-                <form @submit.prevent="submitForm">
-                  <div class="mb-4">
-                    <label class="form-label">{{ t('profile.fields.image') }}</label>
-                    <div class="avatar-wrapper">
-                      <div class="avatar-preview" :class="{ empty: !currentImage }">
-                        <img v-if="currentImage" :src="currentImage" alt="profile" />
-                        <span v-else>{{ t('profile.fields.imagePlaceholder') }}</span>
-                      </div>
-                      <div class="d-flex gap-3 flex-wrap align-items-center">
-                        <input
-                          ref="fileInput"
-                          type="file"
-                          class="d-none"
-                          accept="image/*"
-                          :disabled="loading"
-                          @change="handleImageSelect"
-                        />
-                        <button
-                          type="button"
-                          class="image-link text-highlight"
-                          :disabled="loading"
-                          @click="triggerFileSelect"
-                        >
-                          {{ t('profile.actions.uploadImage') }}
-                        </button>
-                        <button
-                          type="button"
-                          class="image-link text-danger"
-                          :class="{ disabled: loading || (!imageFile && !form.profileImageUrl) }"
-                          :disabled="loading || (!imageFile && !form.profileImageUrl)"
-                          @click="handleRemoveImage"
-                        >
-                          {{ t('profile.actions.removeImage') }}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">{{ t('profile.fields.username') }}</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      v-model="form.username"
-                      disabled
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">{{ t('profile.fields.name') }}</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      v-model.trim="form.name"
-                      :disabled="loading"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">{{ t('profile.fields.email') }}</label>
-                    <input
-                      type="email"
-                      class="form-control form-control-lg"
-                      v-model.trim="form.email"
-                      :disabled="loading"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">{{ t('profile.fields.password') }}</label>
-                    <input
-                      type="password"
-                      class="form-control form-control-lg"
-                      v-model="form.password"
-                      :placeholder="t('profile.fields.password')"
-                      :disabled="loading"
-                    />
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label">{{ t('profile.fields.confirmPassword') }}</label>
-                    <input
-                      type="password"
-                      class="form-control form-control-lg"
-                      v-model="form.confirmPassword"
-                      :placeholder="t('profile.fields.confirmPassword')"
-                      :disabled="loading"
-                    />
-                  </div>
-                  <div class="d-flex justify-content-end gap-2 flex-wrap">
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary"
-                      :disabled="loading"
-                      @click="resetForm"
-                    >
-                      {{ t('profile.actions.reset') }}
-                    </button>
-                    <button type="submit" class="btn bg-gradient-primary" :disabled="loading">
-                      <span
-                        v-if="loading"
-                        class="spinner-border spinner-border-sm me-2"
-                        role="status"
-                      ></span>
-                      {{ t('profile.actions.save') }}
-                    </button>
-                  </div>
-                </form>
-              </div>
+  <AuthCardLayout :title="t('profile.title')" :description="t('profile.description')">
+    <template #default>
+      <form @submit.prevent="submitForm" class="profile-form">
+        <div class="mb-4">
+          <label class="form-label">{{ t('profile.fields.image') }}</label>
+          <div class="avatar-wrapper">
+            <div class="avatar-preview" :class="{ empty: !currentImage }">
+              <img v-if="currentImage" :src="currentImage" alt="profile" />
+              <span v-else>{{ t('profile.fields.imagePlaceholder') }}</span>
+            </div>
+            <div class="d-flex gap-3 flex-wrap align-items-center">
+              <input
+                ref="fileInput"
+                type="file"
+                class="d-none"
+                accept="image/*"
+                :disabled="loading"
+                @change="handleImageSelect"
+              />
+              <button
+                type="button"
+                class="image-link text-highlight"
+                :disabled="loading"
+                @click="triggerFileSelect"
+              >
+                {{ t('profile.actions.uploadImage') }}
+              </button>
+              <button
+                type="button"
+                class="image-link text-danger"
+                :class="{ disabled: loading || (!imageFile && !form.profileImageUrl) }"
+                :disabled="loading || (!imageFile && !form.profileImageUrl)"
+                @click="handleRemoveImage"
+              >
+                {{ t('profile.actions.removeImage') }}
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="mb-3">
+          <label class="form-label">{{ t('profile.fields.username') }}</label>
+          <input type="text" class="form-control form-control-lg" v-model="form.username" disabled />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ t('profile.fields.name') }}</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            v-model.trim="form.name"
+            :disabled="loading"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ t('profile.fields.email') }}</label>
+          <input
+            type="email"
+            class="form-control form-control-lg"
+            v-model.trim="form.email"
+            :disabled="loading"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{{ t('profile.fields.password') }}</label>
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            v-model="form.password"
+            :placeholder="t('profile.fields.password')"
+            :disabled="loading"
+          />
+        </div>
+        <div class="mb-4">
+          <label class="form-label">{{ t('profile.fields.confirmPassword') }}</label>
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            v-model="form.confirmPassword"
+            :placeholder="t('profile.fields.confirmPassword')"
+            :disabled="loading"
+          />
+        </div>
+        <div class="d-flex justify-content-end gap-2 flex-wrap">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            :disabled="loading"
+            @click="resetForm"
+          >
+            {{ t('profile.actions.reset') }}
+          </button>
+          <button type="submit" class="btn bg-gradient-primary" :disabled="loading">
+            <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+            {{ t('profile.actions.save') }}
+          </button>
+        </div>
+      </form>
+    </template>
+  </AuthCardLayout>
 </template>
 
 <script setup>
@@ -129,6 +106,7 @@ import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import { useI18n } from 'vue-i18n'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
+import AuthCardLayout from '@/components/auth/AuthCardLayout.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -351,18 +329,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.profile-edit .page-header {
-  background-color: #f8f9fa;
-  padding-top: 6.5rem;
-  padding-bottom: 4rem;
-}
-.profile-edit .card {
-  border-radius: 1rem;
-}
-.profile-edit .card-header h4 {
-  font-size: 1.5rem;
-}
-.profile-edit .btn {
+.profile-form .btn {
   min-width: 120px;
 }
 .avatar-wrapper {
