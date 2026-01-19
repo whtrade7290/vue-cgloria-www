@@ -34,10 +34,12 @@
               <b>{{ $t('MainSectionTraining.content3Bold') }}</b
               >{{ $t('MainSectionTraining.content3') }}
             </p>
-            <a href="#" target="blank" rel="nofollow" class="btn bg-gradient-primary mb-5 mb-sm-0"
-              >{{ $t('common.moveToPage') }}
-              <i class="fas fa-arrow-right text-sm ms-1"></i>
-            </a>
+            <router-link
+              to="/training"
+              rel="nofollow"
+              class="btn bg-gradient-primary mb-5 mb-sm-0"
+              >{{ $t('common.moveToPage') }}</router-link
+            >
           </div>
         </div>
       </div>
