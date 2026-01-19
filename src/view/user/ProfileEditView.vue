@@ -49,7 +49,13 @@
             class="form-control form-control-lg"
             v-model.trim="form.name"
             :disabled="loading"
+            @input="handleNameInput"
           />
+          <span
+            v-if="nameStatus.touched && nameMessage"
+            :class="['field-feedback', { error: nameStatus.invalid }]"
+            >{{ nameMessage }}</span
+          >
         </div>
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.email') }}</label>
@@ -58,7 +64,13 @@
             class="form-control form-control-lg"
             v-model.trim="form.email"
             :disabled="loading"
+            @input="handleEmailInput"
           />
+          <span
+            v-if="emailStatus.touched && emailMessage"
+            :class="['field-feedback', { error: emailStatus.invalid }]"
+            >{{ emailMessage }}</span
+          >
         </div>
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.password') }}</label>
@@ -68,6 +80,7 @@
             v-model="form.password"
             :placeholder="t('profile.fields.password')"
             :disabled="loading"
+            @input="handlePasswordInput"
           />
         </div>
         <div class="mb-4">
@@ -78,7 +91,13 @@
             v-model="form.confirmPassword"
             :placeholder="t('profile.fields.confirmPassword')"
             :disabled="loading"
+            @input="handlePasswordInput"
           />
+          <span
+            v-if="passwordStatus.touched && passwordMessage"
+            :class="['field-feedback', { error: passwordStatus.invalid }]"
+            >{{ passwordMessage }}</span
+          >
         </div>
         <div class="d-flex justify-content-end gap-2 flex-wrap">
           <button
@@ -124,6 +143,9 @@ const form = reactive({
   confirmPassword: '',
   profileImageUrl: ''
 })
+
+const NAME_REGEX = /^[\u3040-\u30FF\uAC00-\uD7A3\u4E00-\u9FFFa-zA-Z]+$/
+const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/
 
 const getRelativeProfilePath = (value) => {
   if (!value || typeof value !== 'string') return ''
@@ -172,6 +194,104 @@ const currentImage = computed(
   () => imagePreview.value || buildProfileImageUrl(form.profileImageUrl)
 )
 
+const nameStatus = reactive({ touched: false, invalid: false, messageKey: '' })
+const emailStatus = reactive({ touched: false, invalid: false, messageKey: '' })
+const passwordStatus = reactive({ touched: false, invalid: false, messageKey: '' })
+
+const nameMessage = computed(() => (nameStatus.messageKey ? t(nameStatus.messageKey) : ''))
+const emailMessage = computed(() => (emailStatus.messageKey ? t(emailStatus.messageKey) : ''))
+const passwordMessage = computed(() =>
+  passwordStatus.messageKey ? t(passwordStatus.messageKey) : ''
+)
+
+const resetFieldStatus = (status) => {
+  status.touched = false
+  status.invalid = false
+  status.messageKey = ''
+}
+
+const resetValidationStates = () => {
+  resetFieldStatus(nameStatus)
+  resetFieldStatus(emailStatus)
+  resetFieldStatus(passwordStatus)
+}
+
+const validateNameField = (force = false) => {
+  if (force && !nameStatus.touched) {
+    nameStatus.touched = true
+  }
+  if (!nameStatus.touched) return true
+  if (!form.name || !NAME_REGEX.test(form.name)) {
+    nameStatus.invalid = true
+    nameStatus.messageKey = 'profile.alerts.invalidName'
+    return false
+  }
+  nameStatus.invalid = false
+  nameStatus.messageKey = ''
+  return true
+}
+
+const validateEmailField = (force = false) => {
+  if (force && !emailStatus.touched) {
+    emailStatus.touched = true
+  }
+  if (!emailStatus.touched) return true
+  if (!form.email || !EMAIL_REGEX.test(form.email)) {
+    emailStatus.invalid = true
+    emailStatus.messageKey = 'profile.alerts.invalidEmail'
+    return false
+  }
+  emailStatus.invalid = false
+  emailStatus.messageKey = ''
+  return true
+}
+
+const validatePasswordField = (force = false) => {
+  if (force && !passwordStatus.touched) {
+    passwordStatus.touched = true
+  }
+  if (!passwordStatus.touched) return true
+  const hasPassword = !!form.password
+  const hasConfirm = !!form.confirmPassword
+
+  if (hasPassword && form.password.length < 4) {
+    passwordStatus.invalid = true
+    passwordStatus.messageKey = 'profile.alerts.passwordShort'
+    return false
+  }
+
+  if ((hasPassword || hasConfirm) && form.password !== form.confirmPassword) {
+    passwordStatus.invalid = true
+    passwordStatus.messageKey = 'profile.alerts.passwordMismatch'
+    return false
+  }
+
+  passwordStatus.invalid = false
+  passwordStatus.messageKey = ''
+  return true
+}
+
+const handleNameInput = () => {
+  if (!nameStatus.touched) {
+    nameStatus.touched = true
+  }
+  validateNameField()
+}
+
+const handleEmailInput = () => {
+  if (!emailStatus.touched) {
+    emailStatus.touched = true
+  }
+  validateEmailField()
+}
+
+const handlePasswordInput = () => {
+  if (!passwordStatus.touched) {
+    passwordStatus.touched = true
+  }
+  validatePasswordField()
+}
+
 const loadProfile = async () => {
   const storedData = localStorage.getItem(getUserIdFromCookie())
   const parsed = storedData ? JSON.parse(storedData) : null
@@ -212,6 +332,7 @@ const loadProfile = async () => {
       email: form.email,
       profileImageUrl: form.profileImageUrl
     }
+    resetValidationStates()
     return true
   } catch (error) {
     console.error('Failed to fetch user profile', error)
@@ -232,6 +353,7 @@ const resetForm = () => {
   form.profileImageUrl = original.value.profileImageUrl
   removeImageFlag.value = false
   clearImageSelection()
+  resetValidationStates()
 }
 
 const updateStoredUser = (name, email, profileImageUrl) => {
@@ -295,30 +417,12 @@ const triggerFileSelect = () => {
 }
 
 const validateForm = () => {
-  const nameRegex = /^[\u3040-\u30FF\uAC00-\uD7A3\u4E00-\u9FFFa-zA-Z\s]+$/
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/
+  const isNameValid = validateNameField(true)
+  const isEmailValid = validateEmailField(true)
+  const shouldForcePassword = !!form.password || !!form.confirmPassword
+  const isPasswordValid = validatePasswordField(shouldForcePassword)
 
-  if (!form.name || !nameRegex.test(form.name)) {
-    Swal.fire({ title: t('profile.alerts.invalidName'), icon: 'warning' })
-    return false
-  }
-
-  if (!form.email || !emailRegex.test(form.email)) {
-    Swal.fire({ title: t('profile.alerts.invalidEmail'), icon: 'warning' })
-    return false
-  }
-
-  if (form.password && form.password.length < 4) {
-    Swal.fire({ title: t('profile.alerts.passwordShort'), icon: 'warning' })
-    return false
-  }
-
-  if (form.password && form.password !== form.confirmPassword) {
-    Swal.fire({ title: t('profile.alerts.passwordMismatch'), icon: 'warning' })
-    return false
-  }
-
-  return true
+  return isNameValid && isEmailValid && isPasswordValid
 }
 
 const submitForm = async () => {
@@ -366,6 +470,7 @@ const submitForm = async () => {
     form.password = ''
     form.confirmPassword = ''
     clearImageSelection()
+    resetValidationStates()
     await Swal.fire({
       title: t('profile.alerts.success'),
       icon: 'success'
@@ -454,5 +559,14 @@ onBeforeUnmount(() => {
   color: #adb5bd !important;
   -webkit-text-fill-color: #adb5bd !important;
   transform: none;
+}
+.field-feedback {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  color: #198754;
+}
+.field-feedback.error {
+  color: #c53030;
 }
 </style>
