@@ -143,6 +143,7 @@ import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import Swal from 'sweetalert2'
 
+const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
@@ -170,6 +171,9 @@ const editorConfig = {
   ]
 }
 
+const boardName = computed(() => route.query?.name || route.params?.name || '')
+const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
+
 const inputTitle = ref('')
 const files = ref([])
 const previewItems = ref([])
@@ -191,7 +195,7 @@ const removeSelectedFile = (previewId) => {
 async function write() {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
-  if (files.value.length === 0) {
+  if (requiresImage.value && files.value.length === 0) {
     await Swal.fire({
       title: t('photoPage.imageRequired'),
       icon: 'warning'
@@ -204,15 +208,15 @@ async function write() {
   formData.append('content', sanitizeHtml(editorData.value))
   formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
   formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
-  const boardName = route.query?.name || route.params?.name || ''
-  if (!boardName) {
+  const currentBoardName = boardName.value
+  if (!currentBoardName) {
     console.error('게시판 이름이 없어 업로드를 중단했습니다.')
     return
   }
-  formData.append('board', boardName)
+  formData.append('board', currentBoardName)
   formData.append('mainContent', isMainContent.value)
 
-  if (route.query?.name === 'withDiary') {
+  if (currentBoardName === 'withDiary') {
     formData.append('diaryRoomId', route.query.roomId)
   }
 
@@ -224,16 +228,16 @@ async function write() {
     isSubmitting.value = true
     const result = await store.dispatch('WRITE_BOARD', {
       formData,
-      name: route.query.name
+      name: currentBoardName
     })
     if (result) {
-      if (route.query?.name === 'withDiary') {
+      if (currentBoardName === 'withDiary') {
         router.push({
-          name: `${route.query.name}`,
+          name: currentBoardName,
           query: { roomId: route.query.roomId, pageNum: 1 }
         })
       } else {
-        router.push(`/${route.query.name}`)
+        router.push(`/${currentBoardName}`)
       }
     }
   } finally {
