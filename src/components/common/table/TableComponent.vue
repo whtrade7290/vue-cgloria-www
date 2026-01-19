@@ -35,7 +35,6 @@
           {{ $t('common.noResults') }}
         </li>
       </ul>
-
       <!-- 페이지네이션 -->
       <nav class="mt-4">
         <ul class="pagination justify-content-center">
@@ -117,6 +116,43 @@
         </tbody>
       </table>
 
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: pageNum === 1 }"
+              href="javascript:;"
+              @click="fetchList(pageNum - 1)"
+            >
+              ‹
+            </a>
+          </li>
+
+          <li class="page-item" v-for="page in pageList" :key="page">
+            <a
+              class="page-link"
+              :class="{ selected: pageNum === page }"
+              href="javascript:;"
+              @click="fetchList(page)"
+            >
+              {{ page }}
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: pageNum === Math.ceil(store.state.count / pageSize) }"
+              href="javascript:;"
+              @click="fetchList(pageNum + 1)"
+            >
+              ›
+            </a>
+          </li>
+        </ul>
+      </nav>
+
       <!-- 기존 검색 -->
       <div class="d-flex justify-content-center mt-5">
         <div class="mb-3 w-25">
@@ -152,27 +188,26 @@ const props = defineProps({
 })
 let searchWord = ref('')
 let pageNum = ref(Number(route.query?.pageNum ?? 1)) // ref로 선언
+const pageSize = 20
+const pageList = ref([])
+const totalCount = computed(() => store.state.count)
 
 // route.query.pageNum이 변경되면 pageNum을 업데이트하는 watch
 watch(
-  () => Number(route.query.pageNum), // route.query 전체를 감시
-  (newQuery) => {
-    if (newQuery.pageNum) {
-      // pageNum이 존재할 때만 업데이트
-      pageNum.value = Number(newQuery.pageNum ?? 1)
+  () => route.query.pageNum,
+  (newValue) => {
+    const numericValue = Number(newValue ?? 1)
+    if (!Number.isNaN(numericValue)) {
+      pageNum.value = numericValue
+      settingPageNumber()
     }
   },
-  { immediate: true } // 필요 시 deep 옵션 사용
+  { immediate: true }
 )
-
-const pageSize = 20
-let pageList = []
 
 const roomId = computed(() => Number(route.query?.roomId ?? 0))
 
 // Vuex 상태를 computed로 관리
-const totalCount = computed(() => store.state.count)
-
 watch(
   totalCount, // computed로 Vuex 상태 감시
   () => {
@@ -217,11 +252,10 @@ function settingPageNumber() {
   let startIndex = Math.max(1, pageNum.value - 2) // 현재 페이지를 기준으로 앞 2개 페이지를 포함
   let endIndex = Math.min(totalPages, startIndex + 4) // startIndex에서 5개 페이지까지 표시
 
-  pageList = []
-
-  for (let index = startIndex; index <= endIndex; index++) {
-    pageList.push(index)
-  }
+  pageList.value = Array.from(
+    { length: Math.max(0, endIndex - startIndex + 1) },
+    (_, i) => startIndex + i
+  )
 
   return endIndex
 }

@@ -353,9 +353,10 @@ const changeImage = async (event) => {
 }
 const isDisplay = computed(() => {
   const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
-  return routeNames.some((name) => {
-    return route.query?.name === name
-  })
+  const storedData = localStorage.getItem(getUserIdFromCookie())
+  const role = storedData ? JSON.parse(storedData)?.user?.role : ''
+  const allowedBoard = routeNames.includes(route.query?.name)
+  return allowedBoard && role === 'ADMIN'
 })
 </script>
 
