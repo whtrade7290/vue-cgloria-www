@@ -320,7 +320,8 @@
     "editHeader": "写真投稿の編集",
     "editDescription": "中央栄光教会の歴史と兄弟教会紹介",
     "uploadButton": "ファイルアップロード",
-    "removeFile": "ファイル削除"
+    "removeFile": "ファイル削除",
+    "imageRequired": "画像を最低1枚以上登録してください。"
   },
   "alerts": {
     "copySuccess": "コピーしました。",

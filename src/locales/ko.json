@@ -319,7 +319,8 @@
     "editHeader": "사진 글 수정",
     "editDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
     "uploadButton": "파일 업로드",
-    "removeFile": "파일 삭제"
+    "removeFile": "파일 삭제",
+    "imageRequired": "이미지를 최소 1개 이상 등록해주세요."
   },
   "alerts": {
     "copySuccess": "복사되었습니다.",

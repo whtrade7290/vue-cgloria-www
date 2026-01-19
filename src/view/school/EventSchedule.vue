@@ -3,24 +3,24 @@
     <div class="manual-form" v-if="isAdmin">
       <div class="row">
         <div class="col-md-4 mb-3">
-          <label class="form-label">{{ t('eventSchedule.form.title') }}</label>
+          <label class="form-label">{{ t('school.eventSchedule.form.title') }}</label>
           <input
             v-model="form.title"
             type="text"
             class="form-control"
-            :placeholder="t('eventSchedule.form.titlePlaceholder')"
+            :placeholder="t('school.eventSchedule.form.titlePlaceholder')"
           />
         </div>
         <div class="col-md-4 mb-3">
-          <label class="form-label">{{ t('eventSchedule.form.start') }}</label>
+          <label class="form-label">{{ t('school.eventSchedule.form.start') }}</label>
           <input v-model="form.start" type="date" class="form-control" />
         </div>
         <div class="col-md-4 mb-3">
-          <label class="form-label">{{ t('eventSchedule.form.end') }}</label>
+          <label class="form-label">{{ t('school.eventSchedule.form.end') }}</label>
           <input v-model="form.end" type="date" class="form-control" />
         </div>
         <div class="col-12 mb-3">
-          <label class="form-label d-block">{{ t('eventSchedule.form.color') }}</label>
+          <label class="form-label d-block">{{ t('school.eventSchedule.form.color') }}</label>
           <div class="color-palette">
             <button
               v-for="color in colorOptions"
@@ -36,13 +36,13 @@
       </div>
       <div class="text-end d-flex gap-2 justify-content-end">
         <button class="btn btn-outline-secondary" @click="downloadCsvSample">
-          {{ t('eventSchedule.form.sample') }}
+          {{ t('school.eventSchedule.form.sample') }}
         </button>
         <button class="btn btn-outline-secondary" @click="openCsvModal">
-          {{ t('eventSchedule.form.upload') }}
+          {{ t('school.eventSchedule.form.upload') }}
         </button>
         <button class="btn btn-primary" @click="openModal">
-          {{ t('eventSchedule.form.register') }}
+          {{ t('school.eventSchedule.form.register') }}
         </button>
       </div>
     </div>
@@ -131,28 +131,28 @@ const openModal = async () => {
   const color = form.value.color
 
   if (!title || !start) {
-    await Swal.fire(t('eventSchedule.alerts.missingFields'), '', 'warning')
+    await Swal.fire(t('school.eventSchedule.alerts.missingFields'), '', 'warning')
     return
   }
 
   const result = await Swal.fire({
-    title: t('eventSchedule.modal.createTitle'),
-    html: `
+    title: t('school.eventSchedule.modal.createTitle'),
+      html: `
       <div class="swal-review">
-        <p><strong>${t('eventSchedule.form.title')}:</strong> ${title}</p>
-        <p><strong>${t('eventSchedule.form.start')}:</strong> ${start}</p>
-        <p><strong>${t('eventSchedule.form.end')}:</strong> ${end}</p>
-        <p><strong>${t('eventSchedule.form.color')}:</strong> <span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #ccc;margin-right:6px;"></span>${color}</p>
+        <p><strong>${t('school.eventSchedule.form.title')}:</strong> ${title}</p>
+        <p><strong>${t('school.eventSchedule.form.start')}:</strong> ${start}</p>
+        <p><strong>${t('school.eventSchedule.form.end')}:</strong> ${end}</p>
+        <p><strong>${t('school.eventSchedule.form.color')}:</strong> <span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #ccc;margin-right:6px;"></span>${color}</p>
       </div>
     `,
-    confirmButtonText: t('eventSchedule.modal.confirm'),
+    confirmButtonText: t('school.eventSchedule.modal.confirm'),
     showCancelButton: true,
-    cancelButtonText: t('eventSchedule.modal.cancel')
+    cancelButtonText: t('school.eventSchedule.modal.cancel')
   })
 
   if (result.isConfirmed) {
     if (!adminId) {
-      await Swal.fire(t('eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
+      await Swal.fire(t('school.eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
       return
     }
     try {
@@ -167,22 +167,22 @@ const openModal = async () => {
         await fetchSchedules(currentRange.value.start, currentRange.value.end)
       }
       form.value = { title: '', start: '', end: '', color: colorOptions[0] }
-      await Swal.fire(t('eventSchedule.alerts.registerSuccess'), '', 'success')
+      await Swal.fire(t('school.eventSchedule.alerts.registerSuccess'), '', 'success')
     } catch (error) {
       console.error(error)
-      await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
+      await Swal.fire(t('school.eventSchedule.alerts.error'), t('school.eventSchedule.alerts.uploadError'), 'error')
     }
   }
 }
 
 const openCsvModal = async () => {
   if (!adminId) {
-    await Swal.fire(t('eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
+    await Swal.fire(t('school.eventSchedule.alerts.error'), t('alerts.loginRequired'), 'error')
     return
   }
 
   const { value: file } = await Swal.fire({
-    title: t('eventSchedule.form.upload'),
+    title: t('school.eventSchedule.form.upload'),
     html: `
       <div class="swal-form">
         <input id="csv-input" type="file" accept=".csv,text/csv" class="form-control" />
@@ -190,13 +190,13 @@ const openCsvModal = async () => {
     `,
     focusConfirm: false,
     showCancelButton: true,
-    confirmButtonText: t('eventSchedule.form.upload'),
-    cancelButtonText: t('eventSchedule.modal.cancel'),
+    confirmButtonText: t('school.eventSchedule.form.upload'),
+    cancelButtonText: t('school.eventSchedule.modal.cancel'),
     preConfirm: () => {
       const input = document.getElementById('csv-input')
       const selectedFile = input?.files?.[0]
       if (!selectedFile) {
-        Swal.showValidationMessage(t('eventSchedule.alerts.csvSelect'))
+        Swal.showValidationMessage(t('school.eventSchedule.alerts.csvSelect'))
         return false
       }
       return selectedFile
@@ -216,20 +216,20 @@ const openCsvModal = async () => {
     }
 
     const message = `
-      <p>${t('eventSchedule.result.success')}: ${data.successCount}</p>
-      <p>${t('eventSchedule.result.fail')}: ${data.failCount}</p>
+      <p>${t('school.eventSchedule.result.success')}: ${data.successCount}</p>
+      <p>${t('school.eventSchedule.result.fail')}: ${data.failCount}</p>
       ${
         data.errors?.length
-          ? `<hr /><p><strong>${t('eventSchedule.result.errorList')}</strong></p>${data.errors
-              .map((err) => `<p>${t('eventSchedule.result.row')} ${err.row}: ${err.reason}</p>`)
+          ? `<hr /><p><strong>${t('school.eventSchedule.result.errorList')}</strong></p>${data.errors
+              .map((err) => `<p>${t('school.eventSchedule.result.row')} ${err.row}: ${err.reason}</p>`)
               .join('')}`
           : ''
       }
     `
-    await Swal.fire(t('eventSchedule.alerts.csvResult'), message, 'info')
+    await Swal.fire(t('school.eventSchedule.alerts.csvResult'), message, 'info')
   } catch (error) {
     console.error('CSV upload failed', error)
-    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
+    await Swal.fire(t('school.eventSchedule.alerts.error'), t('school.eventSchedule.alerts.uploadError'), 'error')
   }
 }
 
@@ -245,7 +245,7 @@ const downloadCsvSample = async () => {
     URL.revokeObjectURL(url)
   } catch (error) {
     console.error('Failed to download sample', error)
-    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.downloadError'), 'error')
+    await Swal.fire(t('school.eventSchedule.alerts.error'), t('school.eventSchedule.alerts.downloadError'), 'error')
   }
 }
 
@@ -279,15 +279,15 @@ const handleEventClick = (info) => {
     title: event.title,
     html: `
       <div class="swal-review">
-        <p><strong>${t('eventSchedule.modal.start')}:</strong> ${toDateOnly(event.start)}</p>
-        <p><strong>${t('eventSchedule.modal.end')}:</strong> ${toDateOnly(event.end || event.start)}</p>
+        <p><strong>${t('school.eventSchedule.modal.start')}:</strong> ${toDateOnly(event.start)}</p>
+        <p><strong>${t('school.eventSchedule.modal.end')}:</strong> ${toDateOnly(event.end || event.start)}</p>
       </div>
     `,
     showCancelButton: true,
     showDenyButton: true,
-    confirmButtonText: t('eventSchedule.modal.editAction'),
-    denyButtonText: t('eventSchedule.modal.deleteAction'),
-    cancelButtonText: t('eventSchedule.modal.close')
+    confirmButtonText: t('school.eventSchedule.modal.editAction'),
+    denyButtonText: t('school.eventSchedule.modal.deleteAction'),
+    cancelButtonText: t('school.eventSchedule.modal.close')
   }).then((result) => {
     if (result.isConfirmed) {
       openEditModal(event)
@@ -300,16 +300,16 @@ const handleEventClick = (info) => {
 const openEditModal = async (event) => {
   let selectedColor = event.extendedProps.color || '#0F2854'
   const { value: formValues } = await Swal.fire({
-    title: t('eventSchedule.modal.editTitle'),
+    title: t('school.eventSchedule.modal.editTitle'),
     html: `
       <div class="swal-form">
-        <label class="form-label">${t('eventSchedule.form.title')}</label>
+        <label class="form-label">${t('school.eventSchedule.form.title')}</label>
         <input id="edit-title" class="form-control" value="${event.title}" />
-        <label class="form-label mt-2">${t('eventSchedule.form.start')}</label>
+        <label class="form-label mt-2">${t('school.eventSchedule.form.start')}</label>
         <input id="edit-start" type="date" class="form-control" value="${toDateOnly(event.start)}" />
-        <label class="form-label mt-2">${t('eventSchedule.form.end')}</label>
+        <label class="form-label mt-2">${t('school.eventSchedule.form.end')}</label>
         <input id="edit-end" type="date" class="form-control" value="${toDateOnly(event.end || event.start)}" />
-        <label class="form-label mt-2 d-block">${t('eventSchedule.form.color')}</label>
+        <label class="form-label mt-2 d-block">${t('school.eventSchedule.form.color')}</label>
         <div class="color-palette" id="edit-color-palette">
           ${colorOptions
             .map(
@@ -327,8 +327,8 @@ const openEditModal = async (event) => {
     `,
     focusConfirm: false,
     showCancelButton: true,
-    confirmButtonText: t('eventSchedule.modal.save'),
-    cancelButtonText: t('eventSchedule.modal.cancel'),
+    confirmButtonText: t('school.eventSchedule.modal.save'),
+    cancelButtonText: t('school.eventSchedule.modal.cancel'),
     didOpen: () => {
       const palette = document.getElementById('edit-color-palette')
       if (palette) {
@@ -348,7 +348,7 @@ const openEditModal = async (event) => {
       const color = selectedColor || '#0F2854'
 
       if (!title || !start) {
-        Swal.showValidationMessage(t('eventSchedule.alerts.missingFields'))
+        Swal.showValidationMessage(t('school.eventSchedule.alerts.missingFields'))
         return false
       }
 
@@ -366,20 +366,20 @@ const openEditModal = async (event) => {
     if (currentRange.value.start) {
       await fetchSchedules(currentRange.value.start, currentRange.value.end)
     }
-    Swal.fire(t('eventSchedule.alerts.updateSuccess'), '', 'success')
+    Swal.fire(t('school.eventSchedule.alerts.updateSuccess'), '', 'success')
   } catch (error) {
     console.error('Update failed', error)
-    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
+    await Swal.fire(t('school.eventSchedule.alerts.error'), t('school.eventSchedule.alerts.uploadError'), 'error')
   }
 }
 
 const confirmDelete = async (event) => {
   const confirm = await Swal.fire({
-    title: t('eventSchedule.modal.deleteConfirm'),
+    title: t('school.eventSchedule.modal.deleteConfirm'),
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: t('eventSchedule.modal.deleteAction'),
-    cancelButtonText: t('eventSchedule.modal.cancel')
+    confirmButtonText: t('school.eventSchedule.modal.deleteAction'),
+    cancelButtonText: t('school.eventSchedule.modal.cancel')
   })
 
   if (!confirm.isConfirmed || !adminId) return
@@ -389,10 +389,10 @@ const confirmDelete = async (event) => {
     if (currentRange.value.start) {
       await fetchSchedules(currentRange.value.start, currentRange.value.end)
     }
-    Swal.fire(t('eventSchedule.alerts.deleteSuccess'), '', 'success')
+    Swal.fire(t('school.eventSchedule.alerts.deleteSuccess'), '', 'success')
   } catch (error) {
     console.error('Delete failed', error)
-    await Swal.fire(t('eventSchedule.alerts.error'), t('eventSchedule.alerts.uploadError'), 'error')
+    await Swal.fire(t('school.eventSchedule.alerts.error'), t('school.eventSchedule.alerts.uploadError'), 'error')
   }
 }
 

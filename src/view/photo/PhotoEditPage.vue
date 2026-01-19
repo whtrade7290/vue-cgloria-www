@@ -141,6 +141,8 @@ import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import Swal from 'sweetalert2'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 const staticPath = `${import.meta.env.VITE_API_URL}`
 const store = useStore()
@@ -250,6 +252,13 @@ const removeSelectedFile = (item) => {
 const edit = async () => {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
+  if (filteredExistingFiles.value.length === 0 && files.value.length === 0) {
+    await Swal.fire({
+      title: t('photoPage.imageRequired'),
+      icon: 'warning'
+    })
+    return
+  }
 
   let formData = new FormData()
 
