@@ -11,6 +11,10 @@ export const instance = axios.create({
 // request header에 토큰 추가
 instance.interceptors.request.use(
   async (config) => {
+    store.commit('INCREMENT_PENDING_REQUESTS')
+    if (!config.headers) {
+      config.headers = {}
+    }
     if (config.headers['x-skip-auth'] === 'true') return config
     const storedData = localStorage.getItem(getUserIdFromCookie())
 
@@ -35,10 +39,6 @@ instance.interceptors.request.use(
     }
 
     if (accessToken) {
-      if (!config.headers) {
-        config.headers = {}
-      }
-
       config.headers.Authorization = `Bearer ${accessToken}`
       config.headers['x-refresh-token'] = refreshToken
     }
@@ -46,6 +46,18 @@ instance.interceptors.request.use(
     return config
   },
   (err) => {
+    store.commit('DECREMENT_PENDING_REQUESTS')
     return Promise.reject(err)
+  }
+)
+
+instance.interceptors.response.use(
+  (response) => {
+    store.commit('DECREMENT_PENDING_REQUESTS')
+    return response
+  },
+  (error) => {
+    store.commit('DECREMENT_PENDING_REQUESTS')
+    return Promise.reject(error)
   }
 )

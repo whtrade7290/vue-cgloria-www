@@ -1,9 +1,5 @@
 import { instance } from '@/api/intercept.js'
-import axios from 'axios'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
-const config = {
-  baseUrl: import.meta.env.VITE_API_URL
-}
 
 /* ------------------------- 성경 통독 ------------------------- */
 export async function requestBiblePlan(days) {
@@ -29,7 +25,15 @@ export async function getBoardCount({ name, searchWord }) {
 /* ------------------------- 로그인 / 회원 ------------------------- */
 export async function requestLogin(username, password) {
   try {
-    const response = await axios.post(`${config.baseUrl}signIn`, { username, password })
+    const response = await instance.post(
+      'signIn',
+      { username, password },
+      {
+        headers: {
+          'x-skip-auth': 'true'
+        }
+      }
+    )
     return response.data
   } catch (error) {
     console.error(error, 'error login')

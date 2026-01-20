@@ -10,36 +10,18 @@
 <script setup>
 import NavBarVue from './components/common/NavBar.vue'
 import FooterComponentVue from './components/common/FooterComponent.vue'
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import LoadingSpinner from './components/common/LoadingSpinner.vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
 
-const isLoading = ref(true)
+const isLoading = computed(() => store.getters.isGlobalLoading)
 
 const navBarKey = computed(() => {
   // 로그인 상태나 role이 변경되면 NavBar를 다시 마운트
   return `${store.state.isLogin}-${store.state.role}`
 })
-
-onMounted(async () => {
-  await nextTick()
-  setTimeout(() => {
-    isLoading.value = false
-  }, 1000)
-})
-
-// watch(
-//   () => route.fullPath,
-//   async () => {
-//     isLoading.value = true
-//     await nextTick().then(() => {
-//       isLoading.value = false
-//     })
-//   },
-//   { deep: true }
-// )
 </script>
 
 <style>

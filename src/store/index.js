@@ -51,11 +51,15 @@ export default createStore({
     role: '',
     rooms: [],
     room: {},
-    disapproveUsers: []
+    disapproveUsers: [],
+    pendingRequests: 0
   },
   getters: {
     checkLogin() {
       return !localStorage.getItem(getUserIdFromCookie())
+    },
+    isGlobalLoading(state) {
+      return state.pendingRequests > 0
     }
   },
   actions: {
@@ -336,6 +340,12 @@ export default createStore({
     },
     SET_DISAPPROVE_USERS(state, item) {
       state.disapproveUsers = item
+    },
+    INCREMENT_PENDING_REQUESTS(state) {
+      state.pendingRequests += 1
+    },
+    DECREMENT_PENDING_REQUESTS(state) {
+      state.pendingRequests = Math.max(0, state.pendingRequests - 1)
     }
   }
 })
