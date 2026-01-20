@@ -31,7 +31,8 @@
         "sermon": "설교",
         "column": "칼럼",
         "weekly_bible_verse": "금주의성경말씀",
-        "class_meeting": "속회교재실"
+        "class_meeting": "속회교재실",
+        "bible_plan": "성경통독표"
       }
     },
     "worshipTraining": {
@@ -77,6 +78,28 @@
         "manageWithDiary": "예수동행일기 방 관리",
         "userApprove": "유저 관리"
       }
+    }
+  },
+  "biblePlan": {
+    "title": "성경 통독표 생성",
+    "description": "원하는 통독 일수를 입력하고 CSV 파일을 다운로드하세요.",
+    "form": {
+      "daysLabel": "통독 일수",
+      "daysPlaceholder": "예: 120",
+      "helper": "1 이상의 숫자를 입력해주세요."
+    },
+    "actions": {
+      "generate": "통독표 만들기",
+      "download": "CSV 다운로드"
+    },
+    "messages": {
+      "invalidDays": "통독 일수는 1 이상의 정수여야 합니다.",
+      "success": "{days}일 통독표가 준비되었습니다.",
+      "ready": "다운로드 버튼을 눌러 CSV 파일을 받으세요.",
+      "error": "통독표 생성 중 오류가 발생했습니다."
+    },
+    "notice": {
+      "japanesePending": "※ 일본어 성경은 아직 지원하지 않습니다."
     }
   },
   "school": {

@@ -31,7 +31,8 @@
         "sermon": "説教",
         "column": "コラム",
         "weekly_bible_verse": "今週の御言葉",
-        "class_meeting": "属会教材"
+        "class_meeting": "属会教材",
+        "bible_plan": "聖書通読表"
       }
     },
     "worshipTraining": {
@@ -77,6 +78,28 @@
         "manageWithDiary": "イエス同行日記ルーム管理",
         "userApprove": "ユーザー管理"
       }
+    }
+  },
+  "biblePlan": {
+    "title": "聖書通読表作成",
+    "description": "希望する通読日数を入力してCSVファイルをダウンロードしてください。",
+    "form": {
+      "daysLabel": "通読日数",
+      "daysPlaceholder": "例: 120",
+      "helper": "1以上の数字を入力してください。"
+    },
+    "actions": {
+      "generate": "通読表を作成",
+      "download": "CSVをダウンロード"
+    },
+    "messages": {
+      "invalidDays": "通読日数は1以上の整数で入力してください。",
+      "success": "{days}日分の通読表が準備できました。",
+      "ready": "ダウンロードボタンを押してCSVファイルを受け取ってください。",
+      "error": "通読表の作成中にエラーが発生しました。"
+    },
+    "notice": {
+      "japanesePending": "※ 現在、日本語の聖書データはサポートされていません。"
     }
   },
   "school": {

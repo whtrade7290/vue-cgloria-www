@@ -5,6 +5,17 @@ const config = {
   baseUrl: import.meta.env.VITE_API_URL
 }
 
+/* ------------------------- 성경 통독 ------------------------- */
+export async function requestBiblePlan(days) {
+  return await instance.post(
+    '/bible',
+    { days },
+    {
+      responseType: 'blob'
+    }
+  )
+}
+
 /* ------------------------- 게시판 관련 ------------------------- */
 export async function getBoardList(obj) {
   const { name, startRow, pageSize, searchWord } = obj

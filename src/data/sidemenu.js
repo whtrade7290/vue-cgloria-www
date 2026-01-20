@@ -13,7 +13,12 @@ const SMALLGROUP = [
     icon: 'attribution',
     path: 'weekly_bible_verse'
   },
-  { title: 'nav.classWord.subTitles.class_meeting', icon: 'pin_drop', path: 'class_meeting' }
+  { title: 'nav.classWord.subTitles.class_meeting', icon: 'pin_drop', path: 'class_meeting' },
+  {
+    title: 'nav.classWord.subTitles.bible_plan',
+    icon: 'event_note',
+    path: 'bible_plan'
+  }
 ]
 const WORSHIP = [
   { title: 'nav.worshipTraining.subTitles.jumok', icon: 'book', path: 'jumok' },

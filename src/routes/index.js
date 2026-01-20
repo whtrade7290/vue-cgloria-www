@@ -8,6 +8,7 @@ import SermonBoard from '@/view/smallGroup/SermonBoard.vue'
 import ColumnBoard from '@/view/smallGroup/ColumnBoard.vue'
 import SmallGroup from '@/view/smallGroup/SmallGroupBoard.vue'
 import WeeklySermonBoard from '@/view/smallGroup/WeeklySermonBoard.vue'
+import BiblePlanView from '@/view/smallGroup/BiblePlanView.vue'
 import EventSchedule from '@/view/school/EventSchedule.vue'
 import SchoolPhotoBoard from '@/view/school/SchoolPhotoBoard.vue'
 import SchoolLibrary from '@/view/school/SchoolLibrary.vue'
@@ -132,6 +133,11 @@ const routes = [
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'weekly_bible_verse' })
       await next()
     }
+  },
+  {
+    path: '/bible_plan',
+    name: 'bible_plan',
+    component: BiblePlanView
   },
   // 예배/훈련
   { path: '/jumok', name: 'jumok', component: JumokjaView },
