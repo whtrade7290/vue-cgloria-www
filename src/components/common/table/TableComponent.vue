@@ -18,7 +18,7 @@
       <!-- 리스트 -->
       <ul class="list-group list-group-flush mt-3">
         <li
-          v-for="item in store.state.dataList"
+          v-for="item in displayItems"
           :key="item.id"
           class="list-group-item mobile-item"
           @click="intoDetail(item.id)"
@@ -31,8 +31,11 @@
           </p>
         </li>
 
-        <li v-if="store.state.dataList.length === 0" class="list-group-item text-center text-muted">
+        <li v-if="hasNoData" class="list-group-item text-center text-muted">
           {{ $t('common.noResults') }}
+        </li>
+        <li v-if="props.loading" class="list-group-item text-center text-muted">
+          Loading...
         </li>
       </ul>
       <!-- 페이지네이션 -->
@@ -63,7 +66,7 @@
           <li class="page-item">
             <a
               class="page-link"
-              :class="{ disabled: pageNum === Math.ceil(store.state.count / pageSize) }"
+              :class="{ disabled: pageNum === totalPages }"
               href="javascript:;"
               @click="fetchList(pageNum + 1)"
             >
@@ -97,7 +100,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="item in store.state.dataList" :key="item.id">
+          <tr v-for="item in displayItems" :key="item.id">
             <td class="text-center">{{ item.id }}</td>
             <td>
               <a href="javascript:;" @click="intoDetail(item.id)">
@@ -108,9 +111,14 @@
             <td class="text-center">{{ formatDate(item.create_at) }}</td>
           </tr>
 
-          <tr v-if="store.state.dataList.length === 0">
+          <tr v-if="hasNoData">
             <td colspan="4" class="text-center text-muted">
               {{ $t('common.noResults') }}
+            </td>
+          </tr>
+          <tr v-if="props.loading">
+            <td colspan="4" class="text-center text-muted">
+              Loading...
             </td>
           </tr>
         </tbody>
@@ -143,7 +151,7 @@
           <li class="page-item">
             <a
               class="page-link"
-              :class="{ disabled: pageNum === Math.ceil(store.state.count / pageSize) }"
+              :class="{ disabled: pageNum === totalPages }"
               href="javascript:;"
               @click="fetchList(pageNum + 1)"
             >
@@ -161,7 +169,8 @@
             class="form-control form-control-lg"
             placeholder="search"
             v-model="searchWord"
-          />
+          @keydown.enter.prevent="searchPost"
+        />
         </div>
         <div style="margin-left: 10px">
           <button class="btn bg-gradient-primary test" @click="searchPost">검색</button>
@@ -172,150 +181,101 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 import { formatDate } from '@/utils/dateFormat'
 
 const router = useRouter()
 const route = useRoute()
-const store = useStore()
+
 const props = defineProps({
   called: {
     type: String,
     default: ''
-  }
-})
-let searchWord = ref('')
-let pageNum = ref(Number(route.query?.pageNum ?? 1)) // ref로 선언
-const pageSize = 20
-const pageList = ref([])
-const totalCount = computed(() => store.state.count)
-
-// route.query.pageNum이 변경되면 pageNum을 업데이트하는 watch
-watch(
-  () => route.query.pageNum,
-  (newValue) => {
-    const numericValue = Number(newValue ?? 1)
-    if (!Number.isNaN(numericValue)) {
-      pageNum.value = numericValue
-      settingPageNumber()
-    }
   },
-  { immediate: true }
-)
+  items: {
+    type: Array,
+    default: () => []
+  },
+  totalCount: {
+    type: Number,
+    default: 0
+  },
+  page: {
+    type: Number,
+    default: 1
+  },
+  pageSize: {
+    type: Number,
+    default: 20
+  },
+  searchValue: {
+    type: String,
+    default: ''
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  roomId: {
+    type: Number,
+    default: 0
+  }
+})
 
-const roomId = computed(() => Number(route.query?.roomId ?? 0))
+const emit = defineEmits(['page-change', 'search'])
 
-// Vuex 상태를 computed로 관리
+const pageNum = ref(props.page || 1)
 watch(
-  totalCount, // computed로 Vuex 상태 감시
-  () => {
-    fetchList(pageNum.value) // totalCount가 변경되면 리스트 다시 로드
+  () => props.page,
+  (value) => {
+    pageNum.value = value || 1
   }
 )
 
-fetchList(pageNum.value)
-
-function fetchList(num) {
-  let payload = {
-    name: props.called,
-    startRow: (num - 1) * pageSize,
-    pageSize: pageSize,
-    searchWord: searchWord.value
+const searchWord = ref(props.searchValue || '')
+watch(
+  () => props.searchValue,
+  (value) => {
+    searchWord.value = value || ''
   }
+)
 
-  let actionsName = ''
+const totalPages = computed(() => {
+  return Math.max(1, Math.ceil(props.totalCount / props.pageSize))
+})
 
-  if (route.name === 'withDiary') {
-    actionsName = 'FETCH_WITHDIARY_DATALIST'
+const pageList = computed(() => {
+  const startIndex = Math.max(1, pageNum.value - 2)
+  const endIndex = Math.min(totalPages.value, startIndex + 4)
+  return Array.from({ length: Math.max(0, endIndex - startIndex + 1) }, (_, i) => startIndex + i)
+})
 
-    if (roomId.value) {
-      payload = {
-        ...payload,
-        roomId: roomId.value
-      }
-    }
-  } else {
-    actionsName = 'FETCH_BOARDLIST'
-  }
+const hasNoData = computed(
+  () => !props.loading && (!props.items || props.items.length === 0)
+)
 
-  store.dispatch(actionsName, payload)
-  pageNum.value = num
-  settingPageNumber()
+const displayItems = computed(() => props.items ?? [])
+
+const changePage = (page) => {
+  if (page < 1 || page > totalPages.value || page === pageNum.value) return
+  emit('page-change', page)
 }
 
-function settingPageNumber() {
-  let totalPages = Math.ceil(totalCount.value / pageSize)
-
-  // 항상 처음 5개 페이지가 표시되도록
-  let startIndex = Math.max(1, pageNum.value - 2) // 현재 페이지를 기준으로 앞 2개 페이지를 포함
-  let endIndex = Math.min(totalPages, startIndex + 4) // startIndex에서 5개 페이지까지 표시
-
-  pageList.value = Array.from(
-    { length: Math.max(0, endIndex - startIndex + 1) },
-    (_, i) => startIndex + i
-  )
-
-  return endIndex
+const fetchList = (page) => {
+  changePage(page)
 }
 
-async function intoDetail(id) {
+const searchPost = () => {
+  emit('search', searchWord.value.trim())
+}
+
+const intoDetail = async (id) => {
   await router.push({
-    name: 'photoDetail',
-    params: { name: route.name, id: id },
-    query: { pageNum: pageNum.value, roomId: roomId.value }
+    name: 'detail',
+    params: { name: props.called, id },
+    query: { ...route.query, pageNum: pageNum.value, roomId: props.roomId || route.query.roomId }
   })
-}
-
-onMounted(() => {
-  window.addEventListener('keydown', handleEnterKey)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleEnterKey)
-})
-
-const handleEnterKey = (event) => {
-  if (event.key === 'Enter') {
-    searchPost()
-  }
-}
-
-async function searchPost() {
-  pageNum.value = 1
-
-  let payload = {
-    name: props.called,
-    startRow: 0,
-    pageSize: pageSize,
-    searchWord: searchWord.value
-  }
-
-  let actionsName = ''
-  let actionsCountName = ''
-
-  if (route.name === 'withDiary') {
-    actionsName = 'FETCH_WITHDIARY_DATALIST'
-    actionsCountName = 'FETCH_WITHDIARY_BOARDCOUNT'
-
-    if (roomId.value) {
-      payload = {
-        ...payload,
-        roomId: roomId.value
-      }
-    }
-  } else {
-    actionsName = 'FETCH_BOARDLIST'
-    actionsCountName = 'FETCH_BOARDCOUNT'
-  }
-
-  // 글 갯수 조회
-  store.dispatch(actionsCountName, payload)
-  // 글 조회
-  store.dispatch(actionsName, payload)
-
-  window.scrollTo({ top: 0, behavior: 'smooth' }) // 부드러운 스크롤 적용
 }
 </script>
 

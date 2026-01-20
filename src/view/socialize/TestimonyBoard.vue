@@ -1,6 +1,16 @@
 <template>
   <CardContainer :title="obj.title">
-    <TableComponent :called="route.name"></TableComponent>
+    <TableComponent
+      :called="route.name"
+      :items="items"
+      :total-count="totalCount"
+      :page="pageNum"
+      :page-size="pageSize"
+      :search-value="searchWord"
+      :loading="loading"
+      @page-change="handlePageChange"
+      @search="handleSearch"
+    ></TableComponent>
     <WriteButton></WriteButton>
   </CardContainer>
 </template>
@@ -13,12 +23,24 @@ import { useStore } from 'vuex'
 import { SOCIALIZE } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
+import { useBoardList } from '@/composables/useBoardList'
 
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SOCIALIZE)
 obj.value = SOCIALIZE.find((o) => route.name === o.path)
+
+const {
+  items,
+  totalCount,
+  pageNum,
+  pageSize,
+  searchWord,
+  loading,
+  handlePageChange,
+  handleSearch
+} = useBoardList('testimony')
 </script>
 
 <style lang="scss" scoped></style>

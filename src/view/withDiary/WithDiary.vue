@@ -7,7 +7,18 @@
     ></HeaderComponent>
     <div class="container">
       <CardContainer title="withDiaryParams.mainTitle">
-        <TableComponent :called="route.name"></TableComponent>
+        <TableComponent
+          :called="route.name"
+          :items="items"
+          :total-count="totalCount"
+          :page="pageNum"
+          :page-size="pageSize"
+          :search-value="searchWord"
+          :loading="loading"
+          :room-id="roomId"
+          @page-change="handlePageChange"
+          @search="handleSearch"
+        ></TableComponent>
         <WriteButton :roomId="route.query.roomId"></WriteButton>
       </CardContainer>
     </div>
@@ -22,13 +33,26 @@ import WriteButton from '@/components/common/WriteButton.vue'
 import { WITHDIARY } from '@/data/sidemenu.js'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-
-const staticPath = `${import.meta.env.VITE_API_URL}`
+import { computed } from 'vue'
+import { useBoardList } from '@/composables/useBoardList'
 
 const route = useRoute()
 const store = useStore()
 
 store.dispatch('FETCH_SIDEMENU', WITHDIARY)
+
+const roomId = computed(() => Number(route.query?.roomId ?? 0))
+
+const {
+  items,
+  totalCount,
+  pageNum,
+  pageSize,
+  searchWord,
+  loading,
+  handlePageChange,
+  handleSearch
+} = useBoardList('withDiary', { roomIdRef: roomId })
 </script>
 
 <style scoped>
