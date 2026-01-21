@@ -24,7 +24,6 @@ import {
   updateProfile,
   fetchDisapproveUsers,
   approveUser,
-  deletePhotoBoard,
   fetchDiaryRoomUsers,
   removeDiaryRoomUser,
   removeDiaryRoom,
@@ -190,12 +189,8 @@ export default createStore({
       }
       return res
     },
-    async DELETE_BOARD({ commit }, { name, id, deleteKey }) {
-      const result = await deleteBoard(name, id, deleteKey)
-      return result.data
-    },
-    async DELETE_PHOTO_BOARD({ commit }, { name, id, deleteKeyList }) {
-      const result = await deletePhotoBoard(name, id, deleteKeyList)
+    async DELETE_BOARD({ commit }, { name, id, deleteKeyList }) {
+      const result = await deleteBoard(name, id, deleteKeyList)
       return result.data
     },
     async EDIT_BOARD({ commit }, { formData, name }) {

@@ -41,17 +41,6 @@ const routes = [
     path: '/',
     name: 'main',
     component: MainView
-    // beforeEnter: async (to, from, next) => {
-    //   const store = useStore()
-    //   const payload = {
-    //     name: 'photo',
-    //     startRow: 0,
-    //     pageSize: 8
-    //   }
-    //   await store.dispatch('FETCH_BOARDLIST', payload)
-    //   await store.dispatch('FETCH_MAIN_CONTENTS')
-    //   await next()
-    // }
   },
   // auth
   { path: '/login', name: 'login', component: LoginView },

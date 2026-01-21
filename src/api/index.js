@@ -127,12 +127,8 @@ export async function getContentById(name, id) {
   return await instance.post(`${name}/${name}_detail`, { id, board: name })
 }
 
-export async function deleteBoard(name, id, deleteKey) {
-  return await instance.post(`${name}/${name}_delete`, { id, deleteKey })
-}
-
-export async function deletePhotoBoard(name, id, deleteKeyList) {
-  return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList, board: name })
+export async function deleteBoard(name, id, deleteKeyList) {
+  return await instance.post(`${name}/${name}_delete`, { id, deleteKeyList })
 }
 
 export async function deleteCommentRequest({ commentId, boardId, boardName }) {

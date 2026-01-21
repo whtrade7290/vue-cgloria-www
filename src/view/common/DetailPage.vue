@@ -265,7 +265,7 @@ const deleteBoard = () => {
     confirmButtonText: t('alerts.deleteConfirmYes')
   }).then(async (result) => {
     if (result.isConfirmed) {
-      const result = await store.dispatch('DELETE_PHOTO_BOARD', {
+      const result = await store.dispatch('DELETE_BOARD', {
         name: route.params.name,
         id: store.state.detail.id,
         deleteKeyList: store.state.detail.files
