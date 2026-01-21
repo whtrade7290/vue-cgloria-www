@@ -18,10 +18,7 @@
         </div>
         <div class="col-lg-5 col-md-12 ms-auto order-1 order-md-1 order-lg-1">
           <div class="pt-0">
-            <h3 class="text-gradient text-primary mb-0">{{ $t('MainSectionTraining.title') }}</h3>
-            <h5 class="mb-4">
-              <a href="#" target="blank" rel="nofollow">{{ $t('MainSectionTraining.subTitle') }}</a>
-            </h5>
+            <h3 class="text-gradient text-primary mb-2">{{ $t('MainSectionTraining.title') }}</h3>
             <p>
               <b>{{ $t('MainSectionTraining.content1Bold') }}</b
               >{{ $t('MainSectionTraining.content1') }}
