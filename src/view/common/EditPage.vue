@@ -173,6 +173,7 @@ const editorConfig = {
   ]
 }
 
+const MAX_IMAGE_COUNT = 4
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
 
@@ -232,6 +233,34 @@ const displayPdfPreviews = computed(() => [
   ...existingPdfPreviews.value,
   ...newPdfPreviewItems.value
 ])
+
+const getCurrentImageCount = () =>
+  existingImagePreviews.value.length + newImagePreviewItems.value.length
+
+const enforceImageLimit = (filesToAdd, currentCount) => {
+  const accepted = []
+  let imageCount = currentCount
+  let overflow = false
+
+  filesToAdd.forEach((file) => {
+    if (file.type === 'application/pdf') {
+      accepted.push(file)
+      return
+    }
+    if (imageCount < MAX_IMAGE_COUNT) {
+      accepted.push(file)
+      imageCount += 1
+    } else {
+      overflow = true
+    }
+  })
+
+  if (overflow) {
+    Swal.fire({ title: t('photoPage.imageLimit'), icon: 'warning' })
+  }
+
+  return accepted
+}
 
 const removeSelectedFile = (item) => {
   if (item.origin === 'existing') {
@@ -329,9 +358,13 @@ const changeImage = async (event) => {
       const filteredFiles = processedFiles.filter(
         (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
       )
-      files.value = files.value.concat(filteredFiles)
+      const limitedFiles = enforceImageLimit(filteredFiles, getCurrentImageCount())
+      if (limitedFiles.length === 0) {
+        return
+      }
+      files.value = files.value.concat(limitedFiles)
 
-      filteredFiles.forEach((file) => {
+      limitedFiles.forEach((file) => {
         const fileId = `${file.name}-${file.lastModified}`
         if (file.type === 'application/pdf') {
           if (!previewItems.value.some((item) => item.id === fileId)) {
@@ -412,10 +445,13 @@ const isDisplay = computed(() => {
 }
 .image {
   width: 100%;
-  height: 160px;
+  height: 220px;
   display: block;
-  border-radius: 0.5rem;
-  object-fit: cover;
+  border-radius: 0.75rem;
+  object-fit: contain;
+  background-color: #f8f9fc;
+  border: 1px solid #e3e6ef;
+  padding: 0.35rem;
 }
 .file-chip-list {
   width: 80%;

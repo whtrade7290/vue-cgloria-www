@@ -403,8 +403,8 @@ section {
 }
 .attachment-image {
   display: flex;
-  max-width: 360px;
-  max-height: 260px;
+  max-width: 520px;
+  max-height: 380px;
   width: 100%;
   justify-content: center;
   align-items: center;

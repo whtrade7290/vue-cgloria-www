@@ -343,7 +343,8 @@
     "editDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
     "uploadButton": "파일 업로드",
     "removeFile": "파일 삭제",
-    "imageRequired": "이미지를 최소 1개 이상 등록해주세요."
+    "imageRequired": "이미지를 최소 1개 이상 등록해주세요.",
+    "imageLimit": "이미지는 최대 4장까지 등록할 수 있습니다."
   },
   "alerts": {
     "copySuccess": "복사되었습니다.",
