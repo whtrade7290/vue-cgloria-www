@@ -214,7 +214,7 @@ const handleCommentCount = (count) => {
 }
 const contentCopy = async () => {
   const content = store.state.detail.content
-  navigator.clipboard.writeText(stripHtmlTags(content))
+  navigator.clipboard.writeText(convertHtmlToPlainText(content))
 
   await Swal.fire({
     title: t('alerts.copySuccess'),
@@ -222,17 +222,18 @@ const contentCopy = async () => {
   })
 }
 
-function stripHtmlTags(input) {
+function convertHtmlToPlainText(input) {
   if (typeof input !== 'string') {
     throw new TypeError('Expected a string input')
   }
-
-  // 임시 요소를 사용하여 HTML 태그를 제거
+  const normalized = input
+    .replace(/<\s*br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<\/div>/gi, '\n')
   const tempDiv = document.createElement('div')
-  tempDiv.innerHTML = input
-
-  // 텍스트 콘텐츠를 반환
-  return tempDiv.textContent || tempDiv.innerText || ''
+  tempDiv.innerHTML = normalized
+  const text = tempDiv.textContent || tempDiv.innerText || ''
+  return text.replace(/\n{3,}/g, '\n\n').trim()
 }
 
 function goToBoardList() {
