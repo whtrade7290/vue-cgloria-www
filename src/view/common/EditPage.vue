@@ -291,7 +291,7 @@ const edit = async () => {
 
   try {
     isSubmitting.value = true
-    const result = await store.dispatch('EDIT_PHOTO_BOARD', {
+    const result = await store.dispatch('EDIT_BOARD', {
       formData: formData,
       name: currentBoardName
     })

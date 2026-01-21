@@ -11,7 +11,6 @@ import {
   getContentById,
   deleteBoard,
   editBoard,
-  editPhotoBoard,
   writeComment,
   getCommentList,
   checkToken,
@@ -195,10 +194,6 @@ export default createStore({
     },
     async EDIT_BOARD({ commit }, { formData, name }) {
       const res = await editBoard(formData, name)
-      return res.status === 200
-    },
-    async EDIT_PHOTO_BOARD({ commit }, { formData, name }) {
-      const res = await editPhotoBoard(formData, name)
       return res.status === 200
     },
     async WRITE_COMMENT({ commit }, { boardId, boardName, comment, writerName, writer }) {

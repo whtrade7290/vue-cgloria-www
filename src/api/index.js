@@ -119,10 +119,6 @@ export async function editBoard(formData, name) {
   return await instance.post(`${name}/${name}_edit`, formData)
 }
 
-export async function editPhotoBoard(formData, name) {
-  return await instance.post(`${name}/${name}_edit`, formData)
-}
-
 export async function getContentById(name, id) {
   return await instance.post(`${name}/${name}_detail`, { id, board: name })
 }
