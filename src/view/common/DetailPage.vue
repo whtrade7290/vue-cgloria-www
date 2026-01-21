@@ -40,16 +40,16 @@
         </div>
         <div class="content-box">
           <div v-if="imageUrl" class="img-container">
-            <img
-              :key="store.state.detail.id"
-              :src="imageUrl"
-              :alt="store.state.detail.title"
-              loading="lazy"
-              decoding="async"
-              fetchpriority="low"
-              width="300"
-              height="200"
-            />
+            <div class="detail-image">
+              <img
+                :key="store.state.detail.id"
+                :src="imageUrl"
+                :alt="store.state.detail.title"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+              />
+            </div>
             <button
               type="button"
               class="download-link"
@@ -402,19 +402,28 @@ onMounted(() => {
   margin-top: 4rem;
 }
 .img-container {
-  height: 100%;
-  overflow: hidden;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
 
-.img-container img {
+.detail-image {
+  width: 100%;
+  max-width: 360px;
+  max-height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #f8f9fc;
+}
+
+.detail-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+  object-fit: contain;
 }
 .file-chip-group {
   display: flex;

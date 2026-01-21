@@ -45,15 +45,13 @@
               v-for="item in filePreviewItems.filter((file) => file.type === 'image')"
               :key="item.id"
             >
-              <a :href="item.url" data-fancybox>
+              <a :href="item.url" data-fancybox class="attachment-image">
                 <img
                   :src="item.url"
                   :alt="item.name"
                   loading="lazy"
                   decoding="async"
                   fetchpriority="low"
-                  width="300"
-                  height="200"
                 />
               </a>
               <button type="button" class="download-link" @click="handleDownload(item)">
@@ -402,6 +400,22 @@ section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.attachment-image {
+  display: flex;
+  max-width: 360px;
+  max-height: 260px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fc;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.attachment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .pdf-attachment-list {
   display: flex;
