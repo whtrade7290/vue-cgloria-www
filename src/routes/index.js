@@ -271,11 +271,6 @@ const routes = [
     }
   },
   {
-    path: '/photo_write',
-    name: 'photo_write',
-    component: PhotoWritePage
-  },
-  {
     path: '/detail/:name/:id',
     name: 'detail',
     component: DetailPage,

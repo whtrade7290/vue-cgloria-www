@@ -34,7 +34,7 @@ if (props.roomId !== 0) {
 }
 
 function moveWritePage() {
-  router.push({ name: 'photo_write', query: queryObj })
+  router.push({ name: 'write', query: queryObj })
 }
 </script>
 

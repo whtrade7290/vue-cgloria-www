@@ -2,109 +2,133 @@
   <div class="page-wrapper">
     <LoadingSpinner v-if="isSubmitting" />
     <div class="container" style="display: flex; justify-content: center">
-    <div
-      style="
-        margin-top: 7rem;
-        margin-bottom: 5rem;
-        width: 100%;
-        background-color: #fff;
-        border-radius: 1.5rem;
-      "
-    >
       <div
-        class="card-header bg-gradient-primary p-5 position-relative"
-        style="border-radius: 1rem"
+        style="
+          margin-top: 7rem;
+          margin-bottom: 5rem;
+          width: 100%;
+          background-color: #fff;
+          border-radius: 1.5rem;
+        "
       >
-        <h3 class="text-white mb-0">{{ $t('writePage.mainTitle') }}</h3>
-        <p class="text-white opacity-8 mb-4">{{ $t('discriptions.intro') }}</p>
-        <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
-          <svg
-            class="waves"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 40"
-            preserveAspectRatio="none"
-            shape-rendering="auto"
-            style="height: 7vh; min-height: 50px"
-          >
-            <defs>
-              <path
-                id="gentle-wave"
-                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-              ></path>
-            </defs>
-            <g class="moving-waves">
-              <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40"></use>
-              <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)"></use>
-              <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95"></use>
-            </g>
-          </svg>
-        </div>
-      </div>
-      <div style="padding: 1.5rem">
-        <label for="title">{{ $t('writePage.title') }}</label
-        ><br />
-        <input
-          type="text"
-          id="title"
-          class="input-title"
-          :placeholder="$t('writePage.placeholder.title')"
-          v-model="inputTitle"
-        /><br />
-        <div v-if="isDisplay">
-          <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
-            $t('writePage.mainContent')
-          }}</label>
-          <label class="toggle-switch">
-            <input type="checkbox" id="mainContent" v-model="isMainContent" />
-            <span class="slider"></span>
-          </label>
-        </div>
-        <br />
-        <label for="image" class="form-label mt-3">{{ $t('writePage.addImage') }}</label
-        ><br />
-        <div style="width: 100%; display: flex; justify-content: center">
-          <div class="image-container" v-if="files.length !== 0">
-            <img :src="imageData" alt="img" />
+        <div
+          class="card-header bg-gradient-primary p-5 position-relative"
+          style="border-radius: 1rem"
+        >
+          <h3 class="text-white mb-0">{{ $t('photoPage.writeHeader') }}</h3>
+          <p class="text-white opacity-8 mb-4">{{ $t('photoPage.writeDescription') }}</p>
+          <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
+            <svg
+              class="waves"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 24 150 40"
+              preserveAspectRatio="none"
+              shape-rendering="auto"
+              style="height: 7vh; min-height: 50px"
+            >
+              <defs>
+                <path
+                  id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                ></path>
+              </defs>
+              <g class="moving-waves">
+                <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40"></use>
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)"></use>
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)"></use>
+                <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)"></use>
+                <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)"></use>
+                <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95"></use>
+              </g>
+            </svg>
           </div>
         </div>
-        <div class="mb-3">
+        <div style="padding: 1.5rem">
+          <label for="title">{{ $t('writePage.title') }}</label
+          ><br />
           <input
-            class="form-control"
+            type="text"
+            id="title"
+            class="input-title"
+            :placeholder="$t('writePage.placeholder.title')"
+            v-model="inputTitle"
+          /><br />
+          <div v-if="isDisplay">
+            <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
+              $t('writePage.mainContent')
+            }}</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="mainContent" v-model="isMainContent" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <label for="image">{{ $t('writePage.addImage') }}</label
+          ><br />
+          <div style="width: 100%; display: flex; justify-content: center">
+            <div class="image-container" v-if="imagePreviewItems.length !== 0">
+              <div class="image-wrapper" v-for="item in imagePreviewItems" :key="item.id">
+                <button
+                  type="button"
+                  class="remove-btn"
+                  :aria-label="$t('photoPage.removeFile')"
+                  @click="removeSelectedFile(item.id)"
+                >
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+                <img :src="item.src" :alt="item.name" width="200" class="image" />
+              </div>
+            </div>
+          </div>
+          <div class="file-chip-list" v-if="pdfPreviewItems.length !== 0">
+            <div class="file-chip" v-for="item in pdfPreviewItems" :key="item.id">
+              <button
+                type="button"
+                class="remove-btn remove-btn--chip"
+                :aria-label="$t('photoPage.removeFile')"
+                @click="removeSelectedFile(item.id)"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
+              <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+              <span class="file-chip__name">{{ item.name }}</span>
+            </div>
+          </div>
+          <label for="fileUpload" class="btn btn-sm btn-outline-primary mb-0 me-1 mt-2 mt-md-0">{{
+            $t('photoPage.uploadButton')
+          }}</label>
+          <input
             type="file"
-            id="image"
+            id="fileUpload"
             @change="changeImage"
-            name="fileField"
-          />
-        </div>
-        <label for="content">{{ $t('writePage.content') }}</label
-        ><br />
-        <ckeditor
-          id="content"
-          class="ck_contents"
-          :editor="editor"
-          v-model="editorData"
-          :config="editorConfig"
-        ></ckeditor>
-        <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
-          <a
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-            href="javascript:;"
-            @click="write"
-            >{{ $t('button.write') }}</a
-          >
-          <a
-            class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
-            href="javascript:;"
-            @click="backPage"
-            >{{ $t('button.toList') }}</a
-          >
+            class="hidden-file-input"
+            multiple
+          /><br />
+          <label for="content">{{ $t('writePage.content') }}</label
+          ><br />
+          <ckeditor
+            id="content"
+            class="ck_contents"
+            :editor="editor"
+            v-model="editorData"
+            :config="editorConfig"
+          ></ckeditor>
+          <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
+            <a
+              class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+              href="javascript:;"
+              @click="write"
+              >{{ $t('button.write') }}</a
+            >
+            <a
+              class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+              href="javascript:;"
+              @click="backPage"
+              >{{ $t('button.toList') }}</a
+            >
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -115,14 +139,24 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
-import { VALIDATION_TITLE, VALIDATION_CONTENT } from '@/utils/validation'
+import { VALIDATION_TITLE, VALIDATION_CONTENT, VALIDATION_FILES } from '@/utils/validation'
+import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import Swal from 'sweetalert2'
+
+const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
+const isMainContent = ref(false)
+const { t } = useI18n()
 
 const editor = ClassicEditor
 const editorData = ref('')
 const editorConfig = {
+  placeholder: t('writePage.placeholder.content'),
   toolbar: [
     'heading',
     '|',
@@ -140,56 +174,79 @@ const editorConfig = {
   ]
 }
 
+const boardName = computed(() => route.query?.name || route.params?.name || '')
+const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
+
 const inputTitle = ref('')
 const files = ref([])
-const imageData = ref(null)
-const file = ref(null)
-const isMainContent = ref(false)
+const previewItems = ref([])
 const isSubmitting = ref(false)
+const imagePreviewItems = computed(() => previewItems.value.filter((item) => item.type === 'image'))
+const pdfPreviewItems = computed(() => previewItems.value.filter((item) => item.type === 'pdf'))
 
-const store = useStore()
-const route = useRoute()
-const router = useRouter()
+const removeSelectedFile = (previewId) => {
+  previewItems.value = previewItems.value.filter((item) => item.id !== previewId)
+  files.value = files.value.filter((file) => `${file.name}-${file.lastModified}` !== previewId)
+  const input = document.getElementById('fileUpload')
+  if (input) {
+    input.value = ''
+  }
+}
 
-const write = async () => {
+async function write() {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
-  let formData = new FormData()
+  if (requiresImage.value && files.value.length === 0) {
+    await Swal.fire({
+      title: t('photoPage.imageRequired'),
+      icon: 'warning'
+    })
+    return
+  }
 
+  const formData = new FormData()
   formData.append('title', inputTitle.value)
   formData.append('content', sanitizeHtml(editorData.value))
+  formData.append('writer', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.username)
+  formData.append('writer_name', JSON.parse(localStorage.getItem(getUserIdFromCookie())).user.name)
+  const currentBoardName = boardName.value
+  if (!currentBoardName) {
+    console.error('게시판 이름이 없어 업로드를 중단했습니다.')
+    return
+  }
+  formData.append('board', currentBoardName)
   formData.append('mainContent', isMainContent.value)
-  formData.append('board', route.query?.name || route.params?.name || '')
-  formData.append('fileField', file.value)
 
-  const storedData = localStorage.getItem(getUserIdFromCookie())
-  if (storedData) {
-    const user = JSON.parse(storedData).user
-    const username = user.username
-    const name = user.name
-    formData.append('writer', username)
-    formData.append('writer_name', name)
+  if (currentBoardName === 'withDiary') {
+    formData.append('diaryRoomId', route.query.roomId)
   }
 
-  if (route.query?.name === 'withDiary') {
-    formData.append('diaryRoomId', store.state.room.id)
-  }
+  files.value.forEach((file) => {
+    formData.append('fileField', file)
+  })
 
   try {
     isSubmitting.value = true
-    await store.dispatch('WRITE_BOARD', {
-      formData: formData,
-      name: route.query.name
+    const result = await store.dispatch('WRITE_BOARD', {
+      formData,
+      name: currentBoardName
     })
-    router.push({ name: `${route.query.name}`, query: { roomId: store.state.room.id, pageNum: 1 } })
-  } catch (error) {
-    console.error('Error during WRITE_BOARD dispatch:', error)
+    if (result) {
+      if (currentBoardName === 'withDiary') {
+        router.push({
+          name: currentBoardName,
+          query: { roomId: route.query.roomId, pageNum: 1 }
+        })
+      } else {
+        router.push(`/${currentBoardName}`)
+      }
+    }
   } finally {
     isSubmitting.value = false
   }
 }
 
-const backPage = () => {
+function backPage() {
   router.back()
 }
 
@@ -198,46 +255,60 @@ const changeImage = async (event) => {
     const selectedFiles = event.target?.files
 
     if (!selectedFiles || selectedFiles.length === 0) {
-      files.value = []
-      file.value = null
-      imageData.value = null
       return
     }
 
-    const [processedFile] = await compressImageFiles(selectedFiles)
-    if (!processedFile) {
-      return
-    }
+    const processedFiles = await compressImageFiles(selectedFiles)
 
-    files.value = [processedFile]
-    file.value = processedFile
+    if (VALIDATION_FILES(files.value, processedFiles)) {
+      const filteredFiles = processedFiles.filter(
+        (newFile) => !files.value.some((existingFile) => existingFile.name === newFile.name)
+      )
+      files.value = files.value.concat(filteredFiles)
 
-    if (processedFile.type === 'application/pdf') {
-      imageData.value = null
-      return
+      filteredFiles.forEach((file) => {
+        const fileId = `${file.name}-${file.lastModified}`
+        if (file.type === 'application/pdf') {
+          if (!previewItems.value.some((item) => item.id === fileId)) {
+            previewItems.value.push({
+              id: fileId,
+              type: 'pdf',
+              name: file.name
+            })
+          }
+        } else {
+          const reader = new FileReader()
+          reader.onload = (e) => {
+            const src = e.target?.result
+            if (!previewItems.value.some((item) => item.id === fileId)) {
+              previewItems.value.push({
+                id: fileId,
+                type: 'image',
+                src,
+                name: file.name
+              })
+            }
+          }
+          reader.readAsDataURL(file)
+        }
+      })
     }
-
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      imageData.value = e.target?.result
-    }
-    reader.readAsDataURL(processedFile)
   } catch (error) {
-    console.error('Failed to process selected file', error)
+    console.error('Failed to process selected images', error)
   }
 }
-
 const isDisplay = computed(() => {
-  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'classMeeting', 'testimony']
-  return routeNames.some((name) => {
-    return route.query?.name === name
-  })
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
+  const storedData = localStorage.getItem(getUserIdFromCookie())
+  const role = storedData ? JSON.parse(storedData)?.user?.role : ''
+  const allowedBoard = routeNames.includes(route.query?.name)
+  return allowedBoard && role === 'ADMIN'
 })
 </script>
 
 <style scoped>
 .container {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 .input-title {
   width: 100%;
@@ -255,67 +326,105 @@ const isDisplay = computed(() => {
   border-radius: 1.5rem;
 }
 .image-container {
-  width: 22rem;
-  height: 17rem;
-  overflow: hidden;
-  margin-top: 0.2rem;
-  margin-bottom: 0.7rem;
-  border-radius: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 80%;
+  width: 80%;
 }
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
-}
-
-/* 전체 토글 스위치 */
-.toggle-switch {
+.image-wrapper {
+  flex: 1 0 21%;
+  margin: 5px;
+  box-sizing: border-box;
   position: relative;
-  display: inline-block;
-  width: 50px; /* 너비 축소 */
-  height: 28px; /* 높이 축소 */
 }
-
-/* 숨김 처리된 체크박스 */
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0.5rem;
 }
-
-/* 슬라이더 */
-.slider {
+.file-chip-list {
+  width: 80%;
+  margin: 1rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.file-chip {
+  width: 220px;
+  min-height: 110px;
+  border: 1px dashed #c0c4d5;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  text-align: center;
+  color: #344767;
+  background-color: #f8f9fc;
+  position: relative;
+}
+.file-chip__icon {
+  font-size: 2rem;
+  margin-bottom: 0.35rem;
+  color: #f5365c;
+}
+.file-chip__name {
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+.remove-btn {
   position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 28px; /* 높이에 맞춘 슬라이더 라운딩 */
-}
-
-/* 슬라이더 안의 원 */
-.slider:before {
-  position: absolute;
-  content: '';
-  height: 22px; /* 원의 크기 축소 */
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
+  top: 0.25rem;
+  right: 0.25rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
   border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+.remove-btn span {
+  font-size: 1rem;
+}
+.remove-btn--chip {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  background: transparent;
+  color: #8392ab;
+  z-index: 2;
+}
+.hidden-file-input {
+  display: none; /* 파일 입력창 완전히 숨기기 */
 }
 
-/* 체크된 상태 */
-input:checked + .slider {
-  background-color: #4caf50;
+.custom-upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50; /* 버튼 배경색 */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
 }
 
-/* 체크된 상태에서의 슬라이더 원 */
-input:checked + .slider:before {
-  transform: translateX(22px); /* 원이 이동할 거리 축소 */
+/* 커스텀 버튼에 호버 효과 추가 */
+.custom-upload-button:hover {
+  background-color: #45a049;
 }
 </style>
