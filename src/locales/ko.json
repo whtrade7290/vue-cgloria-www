@@ -337,9 +337,9 @@
     }
   },
   "photoPage": {
-    "writeHeader": "글 작성 (파일 첨부)",
+    "writeHeader": "글 작성",
     "writeDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
-    "editHeader": "사진 글 수정",
+    "editHeader": "글 수정",
     "editDescription": "중앙 영광교회 교회 역사와 형제교회 소개",
     "uploadButton": "파일 업로드",
     "removeFile": "파일 삭제",

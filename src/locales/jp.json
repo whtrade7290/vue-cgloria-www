@@ -338,9 +338,9 @@
     }
   },
   "photoPage": {
-    "writeHeader": "投稿 (ファイル添付)",
+    "writeHeader": "投稿",
     "writeDescription": "中央栄光教会の歴史と兄弟教会紹介",
-    "editHeader": "写真投稿の編集",
+    "editHeader": "編集",
     "editDescription": "中央栄光教会の歴史と兄弟教会紹介",
     "uploadButton": "ファイルアップロード",
     "removeFile": "ファイル削除",
