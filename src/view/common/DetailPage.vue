@@ -250,7 +250,7 @@ function goToBoardList() {
 
 const goToEditPage = () => {
   router.push({
-    name: 'photo_edit',
+    name: 'edit',
     query: { name: route.params.name, id: store.state.detail.id, roomId: route.query.roomId }
   })
 }

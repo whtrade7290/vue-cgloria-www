@@ -25,7 +25,6 @@ import ProfileEditView from '@/view/user/ProfileEditView.vue'
 import WithDiary from '@/view/withDiary/WithDiary.vue'
 import WritePage from '@/view/common/WritePage.vue'
 import EditPage from '@/view/common/EditPage.vue'
-import PhotoEditPage from '@/view/photo/PhotoEditPage.vue'
 import PhotoWritePage from '@/view/photo/PhotoWritePage.vue'
 import DetailPage from '@/view/common/DetailPage.vue'
 import MakeWithDiaryRoom from '@/view/admin/MakeWithDiary/MakeWithDiaryRoom.vue'
@@ -267,7 +266,7 @@ const routes = [
       const store = useStore()
       const name = to.query.name
       const id = to.query.id
-      await store.dispatch('FETCH_CONTENT_DETAIL', { name: name, id: id })
+      await store.dispatch('FETCH_PHOTO_CONTENT_DETAIL', { name: name, id: id })
       await next()
     }
   },
@@ -275,18 +274,6 @@ const routes = [
     path: '/photo_write',
     name: 'photo_write',
     component: PhotoWritePage
-  },
-  {
-    path: '/photo_edit',
-    name: 'photo_edit',
-    component: PhotoEditPage,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      const name = to.query.name
-      const id = to.query.id
-      await store.dispatch('FETCH_PHOTO_CONTENT_DETAIL', { name: name, id: id })
-      await next()
-    }
   },
   {
     path: '/detail/:name/:id',
