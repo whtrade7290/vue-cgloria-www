@@ -92,7 +92,7 @@ const processedDataList = computed(() => {
 async function intoDetail(id) {
   if (id) {
     await router.push({
-      name: 'photoDetail',
+      name: 'detail',
       params: { name: 'photo_board', id: id },
       query: { pageNum: 1 }
     })

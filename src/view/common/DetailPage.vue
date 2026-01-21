@@ -39,39 +39,46 @@
           </div>
         </div>
         <div class="content-box">
-          <div v-if="imageUrl" class="img-container">
-            <div class="detail-image">
-              <img
-                :key="store.state.detail.id"
-                :src="imageUrl"
-                :alt="store.state.detail.title"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-              />
+          <div class="image-attachment-list">
+            <div
+              class="attachment-wrapper"
+              v-for="item in filePreviewItems.filter((file) => file.type === 'image')"
+              :key="item.id"
+            >
+              <a :href="item.url" data-fancybox class="attachment-image">
+                <img
+                  :src="item.url"
+                  :alt="item.name"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+              </a>
+              <button type="button" class="download-link" @click="handleDownload(item)">
+                <span class="material-symbols-outlined">download</span>
+                <span>{{ $t('button.download') }}</span>
+              </button>
             </div>
-            <button
-              type="button"
-              class="download-link"
-              @click="downloadAttachment(imageUrl, store.state.detail.filename)"
-            >
-              <span class="material-symbols-outlined">download</span>
-              <span>{{ $t('button.download') }}</span>
-            </button>
           </div>
-          <div v-else-if="pdfAttachment" class="file-chip-group">
-            <a class="file-chip" :href="pdfAttachment.url" target="_blank" rel="noopener">
-              <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
-              <span class="file-chip__name">{{ pdfAttachment.name }}</span>
-            </a>
-            <button
-              type="button"
-              class="download-link download-link--chip"
-              @click="downloadAttachment(pdfAttachment.url, pdfAttachment.name)"
+          <div class="pdf-attachment-list">
+            <div
+              class="file-chip-group"
+              v-for="item in filePreviewItems.filter((file) => file.type === 'pdf')"
+              :key="item.id"
             >
-              <span class="material-symbols-outlined">download</span>
-              <span>{{ $t('button.download') }}</span>
-            </button>
+              <a class="file-chip" :href="item.url" target="_blank" rel="noopener" data-fancybox>
+                <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
+                <span class="file-chip__name">{{ item.name }}</span>
+              </a>
+              <button
+                type="button"
+                class="download-link download-link--chip"
+                @click="handleDownload(item)"
+              >
+                <span class="material-symbols-outlined">download</span>
+                <span>{{ $t('button.download') }}</span>
+              </button>
+            </div>
           </div>
           <div class="content-container" v-html="sanitizedContent"></div>
         </div>
@@ -97,8 +104,8 @@
             >{{ $t('button.delete') }}</a
           >
         </div>
+        <CommentComponent v-if="isLogin" @commentCount="handleCommentCount"></CommentComponent>
       </div>
-      <CommentComponent v-if="isLogin" @commentCount="handleCommentCount"></CommentComponent>
     </div>
   </section>
 </template>
@@ -108,25 +115,49 @@ import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
+import { Fancybox } from '@fancyapps/ui'
+import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
+const staticPath = `${import.meta.env.VITE_API_URL}uploads`
+
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
-const { t } = useI18n()
 const commentCount = ref(0)
+const { t } = useI18n()
+const resolveFileType = (file) => {
+  const extensionSource =
+    file?.extension ||
+    file?.filename?.split('.').pop() ||
+    file?.originalName?.split('.').pop() ||
+    ''
+  const normalizedExtension = extensionSource.toString().replace('.', '').toLowerCase()
+  if (normalizedExtension === 'pdf') return 'pdf'
+  return 'image'
+}
 
-const isLogin = computed(() => {
-  return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
+const filePreviewItems = computed(() => {
+  return (store.state.detail.files ?? []).map((file, index) => {
+    const url = `${staticPath}/${file?.filename}`
+
+    return {
+      id: `${file?.filename}-${index}`,
+      type: resolveFileType(file),
+      url,
+      name: file?.filename,
+      originalName: file?.originalname || file?.originalName || file?.filename
+    }
+  })
 })
 
 const sanitizedContent = computed(() => sanitizeHtml(store.state.detail.content || ''))
 const writerName = computed(
-  () => store.state.detail.writer_name ?? store.state.detail.writer ?? ''
+  () => store.state.detail.writer_name ?? store.state.detail?.writer ?? ''
 )
 const normalizeProfileImage = (value) => {
   if (!value || typeof value !== 'string') return ''
@@ -146,10 +177,7 @@ const normalizeProfileImage = (value) => {
 
 const writerProfileImage = computed(() => {
   const detail = store.state.detail || {}
-  const rawValue =
-    detail.writerProfileImageUrl ||
-    detail.writer_profile_image_url ||
-    ''
+  const rawValue = detail.writerProfileImageUrl || detail.writer_profile_image_url || ''
   return normalizeProfileImage(rawValue)
 })
 const writerInitial = computed(() => {
@@ -157,10 +185,35 @@ const writerInitial = computed(() => {
   return writerName.value.trim().charAt(0).toUpperCase()
 })
 
+const downloadFile = async (url, filename) => {
+  try {
+    const response = await fetch(url)
+    if (!response.ok) throw new Error('Download failed')
+    const blob = await response.blob()
+    const objectUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = objectUrl
+    link.download = filename || 'download'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(objectUrl)
+  } catch (error) {
+    console.error('download error', error)
+    await Swal.fire({
+      title: t('alerts.downloadError'),
+      icon: 'error'
+    })
+  }
+}
+
+const handleDownload = (item) => {
+  downloadFile(item.url, item.originalName || item.name)
+}
+
 const handleCommentCount = (count) => {
   commentCount.value = count
 }
-
 const contentCopy = async () => {
   const content = store.state.detail.content
   navigator.clipboard.writeText(stripHtmlTags(content))
@@ -185,28 +238,20 @@ function stripHtmlTags(input) {
 }
 
 function goToBoardList() {
-  router.push({
-    name: route.params.name,
-    query: {
-      pageNum: route.query.pageNum,
-      roomId: route.query.roomId,
-      searchWord: route.query.searchWord
-    }
-  })
+  if (route.params.name === 'withDiary') {
+    router.push({
+      name: route.params.name,
+      query: { roomId: route.query.roomId, pageNum: route.query.pageNum }
+    })
+  } else {
+    router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
+  }
 }
-
-const isWriter = computed(() => {
-  const localUser = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
-
-  if (!localUser) return false
-
-  return localUser.username === store.state.detail.writer || localUser.role === 'ADMIN'
-})
 
 const goToEditPage = () => {
   router.push({
-    name: 'edit',
-    query: { name: route.params.name, id: store.state.detail.id }
+    name: 'photo_edit',
+    query: { name: route.params.name, id: store.state.detail.id, roomId: route.query.roomId }
   })
 }
 
@@ -220,16 +265,10 @@ const deleteBoard = () => {
     confirmButtonText: t('alerts.deleteConfirmYes')
   }).then(async (result) => {
     if (result.isConfirmed) {
-      let deleteKey = ''
-
-      if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
-        deleteKey = `uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
-      }
-
-      const result = await store.dispatch('DELETE_BOARD', {
+      const result = await store.dispatch('DELETE_PHOTO_BOARD', {
         name: route.params.name,
         id: store.state.detail.id,
-        deleteKey: deleteKey
+        deleteKeyList: store.state.detail.files
       })
       if (result) {
         Swal.fire({
@@ -243,103 +282,59 @@ const deleteBoard = () => {
   })
 }
 
-const imageUrl = ref(null)
-const pdfAttachment = ref(null)
+const isWriter = computed(() => {
+  const localUser = JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user
 
-const downloadAttachment = async (url, filename) => {
-  try {
-    const response = await fetch(url)
-    if (!response.ok) throw new Error('Download failed')
-    const blob = await response.blob()
-    const objectUrl = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = objectUrl
-    link.download = filename || 'download'
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-    URL.revokeObjectURL(objectUrl)
-  } catch (error) {
-    console.error('download error', error)
-    await Swal.fire({
-      title: t('alerts.downloadError'),
-      icon: 'error'
-    })
-  }
-}
+  if (!localUser) return false
+
+  return localUser.username === store.state.detail.writer || localUser.role === 'ADMIN'
+})
+const isLogin = computed(() => {
+  return JSON.parse(localStorage.getItem(getUserIdFromCookie()))?.user ? true : false
+})
 
 onMounted(() => {
-  // 컴포넌트가 마운트된 후에 이미지 URL을 설정
-  if (store.state.detail.uuid && store.state.detail.filename && store.state.detail.extension) {
-    const fileUrl = `${import.meta.env.VITE_API_URL}uploads/${store.state.detail.uuid}_${store.state.detail.filename}`
-    const normalizedExtension = store.state.detail.extension.replace('.', '').toLowerCase()
-
-    if (normalizedExtension === 'pdf') {
-      pdfAttachment.value = {
-        url: fileUrl,
-        name: store.state.detail.filename
-      }
-      imageUrl.value = null
-    } else {
-      imageUrl.value = fileUrl
-      pdfAttachment.value = null
+  Fancybox.bind('[data-fancybox]', {
+    Thumbs: {
+      autoStart: true // 썸네일 자동 시작
+    },
+    Image: {
+      zoom: true, // 이미지 확대 가능
+      click: 'toggleZoom', // 이미지를 클릭하면 확대/축소
+      wheel: 'zoom' // 마우스 휠로 확대/축소
+    },
+    SlideShow: {
+      autoStart: false, // 자동 슬라이드쇼 시작 여부
+      speed: 3000 // 슬라이드쇼 속도
+    },
+    Carousel: {
+      infinite: false
     }
-  }
+  })
 })
 </script>
 
 <style scoped>
-.border-line {
-  border-top: 1px #dddddd solid;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+section {
+  overflow-x: hidden;
 }
-.comment-display-box {
-  font-size: 1.2rem;
-  width: 50rem;
-  /* height: 20rem; */
-  margin: 2rem 0 0 2.5rem;
-  overflow-y: scroll;
-}
-.comment-container {
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  padding: 2.5rem 0 2.5rem 0;
-}
-.comment-box {
-  width: 60rem;
-  /* height: 35rem; */
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.comment-info-box {
-  width: 55rem;
-  height: 2.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  /* background-color: yellow; */
-}
-
 .container {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 7rem;
   margin-bottom: 5rem;
-  border-radius: 1.5rem;
-  padding: 3rem;
-  overflow-x: hidden;
-  background-color: #fff;
 }
 .detail-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 7rem;
   width: 100%;
-  height: 80%;
+  height: 100%;
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 1.5rem;
 }
 .detail-meta {
   display: flex;
@@ -401,73 +396,85 @@ onMounted(() => {
   justify-content: center;
   margin-top: 4rem;
 }
-.img-container {
+.image-attachment-list {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-
-.detail-image {
-  width: 100%;
+.attachment-image {
+  display: flex;
   max-width: 360px;
   max-height: 260px;
-  display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  border-radius: 1rem;
   background-color: #f8f9fc;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
-
-.detail-image img {
+.attachment-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.file-chip-group {
+.pdf-attachment-list {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
+  justify-content: flex-start;
+}
+.attachment-wrapper {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .file-chip {
-  width: 100%;
-  max-width: 22rem;
-  min-height: 17rem;
+  min-width: 200px;
+  min-height: auto;
   border: 1px dashed #c0c4d5;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
+  border-radius: 0.75rem;
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  margin: 1rem auto 0;
-  text-align: center;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+  text-align: left;
   color: #344767;
   background-color: #f8f9fc;
   text-decoration: none;
+  gap: 0.5rem;
+}
+.file-chip-group {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 .file-chip__icon {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0;
   color: #f5365c;
 }
 .file-chip__name {
   font-size: 1rem;
   word-break: break-all;
+  text-decoration: underline;
 }
 .download-link {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  margin-top: 0.5rem;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  text-decoration: none;
   font-size: 0.9rem;
   color: #344767;
   border: 1px solid rgba(52, 71, 103, 0.2);
   background-color: rgba(248, 249, 252, 0.9);
+  text-decoration: none;
+  cursor: pointer;
 }
 .download-link--chip {
   width: 100%;
@@ -478,7 +485,6 @@ onMounted(() => {
 }
 .content-container {
   margin-top: 2rem;
-  white-space: pre-line;
 }
 
 .btn-style {
@@ -486,23 +492,12 @@ onMounted(() => {
   height: 100%;
 }
 
-p {
-  word-wrap: break-word; /* 긴 단어를 자동으로 줄바꿈 */
-  white-space: normal; /* 기본적인 줄바꿈 설정 */
-}
 @media (max-width: 425px) {
-  .container {
+  .detail-card {
     padding: 1.5rem;
   }
   .btn-style {
     font-size: 0.48rem;
-  }
-}
-
-@media (min-width: 1400px) {
-  section {
-    padding-left: 5rem;
-    padding-right: 5rem;
   }
 }
 </style>

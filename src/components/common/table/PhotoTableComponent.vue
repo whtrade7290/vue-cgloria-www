@@ -215,7 +215,7 @@ const parsedFiles = computed(() => {
 
 async function intoDetail(id) {
   await router.push({
-    name: 'photoDetail',
+    name: 'detail',
     params: { name: route.name, id: id },
     query: { pageNum: pageNum.value }
   })

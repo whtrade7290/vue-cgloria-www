@@ -28,7 +28,6 @@ import EditPage from '@/view/common/EditPage.vue'
 import PhotoEditPage from '@/view/photo/PhotoEditPage.vue'
 import PhotoWritePage from '@/view/photo/PhotoWritePage.vue'
 import DetailPage from '@/view/common/DetailPage.vue'
-import PhotoDetailPage from '@/view/photo/PhotoDetailPage.vue'
 import MakeWithDiaryRoom from '@/view/admin/MakeWithDiary/MakeWithDiaryRoom.vue'
 import ApprovePage from '@/view/admin/Approve/ApprovePage.vue'
 import ManageWithDiary from '@/view/admin/ManageWithDiary/ManageWithDiary.vue'
@@ -302,9 +301,9 @@ const routes = [
     }
   },
   {
-    path: '/photoDetail/:name/:id',
-    name: 'photoDetail',
-    component: PhotoDetailPage,
+    path: '/detail/:name/:id',
+    name: 'detail',
+    component: DetailPage,
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const name = to.params.name
