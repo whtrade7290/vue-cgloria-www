@@ -18,19 +18,25 @@
                 <p class="writer-name">
                   {{ writerName }}
                 </p>
-          </div>
-          <div class="meta-actions">
-            <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
-              share
-            </a>
-            <a href="javascript:;" class="material-symbols-outlined" @click="printContent">
-              print
-            </a>
-            <div class="meta-comment">
-              <span class="material-symbols-outlined"> comment </span>
-              <span class="meta-comment__count">{{ commentCount }}</span>
-            </div>
-          </div>
+              </div>
+              <div class="meta-actions">
+                <Tooltip text="링크 복사">
+                  <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
+                    share
+                  </a>
+                </Tooltip>
+                <Tooltip text="인쇄">
+                  <a href="javascript:;" class="material-symbols-outlined" @click="printContent">
+                    print
+                  </a>
+                </Tooltip>
+                <Tooltip text="댓글 수">
+                  <div class="meta-comment">
+                    <span class="material-symbols-outlined"> comment </span>
+                    <span class="meta-comment__count">{{ commentCount }}</span>
+                  </div>
+                </Tooltip>
+              </div>
             </div>
           </div>
           <div>
@@ -120,6 +126,7 @@ import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
+import Tooltip from '@/components/common/Tooltip.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
