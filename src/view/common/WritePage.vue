@@ -416,8 +416,11 @@ const isDisplay = computed(() => {
 
 <style>
 .ck-content {
-  height: 300px;
+  min-height: 600px;
+  max-height: 800px;
+  overflow-y: auto;
   border-radius: 1.5rem;
+  line-height: 1.6;
 }
 .image-container {
   display: flex;

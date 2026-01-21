@@ -18,16 +18,19 @@
                 <p class="writer-name">
                   {{ writerName }}
                 </p>
-              </div>
-              <div class="meta-actions">
-                <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
-                  share
-                </a>
-                <div class="meta-comment">
-                  <span class="material-symbols-outlined"> comment </span>
-                  <span class="meta-comment__count">{{ commentCount }}</span>
-                </div>
-              </div>
+          </div>
+          <div class="meta-actions">
+            <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
+              share
+            </a>
+            <a href="javascript:;" class="material-symbols-outlined" @click="printContent">
+              print
+            </a>
+            <div class="meta-comment">
+              <span class="material-symbols-outlined"> comment </span>
+              <span class="meta-comment__count">{{ commentCount }}</span>
+            </div>
+          </div>
             </div>
           </div>
           <div>
@@ -78,7 +81,7 @@
               </button>
             </div>
           </div>
-          <div class="content-container" v-html="sanitizedContent"></div>
+          <div class="content-container printable-content" v-html="sanitizedContent"></div>
         </div>
         <div class="button-box">
           <a
@@ -220,6 +223,49 @@ const contentCopy = async () => {
     title: t('alerts.copySuccess'),
     icon: 'success'
   })
+}
+
+const printContent = () => {
+  const printable = document.querySelector('.printable-content')
+  if (!printable) return
+
+  const clone = printable.cloneNode(true)
+  clone.querySelectorAll('p').forEach((p) => {
+    const hasMedia = p.querySelector('img, video, iframe')
+    const text = p.textContent.replace(/\u00A0/g, '').trim()
+    if (!hasMedia && !text) {
+      p.remove()
+    }
+  })
+
+  const printWindow = window.open('', '_blank', 'width=900,height=700')
+  if (!printWindow) return
+
+  printWindow.document.write(`
+    <!doctype html>
+    <html>
+      <head>
+        <title>${store.state.detail.title || 'print'}</title>
+        <style>
+          body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #222;
+            padding: 20px;
+          }
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+        </style>
+      </head>
+      <body>${clone.innerHTML}</body>
+    </html>
+  `)
+  printWindow.document.close()
+  printWindow.focus()
+  printWindow.print()
+  printWindow.close()
 }
 
 function convertHtmlToPlainText(input) {
@@ -438,6 +484,24 @@ section {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.printable-content {
+  position: relative;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-content,
+  .printable-content * {
+    visibility: visible;
+  }
+  .printable-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }
 .pdf-attachment-list {
   display: flex;
