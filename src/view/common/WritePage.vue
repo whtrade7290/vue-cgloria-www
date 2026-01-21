@@ -15,7 +15,10 @@
           class="card-header bg-gradient-primary p-5 position-relative"
           style="border-radius: 1rem"
         >
-          <h3 class="text-white mb-0">{{ $t('photoPage.writeHeader') }}</h3>
+          <h3 class="text-white mb-0">
+            <span v-if="boardDisplayTitle">{{ boardDisplayTitle }}</span
+            ><span v-if="boardDisplayTitle">&nbsp;</span>{{ $t('photoPage.writeHeader') }}
+          </h3>
           <p class="text-white opacity-8 mb-4">{{ $t('photoPage.writeDescription') }}</p>
           <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
             <svg
@@ -175,6 +178,24 @@ const editorConfig = {
 }
 
 const boardName = computed(() => route.query?.name || route.params?.name || '')
+const boardTitleMap = {
+  sermon: 'nav.classWord.subTitles.sermon',
+  column: 'nav.classWord.subTitles.column',
+  weekly_bible_verse: 'nav.classWord.subTitles.weekly_bible_verse',
+  class_meeting: 'nav.classWord.subTitles.class_meeting',
+  notice: 'nav.intro.subTitles.notice',
+  school_photo_board: 'nav.sundaySchool.subTitles.school_photo_board',
+  sunday_school_resource: 'nav.sundaySchool.subTitles.sunday_school_resource',
+  general_forum: 'nav.fellowshipArea.subTitles.general_forum',
+  photo_board: 'nav.fellowshipArea.subTitles.photo_board',
+  testimony: 'nav.fellowshipArea.subTitles.testimony',
+  withDiary: 'nav.withDiary.subTitles.withDiary'
+}
+const boardDisplayTitle = computed(() => {
+  const key = boardTitleMap[boardName.value]
+  if (key) return t(key)
+  return boardName.value ? boardName.value : ''
+})
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
 
 const MAX_IMAGE_COUNT = 4
@@ -349,6 +370,47 @@ const isDisplay = computed(() => {
 .input-title:focus {
   outline: 0.001rem solid #2977ff;
   box-shadow: inset 0 0 0.5px 0 #2977ff;
+}
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  transform: translateY(-1px);
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: -1px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d2d6dc;
+  transition: 0.3s ease;
+  border-radius: 999px;
+}
+.toggle-switch .slider:before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: 0.3s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.toggle-switch input:checked + .slider {
+  background: linear-gradient(90deg, #f6ad55 0%, #e49c7f 100%);
+}
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(22px);
 }
 </style>
 

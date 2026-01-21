@@ -19,17 +19,15 @@
                   {{ writerName }}
                 </p>
               </div>
-            </div>
-            <div class="d-flex justify-content-start">
-              <div style="margin-right: 0.8rem; margin-left: 0.5rem">
+              <div class="meta-actions">
                 <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
                   share
                 </a>
+                <div class="meta-comment">
+                  <span class="material-symbols-outlined"> comment </span>
+                  <span class="meta-comment__count">{{ commentCount }}</span>
+                </div>
               </div>
-              <div style="margin-right: 0.3rem">
-                <span class="material-symbols-outlined"> comment </span>
-              </div>
-              <div style="font-size: 1rem">{{ commentCount }}</div>
             </div>
           </div>
           <div>
@@ -341,9 +339,11 @@ section {
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  margin-top: 10px;
 }
 .writer-profile {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
 }
@@ -374,6 +374,27 @@ section {
   margin: 0.15rem 0 0;
   font-size: 1.3rem;
   font-weight: 700;
+}
+.meta-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+.meta-actions .material-symbols-outlined {
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #6c757d;
+}
+.meta-comment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 1rem;
+  color: #6c757d;
+}
+.meta-comment__count {
+  font-weight: 600;
 }
 .user-info {
   display: flex;
