@@ -127,10 +127,6 @@ export async function getContentById(name, id) {
   return await instance.post(`${name}/${name}_detail`, { id, board: name })
 }
 
-export async function getPhotoContentById(name, id) {
-  return await instance.post(`${name}/${name}_detail`, { id, board: name })
-}
-
 export async function deleteBoard(name, id, deleteKey) {
   return await instance.post(`${name}/${name}_delete`, { id, deleteKey })
 }

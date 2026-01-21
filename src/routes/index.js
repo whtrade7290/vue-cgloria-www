@@ -265,18 +265,6 @@ const routes = [
       const store = useStore()
       const name = to.query.name
       const id = to.query.id
-      await store.dispatch('FETCH_PHOTO_CONTENT_DETAIL', { name: name, id: id })
-      await next()
-    }
-  },
-  {
-    path: '/detail/:name/:id',
-    name: 'detail',
-    component: DetailPage,
-    beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      const name = to.params.name
-      const id = to.params.id
       await store.dispatch('FETCH_CONTENT_DETAIL', { name: name, id: id })
       await next()
     }
@@ -289,7 +277,7 @@ const routes = [
       const store = useStore()
       const name = to.params.name
       const id = to.params.id
-      await store.dispatch('FETCH_PHOTO_CONTENT_DETAIL', { name: name, id: id })
+      await store.dispatch('FETCH_CONTENT_DETAIL', { name: name, id: id })
       await next()
     }
   },

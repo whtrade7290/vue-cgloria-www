@@ -9,7 +9,6 @@ import {
   getWithDiaryBoardCount,
   writeBoard,
   getContentById,
-  getPhotoContentById,
   deleteBoard,
   editBoard,
   editPhotoBoard,
@@ -157,13 +156,6 @@ export default createStore({
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getContentById(name, id)
-      if (res.status === 200) {
-        commit('SET_DETAIL', res.data)
-      }
-      return res
-    },
-    async FETCH_PHOTO_CONTENT_DETAIL({ commit }, { name, id }) {
-      const res = await getPhotoContentById(name, id)
       const isEmptyObject = (obj) => Object.keys(obj).length === 0
       let data = {}
 
