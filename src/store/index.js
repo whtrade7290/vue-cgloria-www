@@ -154,33 +154,37 @@ export default createStore({
     },
     async FETCH_CONTENT_DETAIL({ commit }, { name, id }) {
       const res = await getContentById(name, id)
-      const isEmptyObject = (obj) => Object.keys(obj).length === 0
-      let data = {}
-
-      if (res.data !== null || res.data !== undefined || isEmptyObject(res.data.files)) {
-        const fileUrlList = JSON.parse(res.data.files ?? '').map((file) => {
-          return {
-            // fileUrl: `https://cgloria-bucket.s3.ap-northeast-1.amazonaws.com/cgloria-photo/${file.date}${file.filename}${file.extension}`,
-            filename: file.filename,
-            date: file.date,
-            extension: file.extension,
-            originalName: file.originalname
-          }
-        })
-
-        data = {
-          id: Number(res.data.id),
-          title: res.data.title,
-          content: res.data.content,
-          writer: res.data.writer,
-          writer_name: res.data.writer_name,
-          writerProfileImageUrl: res.data.writerProfileImageUrl,
-          files: fileUrlList,
-          mainContent: res.data.mainContent,
-          create_at: res.data.create_at,
-          update_at: res.data.update_at,
-          deleted: res.data.deleted
+      const detailData = res?.data ?? {}
+      let parsedFiles = []
+      if (detailData.files) {
+        try {
+          parsedFiles = JSON.parse(detailData.files)
+        } catch (error) {
+          console.warn('Failed to parse files JSON', error)
         }
+      }
+
+      const fileUrlList = parsedFiles.map((file) => {
+        return {
+          filename: file.filename,
+          date: file.date,
+          extension: file.extension,
+          originalName: file.originalname
+        }
+      })
+
+      const data = {
+        id: Number(detailData.id),
+        title: detailData.title,
+        content: detailData.content,
+        writer: detailData.writer,
+        writer_name: detailData.writer_name,
+        writerProfileImageUrl: detailData.writerProfileImageUrl,
+        files: fileUrlList,
+        mainContent: detailData.mainContent,
+        create_at: detailData.create_at,
+        update_at: detailData.update_at,
+        deleted: detailData.deleted
       }
 
       if (res.status === 200) {

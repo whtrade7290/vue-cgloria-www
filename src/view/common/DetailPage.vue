@@ -163,7 +163,21 @@ const filePreviewItems = computed(() => {
   })
 })
 
-const sanitizedContent = computed(() => sanitizeHtml(store.state.detail.content || ''))
+const hasHtmlTags = (value) => /<\/?[a-z][\s\S]*>/i.test(value)
+const convertPlainTextToHtml = (value = '') => {
+  const paragraphs = value
+    .split(/\n{2,}/)
+    .map((para) => para.replace(/\n/g, '<br />').trim())
+    .filter((para) => para.length > 0)
+    .map((para) => `<p>${para}</p>`)
+  return paragraphs.join('') || '<p></p>'
+}
+
+const sanitizedContent = computed(() => {
+  const raw = store.state.detail.content || ''
+  const source = hasHtmlTags(raw) ? raw : convertPlainTextToHtml(raw)
+  return sanitizeHtml(source)
+})
 const writerName = computed(
   () => store.state.detail.writer_name ?? store.state.detail?.writer ?? ''
 )
