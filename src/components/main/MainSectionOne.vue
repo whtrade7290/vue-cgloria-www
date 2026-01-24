@@ -15,7 +15,7 @@
                   </h5>
                 </div>
                 <div class="main-content" v-html="safeTruncated(column?.content ?? '')"></div>
-                <template v-if="column.id !== 999999">
+                <template v-if="column?.id">
                   <a
                     href="javascript:;"
                     @click="intoDetail(column.id, 'column')"
@@ -36,7 +36,7 @@
                   </h5>
                 </div>
                 <div class="main-content" v-html="safeTruncated(classMeeting?.content ?? '')"></div>
-                <template v-if="classMeeting.id !== 999999">
+                <template v-if="classMeeting?.id">
                   <a
                     href="javascript:;"
                     @click="intoDetail(classMeeting.id, 'class_meeting')"
@@ -57,7 +57,7 @@
                   </h5>
                 </div>
                 <div class="main-content" v-html="safeTruncated(testimony?.content ?? '')"></div>
-                <template v-if="testimony.id !== 999999">
+                <template v-if="testimony?.id">
                   <a
                     href="javascript:;"
                     @click="intoDetail(testimony.id, 'testimony')"
@@ -137,9 +137,11 @@ const safeTruncated = (content) => {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
-  return escaped
-    .replace(/\n/g, '<br />')
-    .replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
+  const normalizedBreaks = escaped
+    .replace(/\r?\n+(?=\s*\d+\.)/g, ' ')
+    .replace(/\r?\n\s*\r?\n/g, '<br /><br />')
+    .replace(/\r?\n/g, '<br />')
+  return normalizedBreaks.replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
 }
 
 async function intoDetail(id, name) {

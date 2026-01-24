@@ -17,7 +17,7 @@
                 <h3 class="text-gradient text-primary">&nbsp;</h3>
                 <h5 class="mt-3">{{ weekly?.title || '' }}</h5>
                 <div class="text-sm" v-html="safeTruncated(weekly?.content ?? '')"></div>
-                <template v-if="weekly?.id !== 999999">
+                <template v-if="weekly?.id">
                   <a
                     href="javascript:;"
                     @click="intoDetail(weekly?.id, 'weekly_bible_verse')"
@@ -53,7 +53,7 @@ const props = defineProps({
 
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
-const TRUNCATE_LIMIT = 160
+const TRUNCATE_LIMIT = 100
 
 const safeTruncated = (content) => {
   if (!content) return ''
@@ -62,11 +62,12 @@ const safeTruncated = (content) => {
   temp.innerHTML = sanitized
   const text = temp.textContent || temp.innerText || ''
   const truncated = text.length > TRUNCATE_LIMIT ? `${text.slice(0, TRUNCATE_LIMIT)}...` : text
-  const escaped = truncated
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-  return escaped.replace(/\n/g, '<br />').replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
+  const escaped = truncated.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  const suppressNumberedBreaks = escaped.replace(/\r?\n+(?=\s*\d+\.)/g, ' ')
+  const preserveBlankLines = suppressNumberedBreaks.replace(/\r?\n\s*\r?\n/g, '<br /><br />')
+  return preserveBlankLines
+    .replace(/\r?\n/g, '<br />')
+    .replace(/\s{2,}/g, (match) => '&nbsp;'.repeat(match.length))
 }
 
 async function intoDetail(id, name) {

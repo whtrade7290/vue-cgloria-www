@@ -131,6 +131,7 @@ import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
+const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 
 const route = useRoute()
@@ -173,10 +174,37 @@ const convertPlainTextToHtml = (value = '') => {
   return paragraphs.join('') || '<p></p>'
 }
 
+const isExternalAsset = (value) => /^(?:[a-z][\w.+-]*:|\/\/)/i.test(value || '')
+const buildFilesAssetUrl = (value) => {
+  if (!value || !apiBaseUrl) return null
+
+  let normalized = value.trim()
+  if (!normalized || isExternalAsset(normalized) || normalized.startsWith('data:')) return null
+
+  while (normalized.startsWith('./') || normalized.startsWith('../')) {
+    normalized = normalized.replace(/^\.{1,2}\//, '')
+  }
+  normalized = normalized.replace(/^\/+/, '')
+
+  if (!normalized || !normalized.toLowerCase().startsWith('files/')) return null
+  return `${apiBaseUrl}/uploads/${normalized}`
+}
+const normalizeContentMediaPaths = (value = '') => {
+  if (!value) return ''
+
+  return value.replace(/(src|data-src)=["']([^"']+)["']/gi, (match, attr, originalValue) => {
+    const converted = buildFilesAssetUrl(originalValue)
+    if (!converted) return match
+    return `${attr}="${converted}"`
+  })
+}
+const stripInlineImages = (value = '') => value.replace(/<img\b[^>]*>/gi, '')
+
 const sanitizedContent = computed(() => {
   const raw = store.state.detail.content || ''
   const source = hasHtmlTags(raw) ? raw : convertPlainTextToHtml(raw)
-  return sanitizeHtml(source)
+  const normalizedSource = stripInlineImages(normalizeContentMediaPaths(source))
+  return sanitizeHtml(normalizedSource)
 })
 const writerName = computed(
   () => store.state.detail.writer_name ?? store.state.detail?.writer ?? ''
@@ -192,9 +220,8 @@ const normalizeProfileImage = (value) => {
   if (/^[\w.-]+:\d+\//.test(trimmedValue)) {
     return `${window?.location?.protocol || 'https:'}//${trimmedValue.replace(/^\/+/, '')}`
   }
-  const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
   const normalizedPath = trimmedValue.replace(/^\/+/, '')
-  return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`
+  return apiBaseUrl ? `${apiBaseUrl}/${normalizedPath}` : `/${normalizedPath}`
 }
 
 const writerProfileImage = computed(() => {
