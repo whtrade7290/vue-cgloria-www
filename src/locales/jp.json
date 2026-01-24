@@ -329,6 +329,11 @@
     "mainTitle": "投稿",
     "title": "タイトル",
     "mainContent": "メインコンテンツ",
+    "languageLabel": "言語選択",
+    "languageOptions": {
+      "ko": "韓国語",
+      "ja": "日本語"
+    },
     "addImage": "画像添付",
     "content": "内容",
     "placeholder": {

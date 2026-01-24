@@ -182,6 +182,7 @@ export default createStore({
         writerProfileImageUrl: detailData.writerProfileImageUrl,
         files: fileUrlList,
         mainContent: detailData.mainContent,
+        language: detailData.language,
         create_at: detailData.create_at,
         update_at: detailData.update_at,
         deleted: detailData.deleted

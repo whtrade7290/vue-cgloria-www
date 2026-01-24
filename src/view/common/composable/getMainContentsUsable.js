@@ -23,7 +23,14 @@ const defaultValue = {
   writer_name: ''
 }
 
-export default async function useGetMainContents() {
+const normalizeContent = (data) => {
+  if (data && typeof data === 'object') {
+    return data
+  }
+  return { ...defaultValue }
+}
+
+export default async function useGetMainContents(language) {
   const payload = {
     name: 'photo_board',
     startRow: 0,
@@ -32,13 +39,15 @@ export default async function useGetMainContents() {
   const [sermon, weekly, column, classMeeting, testimony, photoBoard] = await Promise.allSettled([
     getMainSermon('sermon'),
     getMainWeekly('weekly_bible_verse'),
-    getMainColumn('column'),
-    getMainClassMeeting('class_meeting'),
+    getMainColumn('column', language),
+    getMainClassMeeting('class_meeting', language),
     getMainTestimony('testimony'),
     getBoardList(payload)
   ]).then((results) => {
     return results.map((result) => {
-      if (result.status === 'fulfilled') return result.value.data
+      if (result.status === 'fulfilled') {
+        return normalizeContent(result.value?.data)
+      }
       return { ...defaultValue }
     })
   })

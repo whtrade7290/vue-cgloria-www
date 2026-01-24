@@ -31,11 +31,13 @@ import MainSectionJumokja from '@/components/main/MainSectionJumokja.vue'
 // import MainSectionPhoto from '@/components/main/MainSectionPhoto.vue'
 import MainSectionBrother from '@/components/main/MainSectionBrother.vue'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import useGetMainContents from '@/view/common/composable/getMainContentsUsable.js'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
+const { locale } = useI18n()
 
 const contents = ref({
   sermon: null,
@@ -53,13 +55,28 @@ const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
 const refreshToken = storedData ? JSON.parse(storedData).refreshToken : ''
 
+const currentLanguageCode = computed(() => (locale.value === 'jp' ? 'ja' : locale.value))
+
+const updateMainContents = async () => {
+  const results = await useGetMainContents(currentLanguageCode.value)
+  contents.value = results
+  if (!inited.value) {
+    inited.value = true
+  }
+}
+
 onMounted(async () => {
   await store.dispatch('CHECKING_TOKEN', { accessToken, refreshToken })
 
-  const results = await useGetMainContents()
-  contents.value = results
-  inited.value = true
+  await updateMainContents()
 })
+
+watch(
+  () => currentLanguageCode.value,
+  async () => {
+    await updateMainContents()
+  }
+)
 </script>
 
 <style scoped>

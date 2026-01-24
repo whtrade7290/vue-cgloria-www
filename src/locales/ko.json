@@ -328,6 +328,11 @@
     "mainTitle": "글작성",
     "title": "제목",
     "mainContent": "메인콘텐츠",
+    "languageLabel": "언어 선택",
+    "languageOptions": {
+      "ko": "한국어",
+      "ja": "일본어"
+    },
     "addImage": "이미지 첨부",
     "content": "내용",
     "placeholder": {

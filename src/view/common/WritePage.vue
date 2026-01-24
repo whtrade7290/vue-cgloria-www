@@ -66,6 +66,24 @@
               <span class="slider"></span>
             </label>
           </div>
+          <div v-if="shouldShowLanguageSelector" class="language-selector">
+            <p class="language-selector__label">{{ $t('writePage.languageLabel') }}</p>
+            <label
+              v-for="option in languageOptions"
+              :key="option.value"
+              class="language-selector__option"
+              :for="`write-language-${option.value}`"
+            >
+              <input
+                type="radio"
+                :id="`write-language-${option.value}`"
+                name="write-language"
+                :value="option.value"
+                v-model="selectedLanguage"
+              />
+              <span>{{ $t(option.labelKey) }}</span>
+            </label>
+          </div>
           <label for="image">{{ $t('writePage.addImage') }}</label
           ><br />
           <div style="width: 100%; display: flex; justify-content: center">
@@ -154,7 +172,7 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 const isMainContent = ref(false)
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const editor = ClassicEditor
 const editorData = ref('')
@@ -177,6 +195,13 @@ const editorConfig = {
   ]
 }
 
+const LANGUAGE_CONTROLLED_BOARDS = ['column', 'class_meeting']
+const languageOptions = [
+  { value: 'ko', labelKey: 'writePage.languageOptions.ko' },
+  { value: 'ja', labelKey: 'writePage.languageOptions.ja' }
+]
+const normalizedLocale = computed(() => (locale.value === 'jp' ? 'ja' : locale.value))
+const selectedLanguage = ref(normalizedLocale.value || 'ko')
 const boardName = computed(() => route.query?.name || route.params?.name || '')
 const boardTitleMap = {
   sermon: 'nav.classWord.subTitles.sermon',
@@ -197,6 +222,7 @@ const boardDisplayTitle = computed(() => {
   return boardName.value ? boardName.value : ''
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
+const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardName.value))
 
 const MAX_IMAGE_COUNT = 4
 const inputTitle = ref('')
@@ -238,6 +264,9 @@ async function write() {
   }
   formData.append('board', currentBoardName)
   formData.append('mainContent', isMainContent.value)
+  if (isLanguageBoard.value) {
+    formData.append('language', selectedLanguage.value)
+  }
 
   if (currentBoardName === 'withDiary') {
     formData.append('diaryRoomId', route.query.roomId)
@@ -357,6 +386,9 @@ const isDisplay = computed(() => {
   const allowedBoard = routeNames.includes(route.query?.name)
   return allowedBoard && role === 'ADMIN'
 })
+const shouldShowLanguageSelector = computed(
+  () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
+)
 </script>
 
 <style scoped>
@@ -411,6 +443,28 @@ const isDisplay = computed(() => {
 }
 .toggle-switch input:checked + .slider:before {
   transform: translateX(22px);
+}
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.language-selector__label {
+  margin: 0;
+  font-weight: 600;
+  position: relative;
+  top: -1px;
+}
+.language-selector__option {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+.language-selector__option input[type='radio'] {
+  accent-color: #f6ad55;
 }
 </style>
 

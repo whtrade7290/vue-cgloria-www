@@ -148,12 +148,20 @@ export async function revokeApproveStatusRequest(id) {
 }
 
 /* ------------------------- 메인 콘텐츠 ------------------------- */
-export async function getMainColumn(name) {
-  return await instance.post(`${name}/main_${name}`, { board: name })
+export async function getMainColumn(name, language) {
+  const payload = { board: name }
+  if (language) {
+    payload.language = language
+  }
+  return await instance.post(`${name}/main_${name}`, payload)
 }
 
-export async function getMainClassMeeting(name) {
-  return await instance.post(`${name}/main_${name}`, { board: name })
+export async function getMainClassMeeting(name, language) {
+  const payload = { board: name }
+  if (language) {
+    payload.language = language
+  }
+  return await instance.post(`${name}/main_${name}`, payload)
 }
 
 export async function getMainTestimony(name) {

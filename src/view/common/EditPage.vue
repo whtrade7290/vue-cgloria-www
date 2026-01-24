@@ -67,6 +67,24 @@
               <span class="slider"></span>
             </label>
           </div>
+          <div v-if="shouldShowLanguageSelector" class="language-selector">
+            <p class="language-selector__label">{{ $t('writePage.languageLabel') }}</p>
+            <label
+              v-for="option in languageOptions"
+              :key="option.value"
+              class="language-selector__option"
+              :for="`edit-language-${option.value}`"
+            >
+              <input
+                type="radio"
+                :id="`edit-language-${option.value}`"
+                name="edit-language"
+                :value="option.value"
+                v-model="selectedLanguage"
+              />
+              <span>{{ $t(option.labelKey) }}</span>
+            </label>
+          </div>
           <label for="image">{{ $t('writePage.addImage') }}</label
           ><br />
           <div style="width: 100%; display: flex; justify-content: center">
@@ -156,7 +174,7 @@ const store = useStore()
 const editor = ClassicEditor
 const editorData = ref('')
 editorData.value = store.state.detail.content
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const editorConfig = {
   placeholder: t('writePage.placeholder.content'),
   toolbar: [
@@ -176,6 +194,13 @@ const editorConfig = {
   ]
 }
 
+const LANGUAGE_CONTROLLED_BOARDS = ['column', 'class_meeting']
+const languageOptions = [
+  { value: 'ko', labelKey: 'writePage.languageOptions.ko' },
+  { value: 'ja', labelKey: 'writePage.languageOptions.ja' }
+]
+const normalizedLocale = computed(() => (locale.value === 'jp' ? 'ja' : locale.value))
+const selectedLanguage = ref(store.state.detail?.language || normalizedLocale.value || 'ko')
 const MAX_IMAGE_COUNT = 4
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
@@ -205,6 +230,7 @@ const boardDisplayTitle = computed(() => {
   return boardNameRef.value ? boardNameRef.value : ''
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardNameRef.value))
+const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardNameRef.value))
 const files = ref([])
 const previewItems = ref([])
 const removedExistingFilenames = ref([])
@@ -334,6 +360,9 @@ const edit = async () => {
   }
 
   formData.append('board', currentBoardName)
+  if (isLanguageBoard.value) {
+    formData.append('language', selectedLanguage.value)
+  }
 
   files.value.forEach((file) => {
     formData.append('fileField', file)
@@ -425,6 +454,9 @@ const isDisplay = computed(() => {
   const allowedBoard = routeNames.includes(route.query?.name)
   return allowedBoard && role === 'ADMIN'
 })
+const shouldShowLanguageSelector = computed(
+  () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
+)
 </script>
 
 <style scoped>
@@ -479,6 +511,28 @@ const isDisplay = computed(() => {
 }
 .toggle-switch input:checked + .slider:before {
   transform: translateX(22px);
+}
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.language-selector__label {
+  margin: 0;
+  font-weight: 600;
+  position: relative;
+  top: -1px;
+}
+.language-selector__option {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+.language-selector__option input[type='radio'] {
+  accent-color: #f6ad55;
 }
 </style>
 
