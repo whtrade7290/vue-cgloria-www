@@ -76,39 +76,56 @@
               </ul>
               <div class="nav-btn-container">
                 <template v-if="store.state.isLogin">
-                  <a
-                    href="javascript:;"
-                    class="btn btn-outline-primary btn-round btn-style"
-                    @click="goToProfile"
-                    >{{ $t('button.profile') }}</a
-                  >
-                  <a
-                    href="javascript:;"
-                    class="btn bg-gradient-primary btn-round btn-style"
-                    @click="logout"
-                    >{{ $t('button.logout') }}</a
-                  >
-
-                  <a
-                    href="javascript:;"
-                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
-                    @click="changeLanguage()"
-                    >{{ $t('button.lang') }}</a
-                  >
+                  <div class="dropdown user-menu-wrapper">
+                    <span v-if="userName" class="user-greeting">{{ userName }} {{ userSuffix }}</span>
+                    <a
+                      class="nav-link user-menu-toggle"
+                      href="javascript:;"
+                      id="userMenuDropdown"
+                      @click="toggleUserMenu"
+                    >
+                      <span class="material-symbols-outlined nav-icon">menu</span>
+                      {{ $t('userMenu.title') }}
+                      <DownArrowDarkVue class="ms-1" color="#ffffff" />
+                    </a>
+                    <div
+                      class="dropdown-menu dropdown-menu-end user-menu-dropdown"
+                      aria-labelledby="userMenuDropdown"
+                    >
+                      <a class="dropdown-item" href="javascript:;" @click="goToProfile">
+                        <span class="material-symbols-outlined nav-icon">person</span>
+                        {{ $t('userMenu.profile') }}
+                      </a>
+                      <a class="dropdown-item" href="javascript:;" @click="logout">
+                        <span class="material-symbols-outlined nav-icon">logout</span>
+                        {{ $t('userMenu.logout') }}
+                      </a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="javascript:;" @click="changeLanguage()">
+                        <span class="material-symbols-outlined nav-icon"
+                          >language_japanese_kana</span
+                        >
+                        {{ $t('userMenu.language') }}
+                      </a>
+                    </div>
+                  </div>
                 </template>
                 <template v-else>
-                  <div
-                    @click="goToPage('login')"
-                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
-                  >
-                    {{ $t('button.login') }}
+                  <div class="d-flex gap-1">
+                    <div
+                      @click="goToPage('login')"
+                      class="btn btn-sm bg-gradient-primary btn-round btn-style mb-0 btn-unlogin"
+                    >
+                      {{ $t('button.login') }}
+                    </div>
+                    <div
+                      href="javascript:;"
+                      class="btn btn-sm bg-gradient-primary btn-round btn-style mb-0 btn-unlogin"
+                      @click="changeLanguage()"
+                    >
+                      {{ $t('button.lang') }}
+                    </div>
                   </div>
-                  <a
-                    href="javascript:;"
-                    class="btn btn-sm bg-gradient-primary btn-round btn-style"
-                    @click="changeLanguage()"
-                    >{{ $t('button.lang') }}</a
-                  >
                 </template>
               </div>
             </div>
@@ -120,7 +137,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, nextTick } from 'vue'
+import { onMounted, ref, nextTick, computed } from 'vue'
 import { useStore } from 'vuex'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
@@ -135,6 +152,7 @@ const router = useRouter()
 
 let bsCollapse = null
 const dropdownInstances = ref([])
+const userMenuDropdown = ref(null)
 
 const mainMenus = Object.entries(ko.nav).map((mainMenu) => {
   return {
@@ -155,19 +173,24 @@ function getParsedStoredData() {
       accessToken: parsedData.token || '',
       refreshToken: parsedData.refreshToken || '',
       userId: parsedData.user?.id || '',
-      storedRole: parsedData.user?.role || ''
+      storedRole: parsedData.user?.role || '',
+      userName: parsedData.user?.name || parsedData.user?.username || ''
     }
   }
   return {
     accessToken: '',
     refreshToken: '',
     userId: '',
-    storedRole: ''
+    storedRole: '',
+    userName: ''
   }
 }
 
-const { accessToken, refreshToken, storedRole } = getParsedStoredData()
+const storedInfo = getParsedStoredData()
+const { accessToken, refreshToken, storedRole } = storedInfo
 const role = ref(storedRole)
+const userName = ref(storedInfo?.userName || '')
+const userSuffix = computed(() => (locale.value === 'jp' ? '様' : '님'))
 
 // 로그아웃 함수
 function logout() {
@@ -347,6 +370,7 @@ const toggleHide = () => {
 
 const closeAllDropdowns = () => {
   dropdownInstances.value.forEach((dropdown) => dropdown.hide())
+  userMenuDropdown.value?.hide()
 }
 
 const toggleDropdown = (id) => {
@@ -355,6 +379,10 @@ const toggleDropdown = (id) => {
   if (target) {
     target.toggle()
   }
+}
+
+const toggleUserMenu = () => {
+  userMenuDropdown.value?.toggle()
 }
 
 // 토큰 검사 실행
@@ -385,6 +413,11 @@ onMounted(async () => {
     })
     .filter(Boolean)
 
+  const userMenuEl = document.getElementById('userMenuDropdown')
+  if (userMenuEl) {
+    userMenuDropdown.value = new Dropdown(userMenuEl, { autoClose: true })
+  }
+
   document.addEventListener('click', (e) => {
     const navEl = document.getElementById('navigation')
     const toggler = document.querySelector('.navbar-toggler')
@@ -397,8 +430,7 @@ onMounted(async () => {
       bsCollapse?.hide()
     }
 
-    // Dropdown 닫기
-    dropdownInstances.value.forEach((dropdown) => dropdown.hide())
+    closeAllDropdowns()
   })
 })
 </script>
@@ -421,39 +453,84 @@ onMounted(async () => {
 .nav-btn-container {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 16px;
+  margin-top: 0;
 }
-.btn-style {
+.nav-guest-buttons {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 110px;
-  padding: 0.45rem 1rem;
-  height: auto;
+  gap: 0.5rem;
+}
+.guest-btn {
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.guest-btn--filled {
+  background: linear-gradient(120deg, #f6ad55, #f7689a);
+  color: #fff;
+}
+.guest-btn--filled:hover {
+  opacity: 0.9;
+}
+.guest-btn--outline {
+  background: transparent;
+  border: 1px solid rgba(247, 104, 154, 0.5);
+  color: #c26a45;
+}
+.guest-btn--outline:hover {
+  background: rgba(247, 104, 154, 0.08);
+}
+.user-menu-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+.user-greeting {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #344767;
+  white-space: nowrap;
+}
+.user-menu-toggle {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff !important;
+  white-space: nowrap;
+  border: none;
+  background: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.4);
+}
+.user-menu-toggle:hover {
+  opacity: 0.9;
+}
+.user-menu-dropdown {
+  min-width: 200px;
+  padding: 0.35rem 0;
+}
+.user-menu-dropdown .dropdown-item {
+  font-size: 0.9rem;
+  padding: 0.35rem 1rem;
+}
+.nav-icon {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 .dropdown-menu.show {
   width: 100%;
 }
-@media (min-width: 992px) {
-  .data-bs-popper .bg-color {
-    background-color: #67748e;
-  }
-  .nav-btn-container {
-    gap: 0.75rem;
-  }
-}
 
-@media (max-width: 991px) {
-  .nav-btn-container {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: 0.75rem;
-  }
-  .btn-style {
-    width: 100%;
-  }
+.btn-unlogin {
+  width: 7rem;
+  height: 2rem;
 }
 </style>

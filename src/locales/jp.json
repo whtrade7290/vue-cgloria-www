@@ -80,6 +80,13 @@
       }
     }
   },
+  "userMenu": {
+    "title": "マイページ",
+    "profile": "プロフィール編集",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "language": "한국어"
+  },
   "biblePlan": {
     "title": "聖書通読表作成",
     "description": "希望する通読日数を入力してCSVファイルをダウンロードしてください。",

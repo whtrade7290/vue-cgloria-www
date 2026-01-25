@@ -29,10 +29,8 @@ const navBarKey = computed(() => {
 @import url('@/assets/css/nucleo-svg.css');
 @import url('@/assets/css/soft-design-system.css');
 
-html,
-body {
-  height: 100%;
-  margin: 0;
+.main-content {
+  flex: 1; /* 콘텐츠가 화면보다 짧을 경우, footer를 아래로 밀어줌 */
 }
 .wrapper {
   display: flex;
@@ -40,7 +38,10 @@ body {
   min-height: 100vh;
   background-color: #f6f6f6;
 }
-.main-content {
-  flex: 1; /* 콘텐츠가 화면보다 짧을 경우, footer를 아래로 밀어줌 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Nanum Gothic', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', sans-serif;
 }
 </style>
