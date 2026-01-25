@@ -179,6 +179,10 @@ export async function fetchApprovedUsers({ startRow = 0, pageSize = 20, searchWo
   return await instance.post('/approvedUsers', { startRow, pageSize, searchWord })
 }
 
+export async function fetchApprovedUsersCount() {
+  return await instance.post('/approvedUsersCount')
+}
+
 export async function updateUserRoleRequest({ id, role }) {
   return await instance.post('/updateUserRole', { id, role })
 }

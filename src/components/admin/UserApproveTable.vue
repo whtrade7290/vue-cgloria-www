@@ -178,7 +178,12 @@ import CardContainer from '@/components/common/card/CardContainer.vue'
 import TableOrganisms from '@/components/tableComponent/TableOrganisms.vue'
 import TableHead from '@/components/tableComponent/TableHead.vue'
 import TableBody from '@/components/tableComponent/TableBody.vue'
-import { fetchApprovedUsers, updateUserRoleRequest, revokeApproveStatusRequest } from '@/api/index'
+import {
+  fetchApprovedUsers,
+  fetchApprovedUsersCount,
+  updateUserRoleRequest,
+  revokeApproveStatusRequest
+} from '@/api/index'
 import { useI18n } from 'vue-i18n'
 
 const TITLE = 'nav.adminPage.subTitles.userApprove'
@@ -221,24 +226,42 @@ const isLastPage = computed(() => currentPage.value === totalPages.value)
 
 const loadUsers = async () => {
   try {
-    const response = await fetchApprovedUsers({
-      startRow: (currentPage.value - 1) * PAGE_SIZE,
-      pageSize: PAGE_SIZE,
-      searchWord: searchWord.value
-    })
+    const [listResponse, countResponse] = await Promise.all([
+      fetchApprovedUsers({
+        startRow: (currentPage.value - 1) * PAGE_SIZE,
+        pageSize: PAGE_SIZE,
+        searchWord: searchWord.value
+      }),
+      fetchApprovedUsersCount()
+    ])
 
-    if (Array.isArray(response?.data)) {
-      users.value = response.data
-      totalCount.value = response.data.length
-    } else if (response?.data) {
-      totalCount.value = response.data.count ?? 0
-      users.value = response.data.list ?? []
+    if (Array.isArray(listResponse?.data)) {
+      users.value = listResponse.data
+    } else {
+      users.value = listResponse?.data?.list ?? []
+    }
+
+    const rawCount = countResponse?.data
+    if (typeof rawCount === 'number') {
+      totalCount.value = rawCount
+    } else if (rawCount && typeof rawCount === 'object') {
+      totalCount.value = Number(rawCount.count ?? rawCount.total ?? 0)
     } else {
       totalCount.value = 0
-      users.value = []
+    }
+
+    if (!Number.isFinite(totalCount.value)) {
+      totalCount.value = 0
+    }
+
+    if (!users.value.length && currentPage.value > 1 && !isFirstPage.value) {
+      currentPage.value = 1
+      await loadUsers()
     }
   } catch (error) {
     console.error('Failed to fetch approved users', error)
+    users.value = []
+    totalCount.value = 0
     await Swal.fire({
       icon: 'error',
       title: t('admin.manageWithDiary.fetchError')
