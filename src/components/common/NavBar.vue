@@ -77,7 +77,9 @@
               <div class="nav-btn-container">
                 <template v-if="store.state.isLogin">
                   <div class="dropdown user-menu-wrapper">
-                    <span v-if="userName" class="user-greeting">{{ userName }} {{ userSuffix }}</span>
+                    <span v-if="userName" class="user-greeting"
+                      >{{ userName }} {{ userSuffix }}</span
+                    >
                     <a
                       class="nav-link user-menu-toggle"
                       href="javascript:;"
@@ -89,7 +91,7 @@
                       <DownArrowDarkVue class="ms-1" color="#ffffff" />
                     </a>
                     <div
-                      class="dropdown-menu dropdown-menu-end user-menu-dropdown"
+                      class="dropdown-menu dropdown-menu-end user-menu-dropdown mt-1"
                       aria-labelledby="userMenuDropdown"
                     >
                       <a class="dropdown-item" href="javascript:;" @click="goToProfile">
@@ -519,10 +521,21 @@ onMounted(async () => {
 .user-menu-dropdown {
   min-width: 200px;
   padding: 0.35rem 0;
+  background-color: rgba(255, 255, 255, 0.98);
+  border-radius: 1.25rem;
+  margin-top: 10px;
+  box-shadow:
+    0 14px 30px rgba(52, 71, 103, 0.15),
+    0 6px 18px rgba(52, 71, 103, 0.11),
+    0 3px 8px rgba(52, 71, 103, 0.08);
 }
 .user-menu-dropdown .dropdown-item {
   font-size: 0.9rem;
   padding: 0.35rem 1rem;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 .nav-icon {
   font-size: 1.1rem;
