@@ -240,7 +240,8 @@ const changeLanguage = () => {
       const newLang = localStorage.getItem('getLanguage') === 'jp' ? 'ko' : 'jp'
       localStorage.setItem('getLanguage', newLang) // ✅ 변경된 언어를 localStorage에 저장
       locale.value = newLang // ✅ Vue I18n 언어 변경
-      window.document.title = t('main')
+      const updater = window?.__applyDocumentTitle
+      updater?.(router.currentRoute.value)
     }
     toggleHide()
     closeAllDropdowns()

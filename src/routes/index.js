@@ -40,16 +40,28 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: MainView
+    component: MainView,
+    meta: { titleKey: 'common.siteTitle' }
   },
   // auth
-  { path: '/login', name: 'login', component: LoginView },
-  { path: '/signUp/:isQr?', name: 'signUp', component: SignUpView },
-  { path: '/edit_password', name: 'edit_password', component: EditPassword },
+  { path: '/login', name: 'login', component: LoginView, meta: { titleKey: 'button.login' } },
+  {
+    path: '/signUp/:isQr?',
+    name: 'signUp',
+    component: SignUpView,
+    meta: { titleKey: 'auth.signUpTitle' }
+  },
+  {
+    path: '/edit_password',
+    name: 'edit_password',
+    component: EditPassword,
+    meta: { titleKey: 'auth.editPassword.title' }
+  },
   {
     path: '/profile',
     name: 'profile',
     component: ProfileEditView,
+    meta: { titleKey: 'profile.title' },
     beforeEnter: async (to, from, next) => {
       const storedData = localStorage.getItem(getUserIdFromCookie())
       const storageUser = storedData ? JSON.parse(storedData) : {}
@@ -66,13 +78,24 @@ const routes = [
     }
   },
   // 교회소개
-  { path: '/intro', name: 'intro', component: ChurchIntro },
-  { path: '/location', name: 'location', component: ChurchMap },
-  { path: '/paster', name: 'paster', component: PasterInfo },
+  { path: '/intro', name: 'intro', component: ChurchIntro, meta: { titleKey: 'nav.intro.title' } },
+  {
+    path: '/location',
+    name: 'location',
+    component: ChurchMap,
+    meta: { titleKey: 'nav.intro.subTitles.location' }
+  },
+  {
+    path: '/paster',
+    name: 'paster',
+    component: PasterInfo,
+    meta: { titleKey: 'nav.intro.subTitles.paster' }
+  },
   {
     path: '/notice',
     name: 'notice',
     component: NoticeBoard,
+    meta: { titleKey: 'nav.intro.subTitles.notice' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'notice' })
@@ -84,6 +107,7 @@ const routes = [
     path: '/sermon',
     name: 'sermon',
     component: SermonBoard,
+    meta: { titleKey: 'nav.classWord.subTitles.sermon' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'sermon' })
@@ -94,6 +118,7 @@ const routes = [
     path: '/column',
     name: 'column',
     component: ColumnBoard,
+    meta: { titleKey: 'nav.classWord.subTitles.column' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'column' })
@@ -104,6 +129,7 @@ const routes = [
     path: '/class_meeting',
     name: 'class_meeting',
     component: SmallGroup,
+    meta: { titleKey: 'nav.classWord.subTitles.class_meeting' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'class_meeting' })
@@ -114,6 +140,7 @@ const routes = [
     path: '/weekly_bible_verse',
     name: 'weekly_bible_verse',
     component: WeeklySermonBoard,
+    meta: { titleKey: 'nav.classWord.subTitles.weekly_bible_verse' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'weekly_bible_verse' })
@@ -123,16 +150,23 @@ const routes = [
   {
     path: '/bible_plan',
     name: 'bible_plan',
-    component: BiblePlanView
+    component: BiblePlanView,
+    meta: { titleKey: 'biblePlan.title' }
   },
   // 예배/훈련
-  { path: '/jumok', name: 'jumok', component: JumokjaView },
-  { path: '/training', name: 'training', component: TrainingView },
+  { path: '/jumok', name: 'jumok', component: JumokjaView, meta: { titleKey: 'nav.worshipTraining.title' } },
+  {
+    path: '/training',
+    name: 'training',
+    component: TrainingView,
+    meta: { titleKey: 'nav.worshipTraining.title' }
+  },
   // 주일학교
   {
     path: '/eventSchedule',
     name: 'eventSchedule',
-    component: EventSchedule
+    component: EventSchedule,
+    meta: { titleKey: 'nav.sundaySchool.subTitles.eventSchedule' }
     // beforeEnter: async (from, next) => {
     //   await Swal.fire({
     //     title: '준비중입니다.',
@@ -146,6 +180,7 @@ const routes = [
     path: '/school_photo_board',
     name: 'school_photo_board',
     component: SchoolPhotoBoard,
+    meta: { titleKey: 'nav.sundaySchool.subTitles.school_photo_board' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'school_photo_board' })
@@ -156,6 +191,7 @@ const routes = [
     path: '/sunday_school_resource',
     name: 'sunday_school_resource',
     component: SchoolLibrary,
+    meta: { titleKey: 'nav.sundaySchool.subTitles.sunday_school_resource' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'sunday_school_resource' })
@@ -163,12 +199,18 @@ const routes = [
     }
   },
   // 전도섬김
-  { path: '/evangelismAndVision', name: 'evangelismAndVision', component: EvangelizeView },
+  {
+    path: '/evangelismAndVision',
+    name: 'evangelismAndVision',
+    component: EvangelizeView,
+    meta: { titleKey: 'nav.evangelismService.title' }
+  },
   // 교재마당
   {
     path: '/photo_board',
     name: 'photo_board',
     component: PhotoBoard,
+    meta: { titleKey: 'nav.fellowshipArea.subTitles.photo_board' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'photo_board' })
@@ -179,6 +221,7 @@ const routes = [
     path: '/general_forum',
     name: 'general_forum',
     component: FreeBoard,
+    meta: { titleKey: 'nav.fellowshipArea.subTitles.general_forum' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'general_forum' })
@@ -189,6 +232,7 @@ const routes = [
     path: '/testimony',
     name: 'testimony',
     component: TestimonyBoard,
+    meta: { titleKey: 'nav.fellowshipArea.subTitles.testimony' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'testimony' })
@@ -199,6 +243,7 @@ const routes = [
     path: '/withDiary',
     name: 'withDiary',
     component: WithDiary,
+    meta: { titleKey: 'nav.withDiary.title' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
 
@@ -230,12 +275,14 @@ const routes = [
   {
     path: '/write',
     name: 'write',
-    component: WritePage
+    component: WritePage,
+    meta: { titleKey: 'writePage.mainTitle' }
   },
   {
     path: '/edit',
     name: 'edit',
     component: EditPage,
+    meta: { titleKey: 'writePage.mainTitle' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const name = to.query.name
@@ -248,6 +295,7 @@ const routes = [
     path: '/detail/:name/:id',
     name: 'detail',
     component: DetailPage,
+    meta: { titleKey: 'common.siteTitle' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const name = to.params.name
@@ -260,6 +308,7 @@ const routes = [
     path: '/makeWithDiary',
     name: 'makeWithDiary',
     component: MakeWithDiaryRoom,
+    meta: { titleKey: 'nav.adminPage.subTitles.makeWithDiary' },
     beforeEnter: async (to, from, next) => {
       const storedData = localStorage.getItem(getUserIdFromCookie())
       const storageUser = storedData ? JSON.parse(storedData) : {}
@@ -279,6 +328,7 @@ const routes = [
     path: '/approvePage',
     name: 'approvePage',
     component: ApprovePage,
+    meta: { titleKey: 'nav.adminPage.subTitles.approvePage' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -302,6 +352,7 @@ const routes = [
     path: '/manageWithDiary',
     name: 'manageWithDiary',
     component: ManageWithDiary,
+    meta: { titleKey: 'nav.adminPage.subTitles.manageWithDiary' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -325,6 +376,7 @@ const routes = [
     path: '/userApprove',
     name: 'userApprove',
     component: UserApproveTable,
+    meta: { titleKey: 'nav.adminPage.subTitles.userApprove' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       const storedData = localStorage.getItem(getUserIdFromCookie())
@@ -354,5 +406,20 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+
+const applyDocumentTitle = (route) => {
+  const translator = window?.i18n?.global?.t
+  const siteTitle = translator ? translator('common.siteTitle') : '중앙영광교회'
+  const key = route?.meta?.titleKey
+  if (translator && key) {
+    document.title = `${translator(key)} - ${siteTitle}`
+  } else {
+    document.title = siteTitle
+  }
+}
+
+window.__applyDocumentTitle = applyDocumentTitle
+
+router.afterEach((to) => applyDocumentTitle(to))
 
 export default router
