@@ -521,6 +521,8 @@ onMounted(async () => {
 }
 .user-menu-dropdown {
   min-width: 200px;
+  min-height: 9rem;
+  height: auto;
   padding: 0.35rem 0;
   background-color: rgba(255, 255, 255, 0.98);
   border-radius: 1.25rem;
