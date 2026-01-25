@@ -40,8 +40,7 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: MainView,
-    meta: { titleKey: 'common.siteTitle' }
+    component: MainView
   },
   // auth
   { path: '/login', name: 'login', component: LoginView, meta: { titleKey: 'button.login' } },
@@ -154,7 +153,12 @@ const routes = [
     meta: { titleKey: 'biblePlan.title' }
   },
   // 예배/훈련
-  { path: '/jumok', name: 'jumok', component: JumokjaView, meta: { titleKey: 'nav.worshipTraining.title' } },
+  {
+    path: '/jumok',
+    name: 'jumok',
+    component: JumokjaView,
+    meta: { titleKey: 'nav.worshipTraining.title' }
+  },
   {
     path: '/training',
     name: 'training',
