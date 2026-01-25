@@ -87,6 +87,15 @@
               </button>
             </div>
           </div>
+          <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
+            <MemoryVerseFields
+              v-model="memoryVerseIdx"
+              :initial-bible-id="initialMemoryVerseId"
+              id-prefix="detail-memory"
+              :disabled="true"
+              :show-empty-message="true"
+            />
+          </div>
           <div class="content-container printable-content" v-html="sanitizedContent"></div>
         </div>
         <div class="button-box">
@@ -127,6 +136,7 @@ import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import Tooltip from '@/components/common/Tooltip.vue'
+import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
@@ -139,6 +149,12 @@ const router = useRouter()
 const store = useStore()
 const commentCount = ref(0)
 const { t } = useI18n()
+const boardNameRef = computed(() => route.query?.name || route.params?.name || '')
+const shouldShowMemoryVerse = computed(() => boardNameRef.value === 'weekly_bible_verse')
+const memoryVerseIdx = ref(store.state.detail?.bible_id || store.state.detail?.bibleId || null)
+const initialMemoryVerseId = computed(
+  () => store.state.detail?.bible_id || store.state.detail?.bibleId || null
+)
 const resolveFileType = (file) => {
   const extensionSource =
     file?.extension ||
@@ -619,6 +635,10 @@ section {
 }
 .content-container {
   margin-top: 2rem;
+}
+.memory-verse-wrapper {
+  margin: 1.5rem auto 0;
+  width: min(700px, 100%);
 }
 
 .btn-style {

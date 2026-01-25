@@ -1,5 +1,11 @@
 <template>
   <CardContainer :title="obj.title">
+    <WeeklyMemoryControls
+      class="mb-4"
+      @search="handleMemoryRangeSearch"
+      @copy="handleMemoryRangeCopy"
+      @download="handleMemoryRangeDownload"
+    />
     <TableComponent
       :called="route.name"
       :items="items"
@@ -18,6 +24,7 @@
 <script setup>
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import TableComponent from '@/components/common/table/TableComponent.vue'
+import WeeklyMemoryControls from '@/components/common/table/WeeklyMemoryControls.vue'
 import WriteButton from '@/components/common/WriteButton.vue'
 import { useStore } from 'vuex'
 import { SMALLGROUP } from '@/data/sidemenu.js'
@@ -41,6 +48,18 @@ const {
   handlePageChange,
   handleSearch
 } = useBoardList('weekly_bible_verse')
+
+const handleMemoryRangeSearch = (range) => {
+  console.log('Memory verse search placeholder', range)
+}
+
+const handleMemoryRangeCopy = (range) => {
+  console.log('Memory verse copy placeholder', range)
+}
+
+const handleMemoryRangeDownload = (range) => {
+  console.log('Memory verse download placeholder', range)
+}
 </script>
 
 <style lang="scss" scoped></style>

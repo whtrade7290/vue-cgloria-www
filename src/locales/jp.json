@@ -181,6 +181,16 @@
       "title": "タイトル",
       "writer": "作成者",
       "date": "日付"
+    },
+    "memoryControls": {
+      "subtitle": "今週の聖書",
+      "title": "暗唱聖句期間設定",
+      "description": "確認したい期間を設定して検索するか、TXTファイルでダウンロードできます。",
+      "from": "開始日",
+      "to": "終了日",
+      "searchButton": "検索",
+      "copyButton": "コピー",
+      "downloadButton": "ダウンロード"
     }
   },
   "mainMsg": {
@@ -333,6 +343,22 @@
     "languageOptions": {
       "ko": "韓国語",
       "ja": "日本語"
+    },
+    "memoryVerseSection": {
+      "title": "今週の暗唱聖句",
+      "description": "メインページに表示する暗唱聖句を入力してください。",
+      "book": "聖書",
+      "chapter": "章",
+      "verse": "節",
+      "bookPlaceholder": "例: ヨハネの福音書",
+      "chapterPlaceholder": "例: 3",
+      "versePlaceholder": "例: 16節",
+      "bookListLabel": "聖書全体のリスト",
+      "previewTitle": "検索結果",
+      "previewPlaceholder": "聖書・章・節の選択が完了すると自動で聖句が表示されます。",
+      "loading": "聖句を読み込み中です...",
+      "validation": "聖書・章・節をすべて選択してください。",
+      "searchError": "聖句を読み込む際に問題が発生しました。"
     },
     "addImage": "画像添付",
     "content": "内容",

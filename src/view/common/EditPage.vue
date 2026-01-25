@@ -126,6 +126,13 @@
             class="hidden-file-input"
             multiple
           /><br />
+          <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
+            <MemoryVerseFields
+              v-model="memoryVerseIdx"
+              :initial-bible-id="initialMemoryVerseId"
+              id-prefix="edit-memory"
+            />
+          </div>
           <label for="content">{{ $t('writePage.content') }}</label
           ><br />
           <ckeditor
@@ -156,7 +163,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -165,6 +172,7 @@ import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
@@ -231,10 +239,24 @@ const boardDisplayTitle = computed(() => {
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardNameRef.value))
 const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardNameRef.value))
+const isWeeklyBoard = computed(() => boardNameRef.value === 'weekly_bible_verse')
 const files = ref([])
 const previewItems = ref([])
 const removedExistingFilenames = ref([])
 const isSubmitting = ref(false)
+const memoryVerseIdx = ref(store.state.detail?.bible_id || store.state.detail?.bibleId || null)
+const initialMemoryVerseId = computed(
+  () => store.state.detail?.bible_id || store.state.detail?.bibleId || null
+)
+
+watch(
+  () => isWeeklyBoard.value,
+  (active) => {
+    if (!active) {
+      memoryVerseIdx.value = null
+    }
+  }
+)
 
 const newImagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
@@ -363,6 +385,9 @@ const edit = async () => {
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
   }
+  if (isWeeklyBoard.value && memoryVerseIdx.value) {
+    formData.append('memoryVerseIdx', memoryVerseIdx.value)
+  }
 
   files.value.forEach((file) => {
     formData.append('fileField', file)
@@ -457,6 +482,7 @@ const isDisplay = computed(() => {
 const shouldShowLanguageSelector = computed(
   () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
 )
+const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
 </script>
 
 <style scoped>
@@ -533,6 +559,9 @@ const shouldShowLanguageSelector = computed(
 }
 .language-selector__option input[type='radio'] {
   accent-color: #f6ad55;
+}
+.memory-verse-wrapper {
+  margin-top: 1.5rem;
 }
 </style>
 

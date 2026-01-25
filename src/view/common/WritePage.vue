@@ -125,6 +125,11 @@
             class="hidden-file-input"
             multiple
           /><br />
+          <MemoryVerseFields
+            v-if="shouldShowMemoryVerse"
+            v-model="memoryVerseIdx"
+            id-prefix="write-memory"
+          />
           <label for="content">{{ $t('writePage.content') }}</label
           ><br />
           <ckeditor
@@ -155,7 +160,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, watch } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
@@ -165,6 +170,7 @@ import { useI18n } from 'vue-i18n'
 import { compressImageFiles } from '@/utils/imageCompression'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
 import Swal from 'sweetalert2'
 
 const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
@@ -203,6 +209,7 @@ const languageOptions = [
 const normalizedLocale = computed(() => (locale.value === 'jp' ? 'ja' : locale.value))
 const selectedLanguage = ref(normalizedLocale.value || 'ko')
 const boardName = computed(() => route.query?.name || route.params?.name || '')
+const isWeeklyBoard = computed(() => boardName.value === 'weekly_bible_verse')
 const boardTitleMap = {
   sermon: 'nav.classWord.subTitles.sermon',
   column: 'nav.classWord.subTitles.column',
@@ -223,6 +230,15 @@ const boardDisplayTitle = computed(() => {
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
 const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardName.value))
+const memoryVerseIdx = ref(null)
+watch(
+  () => isWeeklyBoard.value,
+  (isWeekly) => {
+    if (!isWeekly) {
+      memoryVerseIdx.value = null
+    }
+  }
+)
 
 const MAX_IMAGE_COUNT = 4
 const inputTitle = ref('')
@@ -266,6 +282,9 @@ async function write() {
   formData.append('mainContent', isMainContent.value)
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
+  }
+  if (isWeeklyBoard.value && memoryVerseIdx.value) {
+    formData.append('memoryVerseIdx', memoryVerseIdx.value)
   }
 
   if (currentBoardName === 'withDiary') {
@@ -389,6 +408,7 @@ const isDisplay = computed(() => {
 const shouldShowLanguageSelector = computed(
   () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
 )
+const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
 </script>
 
 <style scoped>

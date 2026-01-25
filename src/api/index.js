@@ -12,6 +12,46 @@ export async function requestBiblePlan(days) {
   )
 }
 
+export async function fetchBibleBooks() {
+  return await instance.get('/bible/books')
+}
+
+export async function fetchBibleChapters(longLabel) {
+  return await instance.get('/bible/chapters', {
+    params: {
+      long_label: longLabel
+    }
+  })
+}
+
+export async function fetchBibleParagraphs(longLabel, chapter) {
+  return await instance.get('/bible/paragraphs', {
+    params: {
+      long_label: longLabel,
+      chapter
+    }
+  })
+}
+
+export async function fetchBibleVerse(longLabel, chapter, paragraph) {
+  return await instance.post('/bible/verse', {
+    long_label: longLabel,
+    chapter,
+    paragraph
+  })
+}
+
+export async function fetchBibleVerseById(verseId) {
+  return await instance.get(`/bible/verse/${verseId}`)
+}
+
+export async function requestRememberBibleDownload({ fromDate, toDate }) {
+  return await instance.post('/weekly_bible_verse/remember_bible_download', {
+    fromDate,
+    toDate
+  })
+}
+
 /* ------------------------- 게시판 관련 ------------------------- */
 export async function getBoardList(obj) {
   const { name, startRow, pageSize, searchWord } = obj

@@ -183,6 +183,7 @@ export default createStore({
         files: fileUrlList,
         mainContent: detailData.mainContent,
         language: detailData.language,
+        bible_id: detailData.bible_id ?? detailData.bibleId ?? null,
         create_at: detailData.create_at,
         update_at: detailData.update_at,
         deleted: detailData.deleted
