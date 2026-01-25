@@ -62,14 +62,17 @@
 <script setup>
 import { ref, computed, onBeforeUnmount, watch } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import Swal from 'sweetalert2'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import { SMALLGROUP } from '@/data/sidemenu.js'
 import { requestBiblePlan } from '@/api/index'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 const store = useStore()
 const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
 
 store.dispatch('FETCH_SIDEMENU', SMALLGROUP)
@@ -88,6 +91,39 @@ const lastGeneratedDays = ref(null)
 
 const downloadReady = computed(() => Boolean(downloadUrl.value))
 const disableGenerate = computed(() => isGenerating.value || !isValidDays(daysInput.value))
+const isUserLoggedIn = () => {
+  try {
+    const storedData = localStorage.getItem(getUserIdFromCookie())
+    const parsed = storedData ? JSON.parse(storedData) : null
+    return Boolean(parsed?.user?.id)
+  } catch {
+    return false
+  }
+}
+
+const promptLoginForDownload = async () => {
+  await Swal.fire({
+    title: t('alerts.loginRequired'),
+    text: t('alerts.loginRequired'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: t('button.login'),
+    cancelButtonText: t('button.cancel')
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.push({
+        name: 'login',
+        query: { redirect: route.fullPath }
+      })
+    }
+  })
+}
+
+const ensureDownloadAccess = async () => {
+  if (isUserLoggedIn()) return true
+  await promptLoginForDownload()
+  return false
+}
 
 const isValidDays = (value) => {
   const parsed = Number(value)
@@ -182,8 +218,10 @@ const handleGenerate = async () => {
   }
 }
 
-const downloadPlan = () => {
+const downloadPlan = async () => {
   if (!downloadUrl.value) return
+  const allowed = await ensureDownloadAccess()
+  if (!allowed) return
   const anchor = document.createElement('a')
   anchor.href = downloadUrl.value
   anchor.download =

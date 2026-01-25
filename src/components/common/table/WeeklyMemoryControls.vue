@@ -43,10 +43,15 @@
 
 <script setup>
 import { reactive, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import Swal from 'sweetalert2'
 import { requestRememberBibleDownload } from '@/api/index'
+import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
 const emit = defineEmits(['search', 'copy', 'download'])
+const router = useRouter()
+const { t } = useI18n()
 
 const memoryRange = reactive({
   from: '',
@@ -56,6 +61,40 @@ const searchResultCount = ref(null)
 const memoryResults = ref([])
 const hasSearched = ref(false)
 const canSearch = computed(() => Boolean(memoryRange.from) && Boolean(memoryRange.to))
+
+const isUserLoggedIn = () => {
+  try {
+    const storedData = localStorage.getItem(getUserIdFromCookie())
+    const parsed = storedData ? JSON.parse(storedData) : null
+    return Boolean(parsed?.user?.id)
+  } catch {
+    return false
+  }
+}
+
+const promptLoginForDownload = async () => {
+  const result = await Swal.fire({
+    title: t('alerts.loginRequired'),
+    text: t('alerts.loginRequired'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: t('button.login'),
+    cancelButtonText: t('button.cancel')
+  })
+  if (result.isConfirmed) {
+    router.push({
+      name: 'login',
+      query: { redirect: router.currentRoute.value.fullPath }
+    })
+  }
+  return false
+}
+
+const ensureLoginForDownloads = async () => {
+  if (isUserLoggedIn()) return true
+  await promptLoginForDownload()
+  return false
+}
 
 const payload = () => ({
   from: memoryRange.from,
@@ -139,6 +178,9 @@ const buildDownloadText = (range, verses) => {
     lines.push(formatVerseSentence(verse))
     lines.push('')
   })
+  lines.push(
+    '※ 성경구절 상/하 구분은 되어있지 않으니 상/하 구분에 대해서는 공지사항의 주일예배순서 게시물을 참조 부탁드립니다.'
+  )
   return lines.join('\n').trim()
 }
 
@@ -166,6 +208,8 @@ const ensureMemoryData = async (params) => {
 
 const handleCopy = async () => {
   const params = payload()
+  const allowed = await ensureLoginForDownloads()
+  if (!allowed) return
   try {
     await ensureMemoryData(params)
     const content = buildDownloadText(params, memoryResults.value)
@@ -173,14 +217,14 @@ const handleCopy = async () => {
     await Swal.fire({
       title: '암송 구절이 복사되었습니다.',
       icon: 'success',
-      timer: 1800,
-      showConfirmButton: false
+      confirmButtonText: t('button.confirm')
     })
   } catch (error) {
     console.error('Failed to copy memory verses', error)
     await Swal.fire({
       title: '암송 구절 복사에 실패하였습니다.',
-      icon: 'error'
+      icon: 'error',
+      confirmButtonText: t('button.confirm')
     })
   }
   emit('copy', params)
@@ -188,21 +232,23 @@ const handleCopy = async () => {
 
 const handleDownload = async () => {
   const params = payload()
+  const allowed = await ensureLoginForDownloads()
+  if (!allowed) return
   try {
     await ensureMemoryData(params)
     const content = buildDownloadText(params, memoryResults.value)
     triggerTextDownload(content, params)
     await Swal.fire({
-      title: '암송 구절 TXT 파일이 다운로드되었습니다.',
+      title: '암송 구절 파일이 다운로드되었습니다.',
       icon: 'success',
-      timer: 1800,
-      showConfirmButton: false
+      confirmButtonText: t('button.confirm')
     })
   } catch (error) {
     console.error('Failed to download memory verses', error)
     await Swal.fire({
-      title: '암송 구절 TXT 다운로드에 실패하였습니다.',
-      icon: 'error'
+      title: '암송 구절 다운로드에 실패하였습니다.',
+      icon: 'error',
+      confirmButtonText: t('button.confirm')
     })
   }
   emit('download', params)

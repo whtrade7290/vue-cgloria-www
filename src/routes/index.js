@@ -123,21 +123,7 @@ const routes = [
   {
     path: '/bible_plan',
     name: 'bible_plan',
-    component: BiblePlanView,
-    beforeEnter: async (to, from, next) => {
-      const storedData = localStorage.getItem(getUserIdFromCookie())
-      const storageUser = storedData ? JSON.parse(storedData) : {}
-
-      if (!storageUser?.user?.id) {
-        await Swal.fire({
-          title: window.i18n?.global?.t('alerts.loginRequired'),
-          icon: 'warning'
-        })
-        await next({ name: 'login' })
-      } else {
-        await next()
-      }
-    }
+    component: BiblePlanView
   },
   // 예배/훈련
   { path: '/jumok', name: 'jumok', component: JumokjaView },
