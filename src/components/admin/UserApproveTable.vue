@@ -173,6 +173,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import Swal from 'sweetalert2'
+import { useStore } from 'vuex'
 
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import TableOrganisms from '@/components/tableComponent/TableOrganisms.vue'
@@ -185,6 +186,7 @@ import {
   revokeApproveStatusRequest
 } from '@/api/index'
 import { useI18n } from 'vue-i18n'
+import { ADMIN } from '@/data/sidemenu.js'
 
 const TITLE = 'nav.adminPage.subTitles.userApprove'
 const PAGE_SIZE = 20
@@ -202,6 +204,8 @@ const currentPage = ref(1)
 const totalCount = ref(0)
 const users = ref([])
 const isProcessing = ref(false)
+const store = useStore()
+store.dispatch('FETCH_SIDEMENU', ADMIN)
 
 const totalPages = computed(() => {
   const total = Math.ceil(totalCount.value / PAGE_SIZE)
