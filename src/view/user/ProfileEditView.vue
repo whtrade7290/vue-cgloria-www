@@ -356,18 +356,45 @@ const resetForm = () => {
   resetValidationStates()
 }
 
-const updateStoredUser = (name, email, profileImageUrl) => {
+const updateStoredUser = ({ name, email, profileImageUrl }) => {
   const storedData = localStorage.getItem(getUserIdFromCookie())
   if (!storedData) return
   const parsed = JSON.parse(storedData)
-  if (parsed?.user) {
+  if (!parsed?.user) return
+
+  if (typeof name === 'string') {
     parsed.user.name = name
-    parsed.user.email = email
-    if (profileImageUrl !== undefined) {
-      parsed.user.profileImageUrl = getRelativeProfilePath(profileImageUrl)
-    }
-    localStorage.setItem(getUserIdFromCookie(), JSON.stringify(parsed))
   }
+  if (typeof email === 'string') {
+    parsed.user.email = email
+  }
+  if (profileImageUrl !== undefined) {
+    const normalized = getRelativeProfilePath(profileImageUrl)
+    parsed.user.profileImageUrl = normalized
+    parsed.user.profile_image_url = normalized
+    parsed.user.writerProfileImageUrl = normalized
+    parsed.user.writer_profile_image_url = normalized
+  }
+
+  localStorage.setItem(getUserIdFromCookie(), JSON.stringify(parsed))
+}
+
+const updateStoreUser = ({ name, email, profileImageUrl }) => {
+  if (!store.state.user || Object.keys(store.state.user).length === 0) return
+  const updated = { ...store.state.user }
+  if (typeof name === 'string') {
+    updated.name = name
+  }
+  if (typeof email === 'string') {
+    updated.email = email
+  }
+  if (profileImageUrl !== undefined) {
+    updated.profileImageUrl = profileImageUrl
+    updated.profile_image_url = profileImageUrl
+    updated.writerProfileImageUrl = profileImageUrl
+    updated.writer_profile_image_url = profileImageUrl
+  }
+  store.commit('SET_USER', updated)
 }
 
 const revokePreview = () => {
@@ -461,7 +488,13 @@ const submitForm = async () => {
       result.user?.profileImageUrl ?? result.profileImageUrl ?? form.profileImageUrl
     const normalizedImage = getRelativeProfilePath(updatedImage)
 
-    updateStoredUser(updatedName, updatedEmail, normalizedImage)
+    const updatePayload = {
+      name: updatedName,
+      email: updatedEmail,
+      profileImageUrl: normalizedImage
+    }
+    updateStoredUser(updatePayload)
+    updateStoreUser(updatePayload)
     form.name = updatedName
     form.email = updatedEmail
     form.profileImageUrl = normalizedImage

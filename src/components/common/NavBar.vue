@@ -189,7 +189,10 @@ function getParsedStoredData() {
 const storedInfo = getParsedStoredData()
 const { accessToken, refreshToken, storedRole } = storedInfo
 const role = ref(storedRole)
-const userName = ref(storedInfo?.userName || '')
+const initialUserName = storedInfo?.userName || ''
+const userName = computed(
+  () => store.state.user?.name || store.state.user?.username || initialUserName
+)
 const userSuffix = computed(() => (locale.value === 'jp' ? '様' : '님'))
 
 // 로그아웃 함수
