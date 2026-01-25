@@ -125,6 +125,15 @@
             class="hidden-file-input"
             multiple
           /><br />
+          <div v-if="isWithDiaryBoard" class="with-diary-shortcut">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              @click="insertWithDiaryTemplate"
+            >
+              {{ $t('writePage.withDiaryTemplateButton') }}
+            </button>
+          </div>
           <MemoryVerseFields
             v-if="shouldShowMemoryVerse"
             v-model="memoryVerseIdx"
@@ -171,8 +180,8 @@ import { compressImageFiles } from '@/utils/imageCompression'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
+import { WITH_DIARY_TEMPLATE_KO, WITH_DIARY_TEMPLATE_JA } from '@/data/withDiaryTemp.js'
 import Swal from 'sweetalert2'
-
 const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
 const store = useStore()
 const route = useRoute()
@@ -409,6 +418,16 @@ const shouldShowLanguageSelector = computed(
   () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
 )
 const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
+const isWithDiaryBoard = computed(() => boardName.value === 'withDiary')
+const insertWithDiaryTemplate = () => {
+  const trimmed = editorData.value?.trim() || ''
+  const template = normalizedLocale.value === 'ja' ? WITH_DIARY_TEMPLATE_JA : WITH_DIARY_TEMPLATE_KO
+  if (!trimmed) {
+    editorData.value = template
+    return
+  }
+  editorData.value = `${editorData.value}\n${template}`
+}
 </script>
 
 <style scoped>
@@ -485,6 +504,11 @@ const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
 }
 .language-selector__option input[type='radio'] {
   accent-color: #f6ad55;
+}
+.with-diary-shortcut {
+  margin-top: 0.75rem;
+  text-align: left;
+  margin-left: 4px;
 }
 </style>
 

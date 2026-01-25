@@ -345,6 +345,7 @@
   },
   "writePage": {
     "mainTitle": "投稿",
+    "withDiaryTemplateButton": "同行日記形式追加",
     "title": "タイトル",
     "mainContent": "メインコンテンツ",
     "languageLabel": "言語選択",

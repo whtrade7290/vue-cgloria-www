@@ -344,6 +344,7 @@
   },
   "writePage": {
     "mainTitle": "글작성",
+    "withDiaryTemplateButton": "동행일기 형식 추가",
     "title": "제목",
     "mainContent": "메인콘텐츠",
     "languageLabel": "언어 선택",
