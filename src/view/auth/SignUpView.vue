@@ -1,7 +1,7 @@
 <template>
   <AuthCardLayout :title="$t('auth.signUpTitle')" :description="$t('auth.signUpDescription')">
     <template #default>
-      <form role="form">
+      <form role="form" data-test-id="signup-form">
         <div class="mb-4">
           <label class="form-label">
             {{ $t('profile.fields.image') }}
@@ -50,6 +50,7 @@
             aria-label="Email"
             aria-describedby="email-addon"
             v-model="username"
+            data-test-id="signup-username"
             @focusout="checkingUsername"
           />
           <span :class="usernameClass ? 'red' : 'green'">{{ usernameMsg }}</span>
@@ -64,6 +65,7 @@
             aria-label="Password"
             aria-describedby="password-addon"
             v-model="password1"
+            data-test-id="signup-password"
             @focusout="checkingPassword"
           />
           <input
@@ -73,6 +75,7 @@
             aria-label="Password"
             aria-describedby="password-addon"
             v-model="password2"
+            data-test-id="signup-password-confirm"
             @focusout="checkingPassword"
           />
           <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
@@ -84,6 +87,7 @@
             class="form-control form-control-lg"
             :placeholder="$t('auth.emailPlaceholder')"
             v-model="email"
+            data-test-id="signup-email"
             @focusout="checkingEmail"
           />
           <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
@@ -95,6 +99,7 @@
             class="form-control form-control-lg"
             :placeholder="$t('auth.namePlaceholder')"
             v-model="name"
+            data-test-id="signup-name"
             @focusout="checkingName"
           />
           <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
@@ -103,6 +108,7 @@
           <button
             type="button"
             class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
+            data-test-id="signup-submit"
             @click="signUp"
           >
             {{ $t('auth.signUpButton') }}
