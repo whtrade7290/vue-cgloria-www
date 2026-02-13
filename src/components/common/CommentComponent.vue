@@ -245,7 +245,6 @@ const refreshComments = async () => {
 const canEditComment = (comment) => {
   const user = currentUser.value
   if (!user) return false
-  if (user.role === 'ADMIN') return true
   return user.username === comment.writer
 }
 
