@@ -55,7 +55,7 @@ jobs: # ✅ 무조건 있어야 함
 
       - name: Run Playwright tests
         if: ${{ steps.decide.outputs.should_run == 'true' }}
-        run: PWTEST_HEADLESS=true npx playwright test
+        run: npx playwright test
         working-directory: e2e-cgloria
 
       - name: E2E skipped
