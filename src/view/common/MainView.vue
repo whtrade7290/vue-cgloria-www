@@ -4,7 +4,7 @@
       :img-url="imgUrl"
       :main-msg="$t('mainMsg.main')"
       :sub-msg="$t('mainMsg.sub')"
-      :height="55"
+      :height="70"
     ></HeaderComponent>
     <template v-if="inited">
       <WeeklySermon :sermon="contents.sermon" :weekly="contents.weekly"></WeeklySermon>

@@ -7,7 +7,7 @@
           <div class="card shadow-lg mb-5">
             <CardHeader :title="title" :translate-title="translateTitle"></CardHeader>
             <div class="card card-calendar p-3">
-              <div class="card-body p-3">
+              <div class="card-body p-2">
                 <slot></slot>
               </div>
             </div>
