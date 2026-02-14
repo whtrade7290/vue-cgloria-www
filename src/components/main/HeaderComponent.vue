@@ -13,7 +13,7 @@
               style="padding-left: 5vw"
               :class="[sub_msg === '예수동행일기' ? 'diary-font' : 'main-font']"
             >
-              {{ main_msg }}
+              {{ main_msg }}aaa
             </p>
           </div>
         </div>
