@@ -2,9 +2,8 @@
   <div>
     <HeaderComponent
       :main-msg="$t('withDiaryParams.mainTitle')"
-      :sub-msg="$t('withDiaryParams.subTitle')"
       :img-url="`/sky1.jpeg`"
-      :height="30"
+      :height="20"
     ></HeaderComponent>
     <div class="container">
       <CardContainer :title="cardTitle" :translate-title="translateTitle">

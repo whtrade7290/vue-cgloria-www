@@ -8,7 +8,7 @@
             <p
               class="text-white gugi-regular"
               style="padding-left: 5vw"
-              :class="[subMsg === '예수동행일기' ? 'diary-font' : 'main-font']"
+              :class="[mainMsg === t('withDiaryParams.mainTitle') ? 'diary-font' : 'main-font']"
             >
               {{ mainMsg }}
             </p>
@@ -47,6 +47,8 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   mainMsg: {
@@ -96,7 +98,7 @@ const headerStyle = computed(() => ({
 }
 
 .diary-font {
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: bold;
 }
 
@@ -105,20 +107,20 @@ const headerStyle = computed(() => ({
 }
 
 .main-font {
-  font-size: 4vh;
+  font-size: 4.5vh;
   font-weight: bold;
 }
 
 @media (min-width: 768px) {
   .main-font {
-    font-size: 4vh;
+    font-size: 3.5vh;
     font-weight: bold;
   }
 }
 
 @media (min-width: 1200px) {
   .main-font {
-    font-size: 5vh;
+    font-size: 4.5vh;
     font-weight: bold;
   }
 }
