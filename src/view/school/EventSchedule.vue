@@ -35,13 +35,13 @@
         </div>
       </div>
       <div class="text-end d-flex gap-2 justify-content-end">
-        <button class="btn btn-outline-secondary" @click="downloadCsvSample">
+        <button class="btn btn-outline-primary" @click="downloadCsvSample">
           {{ t('school.eventSchedule.form.sample') }}
         </button>
-        <button class="btn btn-outline-secondary" @click="openCsvModal">
+        <button class="btn btn-outline-primary" @click="openCsvModal">
           {{ t('school.eventSchedule.form.upload') }}
         </button>
-        <button class="btn btn-primary" @click="openModal">
+        <button class="btn schedule-register-btn btn-round text-white" @click="openModal">
           {{ t('school.eventSchedule.form.register') }}
         </button>
       </div>
@@ -429,6 +429,42 @@ onMounted(() => {
   font-weight: 700;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
 }
+:deep(.calendar-wrapper .fc .fc-button) {
+  border-radius: 999px;
+  border: 1px solid #f5c6aa;
+  font-weight: 600;
+  min-width: 42px;
+  transition: all 0.2s ease;
+}
+:deep(.calendar-wrapper .fc .fc-prev-button),
+:deep(.calendar-wrapper .fc .fc-next-button),
+:deep(.calendar-wrapper .fc .fc-today-button) {
+  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
+}
+:deep(.calendar-wrapper .fc .fc-prev-button:hover:not(:disabled)),
+:deep(.calendar-wrapper .fc .fc-next-button:hover:not(:disabled)),
+:deep(.calendar-wrapper .fc .fc-today-button:hover:not(:disabled)) {
+  filter: brightness(1.05);
+}
+:deep(.calendar-wrapper .fc .fc-prev-button:disabled),
+:deep(.calendar-wrapper .fc .fc-next-button:disabled),
+:deep(.calendar-wrapper .fc .fc-today-button:disabled) {
+  background-color: rgba(247, 231, 220, 0.35);
+  color: #c9a18b;
+  border-color: rgba(247, 231, 220, 0.6);
+}
+.schedule-register-btn {
+  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
+}
+.schedule-register-btn:hover {
+  filter: brightness(1.05);
+}
 .color-palette {
   display: flex;
   justify-content: center;
@@ -474,3 +510,26 @@ onMounted(() => {
   transform: scale(1.2);
 }
 </style>
+:deep(.calendar-wrapper .fc .fc-button-primary {
+  border-radius: 999px;
+}
+:deep(.calendar-wrapper .fc .fc-button) {
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  min-width: 42px;
+}
+:deep(.calendar-wrapper .fc .fc-button-primary) {
+  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
+}
+:deep(.calendar-wrapper .fc .fc-button-primary:hover) {
+  filter: brightness(1.05);
+}
+:deep(.calendar-wrapper .fc .fc-button-primary:disabled) {
+  background: #d3d6df;
+  color: #7b809a;
+  box-shadow: none;
+}
