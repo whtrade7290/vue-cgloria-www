@@ -5,7 +5,7 @@
         <SideMenu class="display-sideMenu"></SideMenu>
         <div class="col-lg-9">
           <div class="card shadow-lg mb-5">
-            <CardHeader :title="title"></CardHeader>
+            <CardHeader :title="title" :translate-title="translateTitle"></CardHeader>
             <div class="card card-calendar">
               <div class="card-body p-3">
                 <slot></slot>
@@ -26,6 +26,10 @@ defineProps({
   title: {
     type: String,
     default: ''
+  },
+  translateTitle: {
+    type: Boolean,
+    default: true
   }
 })
 </script>

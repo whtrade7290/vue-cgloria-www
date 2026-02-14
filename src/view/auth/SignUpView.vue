@@ -44,12 +44,12 @@
         <div class="mb-3">
           <label class="form-label">{{ $t('authLabels.username') }}</label>
           <input
+            v-model="username"
             type="text"
             class="form-control form-control-lg"
             :placeholder="$t('auth.accountPlaceholder')"
             aria-label="Email"
             aria-describedby="email-addon"
-            v-model="username"
             data-test-id="signup-username"
             @focusout="checkingUsername"
           />
@@ -59,22 +59,22 @@
         <div class="mb-3">
           <label class="form-label">{{ $t('authLabels.password') }}</label>
           <input
+            v-model="password1"
             type="password"
             class="form-control form-control-lg"
             :placeholder="$t('auth.passwordPlaceholder')"
             aria-label="Password"
             aria-describedby="password-addon"
-            v-model="password1"
             data-test-id="signup-password"
             @focusout="checkingPassword"
           />
           <input
+            v-model="password2"
             type="password"
             class="form-control form-control-lg mt-2"
             :placeholder="$t('auth.passwordPlaceholder')"
             aria-label="Password"
             aria-describedby="password-addon"
-            v-model="password2"
             data-test-id="signup-password-confirm"
             @focusout="checkingPassword"
           />
@@ -83,10 +83,10 @@
         <div class="mb-3">
           <label class="form-label">{{ $t('authLabels.email') }}</label>
           <input
+            v-model="email"
             type="text"
             class="form-control form-control-lg"
             :placeholder="$t('auth.emailPlaceholder')"
-            v-model="email"
             data-test-id="signup-email"
             @focusout="checkingEmail"
           />
@@ -95,10 +95,10 @@
         <div class="mb-3">
           <label class="form-label">{{ $t('authLabels.name') }}</label>
           <input
+            v-model="name"
             type="text"
             class="form-control form-control-lg"
             :placeholder="$t('auth.namePlaceholder')"
-            v-model="name"
             data-test-id="signup-name"
             @focusout="checkingName"
           />
@@ -365,7 +365,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .bg-img {
-  background-image: url('/jesus.png');
+  background-image: url('/login_img.png');
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;
@@ -417,7 +417,9 @@ onBeforeUnmount(() => {
   background: none;
   border: none;
   padding: 0;
-  transition: transform 0.15s ease, color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
 }
 .image-link:disabled {
   opacity: 0.5;

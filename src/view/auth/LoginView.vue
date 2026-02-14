@@ -13,22 +13,22 @@
                 <form role="form">
                   <div class="mb-3">
                     <input
+                      v-model="username"
                       type="text"
                       class="form-control form-control-lg"
                       :placeholder="t('auth.login.usernamePlaceholder')"
                       :aria-label="t('auth.login.usernameAria')"
                       aria-describedby="email-addon"
-                      v-model="username"
                     />
                   </div>
                   <div class="mb-3">
                     <input
+                      v-model="password"
                       type="password"
                       class="form-control form-control-lg"
                       :placeholder="t('auth.login.passwordPlaceholder')"
                       :aria-label="t('auth.login.passwordAria')"
                       aria-describedby="password-addon"
-                      v-model="password"
                       @keyup.enter="login"
                     />
                   </div>
@@ -45,9 +45,9 @@
               </div>
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <p class="mb-4 text-sm mx-auto">
-                  <router-link to="/signUp" class="text-primary text-gradient font-weight-bold"
-                    >{{ t('auth.signUpButton') }}</router-link
-                  >
+                  <router-link to="/signUp" class="text-primary text-gradient font-weight-bold">{{
+                    t('auth.signUpButton')
+                  }}</router-link>
                 </p>
               </div>
             </div>
@@ -138,14 +138,16 @@ const onEnter = () => {
 
 const apiBaseUrl = import.meta.env.VITE_API_URL
 
-document.documentElement.style.setProperty('--background-image-url', `url('/jesus.png')`)
+document.documentElement.style.setProperty('--background-image-url', `url('/login_img.png')`)
 </script>
 
 <style scoped>
 .bg-img {
   background-image: var(--background-image-url);
   background-color: rgba(0, 0, 0, 0.5);
-  background-size: cover;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
   background-blend-mode: multiply;
 }
 

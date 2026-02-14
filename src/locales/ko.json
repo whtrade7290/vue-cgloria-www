@@ -264,7 +264,13 @@
     "seminar": "속장세미나",
     "sunday": "일요일",
     "saturday": "토요일",
-    "location": "오시는길"
+    "location": "오시는길",
+    "denomination": "기독교대한감리회",
+    "churchName": "중앙영광교회",
+    "addressLine1": "〒169-0074 도쿄도 신주쿠구",
+    "addressLine2": "기타신주쿠 3-10-5",
+    "tel": "TEL 03-5330-0090",
+    "fax": "FAX 03-5330-0353"
   },
   "common": {
     "siteTitle": "중앙영광교회",
@@ -455,7 +461,9 @@
       "main": "중앙영광교회 오시는길",
       "sub": "오오쿠보역 북쪽출구에서 왼쪽(나카노)방면 도보 7분",
       "address": "주소 : 도쿄 신쥬쿠구 기타신주쿠 3-10-5",
-      "phone": "전화 : 03-5330-0090, 팩스 03-5330-0353"
+      "phone": "전화 : 03-5330-0090, 팩스 03-5330-0353",
+      "mapLabel": "지도 안내",
+      "mapButton": "지도 열기"
     },
     "churchIntro": {
       "main": "중앙영광교회",
@@ -520,7 +528,7 @@
   },
   "auth": {
     "signUpTitle": "회원가입",
-    "signUpDescription": "God is my light in darkness",
+    "signUpDescription": "God is my light in darkness\u00a0\u00a0\u00a0Psalm 18:28",
     "accountPlaceholder": "아이디를 입력하세요",
     "passwordPlaceholder": "비밀번호를 입력하세요",
     "emailPlaceholder": "이메일을 입력하세요",

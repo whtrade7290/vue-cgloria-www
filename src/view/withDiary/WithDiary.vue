@@ -7,7 +7,7 @@
       :height="30"
     ></HeaderComponent>
     <div class="container">
-      <CardContainer title="withDiaryParams.mainTitle">
+      <CardContainer :title="cardTitle" :translate-title="translateTitle">
         <TableComponent
           :called="route.name"
           :items="items"
@@ -54,6 +54,15 @@ const {
   handlePageChange,
   handleSearch
 } = useBoardList('withDiary', { roomIdRef: roomId })
+
+const cardTitle = computed(() => {
+  const storeRoomName = store.state.room?.diaryRoom?.roomName
+  if (storeRoomName) return storeRoomName
+  if (route.query?.roomName) return route.query.roomName
+  return 'withDiaryParams.mainTitle'
+})
+
+const translateTitle = computed(() => cardTitle.value === 'withDiaryParams.mainTitle')
 </script>
 
 <style scoped>

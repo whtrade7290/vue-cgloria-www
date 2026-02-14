@@ -265,7 +265,13 @@
     "seminar": "属長セミナー",
     "sunday": "日曜日",
     "saturday": "土曜日",
-    "location": "アクセス"
+    "location": "アクセス",
+    "denomination": "基督教大韓監理会",
+    "churchName": "中央栄光教会",
+    "addressLine1": "〒169-0074 東京都新宿区",
+    "addressLine2": "北新宿3丁目10-5",
+    "tel": "TEL 03-5330-0090",
+    "fax": "FAX 03-5330-0353"
   },
   "common": {
     "siteTitle": "中央栄光教会",
@@ -456,7 +462,9 @@
       "main": "中央栄光教会 アクセス",
       "sub": "大久保駅北口から左（中野方面）へ徒歩7分",
       "address": "住所：東京都新宿区北新宿3-10-5",
-      "phone": "電話：03-5330-0090、ファックス：03-5330-0353"
+      "phone": "電話：03-5330-0090、ファックス：03-5330-0353",
+      "mapLabel": "地図案内",
+      "mapButton": "地図を開く"
     },
     "churchIntro": {
       "main": "中央栄光教会",
@@ -521,7 +529,7 @@
   },
   "auth": {
     "signUpTitle": "会員登録",
-    "signUpDescription": "God is my light in darkness",
+    "signUpDescription": "God is my light in darkness\u00a0\u00a0\u00a0Psalm 18:28",
     "accountPlaceholder": "アカウント名を入力してください",
     "passwordPlaceholder": "パスワードを入力してください",
     "emailPlaceholder": "メールアドレスを入力してください",

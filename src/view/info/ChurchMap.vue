@@ -1,6 +1,6 @@
 <template>
   <CardContainer :title="obj.title">
-    <div class="page-header min-vh-65" style="display: grid; padding-top: 20px">
+    <div class="page-header">
       <div class="container">
         <h2>{{ $t('webContents.location.main') }}</h2>
 
@@ -9,11 +9,18 @@
 
         <h6>{{ $t('webContents.location.address') }}</h6>
         <h6>{{ $t('webContents.location.phone') }}</h6>
-        <img
-          class="w-100 border-radius-lg shadow mt-5 mb-5"
-          src="https://www.cgloria.org/imgs/Parking_Place.jpg"
-          alt=""
-        />
+
+        <div class="map-embed-wrapper">
+          <iframe
+            :src="mapEmbedSrc"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </div>
     </div>
   </CardContainer>
@@ -31,6 +38,31 @@ const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', INFO)
 obj.value = INFO.find((o) => route.name === o.path)
+
+const mapEmbedSrc =
+  'https://www.google.com/maps?q=%E4%B8%AD%E5%A4%AE%E6%A0%84%E5%85%89%E6%95%99%E4%BC%9A&output=embed'
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.page-header {
+  padding: 1rem 1rem 5rem 1rem;
+}
+
+.map-embed-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  margin-top: 2rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.25);
+}
+
+.map-embed-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>

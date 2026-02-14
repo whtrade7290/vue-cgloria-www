@@ -6,9 +6,12 @@
         <div class="col-md-3 mb-3 text-center" style="color: rgb(119, 119, 119)">
           <img src="/f_logo.png" style="width: 100px" /><br /><br />
           <strong>
-            〒169-0074 東京都新宿区<br />北新宿３丁目１０−５<br /><br />
-            TEL 03-5330-0090<br />
-            FAX 03-5330-0353
+            <span class="footer-denomination">{{ $t('FooterComponent.denomination') }}</span><br />
+            <span class="footer-church-name">{{ $t('FooterComponent.churchName') }}</span><br />
+            {{ $t('FooterComponent.addressLine1') }}<br />
+            {{ $t('FooterComponent.addressLine2') }}<br /><br />
+            {{ $t('FooterComponent.tel') }}<br />
+            {{ $t('FooterComponent.fax') }}
           </strong>
         </div>
 
@@ -66,6 +69,16 @@ const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
 <style scoped>
 .container {
   padding-top: 4rem;
+}
+
+.footer-church-name {
+  display: inline-block;
+  font-size: 1.4rem;
+}
+
+.footer-denomination {
+  display: inline-block;
+  font-size: 0.9rem;
 }
 
 /* ✅ 모바일 425px 이하에서 숨기기 */

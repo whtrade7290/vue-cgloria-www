@@ -274,7 +274,7 @@ const logout = async () => {
 
 <style scoped>
 .bg-img {
-  background-image: url('/jesus.png');
+  background-image: url('/login_img.png');
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   background-blend-mode: multiply;

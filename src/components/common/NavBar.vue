@@ -351,7 +351,17 @@ const goToPage = async (path) => {
       })
 
       if (result.isConfirmed) {
-        await router.push({ name: 'withDiary', query: { roomId: result.value, pageNum: 1 } })
+        const selectedRoom = roomList.find(
+          (room) => room.diaryRoom?.id === Number(result.value)
+        )
+        await router.push({
+          name: 'withDiary',
+          query: {
+            roomId: result.value,
+            roomName: selectedRoom?.diaryRoom?.roomName ?? '',
+            pageNum: 1
+          }
+        })
         await store.dispatch('FETCH_WITHDIARY_ROOM', { roomId: result.value })
 
         let payload = {
