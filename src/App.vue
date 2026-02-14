@@ -29,6 +29,18 @@ const navBarKey = computed(() => {
 @import url('@/assets/css/nucleo-svg.css');
 @import url('@/assets/css/soft-design-system.css');
 
+:root {
+  --gloria-primary: #f5c6aa;
+  --gloria-primary-light: #f7e7dc;
+  --gloria-primary-dark: #0f2854;
+  --gloria-primary-shadow: rgba(245, 198, 170, 0.35);
+  --gloria-gradient-primary: linear-gradient(
+    310deg,
+    var(--gloria-primary-light) 0%,
+    var(--gloria-primary) 100%
+  );
+}
+
 .main-content {
   flex: 1; /* 콘텐츠가 화면보다 짧을 경우, footer를 아래로 밀어줌 */
 }

@@ -37,6 +37,7 @@ import { ADMIN } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { formatDate } from '@/utils/dateFormat'
+import { getThemeColor } from '@/utils/theme'
 import { useI18n } from 'vue-i18n'
 
 const tabs = { MakeUserList, MakeRoom }
@@ -45,6 +46,8 @@ const isMakeUserList = ref(true)
 const teamName = ref('')
 const isEnabled = ref(false)
 const { t } = useI18n()
+const themePrimaryColor = getThemeColor('--gloria-primary', '#f5c6aa')
+const themePrimaryLight = getThemeColor('--gloria-primary-light', '#f7e7dc')
 
 const getEmitInfo = ({ name, isDecided }) => {
   teamName.value = name
@@ -184,8 +187,8 @@ const search = async (searchUser) => {
         title: t('admin.makeWithDiary.foundConfirm'),
         icon: 'info',
         showCancelButton: true,
-        confirmButtonColor: '#f5c6aa',
-        cancelButtonColor: '#f5d7c7',
+        confirmButtonColor: themePrimaryColor,
+        cancelButtonColor: themePrimaryLight,
         confirmButtonText: t('admin.makeWithDiary.confirmYes'),
         cancelButtonText: t('admin.makeWithDiary.confirmNo'),
         html: optionsHtml

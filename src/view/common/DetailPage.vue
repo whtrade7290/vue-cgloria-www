@@ -463,7 +463,7 @@ section {
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #f5c6aa;
+  border: 2px solid var(--gloria-primary);
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -476,7 +476,7 @@ section {
   object-fit: cover;
 }
 .writer-avatar--placeholder {
-  background: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background: var(--gloria-gradient-primary);
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;

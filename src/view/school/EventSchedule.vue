@@ -431,7 +431,7 @@ onMounted(() => {
 }
 :deep(.calendar-wrapper .fc .fc-button) {
   border-radius: 999px;
-  border: 1px solid #f5c6aa;
+  border: 1px solid var(--gloria-primary);
   font-weight: 600;
   min-width: 42px;
   transition: all 0.2s ease;
@@ -439,10 +439,10 @@ onMounted(() => {
 :deep(.calendar-wrapper .fc .fc-prev-button),
 :deep(.calendar-wrapper .fc .fc-next-button),
 :deep(.calendar-wrapper .fc .fc-today-button) {
-  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background-image: var(--gloria-gradient-primary);
   color: #fff;
   border: none;
-  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
+  box-shadow: 0 8px 20px var(--gloria-primary-shadow);
 }
 :deep(.calendar-wrapper .fc .fc-prev-button:hover:not(:disabled)),
 :deep(.calendar-wrapper .fc .fc-next-button:hover:not(:disabled)),
@@ -457,10 +457,10 @@ onMounted(() => {
   border-color: rgba(247, 231, 220, 0.6);
 }
 .schedule-register-btn {
-  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background-image: var(--gloria-gradient-primary);
   color: #fff;
   border: none;
-  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
+  box-shadow: 0 8px 20px var(--gloria-primary-shadow);
 }
 .schedule-register-btn:hover {
   filter: brightness(1.05);
@@ -478,7 +478,7 @@ onMounted(() => {
   cursor: pointer;
 }
 .color-swatch.selected {
-  border-color: #f7e7dc;
+  border-color: var(--gloria-primary-light);
   border-width: 3px;
   transform: scale(1.5);
 }
@@ -505,31 +505,8 @@ onMounted(() => {
   transition: transform 0.2s ease;
 }
 :global(.swal2-popup .color-swatch.selected) {
-  border-color: #f7e7dc;
+  border-color: var(--gloria-primary-light);
   border-width: 3px;
   transform: scale(1.2);
 }
 </style>
-:deep(.calendar-wrapper .fc .fc-button-primary {
-  border-radius: 999px;
-}
-:deep(.calendar-wrapper .fc .fc-button) {
-  border-radius: 999px;
-  border: none;
-  font-weight: 600;
-  min-width: 42px;
-}
-:deep(.calendar-wrapper .fc .fc-button-primary) {
-  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
-  border: none;
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(245, 198, 170, 0.35);
-}
-:deep(.calendar-wrapper .fc .fc-button-primary:hover) {
-  filter: brightness(1.05);
-}
-:deep(.calendar-wrapper .fc .fc-button-primary:disabled) {
-  background: #d3d6df;
-  color: #7b809a;
-  box-shadow: none;
-}

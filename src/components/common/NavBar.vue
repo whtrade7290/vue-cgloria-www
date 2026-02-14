@@ -522,7 +522,7 @@ onMounted(async () => {
   color: #fff !important;
   white-space: nowrap;
   border: none;
-  background: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background: var(--gloria-gradient-primary);
   border-radius: 999px;
   padding: 0.4rem 1rem;
   display: inline-flex;

@@ -21,7 +21,7 @@
                   <a
                     href="javascript:;"
                     @click="intoDetail(weekly?.id, 'weekly_bible_verse')"
-                    style="color: #d4a59a; font-size: 1.2rem"
+                    class="more-link"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -95,4 +95,15 @@ const formatDate = (dateString) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.more-link {
+  color: var(--gloria-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.more-link:hover {
+  opacity: 0.8;
+}
+</style>

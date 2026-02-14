@@ -87,7 +87,7 @@ const headerStyle = computed(() => ({
   font-family: 'Gugi', sans-serif;
   font-weight: 400;
   font-style: normal;
-  color: #f5c6aa;
+  color: var(--gloria-primary);
   text-shadow: 2px 2px #000;
 }
 
@@ -103,7 +103,7 @@ const headerStyle = computed(() => ({
 }
 
 .main-bg {
-  background-image: linear-gradient(310deg, #f5c6aa, #f7e7dc);
+  background-image: var(--gloria-gradient-primary);
 }
 
 .main-font {

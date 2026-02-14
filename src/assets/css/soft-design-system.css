@@ -21011,7 +21011,7 @@ fieldset:disabled .btn {
 }
 
 .card.card-background.card-background-mask-primary:after {
-  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background-image: var(--gloria-gradient-primary);
   opacity: 0.85;
 }
 
@@ -21762,7 +21762,7 @@ label,
 }
 
 .bg-gradient-primary {
-  background-image: linear-gradient(310deg, #f7e7dc 0%, #f5c6aa 100%);
+  background-image: var(--gloria-gradient-primary);
 }
 
 .bg-gradient-secondary {
@@ -25195,7 +25195,7 @@ p {
 }
 
 .text-gradient.text-primary {
-  background-image: linear-gradient(310deg, #f7e7dc, #f5c6aa);
+  background-image: var(--gloria-gradient-primary);
 }
 
 .text-gradient.text-info {
