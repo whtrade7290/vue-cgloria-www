@@ -78,16 +78,7 @@ const storageUser = storedData ? JSON.parse(storedData) : {}
 const isAdmin = computed(() => storageUser?.user?.role === 'ADMIN')
 const adminId = storageUser?.user?.id ?? null
 
-const colorOptions = [
-  '#0F2854',
-  '#1C4D8D',
-  '#4988C4',
-  '#BDE8F5',
-  '#FA5C5C',
-  '#FD8A6B',
-  '#FEC288',
-  '#FBEF76'
-]
+const colorOptions = ['#0F2854', '#1C4D8D', '#4988C4', '#BDE8F5', '#FA5C5C', '#FD8A6B', '#FEC288']
 
 const events = ref([])
 const currentRange = ref({ start: '', end: '' })
