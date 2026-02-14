@@ -192,7 +192,7 @@ const checkingUsername = async () => {
 }
 
 const checkingPassword = async () => {
-  if (password1.value.length < 4) {
+  if (password1.value.length < 8) {
     confirmPassword.value = false
     passwordClass.value = true
     passwordMsgKey.value = 'auth.warnings.passwordShort'

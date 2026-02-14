@@ -8,12 +8,12 @@
         <div class="mb-3">
           <label class="form-label">{{ t('authLabels.username') }}</label>
           <input
+            v-model="username"
             type="text"
             class="form-control form-control-lg"
             :placeholder="t('auth.editPassword.usernamePlaceholder')"
             :aria-label="t('auth.editPassword.usernamePlaceholder')"
             aria-describedby="email-addon"
-            v-model="username"
             @focusout="checkingUsername"
           />
           <span :class="usernameClass ? 'green' : 'red'">{{ usernameMsg }}</span>
@@ -22,21 +22,21 @@
         <div class="mb-3">
           <label class="form-label">{{ t('authLabels.password') }}</label>
           <input
+            v-model="password1"
             type="password"
             class="form-control form-control-lg"
             :placeholder="t('auth.editPassword.passwordPlaceholder')"
             :aria-label="t('auth.editPassword.passwordPlaceholder')"
             aria-describedby="password-addon"
-            v-model="password1"
             @focusout="checkingPassword"
           />
           <input
+            v-model="password2"
             type="password"
             class="form-control form-control-lg mt-2"
             :placeholder="t('auth.editPassword.passwordPlaceholder')"
             :aria-label="t('auth.editPassword.passwordPlaceholder')"
             aria-describedby="password-addon"
-            v-model="password2"
             @focusout="checkingPassword"
           />
           <span :class="passwordClass ? 'red' : 'green'">{{ passwordMsg }}</span>
@@ -44,10 +44,10 @@
         <div class="mb-3">
           <label class="form-label">{{ t('authLabels.email') }}</label>
           <input
+            v-model="email"
             type="text"
             class="form-control form-control-lg"
             :placeholder="t('auth.editPassword.emailPlaceholder')"
-            v-model="email"
             @focusout="checkingEmail"
           />
           <span :class="emailClass ? 'red' : 'green'">{{ emailMsg }}</span>
@@ -55,10 +55,10 @@
         <div class="mb-3">
           <label class="form-label">{{ t('authLabels.name') }}</label>
           <input
+            v-model="name"
             type="text"
             class="form-control form-control-lg"
             :placeholder="t('auth.editPassword.namePlaceholder')"
-            v-model="name"
             @focusout="checkingName"
           />
           <span :class="nameClass ? 'red' : 'green'">{{ nameMsg }}</span>
@@ -161,7 +161,7 @@ const inputUserResult = (user) => {
 }
 
 const checkingPassword = async () => {
-  if (password1.value.length < 4) {
+  if (password1.value.length < 8) {
     confirmPassword.value = false
     passwordClass.value = true
     passwordMsgKey.value = 'auth.warnings.passwordShort'

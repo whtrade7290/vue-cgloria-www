@@ -1,7 +1,7 @@
 <template>
   <AuthCardLayout :title="t('profile.title')" :description="t('profile.description')">
     <template #default>
-      <form @submit.prevent="submitForm" class="profile-form">
+      <form class="profile-form" @submit.prevent="submitForm">
         <div class="mb-4">
           <label class="form-label">{{ t('profile.fields.image') }}</label>
           <div class="avatar-wrapper">
@@ -40,14 +40,19 @@
         </div>
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.username') }}</label>
-          <input type="text" class="form-control form-control-lg" v-model="form.username" disabled />
+          <input
+            v-model="form.username"
+            type="text"
+            class="form-control form-control-lg"
+            disabled
+          />
         </div>
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.name') }}</label>
           <input
+            v-model.trim="form.name"
             type="text"
             class="form-control form-control-lg"
-            v-model.trim="form.name"
             :disabled="loading"
             @input="handleNameInput"
           />
@@ -60,9 +65,9 @@
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.email') }}</label>
           <input
+            v-model.trim="form.email"
             type="email"
             class="form-control form-control-lg"
-            v-model.trim="form.email"
             :disabled="loading"
             @input="handleEmailInput"
           />
@@ -75,9 +80,9 @@
         <div class="mb-3">
           <label class="form-label">{{ t('profile.fields.password') }}</label>
           <input
+            v-model="form.password"
             type="password"
             class="form-control form-control-lg"
-            v-model="form.password"
             :placeholder="t('profile.fields.password')"
             :disabled="loading"
             @input="handlePasswordInput"
@@ -86,9 +91,9 @@
         <div class="mb-4">
           <label class="form-label">{{ t('profile.fields.confirmPassword') }}</label>
           <input
+            v-model="form.confirmPassword"
             type="password"
             class="form-control form-control-lg"
-            v-model="form.confirmPassword"
             :placeholder="t('profile.fields.confirmPassword')"
             :disabled="loading"
             @input="handlePasswordInput"
@@ -254,7 +259,7 @@ const validatePasswordField = (force = false) => {
   const hasPassword = !!form.password
   const hasConfirm = !!form.confirmPassword
 
-  if (hasPassword && form.password.length < 4) {
+  if (hasPassword && form.password.length < 8) {
     passwordStatus.invalid = true
     passwordStatus.messageKey = 'profile.alerts.passwordShort'
     return false
@@ -571,7 +576,9 @@ onBeforeUnmount(() => {
   background: none;
   border: none;
   padding: 0;
-  transition: transform 0.15s ease, color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
 }
 .image-link:disabled {
   opacity: 0.5;
