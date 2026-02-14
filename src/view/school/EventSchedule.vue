@@ -417,6 +417,26 @@ onMounted(() => {
 }
 :deep(.calendar-wrapper .fc) {
   min-width: 600px;
+  font-family: 'Do Hyeon', 'Noto Sans KR', sans-serif;
+}
+:deep(.calendar-wrapper .fc-daygrid-day-number) {
+  font-weight: 800;
+  color: #081630;
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.85),
+    0 2px 4px rgba(0, 0, 0, 0.35);
+}
+:deep(.calendar-wrapper .fc-daygrid-day-top) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0a1a37;
+}
+:deep(.calendar-wrapper .fc-daygrid-event) {
+  font-weight: 700;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
 }
 .color-palette {
   display: flex;
