@@ -13,7 +13,8 @@
     "download": "다운로드",
     "lang": "日本語",
     "enterWithDiary": "들어가기",
-    "profile": "내 정보 수정"
+    "profile": "내 정보 수정",
+    "deleteUser": "유저 삭제"
   },
   "nav": {
     "intro": {

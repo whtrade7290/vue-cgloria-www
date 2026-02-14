@@ -5,10 +5,10 @@
         <label>{{ t('admin.makeWithDiary.searchLabel') }}</label>
         <div class="search-box">
           <input
+            v-model="acount"
             type="text"
             class="form-control"
             :placeholder="t('admin.makeWithDiary.searchPlaceholder')"
-            v-model="acount"
           />
           <button type="button" class="btn bg-gradient-primary search-button" @click="searchUser">
             {{ t('common.searchAction') }}
@@ -110,7 +110,7 @@
                 <td style="width: 10%; text-align: center">
                   <a href="javascript:;" @click="deleteUser(item.id)"
                     ><p class="text-sm font-weight-bold mb-0 text-center text-danger">
-                      {{ t('button.delete') }}
+                      {{ t('button.deleteUser') }}
                     </p></a
                   >
                 </td>
@@ -139,10 +139,13 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const acount = ref('')
-const emit = defineEmits(['search-user'])
+const emit = defineEmits(['search-user', 'delete-user'])
 
 const props = defineProps({
-  userList: Array
+  userList: {
+    type: Array,
+    default: () => []
+  }
 })
 
 const { t } = useI18n()

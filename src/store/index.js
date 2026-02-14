@@ -15,6 +15,7 @@ import {
   getCommentList,
   checkToken,
   getUserByUsername,
+  getUserByUsernameOrName,
   makeWithDiary,
   fetchWithDiaryRoomList,
   fetchWithDiaryRoom,
@@ -215,6 +216,13 @@ export default createStore({
     },
     async SEARCH_USER({ commit }, { searchUser }) {
       const res = await getUserByUsername(searchUser)
+      if (res.status === 200) {
+        commit('SET_USER', res.data)
+      }
+      return res
+    },
+    async SEARCH_USER_BY_USERNAME_OR_NAME({ commit }, { searchUser }) {
+      const res = await getUserByUsernameOrName(searchUser)
       if (res.status === 200) {
         commit('SET_USER', res.data)
       }

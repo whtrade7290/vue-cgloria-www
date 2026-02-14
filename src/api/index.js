@@ -252,6 +252,10 @@ export async function getUserByUsername(username) {
   return await instance.post('/find_user', { username })
 }
 
+export async function getUserByUsernameOrName(usernameOrName) {
+  return await instance.post('/find_user_by_name', { usernameOrName })
+}
+
 /* ------------------------- 승인 관리 ------------------------- */
 export async function fetchDisapproveUsers() {
   return await instance.get('/disapproveUsers')

@@ -13,7 +13,8 @@
     "download": "ダウンロード",
     "lang": "한국어",
     "enterWithDiary": "入室",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "deleteUser": "ユーザー削除"
   },
   "nav": {
     "intro": {

@@ -8,17 +8,17 @@
       @emit-info="getEmitInfo"
     />
     <div class="button-group">
-      <div class="next-button-box pr-10" v-if="currentTab === 'MakeRoom'">
+      <div v-if="currentTab === 'MakeRoom'" class="next-button-box pr-10">
         <button type="button" class="btn bg-gradient-primary" @click="handleBack">
           {{ t('admin.makeWithDiary.prev') }}
         </button>
       </div>
-      <div class="next-button-box pr-10" v-if="userList.length > 0">
+      <div v-if="userList.length > 0" class="next-button-box pr-10">
         <button
           type="button"
           class="btn bg-gradient-primary"
-          @click="next"
           :disabled="!isMakeUserList && !isEnabled"
+          @click="next"
         >
           {{ isMakeUserList ? t('admin.makeWithDiary.next') : t('admin.makeWithDiary.register') }}
         </button>
@@ -117,7 +117,7 @@ const search = async (searchUser) => {
 
   try {
     // Request user search
-    await store.dispatch('SEARCH_USER', { searchUser: searchUser })
+    await store.dispatch('SEARCH_USER_BY_USERNAME_OR_NAME', { searchUser: searchUser })
 
     const resUser = store.state.user // Retrieved user info
 
