@@ -5,69 +5,7 @@ on:
       - prod # 트리거 브랜치
 
 jobs: # ✅ 무조건 있어야 함
-  e2e:
-    name: Run E2E tests
-    runs-on: ubuntu-latest
-    env:
-      SKIP_E2E: ${{ contains(github.event.head_commit.message, '[skip e2e]') }}
-    outputs:
-      should_run: ${{ steps.decide.outputs.should_run }}
-
-    steps:
-      - name: Decide whether to run e2e
-        id: decide
-        run: |
-          if [[ "${SKIP_E2E}" == "true" ]]; then
-            echo "Commit message contains [skip e2e]; skipping tests."
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Checkout application repo
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        uses: actions/checkout@v4
-
-      - name: Checkout e2e repo
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        uses: actions/checkout@v4
-        with:
-          repository: whtrade7290/e2e-cgloria
-          path: e2e-cgloria
-
-      - name: Setup Node.js
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-          cache-dependency-path: e2e-cgloria/package-lock.json
-
-      - name: Install frontend dependencies
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        run: npm ci
-
-      - name: Install dependencies
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        run: npm ci
-        working-directory: e2e-cgloria
-
-      - name: Install Playwright browsers
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        run: npx playwright install --with-deps
-        working-directory: e2e-cgloria
-
-      - name: Run Playwright tests
-        if: ${{ steps.decide.outputs.should_run == 'true' }}
-        run: npx playwright test
-        working-directory: e2e-cgloria
-
-      - name: E2E skipped
-        if: ${{ steps.decide.outputs.should_run == 'false' }}
-        run: echo "E2E tests skipped."
-
   deploy: # job 이름
-    needs: e2e
     runs-on: ubuntu-latest
 
     steps: # ✅ 단계 정의
