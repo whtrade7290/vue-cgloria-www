@@ -30,7 +30,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </span>
             </button>
-            <div class="collapse navbar-collapse" id="navigation">
+            <div id="navigation" class="collapse navbar-collapse">
               <ul class="navbar-nav navbar-nav-hover w-100 nav-container">
                 <template v-for="menu in mainMenus" :key="menu.mainKey">
                   <li
@@ -42,9 +42,9 @@
                     class="nav-item dropdown dropdown-hover mx-2"
                   >
                     <a
+                      :id="`${menu.mainKey}Dropdown`"
                       class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                       href="javascript:;"
-                      :id="`${menu.mainKey}Dropdown`"
                       @click="toggleDropdown(menu.mainKey)"
                     >
                       {{ $t(`nav.${menu.mainKey}.title`) }}&nbsp;
@@ -53,18 +53,22 @@
                     <div
                       class="dropdown-menu dropdown-menu-xl-start dropdown-menu-animation dropdown-md border-radius-xl mt-0 bg-color"
                     >
-                      <div class="d-none d-lg-block" v-for="subTitle in menu.subTitles">
+                      <div
+                        v-for="subTitle in menu.subTitles"
+                        :key="subTitle"
+                        class="d-none d-lg-block"
+                      >
                         <div
-                          @click="goToPage(subTitle)"
                           class="dropdown-item border-radius-md nav-btn cursor-pointer"
+                          @click="goToPage(subTitle)"
                         >
                           <span class="ps-3">{{
                             $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
                           }}</span>
                         </div>
                       </div>
-                      <div class="d-lg-none" v-for="subTitle in menu.subTitles">
-                        <div @click="goToPage(subTitle)" class="dropdown-item border-radius-md">
+                      <div v-for="subTitle in menu.subTitles" :key="subTitle" class="d-lg-none">
+                        <div class="dropdown-item border-radius-md" @click="goToPage(subTitle)">
                           <span class="ps-3">{{
                             $t(`nav.${menu.mainKey}.subTitles.${subTitle}`)
                           }}</span>
@@ -81,9 +85,9 @@
                       >{{ userName }} {{ userSuffix }}</span
                     >
                     <a
+                      id="userMenuDropdown"
                       class="nav-link user-menu-toggle"
                       href="javascript:;"
-                      id="userMenuDropdown"
                       @click="toggleUserMenu"
                     >
                       <span class="material-symbols-outlined nav-icon">menu</span>
@@ -115,8 +119,8 @@
                 <template v-else>
                   <div class="d-flex gap-1">
                     <div
-                      @click="goToPage('login')"
                       class="btn btn-sm bg-gradient-primary btn-round btn-style mb-0 btn-unlogin"
+                      @click="goToPage('login')"
                     >
                       {{ $t('button.login') }}
                     </div>

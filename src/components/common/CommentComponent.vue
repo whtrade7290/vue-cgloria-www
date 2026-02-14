@@ -21,8 +21,8 @@
               </div>
               <div class="form-group mt-3">
                 <textarea
-                  class="form-control"
                   v-model="inputComment"
+                  class="form-control"
                   rows="5"
                   :placeholder="$t('comments.placeholder')"
                 ></textarea>
@@ -35,7 +35,7 @@
             </div>
           </div>
 
-          <div class="border-line" v-for="item in commentList" :key="item.id">
+          <div v-for="item in commentList" :key="item.id" class="border-line">
             <div class="mt-2 d-flex justify-content-between align-items-start">
               <div class="d-flex justify-content-start align-items-center gap-3">
                 <div v-if="getCommentProfileImage(item)" class="comment-avatar">
@@ -53,7 +53,7 @@
                   </div>
                 </div>
               </div>
-              <div class="comment-actions" v-if="canEditComment(item) || canDeleteComment(item)">
+              <div v-if="canEditComment(item) || canDeleteComment(item)" class="comment-actions">
                 <span
                   v-if="canEditComment(item)"
                   class="material-symbols-outlined edit-icon"
@@ -70,7 +70,7 @@
                 </span>
               </div>
             </div>
-            <div class="comment-display-box" v-if="editingCommentId !== item.id">
+            <div v-if="editingCommentId !== item.id" class="comment-display-box">
               {{ item.content }}
             </div>
             <div v-else class="comment-edit-box">
@@ -118,7 +118,9 @@ const currentUsername = computed(() => {
   const user = storedData ? JSON.parse(storedData)?.user : null
   return user?.username || ''
 })
-const getUserNameFromSession = computed(() => currentUserProfile.value?.name || currentUsername.value)
+const getUserNameFromSession = computed(
+  () => currentUserProfile.value?.name || currentUsername.value
+)
 const currentUser = computed(() => currentUserProfile.value)
 const { t } = useI18n()
 

@@ -52,7 +52,7 @@
             </a>
           </li>
 
-          <li class="page-item" v-for="page in pageList" :key="page">
+          <li v-for="page in pageList" :key="page" class="page-item">
             <a
               class="page-link"
               :class="{ selected: pageNum === page }"
@@ -137,7 +137,7 @@
             </a>
           </li>
 
-          <li class="page-item" v-for="page in pageList" :key="page">
+          <li v-for="page in pageList" :key="page" class="page-item">
             <a
               class="page-link"
               :class="{ selected: pageNum === page }"

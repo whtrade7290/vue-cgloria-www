@@ -88,8 +88,8 @@
           <label for="image">{{ $t('writePage.addImage') }}</label
           ><br />
           <div style="width: 100%; display: flex; justify-content: center">
-            <div class="image-container" v-if="displayImagePreviews.length !== 0">
-              <div class="image-wrapper" v-for="item in displayImagePreviews" :key="item.id">
+            <div v-if="displayImagePreviews.length !== 0" class="image-container">
+              <div v-for="item in displayImagePreviews" :key="item.id" class="image-wrapper">
                 <button
                   type="button"
                   class="remove-btn"
@@ -102,8 +102,8 @@
               </div>
             </div>
           </div>
-          <div class="file-chip-list" v-if="displayPdfPreviews.length !== 0">
-            <div class="file-chip" v-for="item in displayPdfPreviews" :key="item.id">
+          <div v-if="displayPdfPreviews.length !== 0" class="file-chip-list">
+            <div v-for="item in displayPdfPreviews" :key="item.id" class="file-chip">
               <button
                 type="button"
                 class="remove-btn remove-btn--chip"

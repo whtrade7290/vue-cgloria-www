@@ -1,19 +1,16 @@
 <template>
   <header class="header-2">
-    <div
-      class="page-header min-vh-75 relative main-bg"
-      :style="{ backgroundImage: `url(${imgUrl})` }"
-    >
+    <div class="page-header relative main-bg" :style="headerStyle">
       <div class="container">
         <div class="row">
           <div class="col-lg-7mx-auto">
-            <!-- <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ sub_msg }}</h1> -->
+            <!-- <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ subMsg }}</h1> -->
             <p
               class="text-white gugi-regular"
               style="padding-left: 5vw"
-              :class="[sub_msg === '예수동행일기' ? 'diary-font' : 'main-font']"
+              :class="[subMsg === '예수동행일기' ? 'diary-font' : 'main-font']"
             >
-              {{ main_msg }}
+              {{ mainMsg }}
             </p>
           </div>
         </div>
@@ -34,7 +31,7 @@
               d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
             />
           </defs>
-          <g class="moving-waves">
+          <g>
             <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40" />
             <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)" />
             <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)" />
@@ -49,26 +46,31 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 
-defineProps({
-  main_msg: {
+const props = defineProps({
+  mainMsg: {
     type: String,
     default: ''
   },
-  sub_msg: {
+  subMsg: {
     type: String,
     default: ''
   },
   imgUrl: {
     type: String,
     default: ''
+  },
+  height: {
+    type: Number,
+    default: 75
   }
 })
 
-// const styleProps = ref({
-//   backgroundImage: `url(${props.imgUrl})`
-// })
+const headerStyle = computed(() => ({
+  backgroundImage: `url(${props.imgUrl})`,
+  minHeight: `${props.height}vh`
+}))
 </script>
 
 <style scoped>
@@ -109,14 +111,14 @@ defineProps({
 
 @media (min-width: 768px) {
   .main-font {
-    font-size: 5vh;
+    font-size: 4vh;
     font-weight: bold;
   }
 }
 
 @media (min-width: 1200px) {
   .main-font {
-    font-size: 6.5vh;
+    font-size: 5vh;
     font-weight: bold;
   }
 }

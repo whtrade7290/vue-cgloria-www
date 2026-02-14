@@ -4,10 +4,10 @@
     <div class="d-lg-none w-100 px-3 pt-3">
       <div class="mobile-search">
         <input
+          v-model="searchWord"
           type="text"
           class="form-control form-control-sm-custom"
           placeholder="search"
-          v-model="searchWord"
         />
         <button
           type="button"
@@ -21,17 +21,17 @@
 
     <!-- ✅ 카드 리스트 -->
     <div
-      class="col-lg-3 col-sm-6"
-      style="padding: 20px 30px 0 30px"
       v-for="(item, idx) in parsedFiles"
       :key="idx"
+      class="col-lg-3 col-sm-6"
+      style="padding: 20px 30px 0 30px"
     >
       <div class="card card-plain card-blog">
         <div class="card-image border-radius-lg position-relative">
           <a href="javascript:;" @click="intoDetail(item.id)">
             <img
-              class="w-100 border-radius-lg move-on-hover shadow"
               :key="item.id"
+              class="w-100 border-radius-lg move-on-hover shadow"
               :src="item.thumnailUrl"
               :alt="item.title"
               loading="lazy"
@@ -76,7 +76,7 @@
           </a>
         </li>
 
-        <li class="page-item" v-for="page in pageList" :key="page">
+        <li v-for="page in pageList" :key="page" class="page-item">
           <a
             class="page-link"
             :class="[pageNum === page ? 'selected' : '']"
@@ -104,12 +104,12 @@
     <div class="d-none d-lg-flex justify-content-center mt-5">
       <div class="mb-3 w-25">
         <input
+          v-model="searchWord"
           type="text"
           class="form-control form-control-lg mr-1"
           placeholder="search"
           aria-label="Email"
           aria-describedby="email-addon"
-          v-model="searchWord"
         />
       </div>
       <div style="margin-left: 0.5rem">

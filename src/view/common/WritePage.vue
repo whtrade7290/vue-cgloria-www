@@ -51,18 +51,18 @@
           <label for="title">{{ $t('writePage.title') }}</label
           ><br />
           <input
-            type="text"
             id="title"
+            v-model="inputTitle"
+            type="text"
             class="input-title"
             :placeholder="$t('writePage.placeholder.title')"
-            v-model="inputTitle"
           /><br />
           <div v-if="isDisplay">
             <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
               $t('writePage.mainContent')
             }}</label>
             <label class="toggle-switch">
-              <input type="checkbox" id="mainContent" v-model="isMainContent" />
+              <input id="mainContent" v-model="isMainContent" type="checkbox" />
               <span class="slider"></span>
             </label>
           </div>
@@ -75,11 +75,11 @@
               :for="`write-language-${option.value}`"
             >
               <input
-                type="radio"
                 :id="`write-language-${option.value}`"
+                v-model="selectedLanguage"
+                type="radio"
                 name="write-language"
                 :value="option.value"
-                v-model="selectedLanguage"
               />
               <span>{{ $t(option.labelKey) }}</span>
             </label>
@@ -87,8 +87,8 @@
           <label for="image">{{ $t('writePage.addImage') }}</label
           ><br />
           <div style="width: 100%; display: flex; justify-content: center">
-            <div class="image-container" v-if="imagePreviewItems.length !== 0">
-              <div class="image-wrapper" v-for="item in imagePreviewItems" :key="item.id">
+            <div v-if="imagePreviewItems.length !== 0" class="image-container">
+              <div v-for="item in imagePreviewItems" :key="item.id" class="image-wrapper">
                 <button
                   type="button"
                   class="remove-btn"
@@ -101,8 +101,8 @@
               </div>
             </div>
           </div>
-          <div class="file-chip-list" v-if="pdfPreviewItems.length !== 0">
-            <div class="file-chip" v-for="item in pdfPreviewItems" :key="item.id">
+          <div v-if="pdfPreviewItems.length !== 0" class="file-chip-list">
+            <div v-for="item in pdfPreviewItems" :key="item.id" class="file-chip">
               <button
                 type="button"
                 class="remove-btn remove-btn--chip"
@@ -119,11 +119,11 @@
             $t('photoPage.uploadButton')
           }}</label>
           <input
-            type="file"
             id="fileUpload"
-            @change="changeImage"
+            type="file"
             class="hidden-file-input"
             multiple
+            @change="changeImage"
           /><br />
           <div v-if="isWithDiaryBoard" class="with-diary-shortcut">
             <button
@@ -143,9 +143,9 @@
           ><br />
           <ckeditor
             id="content"
+            v-model="editorData"
             class="ck_contents"
             :editor="editor"
-            v-model="editorData"
             :config="editorConfig"
           ></ckeditor>
           <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
@@ -169,7 +169,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'

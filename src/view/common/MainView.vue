@@ -1,15 +1,16 @@
 <template>
   <div class="wrapper">
     <HeaderComponent
-      :imgUrl="imgUrl"
-      :main_msg="$t('mainMsg.main')"
-      :sub_msg="$t('mainMsg.sub')"
+      :img-url="imgUrl"
+      :main-msg="$t('mainMsg.main')"
+      :sub-msg="$t('mainMsg.sub')"
+      :height="55"
     ></HeaderComponent>
     <template v-if="inited">
       <WeeklySermon :sermon="contents.sermon" :weekly="contents.weekly"></WeeklySermon>
       <MainSectionOne
         :column="contents.column"
-        :classMeeting="contents.classMeeting"
+        :class-meeting="contents.classMeeting"
         :testimony="contents.testimony"
       ></MainSectionOne>
       <MainSectionTwo></MainSectionTwo>

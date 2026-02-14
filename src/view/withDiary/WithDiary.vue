@@ -1,9 +1,10 @@
 <template>
   <div>
     <HeaderComponent
-      :main_msg="$t('withDiaryParams.mainTitle')"
-      :sub_msg="$t('withDiaryParams.subTitle')"
-      :imgUrl="`/sky1.jpeg`"
+      :main-msg="$t('withDiaryParams.mainTitle')"
+      :sub-msg="$t('withDiaryParams.subTitle')"
+      :img-url="`/sky1.jpeg`"
+      :height="30"
     ></HeaderComponent>
     <div class="container">
       <CardContainer title="withDiaryParams.mainTitle">
@@ -19,7 +20,7 @@
           @page-change="handlePageChange"
           @search="handleSearch"
         ></TableComponent>
-        <WriteButton :roomId="route.query.roomId"></WriteButton>
+        <WriteButton :room-id="route.query.roomId"></WriteButton>
       </CardContainer>
     </div>
   </div>

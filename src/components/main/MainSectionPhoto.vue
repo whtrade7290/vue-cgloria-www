@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-3 col-sm-6" v-for="photo in photoList" :key="photo">
+        <div v-for="photo in photoList" :key="photo" class="col-lg-3 col-sm-6">
           <div class="card card-plain card-blog">
             <div class="card-image border-radius-lg position-relative">
               <a href="javascript:;" @click="intoDetail(photo.id)">
