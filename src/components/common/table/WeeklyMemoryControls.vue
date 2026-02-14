@@ -15,21 +15,21 @@
       <div class="memory-range-card__inputs">
         <div class="memory-range-card__field">
           <label for="memoryFrom">{{ $t('table.memoryControls.from') }}</label>
-          <input id="memoryFrom" type="date" v-model="memoryRange.from" />
+          <input id="memoryFrom" v-model="memoryRange.from" type="date" />
         </div>
         <span class="memory-range-card__divider">~</span>
         <div class="memory-range-card__field">
           <label for="memoryTo">{{ $t('table.memoryControls.to') }}</label>
-          <input id="memoryTo" type="date" v-model="memoryRange.to" />
+          <input id="memoryTo" v-model="memoryRange.to" type="date" />
         </div>
-        <button class="btn bg-gradient-primary mb-0" @click="handleSearch" :disabled="!canSearch">
+        <button class="btn bg-gradient-primary mb-0" :disabled="!canSearch" @click="handleSearch">
           {{ $t('table.memoryControls.searchButton') }}
         </button>
       </div>
       <p v-if="searchResultCount !== null" class="memory-range-card__result">
         검색 결과 {{ searchResultCount }}건이 조회되었습니다.
       </p>
-      <div class="memory-range-card__actions" v-if="hasSearched">
+      <div v-if="hasSearched" class="memory-range-card__actions">
         <button class="btn btn-outline-primary" @click="handleCopy">
           {{ $t('table.memoryControls.copyButton') }}
         </button>
@@ -259,7 +259,7 @@ const handleDownload = async () => {
 .memory-range-card {
   border: 1px solid #e4e9f2;
   border-radius: 1.25rem;
-  padding: 1.75rem 2rem;
+  padding: 2rem 2rem;
   margin-bottom: 2rem;
   background: #fefefe;
   box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
