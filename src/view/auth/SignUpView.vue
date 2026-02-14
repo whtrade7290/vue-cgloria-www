@@ -179,7 +179,7 @@ const checkingUsername = async () => {
   } else {
     await store.dispatch('SEARCH_USER', { searchUser: username.value })
 
-    if (store.state.user) {
+    if (store.state.searchedUser) {
       confirmUsername.value = false
       usernameClass.value = true
       usernameMsgKey.value = 'auth.warnings.usernameDuplicate'

@@ -119,7 +119,7 @@ const search = async (searchUser) => {
     // Request user search
     await store.dispatch('SEARCH_USER_BY_USERNAME_OR_NAME', { searchUser: searchUser })
 
-    const resUser = store.state.user // Retrieved user info
+    const resUser = store.state.searchedUser // Retrieved user info
 
     // When user exists
     if (resUser && resUser.id) {

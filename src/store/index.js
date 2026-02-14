@@ -46,6 +46,7 @@ export default createStore({
     mainContents: [],
     CommentList: [],
     user: {},
+    searchedUser: null,
     role: '',
     rooms: [],
     room: {},
@@ -109,6 +110,8 @@ export default createStore({
         const normalizedResponse = { ...res, user: normalizedUser }
         localStorage.setItem(user.id, JSON.stringify(normalizedResponse))
         document.cookie = `userId=${user.id};`
+        commit('SET_USER', normalizedUser)
+        return normalizedResponse
       }
       return res
     },
@@ -215,18 +218,32 @@ export default createStore({
       return res
     },
     async SEARCH_USER({ commit }, { searchUser }) {
-      const res = await getUserByUsername(searchUser)
-      if (res.status === 200) {
-        commit('SET_USER', res.data)
+      try {
+        const res = await getUserByUsername(searchUser)
+        if (res.status === 200 && res.data) {
+          commit('SET_SEARCHED_USER', res.data)
+        } else {
+          commit('SET_SEARCHED_USER', null)
+        }
+        return res
+      } catch (error) {
+        commit('SET_SEARCHED_USER', null)
+        throw error
       }
-      return res
     },
     async SEARCH_USER_BY_USERNAME_OR_NAME({ commit }, { searchUser }) {
-      const res = await getUserByUsernameOrName(searchUser)
-      if (res.status === 200) {
-        commit('SET_USER', res.data)
+      try {
+        const res = await getUserByUsernameOrName(searchUser)
+        if (res.status === 200 && res.data) {
+          commit('SET_SEARCHED_USER', res.data)
+        } else {
+          commit('SET_SEARCHED_USER', null)
+        }
+        return res
+      } catch (error) {
+        commit('SET_SEARCHED_USER', null)
+        throw error
       }
-      return res
     },
     async MAKE_WITHDIARY({ commit }, { teamName, userIdList }) {
       const res = await makeWithDiary(teamName, userIdList)
@@ -277,6 +294,7 @@ export default createStore({
       commit('SET_MAIN_CONTENTS', [])
       commit('SET_COMMENTLIST', [])
       commit('SET_USER', {})
+      commit('SET_SEARCHED_USER', null)
       commit('SET_USER_ROLE', '')
       commit('SET_ROOMS', [])
       commit('SET_ROOM', {})
@@ -324,6 +342,9 @@ export default createStore({
     },
     SET_USER(state, item) {
       state.user = item
+    },
+    SET_SEARCHED_USER(state, item) {
+      state.searchedUser = item
     },
     SET_USER_ROLE(state, item) {
       state.role = item

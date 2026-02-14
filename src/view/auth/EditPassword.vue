@@ -132,7 +132,7 @@ const checkingUsername = async () => {
   } else {
     await store.dispatch('SEARCH_USER', { searchUser: username.value })
 
-    if (store.state.user) {
+    if (store.state.searchedUser) {
       confirmUsername.value = true
       usernameClass.value = true
       usernameMsgKey.value = 'auth.editPassword.usernameFound'
@@ -142,7 +142,7 @@ const checkingUsername = async () => {
       usernameMsgKey.value = 'auth.editPassword.usernameNotFound'
     }
 
-    inputUserResult(toValue(store.state.user))
+    inputUserResult(toValue(store.state.searchedUser))
   }
 }
 

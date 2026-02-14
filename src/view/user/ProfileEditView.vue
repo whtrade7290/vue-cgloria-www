@@ -316,6 +316,7 @@ const loadProfile = async () => {
     if (!fetchedUser?.id) {
       throw new Error('User not found')
     }
+    store.commit('SET_USER', fetchedUser)
 
     form.id = fetchedUser.id
     form.username = fetchedUser.username ?? parsed.user.username ?? ''
