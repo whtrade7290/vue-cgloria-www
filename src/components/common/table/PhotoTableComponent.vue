@@ -140,7 +140,7 @@ const staticPath = `${import.meta.env.VITE_API_URL}uploads`
 let searchWord = ref('')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))
-const pageSize = 20
+const pageSize = 12
 let pageList = []
 
 const totalCount = computed(() => store.state.count)

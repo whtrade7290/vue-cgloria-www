@@ -5,9 +5,9 @@
         <label :for="`${idPrefix}-book`">성경</label>
         <select
           :id="`${idPrefix}-book`"
+          v-model="state.book"
           class="form-control"
           name="memory-book"
-          v-model="state.book"
           :disabled="isDisabled"
         >
           <option value="">성경을 선택하세요</option>
@@ -20,9 +20,9 @@
         <label :for="`${idPrefix}-chapter`">장</label>
         <select
           :id="`${idPrefix}-chapter`"
+          v-model.number="state.chapter"
           class="form-control"
           name="memory-chapter"
-          v-model.number="state.chapter"
           :disabled="isDisabled || chapterOptions.length === 0"
         >
           <option :value="null">장을 선택하세요</option>
@@ -35,9 +35,9 @@
         <label :for="`${idPrefix}-paragraph`">절</label>
         <select
           :id="`${idPrefix}-paragraph`"
+          v-model.number="state.paragraph"
           class="form-control"
           name="memory-paragraph"
-          v-model.number="state.paragraph"
           :disabled="isDisabled || paragraphOptions.length === 0"
         >
           <option :value="null">절을 선택하세요</option>
@@ -48,10 +48,10 @@
       </div>
     </div>
 
-    <div class="preview" v-if="previewText">
+    <div v-if="previewText" class="preview">
       {{ previewText }}
     </div>
-    <div class="preview preview--empty" v-else-if="showEmptyMessage">
+    <div v-else-if="showEmptyMessage" class="preview preview--empty">
       설정된 암송 구절이 없습니다.
     </div>
   </div>
@@ -308,6 +308,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin: 10px;
 }
 .field-group {
   display: flex;
