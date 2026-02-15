@@ -89,7 +89,7 @@
         <li class="page-item">
           <a
             class="page-link"
-            :class="[pageNum == Math.ceil(store.state.count / pageSize) ? 'disabled' : '']"
+            :class="[pageNum == totalPages ? 'disabled' : '']"
             href="javascript:;"
             @click="fetchList((pageNum = pageNum + 1))"
           >
@@ -120,7 +120,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { formatDate } from '@/utils/dateFormat'
@@ -141,20 +141,13 @@ let searchWord = ref('')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))
 const pageSize = 12
-let pageList = []
-
-const totalCount = computed(() => store.state.count)
-
-watch(
-  totalCount, // computed로 Vuex 상태 감시
-  () => {
-    fetchList(pageNum.value) // totalCount가 변경되면 리스트 다시 로드
-  }
-)
+const pageList = ref([])
+const totalCount = computed(() => store.state.photoCount || 0)
+const totalPages = computed(() => Math.max(1, Math.ceil(totalCount.value / pageSize)))
 
 fetchList(pageNum.value)
 
-function fetchList(num) {
+async function fetchList(num) {
   const payload = {
     name: props.called,
     startRow: (num - 1) * pageSize,
@@ -162,39 +155,34 @@ function fetchList(num) {
     searchWord: searchWord.value,
     board: route.name
   }
-  store.dispatch('FETCH_PHOTO_DATALIST', payload)
   pageNum.value = num
+  await Promise.all([
+    store.dispatch('FETCH_PHOTO_DATALIST', payload),
+    store.dispatch('FETCH_PHOTO_DATACOUNT', payload)
+  ])
   settingPageNumber()
 }
 
 function settingPageNumber() {
-  let totalPages = Math.ceil(totalCount.value / pageSize)
+  const total = Math.max(1, Math.ceil(totalCount.value / pageSize))
+  const startIndex = Math.max(1, pageNum.value - 2)
+  const endIndex = Math.min(total, startIndex + 7)
 
-  // 항상 처음 5개 페이지가 표시되도록
-  let startIndex = Math.max(1, pageNum.value - 2) // 현재 페이지를 기준으로 앞 2개 페이지를 포함
-  let endIndex = Math.min(totalPages, startIndex + 7) // startIndex에서 5개 페이지까지 표시
-
-  pageList = []
-
-  for (let index = startIndex; index <= endIndex; index++) {
-    pageList.push(index)
+  pageList.value = []
+  for (let index = startIndex; index <= endIndex; index += 1) {
+    pageList.value.push(index)
   }
-
-  return endIndex
 }
 
 const parsedFiles = computed(() => {
-  // dataList를 가져옵니다
   const dataList = store.state.photoList
 
   if (Array.isArray(dataList) === false) return []
 
-  const newList = dataList.map((data) => {
+  return dataList.map((data) => {
     let files = []
     if (data.files) {
       files = JSON.parse(data.files)
-    } else {
-      files = []
     }
 
     return {
@@ -209,8 +197,6 @@ const parsedFiles = computed(() => {
       deleted: data.deleted
     }
   })
-
-  return newList
 })
 
 async function intoDetail(id) {
@@ -223,19 +209,7 @@ async function intoDetail(id) {
 
 async function searchPost() {
   pageNum.value = 1
-
-  let payload = {
-    name: props.called,
-    startRow: 0,
-    pageSize: pageSize,
-    searchWord: searchWord.value,
-    board: route.name
-  }
-
-  // 글 갯수 조회
-  store.dispatch('FETCH_PHOTO_DATACOUNT', payload)
-  // 글 조회
-  store.dispatch('FETCH_PHOTO_DATALIST', payload)
+  await fetchList(1)
 }
 </script>
 
