@@ -636,6 +636,27 @@ section {
 .content-container {
   margin-top: 2rem;
 }
+:deep(.content-container figure.media),
+:deep(.content-container .embed-responsive) {
+  width: min(700px, 100%);
+  margin: 1.5rem 0;
+}
+:deep(.content-container figure.media > div),
+:deep(.content-container .embed-responsive) {
+  position: relative;
+  padding-top: 56.25%;
+  height: 0;
+}
+:deep(.content-container figure.media iframe),
+:deep(.content-container .embed-responsive iframe) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+  display: block;
+}
 .memory-verse-wrapper {
   margin: 1.5rem auto 0;
   width: min(700px, 100%);
