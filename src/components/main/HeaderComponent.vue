@@ -7,7 +7,7 @@
             <!-- <h1 class="text-white gugi-regular" style="font-size: 1.5rem">{{ subMsg }}</h1> -->
             <p
               class="text-white gugi-regular"
-              style="padding-left: 5vw"
+              style="padding-left: 9.5vw"
               :class="[mainMsg === t('withDiaryParams.mainTitle') ? 'diary-font' : 'main-font']"
             >
               {{ mainMsg }}
@@ -98,7 +98,7 @@ const headerStyle = computed(() => ({
 }
 
 .diary-font {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
