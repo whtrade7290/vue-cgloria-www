@@ -166,7 +166,7 @@ async function fetchList(num) {
 function settingPageNumber() {
   const total = Math.max(1, Math.ceil(totalCount.value / pageSize))
   const startIndex = Math.max(1, pageNum.value - 2)
-  const endIndex = Math.min(total, startIndex + 7)
+  const endIndex = Math.min(total, startIndex + 4)
 
   pageList.value = []
   for (let index = startIndex; index <= endIndex; index += 1) {
