@@ -97,31 +97,17 @@ const headerStyle = computed(() => ({
   background-blend-mode: multiply;
 }
 
-.diary-font {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
 .main-bg {
   background-image: var(--gloria-gradient-primary);
 }
 
 .main-font {
-  font-size: 4.5vh;
-  font-weight: bold;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.15;
 }
-
-@media (min-width: 768px) {
-  .main-font {
-    font-size: 3.5vh;
-    font-weight: bold;
-  }
-}
-
-@media (min-width: 1200px) {
-  .main-font {
-    font-size: 4.5vh;
-    font-weight: bold;
-  }
+.diary-font {
+  font-size: clamp(3rem, 7vw, 4.8rem);
+  font-weight: 700;
 }
 </style>
