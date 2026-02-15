@@ -45,7 +45,14 @@ const mapEmbedSrc =
 
 <style scoped>
 .page-header {
-  padding: 1rem 1rem 5rem 1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    padding: 1rem 1rem 5rem 1rem;
+    margin-bottom: 0;
+  }
 }
 
 .map-embed-wrapper {

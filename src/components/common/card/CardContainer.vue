@@ -6,8 +6,8 @@
         <div class="col-lg-9">
           <div class="card shadow-lg mb-5">
             <CardHeader :title="title" :translate-title="translateTitle"></CardHeader>
-            <div class="card card-calendar p-3">
-              <div class="card-body p-2">
+            <div class="card card-calendar card-calendar-wrapper">
+              <div class="card-body">
                 <slot></slot>
               </div>
             </div>
@@ -44,6 +44,22 @@ defineProps({
 
 .display-sideMenu {
   height: 100%;
+}
+
+.card-calendar-wrapper {
+  padding: 1rem;
+}
+.card-calendar-wrapper .card-body {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .card-calendar-wrapper {
+    padding: 1.5rem;
+  }
+  .card-calendar-wrapper .card-body {
+    padding: 0.5rem;
+  }
 }
 
 @media (max-width: 991px) {

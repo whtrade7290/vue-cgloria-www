@@ -1,5 +1,5 @@
 <template>
-  <section class="my-5 py-5" style="padding-top: 0 !important">
+  <section class="my-5 py-3" style="padding-top: 0 !important">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 ms-auto">
@@ -18,8 +18,8 @@
                 <template v-if="column?.id">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(column.id, 'column')"
                     class="more-link"
+                    @click="intoDetail(column.id, 'column')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -39,8 +39,8 @@
                 <template v-if="classMeeting?.id">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(classMeeting.id, 'class_meeting')"
                     class="more-link"
+                    @click="intoDetail(classMeeting.id, 'class_meeting')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -60,8 +60,8 @@
                 <template v-if="testimony?.id">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(testimony.id, 'testimony')"
                     class="more-link"
+                    @click="intoDetail(testimony.id, 'testimony')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>

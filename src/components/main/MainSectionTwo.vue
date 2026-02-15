@@ -1,5 +1,5 @@
 <template>
-  <section class="py-5">
+  <section>
     <div class="container">
       <div class="row">
         <div class="row text-center my-sm-5 mt-5">

@@ -3,14 +3,14 @@
     <!-- ===================== -->
     <!-- 모바일 (≤ 991px) -->
     <!-- ===================== -->
-    <div class="d-lg-none px-3 pt-3">
+    <div class="d-lg-none">
       <!-- 검색 -->
       <div class="mobile-search">
         <input
+          v-model="searchWord"
           type="text"
           class="form-control form-control-lg"
           placeholder="search"
-          v-model="searchWord"
         />
         <button class="btn bg-gradient-primary mb-0" @click="searchPost">검색</button>
       </div>
@@ -34,9 +34,7 @@
         <li v-if="hasNoData" class="list-group-item text-center text-muted">
           {{ $t('common.noResults') }}
         </li>
-        <li v-if="props.loading" class="list-group-item text-center text-muted">
-          Loading...
-        </li>
+        <li v-if="props.loading" class="list-group-item text-center text-muted">Loading...</li>
       </ul>
       <!-- 페이지네이션 -->
       <nav class="mt-4">
@@ -117,9 +115,7 @@
             </td>
           </tr>
           <tr v-if="props.loading">
-            <td colspan="4" class="text-center text-muted">
-              Loading...
-            </td>
+            <td colspan="4" class="text-center text-muted">Loading...</td>
           </tr>
         </tbody>
       </table>
@@ -165,12 +161,12 @@
       <div class="d-flex justify-content-center mt-5">
         <div class="mb-3 w-25">
           <input
+            v-model="searchWord"
             type="text"
             class="form-control form-control-lg"
             placeholder="search"
-            v-model="searchWord"
-          @keydown.enter.prevent="searchPost"
-        />
+            @keydown.enter.prevent="searchPost"
+          />
         </div>
         <div style="margin-left: 10px">
           <button class="btn bg-gradient-primary test" @click="searchPost">검색</button>
@@ -251,9 +247,7 @@ const pageList = computed(() => {
   return Array.from({ length: Math.max(0, endIndex - startIndex + 1) }, (_, i) => startIndex + i)
 })
 
-const hasNoData = computed(
-  () => !props.loading && (!props.items || props.items.length === 0)
-)
+const hasNoData = computed(() => !props.loading && (!props.items || props.items.length === 0))
 
 const displayItems = computed(() => props.items ?? [])
 
@@ -348,7 +342,7 @@ const intoDetail = async (id) => {
 
 .mobile-title {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 0.25rem;
 }
 
