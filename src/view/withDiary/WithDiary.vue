@@ -3,7 +3,7 @@
     <HeaderComponent
       :main-msg="$t('withDiaryParams.mainTitle')"
       :img-url="`/sky1.jpeg`"
-      :height="20"
+      :height="30"
     ></HeaderComponent>
     <div class="container">
       <CardContainer :title="cardTitle" :translate-title="translateTitle">
