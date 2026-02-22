@@ -161,7 +161,7 @@ const inputUserResult = (user) => {
 }
 
 const checkingPassword = async () => {
-  if (password1.value.length < 8) {
+  if (password1.value.length < 4) {
     confirmPassword.value = false
     passwordClass.value = true
     passwordMsgKey.value = 'auth.warnings.passwordShort'

@@ -259,7 +259,7 @@ const validatePasswordField = (force = false) => {
   const hasPassword = !!form.password
   const hasConfirm = !!form.confirmPassword
 
-  if (hasPassword && form.password.length < 8) {
+  if (hasPassword && form.password.length < 4) {
     passwordStatus.invalid = true
     passwordStatus.messageKey = 'profile.alerts.passwordShort'
     return false

@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-3 pb-4" id="count-stats">
+  <section id="count-stats" class="pt-3 pb-4">
     <div class="container">
       <div class="row">
         <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
@@ -8,7 +8,18 @@
               <div class="p-3 text-center">
                 <h3>{{ formatDate(sermon?.create_at) || '' }}</h3>
                 <h5 class="mt-3 h4">{{ $t('weeklySermon.sermon') }}</h5>
-                <p class="h5">{{ sermon?.title || '' }}</p>
+                <div class="sermon-title">
+                  <p class="h5 mb-2">{{ sermon?.title || '' }}</p>
+                  <template v-if="sermon?.id">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-primary sermon-detail-btn"
+                      @click="intoDetail(sermon.id, 'sermon')"
+                    >
+                      {{ $t('common.moveToPage') }}
+                    </button>
+                  </template>
+                </div>
               </div>
               <hr class="vertical dark" />
             </div>
@@ -20,8 +31,8 @@
                 <template v-if="weekly?.id">
                   <a
                     href="javascript:;"
-                    @click="intoDetail(weekly?.id, 'weekly_bible_verse')"
                     class="more-link"
+                    @click="intoDetail(weekly?.id, 'weekly_bible_verse')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -37,10 +48,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { formatDate } from '@/utils/dateFormat'
 
 const router = useRouter()
 
-const props = defineProps({
+defineProps({
   sermon: {
     type: Object,
     default: () => ({})
@@ -77,25 +89,23 @@ async function intoDetail(id, name) {
     query: { pageNum: 1 }
   })
 }
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-
-  const date = new Date(dateString)
-  const dayOfWeek = date.getDay() // 0(일)~6(토)
-  const daysUntilSunday = 7 - dayOfWeek // 다음 일요일까지 남은 일수
-
-  date.setDate(date.getDate() + daysUntilSunday)
-
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  return `${year}. ${month}. ${day}`
-}
 </script>
 
 <style scoped>
+.sermon-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 70px;
+}
+
+.sermon-detail-btn {
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.35rem 1.25rem;
+}
+
 .more-link {
   color: var(--gloria-primary);
   font-size: 1.2rem;
