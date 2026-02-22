@@ -251,10 +251,43 @@ const toDateOnly = (value) => {
   return `${year}-${month}-${day}`
 }
 
+const shiftDateOnly = (value, offset) => {
+  if (!value) return ''
+  const parsed = new Date(value)
+  if (Number.isNaN(parsed.getTime())) {
+    const parts = value.split('-').map((part) => Number(part))
+    const tempDate = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1)
+    tempDate.setDate(tempDate.getDate() + offset)
+    return toDateOnly(tempDate)
+  }
+  parsed.setDate(parsed.getDate() + offset)
+  return toDateOnly(parsed)
+}
+
+const getInclusiveEnd = (event) => {
+  const originalEnd = event.extendedProps?.originalEnd
+  if (originalEnd) return originalEnd
+  if (event.end) {
+    return shiftDateOnly(event.end, -1)
+  }
+  return toDateOnly(event.start)
+}
+
 const fetchSchedules = async (start, end) => {
   try {
     const { data } = await ScheduleApi.fetchByRange(start, end)
-    events.value = data ?? []
+    events.value = (data ?? []).map((item) => {
+      const originalEnd = item.end || item.start
+      return {
+        ...item,
+        start: item.start,
+        end: shiftDateOnly(originalEnd, 1),
+        extendedProps: {
+          ...item.extendedProps,
+          originalEnd
+        }
+      }
+    })
   } catch (error) {
     console.error('Failed to fetch schedules', error)
   }
@@ -271,7 +304,7 @@ const handleEventClick = (info) => {
     html: `
       <div class="swal-review">
         <p><strong>${t('school.eventSchedule.modal.start')}:</strong> ${toDateOnly(event.start)}</p>
-        <p><strong>${t('school.eventSchedule.modal.end')}:</strong> ${toDateOnly(event.end || event.start)}</p>
+        <p><strong>${t('school.eventSchedule.modal.end')}:</strong> ${getInclusiveEnd(event)}</p>
       </div>
     `,
     showCancelButton: true,
@@ -299,7 +332,7 @@ const openEditModal = async (event) => {
         <label class="form-label mt-2">${t('school.eventSchedule.form.start')}</label>
         <input id="edit-start" type="date" class="form-control" value="${toDateOnly(event.start)}" />
         <label class="form-label mt-2">${t('school.eventSchedule.form.end')}</label>
-        <input id="edit-end" type="date" class="form-control" value="${toDateOnly(event.end || event.start)}" />
+        <input id="edit-end" type="date" class="form-control" value="${getInclusiveEnd(event)}" />
         <label class="form-label mt-2 d-block">${t('school.eventSchedule.form.color')}</label>
         <div class="color-palette" id="edit-color-palette">
           ${colorOptions
