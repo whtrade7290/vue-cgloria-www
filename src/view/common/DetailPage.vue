@@ -5,8 +5,8 @@
         <div class="detail-card-title">
           <h2>{{ store.state.detail.title || '' }}</h2>
         </div>
-        <div class="detail-meta">
-          <div>
+        <div class="detail-meta-container">
+          <div class="detail-meta">
             <div class="writer-profile">
               <div v-if="writerProfileImage" class="writer-avatar">
                 <img :src="writerProfileImage" :alt="writerName" />
@@ -19,30 +19,30 @@
                   {{ writerName }}
                 </p>
               </div>
-              <div class="meta-actions">
-                <Tooltip text="링크 복사">
-                  <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
-                    share
-                  </a>
-                </Tooltip>
-                <Tooltip text="인쇄">
-                  <a href="javascript:;" class="material-symbols-outlined" @click="printContent">
-                    print
-                  </a>
-                </Tooltip>
-                <Tooltip text="댓글 수">
-                  <div class="meta-comment">
-                    <span class="material-symbols-outlined"> comment </span>
-                    <span class="meta-comment__count">{{ commentCount }}</span>
-                  </div>
-                </Tooltip>
-              </div>
+            </div>
+            <div class="detail-date-box">
+              <span>
+                {{ formatDate(store.state.detail.create_at) || '' }}
+              </span>
             </div>
           </div>
-          <div>
-            <p style="margin-top: 0.2rem; font-size: 1rem; font-weight: 500">
-              {{ formatDate(store.state.detail.create_at) || '' }}
-            </p>
+          <div class="meta-actions">
+            <Tooltip text="링크 복사">
+              <a href="javascript:;" class="material-symbols-outlined" @click="contentCopy">
+                share
+              </a>
+            </Tooltip>
+            <Tooltip text="인쇄">
+              <a href="javascript:;" class="material-symbols-outlined" @click="printContent">
+                print
+              </a>
+            </Tooltip>
+            <Tooltip text="댓글 수">
+              <div class="meta-comment">
+                <span class="material-symbols-outlined"> comment </span>
+                <span class="meta-comment__count">{{ commentCount }}</span>
+              </div>
+            </Tooltip>
           </div>
         </div>
         <div class="content-box">
@@ -434,6 +434,21 @@ section {
   flex-direction: column;
   margin-bottom: 5rem;
 }
+
+.meta-actions {
+  margin-top: 18px;
+}
+
+.detail-date-box {
+  display: flex;
+  align-items: center;
+}
+.detail-meta-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
 .detail-card {
   display: flex;
   flex-direction: column;
@@ -448,7 +463,7 @@ section {
 .detail-meta {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 1rem;
   margin-top: 10px;
 }
@@ -491,6 +506,7 @@ section {
   align-items: center;
   gap: 0.5rem;
   margin-left: 0.5rem;
+  align-self: stretch;
 }
 .meta-actions .material-symbols-outlined {
   font-size: 1.4rem;
@@ -676,9 +692,28 @@ section {
   }
   .detail-meta {
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
   .detail-card-title {
     padding: 1rem;
+  }
+  .detail-meta-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .meta-actions {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .detail-meta {
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
   }
 }
 </style>
