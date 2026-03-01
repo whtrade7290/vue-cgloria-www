@@ -2,7 +2,7 @@
   <section>
     <div class="container">
       <div class="detail-card">
-        <div>
+        <div class="detail-card-title">
           <h2>{{ store.state.detail.title || '' }}</h2>
         </div>
         <div class="detail-meta">
@@ -48,9 +48,9 @@
         <div class="content-box">
           <div class="image-attachment-list">
             <div
-              class="attachment-wrapper"
               v-for="item in filePreviewItems.filter((file) => file.type === 'image')"
               :key="item.id"
+              class="attachment-wrapper"
             >
               <a :href="item.url" data-fancybox class="attachment-image">
                 <img
@@ -69,9 +69,9 @@
           </div>
           <div class="pdf-attachment-list">
             <div
-              class="file-chip-group"
               v-for="item in filePreviewItems.filter((file) => file.type === 'pdf')"
               :key="item.id"
+              class="file-chip-group"
             >
               <a class="file-chip" :href="item.url" target="_blank" rel="noopener" data-fancybox>
                 <span class="material-symbols-outlined file-chip__icon">picture_as_pdf</span>
@@ -106,21 +106,21 @@
             >{{ $t('button.toList') }}</a
           >
           <a
+            v-show="isWriter"
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
-            v-show="isWriter"
             @click="goToEditPage"
             >{{ $t('button.edit') }}</a
           >
           <a
+            v-show="isWriter"
             href="javascript:;"
             class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 btn-style"
-            v-show="isWriter"
             @click="deleteBoard"
             >{{ $t('button.delete') }}</a
           >
         </div>
-        <CommentComponent v-if="isLogin" @commentCount="handleCommentCount"></CommentComponent>
+        <CommentComponent v-if="isLogin" @comment-count="handleCommentCount"></CommentComponent>
       </div>
     </div>
   </section>
@@ -667,12 +667,18 @@ section {
   height: 100%;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .detail-card {
-    padding: 1.5rem;
+    padding: 0.5rem;
   }
   .btn-style {
     font-size: 0.48rem;
+  }
+  .detail-meta {
+    padding: 1rem;
+  }
+  .detail-card-title {
+    padding: 1rem;
   }
 }
 </style>

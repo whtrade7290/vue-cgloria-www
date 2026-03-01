@@ -17,7 +17,6 @@
           <label for="memoryFrom">{{ $t('table.memoryControls.from') }}</label>
           <input id="memoryFrom" v-model="memoryRange.from" type="date" />
         </div>
-        <span class="memory-range-card__divider">~</span>
         <div class="memory-range-card__field">
           <label for="memoryTo">{{ $t('table.memoryControls.to') }}</label>
           <input id="memoryTo" v-model="memoryRange.to" type="date" />
@@ -305,11 +304,6 @@ const handleDownload = async () => {
   border-radius: 0.75rem;
   padding: 0.5rem 0.75rem;
 }
-.memory-range-card__divider {
-  font-size: 1.25rem;
-  color: #94a3b8;
-  font-weight: 600;
-}
 .memory-range-card__actions {
   display: flex;
   gap: 0.75rem;
@@ -341,6 +335,16 @@ const handleDownload = async () => {
     width: 100%;
   }
   .memory-range-card__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .memory-range-card__inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .memory-range-card__inputs > button {
     width: 100%;
   }
 }
