@@ -303,6 +303,24 @@ const handleDownload = async () => {
   border: 1px solid #d4dae3;
   border-radius: 0.75rem;
   padding: 0.5rem 0.75rem;
+  height: 46px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  color: #1e293b;
+  overflow: hidden; /* clip iOS native picker background */
+  background-clip: padding-box;
+}
+.memory-range-card__field input::-webkit-datetime-edit,
+.memory-range-card__field input::-webkit-datetime-edit-fields-wrapper,
+.memory-range-card__field input::-webkit-date-and-time-value {
+  background-color: #fff;
+}
+.memory-range-card__field input::-webkit-datetime-edit-text,
+.memory-range-card__field input::-webkit-datetime-edit-year-field,
+.memory-range-card__field input::-webkit-datetime-edit-month-field,
+.memory-range-card__field input::-webkit-datetime-edit-day-field {
+  color: #1e293b;
 }
 .memory-range-card__actions {
   display: flex;
