@@ -667,7 +667,7 @@ section {
   height: 100%;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
   .detail-card {
     padding: 0.5rem;
   }
