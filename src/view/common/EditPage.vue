@@ -128,9 +128,10 @@
           /><br />
           <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
             <MemoryVerseFields
-              v-model="memoryVerseIdx"
+              v-model="memoryVerseData"
               :initial-bible-id="initialMemoryVerseId"
               id-prefix="edit-memory"
+              editable-sentence
             />
           </div>
           <label for="content">{{ $t('writePage.content') }}</label
@@ -244,19 +245,74 @@ const files = ref([])
 const previewItems = ref([])
 const removedExistingFilenames = ref([])
 const isSubmitting = ref(false)
-const memoryVerseIdx = ref(store.state.detail?.bible_id || store.state.detail?.bibleId || null)
-const initialMemoryVerseId = computed(
-  () => store.state.detail?.bible_id || store.state.detail?.bibleId || null
-)
+const deriveInitialMemoryVerse = () => {
+  const verse = store.state.detail?.memoryVerse
+  if (verse) return verse
+  const bibleId = store.state.detail?.bible_id || store.state.detail?.bibleId || null
+  return bibleId ? { bibleId } : null
+}
+const memoryVerseData = ref(deriveInitialMemoryVerse())
+const initialMemoryVerseId = computed(() => {
+  if (store.state.detail?.memoryVerse?.bibleId) {
+    return store.state.detail.memoryVerse.bibleId
+  }
+  return store.state.detail?.bible_id || store.state.detail?.bibleId || null
+})
 
 watch(
   () => isWeeklyBoard.value,
   (active) => {
     if (!active) {
-      memoryVerseIdx.value = null
+      memoryVerseData.value = null
     }
   }
 )
+
+watch(
+  () => store.state.detail?.memoryVerse,
+  (val) => {
+    if (val) {
+      memoryVerseData.value = val
+    }
+  }
+)
+
+const normalizeMemoryVerseValue = (verse) => {
+  if (!verse) return null
+  const bibleIdCandidate = Number(verse?.bibleId ?? verse?.bible_id ?? verse?.idx ?? null)
+  const chapterCandidate = Number(verse?.chapter)
+  const paragraphCandidate = Number(verse?.paragraph)
+  const sentence =
+    verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
+  const longLabel = verse?.longLabel || verse?.long_label || verse?.book || ''
+  return {
+    bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
+    longLabel,
+    chapter: Number.isFinite(chapterCandidate) ? chapterCandidate : null,
+    paragraph: Number.isFinite(paragraphCandidate) ? paragraphCandidate : null,
+    sentence
+  }
+}
+
+const appendWeeklyVerseFields = (formData, verse) => {
+  const normalized = normalizeMemoryVerseValue(verse)
+  if (!normalized) return
+  if (normalized.bibleId) {
+    formData.append('memoryVerseIdx', normalized.bibleId)
+  }
+  if (normalized.longLabel) {
+    formData.append('longLabel', normalized.longLabel)
+  }
+  if (normalized.chapter !== null) {
+    formData.append('chapter', normalized.chapter.toString())
+  }
+  if (normalized.paragraph !== null) {
+    formData.append('paragraph', normalized.paragraph.toString())
+  }
+  if (normalized.sentence) {
+    formData.append('sentence', normalized.sentence)
+  }
+}
 
 const newImagePreviewItems = computed(() =>
   previewItems.value.filter((item) => item.type === 'image')
@@ -385,8 +441,8 @@ const edit = async () => {
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
   }
-  if (isWeeklyBoard.value && memoryVerseIdx.value) {
-    formData.append('memoryVerseIdx', memoryVerseIdx.value)
+  if (isWeeklyBoard.value && memoryVerseData.value) {
+    appendWeeklyVerseFields(formData, memoryVerseData.value)
   }
 
   files.value.forEach((file) => {

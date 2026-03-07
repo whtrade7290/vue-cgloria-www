@@ -48,7 +48,19 @@
       </div>
     </div>
 
-    <div v-if="previewText" class="preview">
+    <textarea
+      v-if="editableSentence"
+      v-model="previewText"
+      class="preview preview--editable"
+      rows="4"
+      :disabled="isDisabled || !hasSelection"
+      :placeholder="
+        hasSelection
+          ? '암송 구절을 입력하거나 수정하세요'
+          : '성경, 장, 절을 먼저 선택해 주세요'
+      "
+    ></textarea>
+    <div v-else-if="previewText" class="preview">
       {{ previewText }}
     </div>
     <div v-else-if="showEmptyMessage" class="preview preview--empty">
@@ -71,7 +83,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
   modelValue: {
-    type: Number,
+    type: [Number, Object],
     default: null
   },
   idPrefix: {
@@ -89,44 +101,112 @@ const props = defineProps({
   showEmptyMessage: {
     type: Boolean,
     default: false
+  },
+  editableSentence: {
+    type: Boolean,
+    default: false
   }
 })
 
+const normalizeVerseValue = (value) => {
+  if (value === null || value === undefined) return null
+  if (typeof value === 'number') {
+    const numeric = Number(value)
+    return Number.isFinite(numeric) && numeric > 0 ? { bibleId: numeric } : null
+  }
+  if (typeof value === 'object') {
+    const bibleIdCandidate = Number(value?.bibleId ?? value?.bible_id ?? value?.idx ?? null)
+    const chapterCandidate = Number(value?.chapter ?? value?.Chapter)
+    const paragraphCandidate = Number(value?.paragraph ?? value?.Paragraph ?? value?.verse)
+    const label = value?.longLabel || value?.long_label || value?.book || ''
+    const sentence =
+      value?.sentence || value?.text || value?.content || value?.memorySentence || ''
+    return {
+      bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
+      longLabel: label,
+      chapter: Number.isFinite(chapterCandidate) ? chapterCandidate : null,
+      paragraph: Number.isFinite(paragraphCandidate) ? paragraphCandidate : null,
+      sentence
+    }
+  }
+  return null
+}
+
+const isSameVerse = (a, b) => {
+  if (!a && !b) return true
+  if (!a || !b) return false
+  return (
+    (a.bibleId ?? null) === (b.bibleId ?? null) &&
+    (a.longLabel ?? '') === (b.longLabel ?? '') &&
+    (a.chapter ?? null) === (b.chapter ?? null) &&
+    (a.paragraph ?? null) === (b.paragraph ?? null) &&
+    (a.sentence ?? '') === (b.sentence ?? '')
+  )
+}
+
+const hasVerseDetails = (verse) => {
+  if (!verse) return false
+  return Boolean(
+    verse.longLabel &&
+      Number.isFinite(verse.chapter) &&
+      Number.isFinite(verse.paragraph)
+  )
+}
+
+const incomingValue = normalizeVerseValue(props.modelValue)
 const state = reactive({
-  book: '',
-  chapter: null,
-  paragraph: null
+  book: incomingValue?.longLabel || '',
+  chapter: incomingValue?.chapter ?? null,
+  paragraph: incomingValue?.paragraph ?? null
 })
 
 const isDisabled = computed(() => props.disabled)
-const currentBibleId = ref(props.modelValue ?? null)
+const hasSelection = computed(
+  () =>
+    Boolean(state.book && state.book.length > 0) &&
+    Number.isFinite(state.chapter) &&
+    Number.isFinite(state.paragraph)
+)
+const editableSentence = computed(() => props.editableSentence && !props.disabled)
+const selectedVerse = ref(incomingValue)
 const bookOptions = ref([])
 const chapterOptions = ref([])
 const paragraphOptions = ref([])
-const previewText = ref('')
-const suppressEmit = ref(false)
+const previewText = ref(incomingValue?.sentence || '')
+const suppressStateWatch = ref(false)
 const booksLoaded = ref(false)
 
-const emitBibleId = (value) => {
-  if (suppressEmit.value) return
-  currentBibleId.value = value ?? null
-  emit('update:modelValue', currentBibleId.value)
+const updateSelectedVerse = (value, { emitChange = true } = {}) => {
+  selectedVerse.value = value ?? null
+  if (emitChange) {
+    emit('update:modelValue', selectedVerse.value)
+  }
+}
+
+const clearSelection = () => {
+  suppressStateWatch.value = true
+  state.book = ''
+  state.chapter = null
+  state.paragraph = null
+  suppressStateWatch.value = false
+  previewText.value = ''
+  updateSelectedVerse(null)
 }
 
 const resetParagraphState = () => {
   paragraphOptions.value = []
-  suppressEmit.value = true
+  suppressStateWatch.value = true
   state.paragraph = null
-  suppressEmit.value = false
+  suppressStateWatch.value = false
   previewText.value = ''
-  emitBibleId(null)
+  updateSelectedVerse(null)
 }
 
 const resetChapterState = () => {
   chapterOptions.value = []
-  suppressEmit.value = true
+  suppressStateWatch.value = true
   state.chapter = null
-  suppressEmit.value = false
+  suppressStateWatch.value = false
   resetParagraphState()
 }
 
@@ -137,9 +217,9 @@ const loadBooks = async () => {
   booksLoaded.value = true
 
   if (state.book && !bookOptions.value.includes(state.book)) {
-    suppressEmit.value = true
+    suppressStateWatch.value = true
     state.book = ''
-    suppressEmit.value = false
+    suppressStateWatch.value = false
   }
 
   if (!state.book) {
@@ -165,9 +245,9 @@ const loadChapters = async () => {
   }
 
   if (!chapterOptions.value.includes(state.chapter)) {
-    suppressEmit.value = true
+    suppressStateWatch.value = true
     state.chapter = chapterOptions.value[0]
-    suppressEmit.value = false
+    suppressStateWatch.value = false
   }
 }
 
@@ -187,9 +267,9 @@ const loadParagraphs = async () => {
   }
 
   if (!paragraphOptions.value.includes(state.paragraph)) {
-    suppressEmit.value = true
+    suppressStateWatch.value = true
     state.paragraph = paragraphOptions.value[0]
-    suppressEmit.value = false
+    suppressStateWatch.value = false
   }
 
   await updatePreview()
@@ -198,21 +278,49 @@ const loadParagraphs = async () => {
 const updatePreview = async () => {
   if (!state.book || state.chapter === null || state.paragraph === null) {
     previewText.value = ''
-    emitBibleId(null)
+    updateSelectedVerse(null)
     return
   }
 
-  const res = await fetchBibleVerse(state.book, state.chapter, state.paragraph)
-  const verse = res?.data
-  previewText.value =
-    verse?.sentence ||
-    verse?.text ||
-    verse?.content ||
-    `${state.book} ${state.chapter}장 ${state.paragraph}절`
-  emitBibleId(verse?.idx ?? null)
+  try {
+    const res = await fetchBibleVerse(state.book, state.chapter, state.paragraph)
+    const verse = res?.data
+    const normalized =
+      normalizeVerseValue({
+        ...verse,
+        longLabel: state.book,
+        chapter: state.chapter,
+        paragraph: state.paragraph
+      }) ?? {
+        bibleId: verse?.idx ?? null,
+        longLabel: state.book,
+        chapter: state.chapter,
+        paragraph: state.paragraph,
+        sentence: ''
+      }
+    normalized.sentence =
+      verse?.sentence ||
+      verse?.text ||
+      verse?.content ||
+      normalized.sentence ||
+      `${state.book} ${state.chapter}장 ${state.paragraph}절`
+    previewText.value = normalized.sentence
+    updateSelectedVerse(normalized)
+  } catch (error) {
+    console.error('Failed to fetch bible verse', error)
+    const fallback = {
+      bibleId: selectedVerse.value?.bibleId ?? null,
+      longLabel: state.book,
+      chapter: state.chapter,
+      paragraph: state.paragraph,
+      sentence: `${state.book} ${state.chapter}장 ${state.paragraph}절`
+    }
+    previewText.value = fallback.sentence
+    updateSelectedVerse(fallback)
+  }
 }
 
-const applyInitialVerseById = async (bibleId) => {
+const applyInitialVerseById = async (bibleId, { emitChange = true } = {}) => {
   const numeric = Number(bibleId)
   if (!Number.isFinite(numeric) || numeric <= 0) return
   if (!booksLoaded.value) {
@@ -232,26 +340,71 @@ const applyInitialVerseById = async (bibleId) => {
       bookOptions.value.unshift(bookLabel)
     }
 
-    suppressEmit.value = true
+    suppressStateWatch.value = true
     state.book = bookLabel
     state.chapter = Number.isFinite(chapterValue) ? chapterValue : null
     state.paragraph = Number.isFinite(paragraphValue) ? paragraphValue : null
-    suppressEmit.value = false
+    suppressStateWatch.value = false
 
     await loadChapters()
     await loadParagraphs()
 
-    previewText.value = verse.sentence || verse.text || verse.content || ''
-    emitBibleId(verse.idx ?? numeric)
+    const normalized = normalizeVerseValue({
+      ...verse,
+      longLabel: state.book,
+      chapter: state.chapter,
+      paragraph: state.paragraph
+    })
+    previewText.value = normalized?.sentence || ''
+    updateSelectedVerse(normalized, { emitChange })
   } catch (error) {
     console.error('Failed to fetch verse by id', error)
   }
 }
 
+const applyVerseData = async (verse, { emitChange = false } = {}) => {
+  const normalized = normalizeVerseValue(verse)
+  if (!normalized) {
+    resetChapterState()
+    return
+  }
+
+  if (normalized.longLabel && !bookOptions.value.includes(normalized.longLabel)) {
+    bookOptions.value.unshift(normalized.longLabel)
+  }
+
+  suppressStateWatch.value = true
+  state.book = normalized.longLabel || ''
+  state.chapter = normalized.chapter ?? null
+  state.paragraph = normalized.paragraph ?? null
+  suppressStateWatch.value = false
+
+  previewText.value = normalized.sentence || ''
+
+  await loadChapters()
+  await loadParagraphs()
+
+  if (!previewText.value && normalized.bibleId) {
+    await applyInitialVerseById(normalized.bibleId, { emitChange })
+    return
+  }
+
+  updateSelectedVerse(
+    {
+      bibleId: normalized.bibleId ?? selectedVerse.value?.bibleId ?? null,
+      longLabel: state.book,
+      chapter: state.chapter,
+      paragraph: state.paragraph,
+      sentence: previewText.value
+    },
+    { emitChange }
+  )
+}
+
 watch(
   () => state.book,
   async (newVal, oldVal) => {
-    if (suppressEmit.value || newVal === oldVal) return
+    if (suppressStateWatch.value || newVal === oldVal) return
     await loadChapters()
     await loadParagraphs()
   }
@@ -260,7 +413,7 @@ watch(
 watch(
   () => state.chapter,
   async (newVal, oldVal) => {
-    if (suppressEmit.value || newVal === oldVal) return
+    if (suppressStateWatch.value || newVal === oldVal) return
     await loadParagraphs()
   }
 )
@@ -268,34 +421,60 @@ watch(
 watch(
   () => state.paragraph,
   async (newVal, oldVal) => {
-    if (suppressEmit.value || newVal === oldVal) return
+    if (suppressStateWatch.value || newVal === oldVal) return
     await updatePreview()
   }
 )
 
 watch(
-  () => props.modelValue,
+  previewText,
   (val) => {
-    currentBibleId.value = val ?? null
+    if (!props.editableSentence) return
+    if (!hasSelection.value) return
+    if (!selectedVerse.value) return
+    if ((selectedVerse.value.sentence || '') === (val || '')) return
+    updateSelectedVerse({ ...selectedVerse.value, sentence: val || '' })
   }
+)
+
+watch(
+  () => props.modelValue,
+  async (val) => {
+    const normalized = normalizeVerseValue(val)
+    if (isSameVerse(normalized, selectedVerse.value)) return
+    if (normalized) {
+      await applyVerseData(normalized, { emitChange: false })
+    } else {
+      clearSelection()
+    }
+  },
+  { deep: true }
 )
 
 watch(
   () => props.initialBibleId,
   async (val) => {
     if (!val) return
-    await applyInitialVerseById(val)
+    await applyInitialVerseById(val, { emitChange: !selectedVerse.value })
   }
 )
 
 onMounted(async () => {
   await loadBooks()
+  if (hasVerseDetails(selectedVerse.value)) {
+    await applyVerseData(selectedVerse.value, { emitChange: false })
+    return
+  }
+  if (selectedVerse.value?.bibleId) {
+    await applyInitialVerseById(selectedVerse.value.bibleId)
+    return
+  }
   if (props.initialBibleId) {
     await applyInitialVerseById(props.initialBibleId)
-  } else {
-    await loadChapters()
-    await loadParagraphs()
+    return
   }
+  await loadChapters()
+  await loadParagraphs()
 })
 </script>
 
@@ -337,5 +516,11 @@ onMounted(async () => {
   color: #94a3b8;
   font-style: italic;
   text-align: center;
+}
+.preview--editable {
+  width: 100%;
+  resize: vertical;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 </style>

@@ -136,8 +136,9 @@
           </div>
           <MemoryVerseFields
             v-if="shouldShowMemoryVerse"
-            v-model="memoryVerseIdx"
+            v-model="memoryVerseData"
             id-prefix="write-memory"
+            editable-sentence
           />
           <label for="content">{{ $t('writePage.content') }}</label
           ><br />
@@ -239,12 +240,49 @@ const boardDisplayTitle = computed(() => {
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
 const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardName.value))
-const memoryVerseIdx = ref(null)
+const memoryVerseData = ref(null)
+
+const normalizeMemoryVerseValue = (verse) => {
+  if (!verse) return null
+  const bibleIdCandidate = Number(verse?.bibleId ?? verse?.bible_id ?? verse?.idx ?? null)
+  const chapterCandidate = Number(verse?.chapter)
+  const paragraphCandidate = Number(verse?.paragraph)
+  const sentence =
+    verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
+  const longLabel = verse?.longLabel || verse?.long_label || verse?.book || ''
+  return {
+    bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
+    longLabel,
+    chapter: Number.isFinite(chapterCandidate) ? chapterCandidate : null,
+    paragraph: Number.isFinite(paragraphCandidate) ? paragraphCandidate : null,
+    sentence
+  }
+}
+
+const appendWeeklyVerseFields = (formData, verse) => {
+  const normalized = normalizeMemoryVerseValue(verse)
+  if (!normalized) return
+  if (normalized.bibleId) {
+    formData.append('memoryVerseIdx', normalized.bibleId)
+  }
+  if (normalized.longLabel) {
+    formData.append('longLabel', normalized.longLabel)
+  }
+  if (normalized.chapter !== null) {
+    formData.append('chapter', normalized.chapter.toString())
+  }
+  if (normalized.paragraph !== null) {
+    formData.append('paragraph', normalized.paragraph.toString())
+  }
+  if (normalized.sentence) {
+    formData.append('sentence', normalized.sentence)
+  }
+}
 watch(
   () => isWeeklyBoard.value,
   (isWeekly) => {
     if (!isWeekly) {
-      memoryVerseIdx.value = null
+      memoryVerseData.value = null
     }
   }
 )
@@ -292,8 +330,8 @@ async function write() {
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
   }
-  if (isWeeklyBoard.value && memoryVerseIdx.value) {
-    formData.append('memoryVerseIdx', memoryVerseIdx.value)
+  if (isWeeklyBoard.value && memoryVerseData.value) {
+    appendWeeklyVerseFields(formData, memoryVerseData.value)
   }
 
   if (currentBoardName === 'withDiary') {

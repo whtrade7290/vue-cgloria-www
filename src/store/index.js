@@ -177,6 +177,30 @@ export default createStore({
         }
       })
 
+      const toNumber = (value) => {
+        const numeric = Number(value)
+        return Number.isFinite(numeric) ? numeric : null
+      }
+      const memoryVerse = {
+        bibleId: toNumber(detailData.bible_id ?? detailData.bibleId ?? detailData.idx),
+        longLabel: detailData.long_label ?? detailData.longLabel ?? detailData.book ?? '',
+        chapter: toNumber(detailData.chapter),
+        paragraph: toNumber(detailData.paragraph),
+        sentence:
+          detailData.sentence ??
+          detailData.memory_sentence ??
+          detailData.memorySentence ??
+          detailData.memory_text ??
+          ''
+      }
+      const hasMemoryVerseData = Boolean(
+        memoryVerse.bibleId ||
+          (memoryVerse.longLabel && memoryVerse.longLabel.length > 0) ||
+          Number.isFinite(memoryVerse.chapter) ||
+          Number.isFinite(memoryVerse.paragraph) ||
+          (memoryVerse.sentence && memoryVerse.sentence.length > 0)
+      )
+
       const data = {
         id: Number(detailData.id),
         title: detailData.title,
@@ -188,6 +212,7 @@ export default createStore({
         mainContent: detailData.mainContent,
         language: detailData.language,
         bible_id: detailData.bible_id ?? detailData.bibleId ?? null,
+        memoryVerse: hasMemoryVerseData ? memoryVerse : null,
         create_at: detailData.create_at,
         update_at: detailData.update_at,
         deleted: detailData.deleted

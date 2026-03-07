@@ -89,7 +89,7 @@
           </div>
           <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
             <MemoryVerseFields
-              v-model="memoryVerseIdx"
+              v-model="memoryVerseData"
               :initial-bible-id="initialMemoryVerseId"
               id-prefix="detail-memory"
               :disabled="true"
@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
@@ -151,9 +151,27 @@ const commentCount = ref(0)
 const { t } = useI18n()
 const boardNameRef = computed(() => route.query?.name || route.params?.name || '')
 const shouldShowMemoryVerse = computed(() => boardNameRef.value === 'weekly_bible_verse')
-const memoryVerseIdx = ref(store.state.detail?.bible_id || store.state.detail?.bibleId || null)
-const initialMemoryVerseId = computed(
-  () => store.state.detail?.bible_id || store.state.detail?.bibleId || null
+const deriveInitialMemoryVerse = () => {
+  const verse = store.state.detail?.memoryVerse
+  if (verse) return verse
+  const bibleId = store.state.detail?.bible_id || store.state.detail?.bibleId || null
+  return bibleId ? { bibleId } : null
+}
+const memoryVerseData = ref(deriveInitialMemoryVerse())
+const initialMemoryVerseId = computed(() => {
+  if (store.state.detail?.memoryVerse?.bibleId) {
+    return store.state.detail.memoryVerse.bibleId
+  }
+  return store.state.detail?.bible_id || store.state.detail?.bibleId || null
+})
+
+watch(
+  () => store.state.detail?.memoryVerse,
+  (val) => {
+    if (val) {
+      memoryVerseData.value = val
+    }
+  }
 )
 const resolveFileType = (file) => {
   const extensionSource =
