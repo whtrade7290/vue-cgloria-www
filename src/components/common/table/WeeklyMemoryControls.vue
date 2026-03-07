@@ -158,7 +158,10 @@ const formatVerseReference = (verse, index) => {
   const label = verse?.long_label || verse?.longLabel || verse?.book || ''
   const chapter = verse?.chapter ?? verse?.Chapter ?? verse?.chapterNumber ?? ''
   const paragraph = verse?.paragraph ?? verse?.Paragraph ?? verse?.verse ?? ''
-  return `${index + 1}. ${label} ${chapter}장 ${paragraph}절`
+  const readingPart = verse?.reading_part || verse?.readingPart || verse?.range || ''
+  const partLabel = readingPart === 'upper' ? '상' : readingPart === 'lower' ? '하' : ''
+  const reference = `${label} ${chapter}장 ${paragraph}절`
+  return `${index + 1}. ${reference}${partLabel ? ` (${partLabel})` : ''}`
 }
 
 const formatVerseSentence = (verse) => {
