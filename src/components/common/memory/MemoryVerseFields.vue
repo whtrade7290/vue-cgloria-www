@@ -49,11 +49,7 @@
       <div v-if="readingPartOptionsList.length" class="field field--range">
         <label class="range-label">범위</label>
         <div class="range-options">
-          <label
-            v-for="option in readingPartOptionsList"
-            :key="option.value"
-            class="range-option"
-          >
+          <label v-for="option in readingPartOptionsList" :key="option.value" class="range-option">
             <input
               v-model="readingPartState"
               type="radio"
@@ -120,10 +116,6 @@ const props = defineProps({
     default: false
   },
   editableSentence: {
-    type: Boolean,
-    default: false
-  },
-  skipVerseFetch: {
     type: Boolean,
     default: false
   },
@@ -209,8 +201,8 @@ const chapterOptions = ref([])
 const paragraphOptions = ref([])
 const previewText = ref(incomingValue?.sentence || '')
 const suppressStateWatch = ref(false)
+const suppressPreviewUpdate = ref(false)
 const booksLoaded = ref(false)
-const shouldFetchVerse = computed(() => !props.skipVerseFetch)
 
 const updateSelectedVerse = (value, { emitChange = true } = {}) => {
   selectedVerse.value = value ?? null
@@ -308,6 +300,11 @@ const loadParagraphs = async () => {
     suppressStateWatch.value = false
   }
 
+  if (suppressPreviewUpdate.value) {
+    syncSelectedVerse({ preserveSentence: true })
+    return
+  }
+
   await updatePreview()
 }
 
@@ -348,11 +345,6 @@ const updatePreview = async () => {
     return
   }
 
-  if (!shouldFetchVerse.value) {
-    syncSelectedVerse({ preserveSentence: true })
-    return
-  }
-
   try {
     const res = await fetchBibleVerse(state.book, state.chapter, state.paragraph)
     const verse = res?.data
@@ -383,9 +375,7 @@ const updatePreview = async () => {
 }
 
 const applyInitialVerseById = async (bibleId, { emitChange = true } = {}) => {
-  if (!shouldFetchVerse.value) {
-    return
-  }
+  suppressPreviewUpdate.value = true
   const numeric = Number(bibleId)
   if (!Number.isFinite(numeric) || numeric <= 0) return
   if (!booksLoaded.value) {
@@ -424,6 +414,8 @@ const applyInitialVerseById = async (bibleId, { emitChange = true } = {}) => {
     updateSelectedVerse(normalized, { emitChange })
   } catch (error) {
     console.error('Failed to fetch verse by id', error)
+  } finally {
+    suppressPreviewUpdate.value = false
   }
 }
 
@@ -433,34 +425,39 @@ const applyVerseData = async (verse, { emitChange = false } = {}) => {
     resetChapterState()
     return
   }
+  suppressPreviewUpdate.value = true
+  try {
+    if (normalized.longLabel && !bookOptions.value.includes(normalized.longLabel)) {
+      bookOptions.value.unshift(normalized.longLabel)
+    }
 
-  if (normalized.longLabel && !bookOptions.value.includes(normalized.longLabel)) {
-    bookOptions.value.unshift(normalized.longLabel)
+    suppressStateWatch.value = true
+    state.book = normalized.longLabel || ''
+    state.chapter = normalized.chapter ?? null
+    state.paragraph = normalized.paragraph ?? null
+    suppressStateWatch.value = false
+
+    previewText.value = normalized.sentence || ''
+
+    await loadChapters()
+    await loadParagraphs()
+
+    if (!previewText.value && normalized.bibleId) {
+      suppressPreviewUpdate.value = false
+      await applyInitialVerseById(normalized.bibleId, { emitChange })
+      return
+    }
+
+    syncSelectedVerse({ preserveSentence: true })
+  } finally {
+    suppressPreviewUpdate.value = false
   }
-
-  suppressStateWatch.value = true
-  state.book = normalized.longLabel || ''
-  state.chapter = normalized.chapter ?? null
-  state.paragraph = normalized.paragraph ?? null
-  suppressStateWatch.value = false
-
-  previewText.value = normalized.sentence || ''
-
-  await loadChapters()
-  await loadParagraphs()
-
-  if (!previewText.value && normalized.bibleId && shouldFetchVerse.value) {
-    await applyInitialVerseById(normalized.bibleId, { emitChange })
-    return
-  }
-
-  syncSelectedVerse({ preserveSentence: true })
 }
 
 watch(
   () => state.book,
   async (newVal, oldVal) => {
-    if (suppressStateWatch.value || newVal === oldVal) return
+    if (suppressPreviewUpdate.value || suppressStateWatch.value || newVal === oldVal) return
     await loadChapters()
     await loadParagraphs()
   }
@@ -469,7 +466,7 @@ watch(
 watch(
   () => state.chapter,
   async (newVal, oldVal) => {
-    if (suppressStateWatch.value || newVal === oldVal) return
+    if (suppressPreviewUpdate.value || suppressStateWatch.value || newVal === oldVal) return
     await loadParagraphs()
   }
 )
@@ -477,21 +474,18 @@ watch(
 watch(
   () => state.paragraph,
   async (newVal, oldVal) => {
-    if (suppressStateWatch.value || newVal === oldVal) return
+    if (suppressPreviewUpdate.value || suppressStateWatch.value || newVal === oldVal) return
     await updatePreview()
   }
 )
 
-watch(
-  previewText,
-  (val) => {
-    if (!props.editableSentence) return
-    if (!hasSelection.value) return
-    if (!selectedVerse.value) return
-    if ((selectedVerse.value.sentence || '') === (val || '')) return
-    updateSelectedVerse({ ...selectedVerse.value, sentence: val || '' })
-  }
-)
+watch(previewText, (val) => {
+  if (!props.editableSentence) return
+  if (!hasSelection.value) return
+  if (!selectedVerse.value) return
+  if ((selectedVerse.value.sentence || '') === (val || '')) return
+  updateSelectedVerse({ ...selectedVerse.value, sentence: val || '' })
+})
 
 watch(
   () => props.readingPart,
@@ -500,12 +494,9 @@ watch(
   }
 )
 
-watch(
-  readingPartState,
-  (val) => {
-    emit('update:readingPart', val ?? null)
-  }
-)
+watch(readingPartState, (val) => {
+  emit('update:readingPart', val ?? null)
+})
 
 watch(
   () => props.modelValue,

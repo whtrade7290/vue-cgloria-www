@@ -52,18 +52,18 @@
           <label for="title">{{ $t('writePage.title') }}</label
           ><br />
           <input
-            type="text"
             id="title"
+            v-model="inputTitle"
+            type="text"
             class="input-title"
             :placeholder="$t('writePage.placeholder.title')"
-            v-model="inputTitle"
           /><br />
           <div v-if="isDisplay">
             <label for="mainContent" style="margin-right: 1rem; margin-top: 1rem">{{
               $t('writePage.mainContent')
             }}</label>
             <label class="toggle-switch">
-              <input type="checkbox" id="mainContent" v-model="isMainContent" />
+              <input id="mainContent" v-model="isMainContent" type="checkbox" />
               <span class="slider"></span>
             </label>
           </div>
@@ -76,11 +76,11 @@
               :for="`edit-language-${option.value}`"
             >
               <input
-                type="radio"
                 :id="`edit-language-${option.value}`"
+                v-model="selectedLanguage"
+                type="radio"
                 name="edit-language"
                 :value="option.value"
-                v-model="selectedLanguage"
               />
               <span>{{ $t(option.labelKey) }}</span>
             </label>
@@ -120,29 +120,28 @@
             $t('photoPage.uploadButton')
           }}</label>
           <input
-            type="file"
             id="fileUpload"
-            @change="changeImage"
+            type="file"
             class="hidden-file-input"
             multiple
+            @change="changeImage"
           /><br />
           <MemoryVerseFields
             v-if="shouldShowMemoryVerse"
             v-model="memoryVerseData"
+            v-model:readingPart="readingPart"
             :initial-bible-id="initialMemoryVerseId"
             id-prefix="edit-memory"
-            v-model:readingPart="readingPart"
             :reading-part-options="readingPartOptions"
             editable-sentence
-            skip-verse-fetch
           />
           <label for="content">{{ $t('writePage.content') }}</label
           ><br />
           <ckeditor
             id="content"
+            v-model="editorData"
             class="ck_contents"
             :editor="editor"
-            v-model="editorData"
             :config="editorConfig"
           ></ckeditor>
           <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
@@ -166,7 +165,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, watch } from 'vue'
+import { ref, computed, reactive, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -299,8 +298,7 @@ const normalizeMemoryVerseValue = (verse) => {
   const bibleIdCandidate = Number(verse?.bibleId ?? verse?.bible_id ?? verse?.idx ?? null)
   const chapterCandidate = Number(verse?.chapter)
   const paragraphCandidate = Number(verse?.paragraph)
-  const sentence =
-    verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
+  const sentence = verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
   const longLabel = verse?.longLabel || verse?.long_label || verse?.book || ''
   return {
     bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
@@ -559,6 +557,10 @@ const shouldShowLanguageSelector = computed(
   () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
 )
 const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
+
+onMounted(() => {
+  console.log('test')
+})
 </script>
 
 <style scoped>
