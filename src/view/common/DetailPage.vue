@@ -87,14 +87,16 @@
               </button>
             </div>
           </div>
-          <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
-            <MemoryVerseFields
-              v-model="memoryVerseData"
-              :initial-bible-id="initialMemoryVerseId"
-              id-prefix="detail-memory"
-              :disabled="true"
-              :show-empty-message="true"
-            />
+          <div v-if="shouldShowMemoryVerse && memoryVerseDisplay" class="memory-verse-wrapper">
+            <div class="memory-verse-display">
+              <div class="memory-verse-display__reference-row">
+                <p class="memory-verse-display__reference">{{ memoryVerseDisplay.reference }}</p>
+                <span v-if="readingPartLabel" class="memory-verse-display__badge">{{
+                  readingPartLabel
+                }}</span>
+              </div>
+              <p class="memory-verse-display__sentence">{{ memoryVerseDisplay.sentence }}</p>
+            </div>
           </div>
           <div class="content-container printable-content" v-html="sanitizedContent"></div>
         </div>
@@ -127,7 +129,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
@@ -136,7 +138,6 @@ import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import Swal from 'sweetalert2'
 import CommentComponent from '@/components/common/CommentComponent.vue'
 import Tooltip from '@/components/common/Tooltip.vue'
-import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
@@ -151,28 +152,30 @@ const commentCount = ref(0)
 const { t } = useI18n()
 const boardNameRef = computed(() => route.query?.name || route.params?.name || '')
 const shouldShowMemoryVerse = computed(() => boardNameRef.value === 'weekly_bible_verse')
-const deriveInitialMemoryVerse = () => {
+const memoryVerseDisplay = computed(() => {
   const verse = store.state.detail?.memoryVerse
-  if (verse) return verse
-  const bibleId = store.state.detail?.bible_id || store.state.detail?.bibleId || null
-  return bibleId ? { bibleId } : null
-}
-const memoryVerseData = ref(deriveInitialMemoryVerse())
-const initialMemoryVerseId = computed(() => {
-  if (store.state.detail?.memoryVerse?.bibleId) {
-    return store.state.detail.memoryVerse.bibleId
+  if (!verse) return null
+  const referenceParts = []
+  if (verse.longLabel) referenceParts.push(verse.longLabel)
+  if (Number.isFinite(verse.chapter)) referenceParts.push(`${verse.chapter}장`)
+  if (Number.isFinite(verse.paragraph)) referenceParts.push(`${verse.paragraph}절`)
+  const sentenceText = verse.sentence || ''
+  if (!referenceParts.length && !sentenceText) return null
+  return {
+    reference: referenceParts.join(' '),
+    sentence: sentenceText
   }
-  return store.state.detail?.bible_id || store.state.detail?.bibleId || null
 })
-
-watch(
-  () => store.state.detail?.memoryVerse,
-  (val) => {
-    if (val) {
-      memoryVerseData.value = val
-    }
+const readingPartLabel = computed(() => {
+  if (!shouldShowMemoryVerse.value) return ''
+  const value = store.state.detail?.readingPart || 'all'
+  const map = {
+    all: '전체',
+    upper: '상',
+    lower: '하'
   }
-)
+  return map[value] || ''
+})
 const resolveFileType = (file) => {
   const extensionSource =
     file?.extension ||
@@ -694,6 +697,47 @@ section {
 .memory-verse-wrapper {
   margin: 1.5rem auto 0;
   width: min(700px, 100%);
+}
+.memory-verse-display {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.memory-verse-display__reference-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.memory-verse-display__reference {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1f2937;
+  margin: 0;
+}
+.memory-verse-display__badge {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: #e9efff;
+  color: #1d4ed8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.memory-verse-display__sentence {
+  border: 1px dashed #cbd5f5;
+  border-radius: 0.5rem;
+  padding: 0.9rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  background: #f8fafc;
+  color: #111827;
+  margin: 0;
+  white-space: pre-wrap;
 }
 
 .btn-style {

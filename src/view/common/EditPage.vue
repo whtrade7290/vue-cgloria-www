@@ -126,14 +126,16 @@
             class="hidden-file-input"
             multiple
           /><br />
-          <div v-if="shouldShowMemoryVerse" class="memory-verse-wrapper">
-            <MemoryVerseFields
-              v-model="memoryVerseData"
-              :initial-bible-id="initialMemoryVerseId"
-              id-prefix="edit-memory"
-              editable-sentence
-            />
-          </div>
+          <MemoryVerseFields
+            v-if="shouldShowMemoryVerse"
+            v-model="memoryVerseData"
+            :initial-bible-id="initialMemoryVerseId"
+            id-prefix="edit-memory"
+            v-model:readingPart="readingPart"
+            :reading-part-options="readingPartOptions"
+            editable-sentence
+            skip-verse-fetch
+          />
           <label for="content">{{ $t('writePage.content') }}</label
           ><br />
           <ckeditor
@@ -251,7 +253,14 @@ const deriveInitialMemoryVerse = () => {
   const bibleId = store.state.detail?.bible_id || store.state.detail?.bibleId || null
   return bibleId ? { bibleId } : null
 }
+const READING_PART_OPTIONS = [
+  { value: 'all', label: '전체' },
+  { value: 'upper', label: '상' },
+  { value: 'lower', label: '하' }
+]
+const readingPartOptions = READING_PART_OPTIONS
 const memoryVerseData = ref(deriveInitialMemoryVerse())
+const readingPart = ref(store.state.detail?.readingPart || 'all')
 const initialMemoryVerseId = computed(() => {
   if (store.state.detail?.memoryVerse?.bibleId) {
     return store.state.detail.memoryVerse.bibleId
@@ -264,6 +273,7 @@ watch(
   (active) => {
     if (!active) {
       memoryVerseData.value = null
+      readingPart.value = 'all'
     }
   }
 )
@@ -274,6 +284,13 @@ watch(
     if (val) {
       memoryVerseData.value = val
     }
+  }
+)
+
+watch(
+  () => store.state.detail?.readingPart,
+  (val) => {
+    readingPart.value = val || 'all'
   }
 )
 
@@ -441,8 +458,11 @@ const edit = async () => {
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
   }
-  if (isWeeklyBoard.value && memoryVerseData.value) {
-    appendWeeklyVerseFields(formData, memoryVerseData.value)
+  if (isWeeklyBoard.value) {
+    if (memoryVerseData.value) {
+      appendWeeklyVerseFields(formData, memoryVerseData.value)
+    }
+    formData.append('readingPart', readingPart.value || 'all')
   }
 
   files.value.forEach((file) => {

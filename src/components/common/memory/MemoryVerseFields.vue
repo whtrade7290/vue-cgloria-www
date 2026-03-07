@@ -46,6 +46,25 @@
           </option>
         </select>
       </div>
+      <div v-if="readingPartOptionsList.length" class="field field--range">
+        <label class="range-label">범위</label>
+        <div class="range-options">
+          <label
+            v-for="option in readingPartOptionsList"
+            :key="option.value"
+            class="range-option"
+          >
+            <input
+              v-model="readingPartState"
+              type="radio"
+              name="memory-range"
+              :value="option.value"
+              :disabled="isRangeDisabled"
+            />
+            <span>{{ option.label }}</span>
+          </label>
+        </div>
+      </div>
     </div>
 
     <textarea
@@ -55,9 +74,7 @@
       rows="4"
       :disabled="isDisabled || !hasSelection"
       :placeholder="
-        hasSelection
-          ? '암송 구절을 입력하거나 수정하세요'
-          : '성경, 장, 절을 먼저 선택해 주세요'
+        hasSelection ? '암송 구절을 입력하거나 수정하세요' : '성경, 장, 절을 먼저 선택해 주세요'
       "
     ></textarea>
     <div v-else-if="previewText" class="preview">
@@ -79,7 +96,7 @@ import {
   fetchBibleVerseById
 } from '@/api/index'
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:readingPart'])
 
 const props = defineProps({
   modelValue: {
@@ -105,6 +122,22 @@ const props = defineProps({
   editableSentence: {
     type: Boolean,
     default: false
+  },
+  skipVerseFetch: {
+    type: Boolean,
+    default: false
+  },
+  readingPart: {
+    type: String,
+    default: null
+  },
+  readingPartOptions: {
+    type: Array,
+    default: () => []
+  },
+  readingPartDisabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -119,8 +152,7 @@ const normalizeVerseValue = (value) => {
     const chapterCandidate = Number(value?.chapter ?? value?.Chapter)
     const paragraphCandidate = Number(value?.paragraph ?? value?.Paragraph ?? value?.verse)
     const label = value?.longLabel || value?.long_label || value?.book || ''
-    const sentence =
-      value?.sentence || value?.text || value?.content || value?.memorySentence || ''
+    const sentence = value?.sentence || value?.text || value?.content || value?.memorySentence || ''
     return {
       bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
       longLabel: label,
@@ -147,9 +179,7 @@ const isSameVerse = (a, b) => {
 const hasVerseDetails = (verse) => {
   if (!verse) return false
   return Boolean(
-    verse.longLabel &&
-      Number.isFinite(verse.chapter) &&
-      Number.isFinite(verse.paragraph)
+    verse.longLabel && Number.isFinite(verse.chapter) && Number.isFinite(verse.paragraph)
   )
 }
 
@@ -161,6 +191,11 @@ const state = reactive({
 })
 
 const isDisabled = computed(() => props.disabled)
+const readingPartOptionsList = computed(() =>
+  Array.isArray(props.readingPartOptions) ? props.readingPartOptions : []
+)
+const readingPartState = ref(props.readingPart ?? null)
+const isRangeDisabled = computed(() => isDisabled.value || props.readingPartDisabled)
 const hasSelection = computed(
   () =>
     Boolean(state.book && state.book.length > 0) &&
@@ -175,6 +210,7 @@ const paragraphOptions = ref([])
 const previewText = ref(incomingValue?.sentence || '')
 const suppressStateWatch = ref(false)
 const booksLoaded = ref(false)
+const shouldFetchVerse = computed(() => !props.skipVerseFetch)
 
 const updateSelectedVerse = (value, { emitChange = true } = {}) => {
   selectedVerse.value = value ?? null
@@ -275,6 +311,36 @@ const loadParagraphs = async () => {
   await updatePreview()
 }
 
+const buildReferenceSentence = () => {
+  if (!state.book || state.chapter === null || state.paragraph === null) return ''
+  const parts = [state.book]
+  if (Number.isFinite(state.chapter)) parts.push(`${state.chapter}장`)
+  if (Number.isFinite(state.paragraph)) parts.push(`${state.paragraph}절`)
+  return parts.join(' ').trim()
+}
+
+const syncSelectedVerse = ({ preserveSentence = false } = {}) => {
+  if (!state.book || state.chapter === null || state.paragraph === null) {
+    previewText.value = ''
+    updateSelectedVerse(null)
+    return
+  }
+
+  let sentence = preserveSentence ? previewText.value || '' : ''
+  if (!sentence) {
+    sentence = buildReferenceSentence()
+  }
+
+  previewText.value = sentence
+  updateSelectedVerse({
+    bibleId: selectedVerse.value?.bibleId ?? null,
+    longLabel: state.book,
+    chapter: state.chapter,
+    paragraph: state.paragraph,
+    sentence
+  })
+}
+
 const updatePreview = async () => {
   if (!state.book || state.chapter === null || state.paragraph === null) {
     previewText.value = ''
@@ -282,45 +348,44 @@ const updatePreview = async () => {
     return
   }
 
+  if (!shouldFetchVerse.value) {
+    syncSelectedVerse({ preserveSentence: true })
+    return
+  }
+
   try {
     const res = await fetchBibleVerse(state.book, state.chapter, state.paragraph)
     const verse = res?.data
-    const normalized =
-      normalizeVerseValue({
-        ...verse,
-        longLabel: state.book,
-        chapter: state.chapter,
-        paragraph: state.paragraph
-      }) ?? {
-        bibleId: verse?.idx ?? null,
-        longLabel: state.book,
-        chapter: state.chapter,
-        paragraph: state.paragraph,
-        sentence: ''
-      }
+    const normalized = normalizeVerseValue({
+      ...verse,
+      longLabel: state.book,
+      chapter: state.chapter,
+      paragraph: state.paragraph
+    }) ?? {
+      bibleId: verse?.idx ?? null,
+      longLabel: state.book,
+      chapter: state.chapter,
+      paragraph: state.paragraph,
+      sentence: ''
+    }
     normalized.sentence =
       verse?.sentence ||
       verse?.text ||
       verse?.content ||
       normalized.sentence ||
-      `${state.book} ${state.chapter}장 ${state.paragraph}절`
+      buildReferenceSentence()
     previewText.value = normalized.sentence
     updateSelectedVerse(normalized)
   } catch (error) {
     console.error('Failed to fetch bible verse', error)
-    const fallback = {
-      bibleId: selectedVerse.value?.bibleId ?? null,
-      longLabel: state.book,
-      chapter: state.chapter,
-      paragraph: state.paragraph,
-      sentence: `${state.book} ${state.chapter}장 ${state.paragraph}절`
-    }
-    previewText.value = fallback.sentence
-    updateSelectedVerse(fallback)
+    syncSelectedVerse()
   }
 }
 
 const applyInitialVerseById = async (bibleId, { emitChange = true } = {}) => {
+  if (!shouldFetchVerse.value) {
+    return
+  }
   const numeric = Number(bibleId)
   if (!Number.isFinite(numeric) || numeric <= 0) return
   if (!booksLoaded.value) {
@@ -384,21 +449,12 @@ const applyVerseData = async (verse, { emitChange = false } = {}) => {
   await loadChapters()
   await loadParagraphs()
 
-  if (!previewText.value && normalized.bibleId) {
+  if (!previewText.value && normalized.bibleId && shouldFetchVerse.value) {
     await applyInitialVerseById(normalized.bibleId, { emitChange })
     return
   }
 
-  updateSelectedVerse(
-    {
-      bibleId: normalized.bibleId ?? selectedVerse.value?.bibleId ?? null,
-      longLabel: state.book,
-      chapter: state.chapter,
-      paragraph: state.paragraph,
-      sentence: previewText.value
-    },
-    { emitChange }
-  )
+  syncSelectedVerse({ preserveSentence: true })
 }
 
 watch(
@@ -434,6 +490,20 @@ watch(
     if (!selectedVerse.value) return
     if ((selectedVerse.value.sentence || '') === (val || '')) return
     updateSelectedVerse({ ...selectedVerse.value, sentence: val || '' })
+  }
+)
+
+watch(
+  () => props.readingPart,
+  (val) => {
+    readingPartState.value = val ?? null
+  }
+)
+
+watch(
+  readingPartState,
+  (val) => {
+    emit('update:readingPart', val ?? null)
   }
 )
 
@@ -500,10 +570,31 @@ onMounted(async () => {
   flex-direction: column;
   gap: 0.25rem;
 }
+.field--range {
+  flex: 1 1 220px;
+}
 .form-control {
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   padding: 0.4rem 0.75rem;
+}
+.range-label {
+  font-weight: 600;
+}
+.range-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.range-option {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.95rem;
+}
+.range-option input[type='radio'] {
+  accent-color: #f6ad55;
 }
 .preview {
   margin-top: 0.5rem;

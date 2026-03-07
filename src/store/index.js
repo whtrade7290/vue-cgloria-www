@@ -201,6 +201,9 @@ export default createStore({
           (memoryVerse.sentence && memoryVerse.sentence.length > 0)
       )
 
+      const readingPart =
+        detailData.reading_part || detailData.readingPart || detailData.reading_part_label || 'all'
+
       const data = {
         id: Number(detailData.id),
         title: detailData.title,
@@ -213,6 +216,7 @@ export default createStore({
         language: detailData.language,
         bible_id: detailData.bible_id ?? detailData.bibleId ?? null,
         memoryVerse: hasMemoryVerseData ? memoryVerse : null,
+        readingPart,
         create_at: detailData.create_at,
         update_at: detailData.update_at,
         deleted: detailData.deleted

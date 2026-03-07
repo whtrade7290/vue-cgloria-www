@@ -138,6 +138,8 @@
             v-if="shouldShowMemoryVerse"
             v-model="memoryVerseData"
             id-prefix="write-memory"
+            v-model:readingPart="readingPart"
+            :reading-part-options="readingPartOptions"
             editable-sentence
           />
           <label for="content">{{ $t('writePage.content') }}</label
@@ -240,7 +242,14 @@ const boardDisplayTitle = computed(() => {
 })
 const requiresImage = computed(() => IMAGE_REQUIRED_BOARDS.includes(boardName.value))
 const isLanguageBoard = computed(() => LANGUAGE_CONTROLLED_BOARDS.includes(boardName.value))
+const READING_PART_OPTIONS = [
+  { value: 'all', label: '전체' },
+  { value: 'upper', label: '상' },
+  { value: 'lower', label: '하' }
+]
+const readingPartOptions = READING_PART_OPTIONS
 const memoryVerseData = ref(null)
+const readingPart = ref('all')
 
 const normalizeMemoryVerseValue = (verse) => {
   if (!verse) return null
@@ -283,6 +292,7 @@ watch(
   (isWeekly) => {
     if (!isWeekly) {
       memoryVerseData.value = null
+      readingPart.value = 'all'
     }
   }
 )
@@ -330,8 +340,11 @@ async function write() {
   if (isLanguageBoard.value) {
     formData.append('language', selectedLanguage.value)
   }
-  if (isWeeklyBoard.value && memoryVerseData.value) {
-    appendWeeklyVerseFields(formData, memoryVerseData.value)
+  if (isWeeklyBoard.value) {
+    if (memoryVerseData.value) {
+      appendWeeklyVerseFields(formData, memoryVerseData.value)
+    }
+    formData.append('readingPart', readingPart.value || 'all')
   }
 
   if (currentBoardName === 'withDiary') {

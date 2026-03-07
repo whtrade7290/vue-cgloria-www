@@ -177,9 +177,6 @@ const buildDownloadText = (range, verses) => {
     lines.push(formatVerseSentence(verse))
     lines.push('')
   })
-  lines.push(
-    '※ 성경구절 상/하 구분은 되어있지 않으니 상/하 구분에 대해서는 공지사항의 주일예배순서 게시물을 참조 부탁드립니다.'
-  )
   return lines.join('\n').trim()
 }
 
