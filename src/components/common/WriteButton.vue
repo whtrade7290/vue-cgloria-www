@@ -33,6 +33,12 @@ const queryObj = computed(() => {
   if (props.roomId) {
     query.roomId = props.roomId
   }
+  if (route.query?.roomName) {
+    query.roomName = route.query.roomName
+  }
+  if (route.query?.pageNum) {
+    query.pageNum = route.query.pageNum
+  }
   return query
 })
 

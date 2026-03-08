@@ -19,7 +19,7 @@
           @page-change="handlePageChange"
           @search="handleSearch"
         ></TableComponent>
-        <WriteButton :room-id="route.query.roomId"></WriteButton>
+        <WriteButton :room-id="roomId"></WriteButton>
       </CardContainer>
     </div>
   </div>

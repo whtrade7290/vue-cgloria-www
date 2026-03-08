@@ -369,9 +369,13 @@ function convertHtmlToPlainText(input) {
 
 function goToBoardList() {
   if (route.params.name === 'withDiary') {
+    const query = {}
+    if (route.query.roomId) query.roomId = route.query.roomId
+    if (route.query.roomName) query.roomName = route.query.roomName
+    if (route.query.pageNum) query.pageNum = route.query.pageNum
     router.push({
       name: route.params.name,
-      query: { roomId: route.query.roomId, pageNum: route.query.pageNum }
+      query
     })
   } else {
     router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
@@ -381,7 +385,13 @@ function goToBoardList() {
 const goToEditPage = () => {
   router.push({
     name: 'edit',
-    query: { name: route.params.name, id: store.state.detail.id, roomId: route.query.roomId }
+    query: {
+      name: route.params.name,
+      id: store.state.detail.id,
+      roomId: route.query.roomId,
+      roomName: route.query.roomName,
+      pageNum: route.query.pageNum
+    }
   })
 }
 

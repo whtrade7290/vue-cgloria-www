@@ -478,7 +478,7 @@ const edit = async () => {
       if (currentBoardName === 'withDiary') {
         router.push({
           name: currentBoardName,
-          query: { roomId: route.query.roomId, pageNum: 1 }
+          query: { roomId: route.query.roomId, pageNum: 1, roomName: route.query.roomName }
         })
       } else {
         router.push(`/${currentBoardName}`)
