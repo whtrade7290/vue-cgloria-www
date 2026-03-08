@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: end" v-show="store.state.isLogin">
+  <div v-show="store.state.isLogin" style="display: flex; justify-content: end">
     <a
       href="javascript:;"
       class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -13,6 +13,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 const props = defineProps({
   roomId: {
@@ -25,16 +26,18 @@ const router = useRouter()
 const route = useRoute()
 const store = useStore()
 
-const queryObj = {
-  name: route.name
-}
-
-if (props.roomId !== 0) {
-  queryObj.roomId = props.roomId
-}
+const queryObj = computed(() => {
+  const query = {
+    name: route.name
+  }
+  if (props.roomId) {
+    query.roomId = props.roomId
+  }
+  return query
+})
 
 function moveWritePage() {
-  router.push({ name: 'write', query: queryObj })
+  router.push({ name: 'write', query: queryObj.value })
 }
 </script>
 
