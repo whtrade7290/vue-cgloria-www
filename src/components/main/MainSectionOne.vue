@@ -8,18 +8,18 @@
               <div class="info mb-3">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
-                    {{ $t('mainSectionOne.column') }}
+                    {{ $t('mainSectionOne.notice') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    {{ column?.title || '' }}
+                    {{ notice?.title || '' }}
                   </h5>
                 </div>
-                <div class="main-content" v-html="safeTruncated(column?.content ?? '')"></div>
-                <template v-if="column?.id">
+                <div class="main-content" v-html="safeTruncated(notice?.content ?? '')"></div>
+                <template v-if="notice?.id">
                   <a
                     href="javascript:;"
                     class="more-link"
-                    @click="intoDetail(column.id, 'column')"
+                    @click="intoDetail(notice.id, 'notice')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -50,18 +50,18 @@
               <div class="info mb-3">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
-                    {{ $t('mainSectionOne.testimony') }}
+                    {{ $t('mainSectionOne.column') }}
                   </h3>
                   <h5 class="font-weight-bolder" style="padding-left: 10px; padding-top: 10px">
-                    {{ testimony?.title || '' }}
+                    {{ column?.title || '' }}
                   </h5>
                 </div>
-                <div class="main-content" v-html="safeTruncated(testimony?.content ?? '')"></div>
-                <template v-if="testimony?.id">
+                <div class="main-content" v-html="safeTruncated(column?.content ?? '')"></div>
+                <template v-if="column?.id">
                   <a
                     href="javascript:;"
                     class="more-link"
-                    @click="intoDetail(testimony.id, 'testimony')"
+                    @click="intoDetail(column.id, 'column')"
                     >{{ $t('common.more') }}</a
                   >
                 </template>
@@ -116,7 +116,7 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  testimony: {
+  notice: {
     type: Object,
     default: () => ({})
   }

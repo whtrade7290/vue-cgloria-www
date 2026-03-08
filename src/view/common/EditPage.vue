@@ -547,7 +547,7 @@ const changeImage = async (event) => {
   }
 }
 const isDisplay = computed(() => {
-  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'notice']
   const storedData = localStorage.getItem(getUserIdFromCookie())
   const role = storedData ? JSON.parse(storedData)?.user?.role : ''
   const allowedBoard = routeNames.includes(route.query?.name)
@@ -557,10 +557,6 @@ const shouldShowLanguageSelector = computed(
   () => isDisplay.value && isLanguageBoard.value && !!selectedLanguage.value
 )
 const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
-
-onMounted(() => {
-  console.log('test')
-})
 </script>
 
 <style scoped>

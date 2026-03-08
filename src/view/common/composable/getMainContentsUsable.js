@@ -1,7 +1,7 @@
 import {
   getMainColumn,
   getMainClassMeeting,
-  getMainTestimony,
+  getMainNotice,
   getMainSermon,
   getMainWeekly,
   getBoardList
@@ -36,12 +36,12 @@ export default async function useGetMainContents(language) {
     startRow: 0,
     pageSize: 8
   }
-  const [sermon, weekly, column, classMeeting, testimony, photoBoard] = await Promise.allSettled([
+  const [sermon, weekly, column, classMeeting, notice, photoBoard] = await Promise.allSettled([
     getMainSermon('sermon'),
     getMainWeekly('weekly_bible_verse'),
     getMainColumn('column', language),
     getMainClassMeeting('class_meeting', language),
-    getMainTestimony('testimony'),
+    getMainNotice('notice'),
     getBoardList(payload)
   ]).then((results) => {
     return results.map((result) => {
@@ -52,5 +52,5 @@ export default async function useGetMainContents(language) {
     })
   })
 
-  return { sermon, weekly, column, classMeeting, testimony, photoBoard }
+  return { sermon, weekly, column, classMeeting, notice, photoBoard }
 }

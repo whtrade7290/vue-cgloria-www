@@ -137,8 +137,8 @@
           <MemoryVerseFields
             v-if="shouldShowMemoryVerse"
             v-model="memoryVerseData"
-            id-prefix="write-memory"
             v-model:readingPart="readingPart"
+            id-prefix="write-memory"
             :reading-part-options="readingPartOptions"
             editable-sentence
           />
@@ -256,8 +256,7 @@ const normalizeMemoryVerseValue = (verse) => {
   const bibleIdCandidate = Number(verse?.bibleId ?? verse?.bible_id ?? verse?.idx ?? null)
   const chapterCandidate = Number(verse?.chapter)
   const paragraphCandidate = Number(verse?.paragraph)
-  const sentence =
-    verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
+  const sentence = verse?.sentence || verse?.text || verse?.content || verse?.memorySentence || ''
   const longLabel = verse?.longLabel || verse?.long_label || verse?.book || ''
   return {
     bibleId: Number.isFinite(bibleIdCandidate) && bibleIdCandidate > 0 ? bibleIdCandidate : null,
@@ -459,7 +458,7 @@ const changeImage = async (event) => {
   }
 }
 const isDisplay = computed(() => {
-  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'testimony']
+  const routeNames = ['sermon', 'column', 'weekly_bible_verse', 'class_meeting', 'notice']
   const storedData = localStorage.getItem(getUserIdFromCookie())
   const role = storedData ? JSON.parse(storedData)?.user?.role : ''
   const allowedBoard = routeNames.includes(route.query?.name)

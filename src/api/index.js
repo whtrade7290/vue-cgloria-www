@@ -220,6 +220,10 @@ export async function getMainWeekly(name) {
   return await instance.post(`${name}/main_${name}`, { board: name })
 }
 
+export async function getMainNotice(name) {
+  return await instance.post(`${name}/main_${name}`, { board: name })
+}
+
 /* ------------------------- 댓글 ------------------------- */
 export async function writeComment(boardId, boardName, comment, writerName, writer) {
   return await instance.post('comment/comment_write', {

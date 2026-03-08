@@ -11,7 +11,7 @@
       <MainSectionOne
         :column="contents.column"
         :class-meeting="contents.classMeeting"
-        :testimony="contents.testimony"
+        :notice="contents.notice"
       ></MainSectionOne>
       <MainSectionTwo></MainSectionTwo>
       <MainSectionTraining></MainSectionTraining>
@@ -45,7 +45,7 @@ const contents = ref({
   weekly: null,
   column: null,
   classMeeting: null,
-  testimony: null
+  notice: null
 })
 
 const inited = ref(false)
