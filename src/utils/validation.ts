@@ -1,12 +1,21 @@
 import Swal from 'sweetalert2'
 
+const MAX_TITLE_LENGTH = 48
+
 export const VALIDATION_TITLE = (title: string): boolean => {
   if (title.length === 0) {
     Swal.fire({
       title: '제목을 입력해주세요.',
       icon: 'warning'
     })
+    return true
+  }
 
+  if (title.length > MAX_TITLE_LENGTH) {
+    Swal.fire({
+      title: `제목은 ${MAX_TITLE_LENGTH}자 이내로 입력해주세요.`,
+      icon: 'warning'
+    })
     return true
   }
 

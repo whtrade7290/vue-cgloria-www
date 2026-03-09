@@ -23,7 +23,13 @@
           class="list-group-item mobile-item"
           @click="intoDetail(item.id)"
         >
-          <p class="mobile-title">{{ item.title }}</p>
+          <p class="mobile-title">
+            <span>{{ item.title }}</span>
+            <span v-if="isNew(item)" class="new-chip">NEW</span>
+            <span v-if="getCommentCount(item) !== null" class="comment-chip">
+              {{ getCommentCount(item) }}
+            </span>
+          </p>
           <p class="mobile-meta">
             {{ formatDate(item.create_at) }}
             <span>|</span>
@@ -106,6 +112,7 @@
                 <span v-if="getCommentCount(item) !== null" class="comment-chip">
                   {{ getCommentCount(item) }}
                 </span>
+                <span v-if="isNew(item)" class="new-chip">NEW</span>
               </a>
             </td>
             <td class="text-center">{{ item.writer_name ?? item.writer }}</td>
@@ -241,15 +248,21 @@ watch(
 )
 
 const getCommentCount = (item) => {
-  const count =
-    item?.comment_count ??
-    item?.commentCount ??
-    item?.comments ??
-    null
+  const count = item?.comment_count ?? item?.commentCount ?? item?.comments ?? null
   if (count === null || typeof count === 'undefined') return null
   const numeric = Number(count)
   if (!Number.isFinite(numeric) || numeric <= 0) return null
   return numeric
+}
+
+const isNew = (item) => {
+  const source = item?.create_at ?? item?.created_at ?? item?.createdAt
+  if (!source) return false
+  const created = new Date(source).getTime()
+  if (Number.isNaN(created)) return false
+  const limitDays = props.called === 'withDiary' ? 1 : 6
+  const limitMs = limitDays * 24 * 60 * 60 * 1000
+  return Date.now() - created <= limitMs
 }
 
 const totalPages = computed(() => {
@@ -358,7 +371,11 @@ const intoDetail = async (id) => {
 .mobile-title {
   font-weight: 600;
   font-size: 1.25rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transform: translateY(-1px);
 }
 
 .mobile-meta {
@@ -372,8 +389,25 @@ const intoDetail = async (id) => {
 
 .title-cell a {
   display: inline-flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  word-break: break-word;
+}
+.new-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  padding: 0.08rem 0.35rem;
+  border-radius: 999px;
+  background: linear-gradient(310deg, rgb(247, 231, 220) 0%, rgb(245, 198, 170) 100%);
+  color: #a44b2f;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(245, 198, 170, 0.9);
+  box-shadow: 0 0 6px rgba(245, 198, 170, 0.35);
 }
 
 .comment-chip {
@@ -403,13 +437,3 @@ const intoDetail = async (id) => {
   cursor: default;
 }
 </style>
-const getCommentCount = (item) => {
-  const count =
-    item?.comment_count ??
-    item?.commentCount ??
-    item?.comments ??
-    null
-  if (count === null || typeof count === 'undefined') return null
-  const numeric = Number(count)
-  return Number.isFinite(numeric) ? numeric : null
-}
