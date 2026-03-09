@@ -4,10 +4,10 @@
     <div class="d-lg-none px-3 pt-3">
       <div class="mobile-search">
         <input
+          v-model="searchWord"
           type="text"
           class="form-control form-control-sm-custom"
           :placeholder="$t('common.searchPlaceholder')"
-          v-model="searchWord"
           @keyup.enter="searchUsers"
         />
         <button
@@ -127,12 +127,17 @@
           </a>
         </li>
 
-        <li v-for="page in pageNumbers" :key="page" class="page-item">
+        <li
+          v-for="page in pageNumbers"
+          :key="page"
+          class="page-item"
+          :class="{ disabled: page === currentPage }"
+        >
           <a
             class="page-link"
             :class="{ selected: page === currentPage }"
             href="javascript:;"
-            @click="changePage(page)"
+            @click="page !== currentPage && changePage(page)"
           >
             {{ page }}
           </a>
@@ -156,10 +161,10 @@
     <div class="search-container mt-4 d-none d-lg-flex">
       <div class="search-input">
         <input
+          v-model="searchWord"
           type="text"
           class="form-control form-control-lg"
           :placeholder="$t('common.searchPlaceholder')"
-          v-model="searchWord"
           @keyup.enter="searchUsers"
         />
       </div>
@@ -236,7 +241,7 @@ const loadUsers = async () => {
         pageSize: PAGE_SIZE,
         searchWord: searchWord.value
       }),
-      fetchApprovedUsersCount()
+      fetchApprovedUsersCount({ searchWord: searchWord.value })
     ])
 
     if (Array.isArray(listResponse?.data)) {
