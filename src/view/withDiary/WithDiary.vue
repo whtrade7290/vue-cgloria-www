@@ -1,10 +1,10 @@
 <template>
   <div>
-    <HeaderComponent
+    <!-- <HeaderComponent
       :main-msg="$t('withDiaryParams.mainTitle')"
       :img-url="`/sky1.jpeg`"
       :height="30"
-    ></HeaderComponent>
+    ></HeaderComponent> -->
     <div class="container">
       <CardContainer :title="cardTitle" :translate-title="translateTitle">
         <TableComponent
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import HeaderComponent from '@/components/main/HeaderComponent.vue'
+// import HeaderComponent from '@/components/main/HeaderComponent.vue'
 import TableComponent from '@/components/common/table/TableComponent.vue'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import WriteButton from '@/components/common/WriteButton.vue'

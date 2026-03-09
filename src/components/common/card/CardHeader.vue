@@ -1,7 +1,7 @@
 <template>
   <div class="card-header bg-gradient-primary p-5 position-relative">
     <h3 class="text-white mb-0 do-hyeon-regular">
-      {{ translateTitle ? $t(title) : title }}
+      {{ translateTitle ? $t(title) : `${$t('nav.withDiary.title')} - ${title}` }}
     </h3>
     <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5 header-waves">
       <svg

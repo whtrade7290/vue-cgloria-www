@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7 mt-5 mb-7">
+  <section class="pt-3 pt-md-5 pb-md-5 pt-lg-7 mt-5">
     <div class="container">
       <div class="row">
         <SideMenu class="display-sideMenu"></SideMenu>
