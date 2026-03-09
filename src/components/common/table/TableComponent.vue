@@ -100,9 +100,12 @@
         <tbody>
           <tr v-for="item in displayItems" :key="item.id">
             <td class="text-center">{{ item.id }}</td>
-            <td>
+            <td class="title-cell">
               <a href="javascript:;" @click="intoDetail(item.id)">
                 {{ item.title }}
+                <span v-if="getCommentCount(item) !== null" class="comment-chip">
+                  {{ getCommentCount(item) }}
+                </span>
               </a>
             </td>
             <td class="text-center">{{ item.writer_name ?? item.writer }}</td>
@@ -237,6 +240,18 @@ watch(
   }
 )
 
+const getCommentCount = (item) => {
+  const count =
+    item?.comment_count ??
+    item?.commentCount ??
+    item?.comments ??
+    null
+  if (count === null || typeof count === 'undefined') return null
+  const numeric = Number(count)
+  if (!Number.isFinite(numeric) || numeric <= 0) return null
+  return numeric
+}
+
 const totalPages = computed(() => {
   return Math.max(1, Math.ceil(props.totalCount / props.pageSize))
 })
@@ -355,6 +370,23 @@ const intoDetail = async (id) => {
   margin: 0 0.25rem;
 }
 
+.title-cell a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.comment-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(52, 71, 103, 0.12);
+  color: #344767;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
 .pagination .page-link.selected {
   background-color: #f8f9fa;
   border-color: transparent;
@@ -371,3 +403,13 @@ const intoDetail = async (id) => {
   cursor: default;
 }
 </style>
+const getCommentCount = (item) => {
+  const count =
+    item?.comment_count ??
+    item?.commentCount ??
+    item?.comments ??
+    null
+  if (count === null || typeof count === 'undefined') return null
+  const numeric = Number(count)
+  return Number.isFinite(numeric) ? numeric : null
+}
