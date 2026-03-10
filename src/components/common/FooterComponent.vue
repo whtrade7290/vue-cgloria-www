@@ -6,8 +6,10 @@
         <div class="col-md-3 mb-3 text-center" style="color: rgb(119, 119, 119)">
           <img src="/f_logo.png" style="width: 100px" /><br /><br />
           <strong>
-            <span class="footer-denomination">{{ $t('FooterComponent.denomination') }}</span><br />
-            <span class="footer-church-name">{{ $t('FooterComponent.churchName') }}</span><br />
+            <span class="footer-denomination">{{ $t('FooterComponent.denomination') }}</span
+            ><br />
+            <span class="footer-church-name">{{ $t('FooterComponent.churchName') }}</span
+            ><br />
             {{ $t('FooterComponent.addressLine1') }}<br />
             {{ $t('FooterComponent.addressLine2') }}<br /><br />
             {{ $t('FooterComponent.tel') }}<br />
@@ -24,7 +26,7 @@
             {{ $t('FooterComponent.midnightWorship') }}<br />
             {{ $t('FooterComponent.everyDay') }} 05:40 ~ 06:40<br /><br />
             {{ $t('FooterComponent.worship1') }}<br />
-            08:05~10:00
+            08:50~10:00
             <br /><br />
             {{ $t('FooterComponent.worship2') }}<br />{{ $t('FooterComponent.worship2Info') }}<br />
             10:30~12:00
