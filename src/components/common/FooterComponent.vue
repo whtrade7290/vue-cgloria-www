@@ -29,7 +29,7 @@
             08:50~10:00
             <br /><br />
             {{ $t('FooterComponent.worship2') }}<br />{{ $t('FooterComponent.worship2Info') }}<br />
-            10:30~12:00
+            10:40~12:00
           </div>
         </div>
 
