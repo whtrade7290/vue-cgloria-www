@@ -153,6 +153,13 @@
           ></ckeditor>
           <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
             <a
+              v-if="isWithDiaryBoard && canBulkWrite"
+              class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+              href="javascript:;"
+              @click="bulkWrite"
+              >{{ $t('button.bulkWrite') }}</a
+            >
+            <a
               class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
               href="javascript:;"
               @click="write"
@@ -172,7 +179,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
@@ -185,6 +192,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import MemoryVerseFields from '@/components/common/memory/MemoryVerseFields.vue'
 import { WITH_DIARY_TEMPLATE_KO, WITH_DIARY_TEMPLATE_JA } from '@/data/withDiaryTemp.js'
 import Swal from 'sweetalert2'
+
 const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
 const store = useStore()
 const route = useRoute()
@@ -250,6 +258,8 @@ const READING_PART_OPTIONS = [
 const readingPartOptions = READING_PART_OPTIONS
 const memoryVerseData = ref(null)
 const readingPart = ref('all')
+const canBulkWrite = ref(false)
+const withDiaryRoomList = ref([])
 
 const normalizeMemoryVerseValue = (verse) => {
   if (!verse) return null
@@ -296,6 +306,27 @@ watch(
   }
 )
 
+const getLoggedInUserId = () => {
+  const storedUser = localStorage.getItem(getUserIdFromCookie())
+  if (!storedUser) return null
+  try {
+    return JSON.parse(storedUser)?.user?.id ?? null
+  } catch {
+    return null
+  }
+}
+
+const fetchWithDiaryRoomList = async () => {
+  const userId = getLoggedInUserId()
+  if (!userId) return []
+  try {
+    const roomList = await store.dispatch('FETCH_WITHDIARY_ROOM_LIST', { userId })
+    return Array.isArray(roomList) ? roomList : []
+  } catch {
+    return []
+  }
+}
+
 const MAX_IMAGE_COUNT = 4
 const inputTitle = ref('')
 const files = ref([])
@@ -313,7 +344,103 @@ const removeSelectedFile = (previewId) => {
   }
 }
 
-async function write() {
+const updateBulkWriteAvailability = async () => {
+  const roomList = await fetchWithDiaryRoomList()
+  withDiaryRoomList.value = roomList
+  canBulkWrite.value = roomList.length > 1
+}
+
+const bulkWrite = async () => {
+  if (VALIDATION_TITLE(inputTitle.value)) return
+  if (VALIDATION_CONTENT(editorData.value)) return
+  if (!withDiaryRoomList.value.length) {
+    await updateBulkWriteAvailability()
+  }
+  const roomList = withDiaryRoomList.value
+  if (!Array.isArray(roomList) || !roomList.length) {
+    return
+  }
+  const currentRoomId = route.query?.roomId ? String(route.query.roomId) : ''
+
+  const optionsHtml = `
+    <style>
+      .room-checkbox-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 12px;
+        max-height: 340px;
+        overflow-y: auto;
+      }
+
+      .room-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #e6e8ec;
+        border-radius: 8px;
+        padding: 10px 14px;
+        background: #fdfdfd;
+      }
+
+      .room-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        accent-color: #cb0c9f;
+      }
+
+      .room-checkbox__label {
+        flex: 1;
+        font-size: 0.95rem;
+        color: #344767;
+      }
+    </style>
+    <div class="room-checkbox-list">
+      ${roomList
+        .map(
+          (room) => `
+          <label class="room-checkbox">
+            <input type="checkbox" name="withDiaryBulkRoomOption" value="${room.diaryRoom.id}" ${
+              String(room.diaryRoom.id) === currentRoomId ? 'checked disabled' : ''
+            }>
+            <span class="room-checkbox__label">${room.diaryRoom.roomName}</span>
+          </label>
+        `
+        )
+        .join('')}
+    </div>
+  `
+
+  const result = await Swal.fire({
+    title: t('modalMsg.withDiaryRoom'),
+    html: optionsHtml,
+    showCancelButton: true,
+    cancelButtonText: t('navBar.cancel'),
+    confirmButtonText: t('button.bulkWrite'),
+    focusConfirm: false,
+    preConfirm: () => {
+      const checked = Array.from(
+        document.querySelectorAll(`input[name="withDiaryBulkRoomOption"]:checked`)
+      )
+
+      if (!checked.length) {
+        Swal.showValidationMessage(t('navBar.withDiarySelectRoom'))
+        return null
+      }
+
+      return checked.map((input) => Number(input.value))
+    }
+  })
+
+  if (!result.isConfirmed || !Array.isArray(result.value) || result.value.length === 0) {
+    return
+  }
+
+  await write(result.value)
+}
+
+async function write(roomIdList = []) {
   if (VALIDATION_TITLE(inputTitle.value)) return
   if (VALIDATION_CONTENT(editorData.value)) return
   if (requiresImage.value && files.value.length === 0) {
@@ -347,7 +474,11 @@ async function write() {
   }
 
   if (currentBoardName === 'withDiary') {
-    formData.append('diaryRoomId', route.query.roomId)
+    if (roomIdList.length > 0) {
+      roomIdList.forEach((id) => formData.append('roomIdList', JSON.stringify(id)))
+    } else {
+      formData.append('diaryRoomId', route.query.roomId)
+    }
   }
 
   files.value.forEach((file) => {
@@ -478,6 +609,24 @@ const insertWithDiaryTemplate = () => {
   }
   editorData.value = `${editorData.value}\n${template}`
 }
+
+watch(
+  () => boardName.value,
+  async (name) => {
+    if (name === 'withDiary') {
+      await updateBulkWriteAvailability()
+    } else {
+      withDiaryRoomList.value = []
+      canBulkWrite.value = false
+    }
+  }
+)
+
+onMounted(() => {
+  if (boardName.value === 'withDiary') {
+    updateBulkWriteAvailability()
+  }
+})
 </script>
 
 <style scoped>
