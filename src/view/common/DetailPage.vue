@@ -2,6 +2,25 @@
   <section>
     <div class="container">
       <div class="detail-card">
+        <nav v-if="breadcrumb" class="detail-breadcrumb">
+          <span>{{ $t(breadcrumb.parentKey) }}</span>
+          <span class="breadcrumb-sep">›</span>
+          <router-link
+            :to="{
+              name: boardNameRef,
+              query:
+                boardNameRef === 'withDiary'
+                  ? { roomId: route.query.roomId, roomName: route.query.roomName }
+                  : {}
+            }"
+          >
+            {{
+              boardNameRef === 'withDiary' && route.query.roomName
+                ? route.query.roomName
+                : $t(breadcrumb.labelKey)
+            }}
+          </router-link>
+        </nav>
         <div class="detail-card-title">
           <h2>{{ store.state.detail.title || '' }}</h2>
         </div>
@@ -141,6 +160,7 @@ import Tooltip from '@/components/common/Tooltip.vue'
 import { formatDate } from '@/utils/dateFormat'
 import { useI18n } from 'vue-i18n'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
+import { breadcrumbMap } from '@/data/breadcrumb.js'
 
 const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 const staticPath = `${import.meta.env.VITE_API_URL}uploads`
@@ -151,6 +171,8 @@ const store = useStore()
 const commentCount = ref(0)
 const { t } = useI18n()
 const boardNameRef = computed(() => route.query?.name || route.params?.name || '')
+
+const breadcrumb = computed(() => breadcrumbMap[boardNameRef.value] ?? null)
 const shouldShowMemoryVerse = computed(() => boardNameRef.value === 'weekly_bible_verse')
 const memoryVerseDisplay = computed(() => {
   const verse = store.state.detail?.memoryVerse
@@ -767,6 +789,22 @@ section {
     display: flex;
     justify-content: space-between;
     width: 100%;
+  }
+  .detail-breadcrumb {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+  }
+  .detail-breadcrumb a {
+    color: #9ca3af;
+    text-decoration: none;
+  }
+  .detail-breadcrumb a:hover {
+    color: #6b7280;
+    text-decoration: underline;
+  }
+  .breadcrumb-sep {
+    margin: 0 0.4rem;
   }
   .detail-card-title {
     padding: 1rem;
