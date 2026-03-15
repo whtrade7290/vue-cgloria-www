@@ -47,7 +47,7 @@ function moveWritePage() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .write-button-wrapper {
   display: flex;
   justify-content: end;
