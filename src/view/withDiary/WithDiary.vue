@@ -1,28 +1,20 @@
 <template>
-  <div>
-    <!-- <HeaderComponent
-      :main-msg="$t('withDiaryParams.mainTitle')"
-      :img-url="`/sky1.jpeg`"
-      :height="30"
-    ></HeaderComponent> -->
-    <div class="container">
-      <CardContainer :title="cardTitle" :translate-title="translateTitle">
-        <TableComponent
-          :called="route.name"
-          :items="items"
-          :total-count="totalCount"
-          :page="pageNum"
-          :page-size="pageSize"
-          :search-value="searchWord"
-          :loading="loading"
-          :room-id="roomId"
-          @page-change="handlePageChange"
-          @search="handleSearch"
-        ></TableComponent>
-        <WriteButton :room-id="roomId"></WriteButton>
-      </CardContainer>
-    </div>
-  </div>
+  <CardContainer :title="cardTitle" :translate-title="translateTitle">
+    <WriteButton class="d-lg-none mb-3"></WriteButton>
+    <TableComponent
+      :called="route.name"
+      :items="items"
+      :total-count="totalCount"
+      :page="pageNum"
+      :page-size="pageSize"
+      :search-value="searchWord"
+      :loading="loading"
+      :room-id="roomId"
+      @page-change="handlePageChange"
+      @search="handleSearch"
+    ></TableComponent>
+    <WriteButton :room-id="roomId"></WriteButton>
+  </CardContainer>
 </template>
 
 <script setup>
