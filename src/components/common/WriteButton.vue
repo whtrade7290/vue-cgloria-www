@@ -1,5 +1,5 @@
 <template>
-  <div v-show="store.state.isLogin" style="display: flex; justify-content: end">
+  <div v-if="store.state.isLogin" class="write-button-wrapper">
     <a
       href="javascript:;"
       class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -47,4 +47,16 @@ function moveWritePage() {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.write-button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 991px) {
+  .write-button-wrapper .btn {
+    width: 100%;
+    border-radius: 6px;
+  }
+}
+</style>
