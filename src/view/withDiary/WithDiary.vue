@@ -1,6 +1,6 @@
 <template>
   <CardContainer :title="cardTitle" :translate-title="translateTitle">
-    <WriteButton class="d-lg-none mb-3"></WriteButton>
+    <WriteButton :room-id="roomId" class="d-lg-none mb-3"></WriteButton>
     <TableComponent
       :called="route.name"
       :items="items"
@@ -13,7 +13,7 @@
       @page-change="handlePageChange"
       @search="handleSearch"
     ></TableComponent>
-    <WriteButton :room-id="roomId"></WriteButton>
+    <WriteButton :room-id="roomId" class="d-none d-lg-flex"></WriteButton>
   </CardContainer>
 </template>
 
