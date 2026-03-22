@@ -124,7 +124,7 @@ const headerStyle = computed(() => ({
     background-position: 86% center;
   }
   .page-header.main-bg {
-    min-height: 55vh !important;
+    min-height: 60vh !important;
   }
 }
 
