@@ -23,13 +23,13 @@
       "subTitles": {
         "intro": "教会紹介",
         "paster": "牧師紹介",
-        "location": "教会地図",
-        "notice": "お知らせ"
+        "location": "教会地図"
       }
     },
     "classWord": {
       "title": "属会/御言葉",
       "subTitles": {
+        "notice": "お知らせ",
         "sermon": "説教",
         "column": "コラム",
         "weekly_bible_verse": "今週の御言葉",

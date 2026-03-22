@@ -21,7 +21,7 @@ import CardContainer from '@/components/common/card/CardContainer.vue'
 import TableComponent from '@/components/common/table/TableComponent.vue'
 import WriteButton from '@/components/common/WriteButton.vue'
 import { useStore } from 'vuex'
-import { INFO } from '@/data/sidemenu.js'
+import { SMALLGROUP } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { useBoardList } from '@/composables/useBoardList'
@@ -29,8 +29,8 @@ import { useBoardList } from '@/composables/useBoardList'
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
-store.dispatch('FETCH_SIDEMENU', INFO)
-obj.value = INFO.find((o) => route.name === o.path)
+store.dispatch('FETCH_SIDEMENU', SMALLGROUP)
+obj.value = SMALLGROUP.find((o) => route.name === o.path)
 
 const {
   items,

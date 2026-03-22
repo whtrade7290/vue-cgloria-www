@@ -1,11 +1,11 @@
 const INFO = [
   { title: 'nav.intro.subTitles.intro', icon: 'church', path: 'intro' },
   { title: 'nav.intro.subTitles.paster', icon: 'attribution', path: 'paster' },
-  { title: 'nav.intro.subTitles.location', icon: 'pin_drop', path: 'location' },
-  { title: 'nav.intro.subTitles.notice', icon: 'info', path: 'notice' }
+  { title: 'nav.intro.subTitles.location', icon: 'pin_drop', path: 'location' }
 ]
 
 const SMALLGROUP = [
+  { title: 'nav.classWord.subTitles.notice', icon: 'info', path: 'notice' },
   { title: 'nav.classWord.subTitles.sermon', icon: 'church', path: 'sermon' },
   { title: 'nav.classWord.subTitles.column', icon: 'book', path: 'column' },
   {

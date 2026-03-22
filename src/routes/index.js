@@ -94,7 +94,7 @@ const routes = [
     path: '/notice',
     name: 'notice',
     component: NoticeBoard,
-    meta: { titleKey: 'nav.intro.subTitles.notice' },
+    meta: { titleKey: 'nav.classWord.subTitles.notice' },
     beforeEnter: async (to, from, next) => {
       const store = useStore()
       await store.dispatch('FETCH_BOARDCOUNT', { name: 'notice' })

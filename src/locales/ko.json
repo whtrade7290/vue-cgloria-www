@@ -23,13 +23,13 @@
       "subTitles": {
         "intro": "교회소개",
         "paster": "목회자소개",
-        "location": "교회약도",
-        "notice": "공지사항"
+        "location": "교회약도"
       }
     },
     "classWord": {
       "title": "속회/말씀",
       "subTitles": {
+        "notice": "공지사항",
         "sermon": "설교",
         "column": "칼럼",
         "weekly_bible_verse": "금주의성경말씀",

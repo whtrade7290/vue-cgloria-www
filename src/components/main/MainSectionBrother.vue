@@ -16,11 +16,13 @@
               </p>
               <span class="text-white">〒410-1231 静岡県裾野市須山2255-2998</span> <br />
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=35.2616833,138.793638"
+                href="https://www.google.com/maps/dir/?api=1&destination=35.261765,138.793433&travelmode=driving"
                 class="text-white icon-move-right"
                 target="_blank"
               >
-                <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">location_on</span>
+                <span class="material-icons" style="font-size: 1rem; vertical-align: middle"
+                  >location_on</span
+                >
                 Google Map
               </a>
             </div>
