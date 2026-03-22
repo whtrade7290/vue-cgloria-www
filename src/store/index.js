@@ -32,6 +32,20 @@ import {
 } from '@/api/index'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
 
+function getJwtMaxAge(token) {
+  try {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64))
+    if (payload.exp) {
+      return payload.exp - Math.floor(Date.now() / 1000)
+    }
+  } catch (e) {
+    console.warn('[getJwtMaxAge] JWT 파싱 실패, 재로그인 필요:', e.message)
+    return 0
+  }
+  return 0
+}
+
 export default createStore({
   state: {
     bootstrap,
@@ -109,7 +123,8 @@ export default createStore({
         const normalizedUser = { ...user, profileImageUrl }
         const normalizedResponse = { ...res, user: normalizedUser }
         localStorage.setItem(user.id, JSON.stringify(normalizedResponse))
-        document.cookie = `userId=${user.id};`
+        const cookieMaxAge = getJwtMaxAge(res.token || res.accessToken || '')
+        document.cookie = `userId=${user.id}; max-age=${cookieMaxAge}; path=/`
         commit('SET_USER', normalizedUser)
         return normalizedResponse
       }
