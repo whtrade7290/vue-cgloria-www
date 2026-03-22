@@ -144,7 +144,7 @@
             :editor="editor"
             :config="editorConfig"
           ></ckeditor>
-          <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
+          <div class="edit-btn-group">
             <a
               class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
               href="javascript:;"
@@ -734,5 +734,25 @@ const shouldShowMemoryVerse = computed(() => isWeeklyBoard.value)
   background: transparent;
   color: #8392ab;
   z-index: 2;
+}
+
+.edit-btn-group {
+  margin-top: 1rem;
+  margin-left: 2.5rem;
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 425px) {
+  .edit-btn-group {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+  }
+  .edit-btn-group .btn {
+    width: 95% !important;
+    border-radius: 4px !important;
+    padding: 0.4rem 1rem;
+  }
 }
 </style>

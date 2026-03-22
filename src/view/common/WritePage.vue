@@ -151,7 +151,9 @@
             :editor="editor"
             :config="editorConfig"
           ></ckeditor>
-          <div style="margin-top: 1rem; margin-left: 2.5rem; display: flex; justify-content: end">
+          <div
+            class="btn-group write-btn-group"
+          >
             <a
               v-if="isWithDiaryBoard && canBulkWrite"
               class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -823,5 +825,25 @@ onMounted(() => {
 /* 커스텀 버튼에 호버 효과 추가 */
 .custom-upload-button:hover {
   background-color: #45a049;
+}
+
+.write-btn-group {
+  margin-top: 1rem;
+  margin-left: 2.5rem;
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 425px) {
+  .write-btn-group {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+  }
+  .write-btn-group .btn {
+    width: 95% !important;
+    border-radius: 4px !important;
+    padding: 0.4rem 1rem;
+  }
 }
 </style>
