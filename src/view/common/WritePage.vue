@@ -151,7 +151,7 @@
             :editor="editor"
             :config="editorConfig"
           ></ckeditor>
-          <div class="btn-group write-btn-group">
+          <div class="write-btn-group">
             <a
               v-if="isWithDiaryBoard && canBulkWrite"
               class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -235,7 +235,7 @@ const boardTitleMap = {
   column: 'nav.classWord.subTitles.column',
   weekly_bible_verse: 'nav.classWord.subTitles.weekly_bible_verse',
   class_meeting: 'nav.classWord.subTitles.class_meeting',
-  notice: 'nav.intro.subTitles.notice',
+  notice: 'nav.classWord.subTitles.notice',
   school_photo_board: 'nav.sundaySchool.subTitles.school_photo_board',
   sunday_school_resource: 'nav.sundaySchool.subTitles.sunday_school_resource',
   general_forum: 'nav.fellowshipArea.subTitles.general_forum',
