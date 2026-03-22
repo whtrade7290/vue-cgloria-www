@@ -20798,6 +20798,9 @@ fieldset:disabled .btn {
 .btn-primary,
 .btn.bg-gradient-primary {
   color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .btn-primary:hover,

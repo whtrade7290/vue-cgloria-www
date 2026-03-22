@@ -99,6 +99,33 @@ const headerStyle = computed(() => ({
 
 .main-bg {
   background-image: var(--gloria-gradient-primary);
+  overflow: hidden;
+}
+
+.main-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center center;
+  filter: blur(0.7px) brightness(0.8);
+  transform: scale(1.05);
+  z-index: 0;
+}
+
+.main-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .main-bg::before {
+    background-position: 86% center;
+  }
+  .page-header.main-bg {
+    min-height: 55vh !important;
+  }
 }
 
 .main-font {
