@@ -151,9 +151,7 @@
             :editor="editor"
             :config="editorConfig"
           ></ckeditor>
-          <div
-            class="btn-group write-btn-group"
-          >
+          <div class="btn-group write-btn-group">
             <a
               v-if="isWithDiaryBoard && canBulkWrite"
               class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
@@ -199,7 +197,7 @@ const IMAGE_REQUIRED_BOARDS = ['school_photo_board', 'photo_board']
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
-const isMainContent = ref(false)
+const isMainContent = ref(true)
 const { t, locale } = useI18n()
 
 const editor = ClassicEditor
