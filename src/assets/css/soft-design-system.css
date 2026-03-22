@@ -20801,6 +20801,7 @@ fieldset:disabled .btn {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   font-size: 15px;
   font-weight: 900;
+  --bs-btn-font-size: 15px;
 }
 
 .btn-primary:hover,

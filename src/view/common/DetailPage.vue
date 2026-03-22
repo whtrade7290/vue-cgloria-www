@@ -597,6 +597,18 @@ section {
   justify-content: center;
   margin-top: 4rem;
 }
+
+@media (max-width: 425px) {
+  .button-box {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-style {
+    width: 95% !important;
+    padding: 0.4rem 1rem;
+    border-radius: 4px !important;
+  }
+}
 .image-attachment-list {
   display: flex;
   flex-wrap: wrap;
@@ -780,10 +792,9 @@ section {
 @media (max-width: 768px) {
   .detail-card {
     padding: 0.5rem;
+    border-radius: 1rem;
   }
-  .btn-style {
-    font-size: 0.48rem;
-  }
+
   .detail-meta {
     padding: 1rem;
     display: flex;
