@@ -109,7 +109,7 @@ const headerStyle = computed(() => ({
   background-image: inherit;
   background-size: cover;
   background-position: center center;
-  filter: blur(0.7px) brightness(0.8);
+  filter: blur(0.7px) brightness(0.85) saturate(0.75) hue-rotate(10deg);
   transform: scale(1.05);
   z-index: 0;
 }
