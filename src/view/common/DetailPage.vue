@@ -716,6 +716,12 @@ section {
 }
 .content-container {
   margin-top: 2rem;
+  line-height: 1.4;
+  font-size: 1.05rem;
+  color: #111;
+}
+:deep(.content-container p) {
+  margin-bottom: 0;
 }
 :deep(.content-container figure.media),
 :deep(.content-container .embed-responsive) {

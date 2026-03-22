@@ -717,7 +717,11 @@ onMounted(() => {
   max-height: 800px;
   overflow-y: auto;
   border-radius: 1.5rem;
-  line-height: 1.6;
+  /* line-height: 1.4; */
+  color: #111;
+}
+.ck-content p {
+  margin-bottom: 0;
 }
 .image-container {
   display: flex;
