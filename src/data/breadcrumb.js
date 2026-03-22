@@ -1,5 +1,5 @@
 const breadcrumbMap = {
-  notice:               { parentKey: 'nav.intro.title',             labelKey: 'nav.intro.subTitles.notice' },
+  notice:               { parentKey: 'nav.classWord.title',         labelKey: 'nav.classWord.subTitles.notice' },
   sermon:               { parentKey: 'nav.classWord.title',         labelKey: 'nav.classWord.subTitles.sermon' },
   column:               { parentKey: 'nav.classWord.title',         labelKey: 'nav.classWord.subTitles.column' },
   weekly_bible_verse:   { parentKey: 'nav.classWord.title',         labelKey: 'nav.classWord.subTitles.weekly_bible_verse' },
