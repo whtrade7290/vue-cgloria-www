@@ -5,7 +5,7 @@
         <div class="col-lg-6 ms-auto">
           <div class="row justify-content-start">
             <div class="col-md-12">
-              <div class="info mb-3">
+              <div class="info mb-5">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
                     {{ $t('mainSectionOne.notice') }}
@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="col-md-12">
-              <div class="info mb-3">
+              <div class="info mb-5">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
                     {{ $t('mainSectionOne.class_meeting') }}
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="col-md-12">
-              <div class="info mb-3">
+              <div class="info mb-5">
                 <div style="display: flex">
                   <h3 class="text-gradient text-primary" style="padding-left: 0px">
                     {{ $t('mainSectionOne.column') }}
