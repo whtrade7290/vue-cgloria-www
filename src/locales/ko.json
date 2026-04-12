@@ -5,6 +5,7 @@
     "login": "로그인",
     "logout": "로그아웃",
     "write": "글작성",
+    "register": "글등록",
     "bulkWrite": "일괄등록",
     "edit": "글수정",
     "delete": "글삭제",

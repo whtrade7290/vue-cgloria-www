@@ -344,13 +344,13 @@ const confirmDeleteComment = async (comment) => {
 .border-line {
   border-top: 1px #dddddd solid;
   margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 }
 .comment-display-box {
   font-size: 1.2rem;
-  margin: 2rem 0 0 2.5rem;
+  margin: 10px 2.5rem 0 2.5rem;
   overflow-y: scroll;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 .comment-container {
   width: 100%;

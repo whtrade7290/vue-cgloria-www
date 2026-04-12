@@ -351,9 +351,7 @@ const goToPage = async (path) => {
       })
 
       if (result.isConfirmed) {
-        const selectedRoom = roomList.find(
-          (room) => room.diaryRoom?.id === Number(result.value)
-        )
+        const selectedRoom = roomList.find((room) => room.diaryRoom?.id === Number(result.value))
         await router.push({
           name: 'withDiary',
           query: {
@@ -565,5 +563,7 @@ onMounted(async () => {
 .btn-unlogin {
   width: 7rem;
   height: 2rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 </style>
