@@ -50,7 +50,7 @@ const contents = ref({
 
 const inited = ref(false)
 
-const imgUrl = '/main02.jpg'
+const imgUrl = '/main03.jpg'
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const accessToken = storedData ? JSON.parse(storedData).token : ''
