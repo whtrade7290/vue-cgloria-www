@@ -102,32 +102,6 @@ const headerStyle = computed(() => ({
   overflow: hidden;
 }
 
-.main-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: inherit;
-  background-size: cover;
-  background-position: center center;
-  filter: blur(0.7px) brightness(0.85) saturate(0.75) hue-rotate(10deg);
-  transform: scale(1.05);
-  z-index: 0;
-}
-
-.main-bg > * {
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 768px) {
-  .main-bg::before {
-    background-position: 86% center;
-  }
-  .page-header.main-bg {
-    min-height: 60vh !important;
-  }
-}
-
 .main-font {
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   font-weight: 700;
