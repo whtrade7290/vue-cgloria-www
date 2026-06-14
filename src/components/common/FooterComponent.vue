@@ -60,7 +60,9 @@
       </div>
 
       <div class="col-12 text-center mt-3">
-        <p class="text-sm" style="color: #ffffff">All Right Reserved © 중앙영광교회 LLC.</p>
+        <p class="text-sm" style="color: #ffffff">
+          Copyright © 2026 중앙영광교회 LLC. All Rights Reserved.
+        </p>
       </div>
     </div>
   </footer>
