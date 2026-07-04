@@ -123,7 +123,7 @@ export default createStore({
         const normalizedUser = { ...user, profileImageUrl }
         const normalizedResponse = { ...res, user: normalizedUser }
         localStorage.setItem(user.id, JSON.stringify(normalizedResponse))
-        const cookieMaxAge = getJwtMaxAge(res.token || res.accessToken || '')
+        const cookieMaxAge = getJwtMaxAge(res.refreshToken || res.token || res.accessToken || '')
         document.cookie = `userId=${user.id}; max-age=${cookieMaxAge}; path=/`
         commit('SET_USER', normalizedUser)
         return normalizedResponse
