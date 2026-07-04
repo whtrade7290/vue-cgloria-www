@@ -565,5 +565,9 @@ onMounted(async () => {
   height: 2rem;
   font-size: 0.8rem;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 </style>

@@ -190,7 +190,8 @@
       "number": "番号",
       "title": "タイトル",
       "writer": "作成者",
-      "date": "日付"
+      "date": "日付",
+      "searchPlaceholder": "検索キーワードを入力してください"
     },
     "memoryControls": {
       "subtitle": "今週の聖書",
@@ -541,7 +542,7 @@
   },
   "auth": {
     "signUpTitle": "会員登録",
-    "signUpDescription": "God is my light in darkness\u00a0\u00a0\u00a0Psalm 18:28",
+    "signUpDescription": "\u95c7\u306e\u4e2d\u3067\u306e\u79c1\u306e\u5149\u306f\u795e\u69d8\u3067\u3059\u00a0\u00a0\u00a0\u8a69\u7bc718:28",
     "accountPlaceholder": "アカウント名を入力してください",
     "passwordPlaceholder": "パスワードを入力してください",
     "emailPlaceholder": "メールアドレスを入力してください",
@@ -572,7 +573,7 @@
     },
     "editPassword": {
       "title": "パスワード再設定",
-      "description": "God is my light in darkness",
+      "description": "闇の中での私の光は神様です",
       "usernamePlaceholder": "アカウント名を入力してください",
       "passwordPlaceholder": "パスワードを入力してください",
       "emailPlaceholder": "メールアドレスを入力してください",

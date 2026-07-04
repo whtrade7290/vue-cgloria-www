@@ -10,7 +10,7 @@
           v-model="searchWord"
           type="text"
           class="form-control form-control-lg"
-          placeholder="search"
+          :placeholder="$t('table.tableComponent.searchPlaceholder')"
         />
         <button class="btn bg-gradient-primary mb-0" @click="searchPost">검색</button>
       </div>
@@ -174,7 +174,7 @@
             v-model="searchWord"
             type="text"
             class="form-control form-control-lg"
-            placeholder="search"
+            :placeholder="$t('table.tableComponent.searchPlaceholder')"
             @keydown.enter.prevent="searchPost"
           />
         </div>
@@ -302,6 +302,11 @@ const intoDetail = async (id) => {
 </script>
 
 <style scoped>
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 /* ✅ 검색 영역 wrapper */
 /* ✅ 기본 (데스크탑 기준) */
 .w-25 {

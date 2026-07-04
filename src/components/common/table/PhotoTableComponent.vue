@@ -7,7 +7,7 @@
           v-model="searchWord"
           type="text"
           class="form-control form-control-sm-custom"
-          placeholder="search"
+          :placeholder="$t('table.tableComponent.searchPlaceholder')"
         />
         <button
           type="button"
@@ -107,7 +107,7 @@
           v-model="searchWord"
           type="text"
           class="form-control form-control-lg mr-1"
-          placeholder="search"
+          :placeholder="$t('table.tableComponent.searchPlaceholder')"
           aria-label="Email"
           aria-describedby="email-addon"
         />

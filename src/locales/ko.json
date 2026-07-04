@@ -190,7 +190,8 @@
       "number": "번호",
       "title": "제목",
       "writer": "글쓴이",
-      "date": "작성일"
+      "date": "작성일",
+      "searchPlaceholder": "검색어를 입력하세요"
     },
     "memoryControls": {
       "subtitle": "금주의 성경말씀",
@@ -540,7 +541,7 @@
   },
   "auth": {
     "signUpTitle": "회원가입",
-    "signUpDescription": "God is my light in darkness\u00a0\u00a0\u00a0Psalm 18:28",
+    "signUpDescription": "\uc5b4\ub460 \uc18d\uc5d0\uc11c \ub098\uc758 \ube5b\uc740 \ud558\ub098\ub2d8\uc774\uc2ed\ub2c8\ub2e4\u00a0\u00a0\u00a0\uc2dc\ud3b8 18:28",
     "accountPlaceholder": "아이디를 입력하세요",
     "passwordPlaceholder": "비밀번호를 입력하세요",
     "emailPlaceholder": "이메일을 입력하세요",
@@ -571,7 +572,7 @@
     },
     "editPassword": {
       "title": "비밀번호 재설정",
-      "description": "God is my light in darkness",
+      "description": "어둠 속에서 나의 빛은 하나님이십니다",
       "usernamePlaceholder": "아이디를 입력하세요",
       "passwordPlaceholder": "비밀번호를 입력하세요",
       "emailPlaceholder": "이메일을 입력하세요",

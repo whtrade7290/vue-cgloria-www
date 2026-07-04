@@ -56,6 +56,8 @@
 import { ref, computed, onMounted } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import jaLocale from '@fullcalendar/core/locales/ja'
+import koLocale from '@fullcalendar/core/locales/ko'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { SCHOOL } from '@/data/sidemenu.js'
@@ -71,7 +73,8 @@ const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', SCHOOL)
 obj.value = SCHOOL.find((o) => route.name === o.path)
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+const calendarLocales = { jp: jaLocale, ko: koLocale }
 
 const storedData = localStorage.getItem(getUserIdFromCookie())
 const storageUser = storedData ? JSON.parse(storedData) : {}
@@ -93,6 +96,7 @@ const form = ref({
 const calendarOptions = computed(() => ({
   contentHeight: 'auto',
   plugins: [dayGridPlugin],
+  locale: calendarLocales[locale.value] || jaLocale,
   initialView: 'dayGridMonth',
   headerToolbar: {
     start: 'title',
