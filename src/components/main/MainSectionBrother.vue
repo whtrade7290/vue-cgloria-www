@@ -38,7 +38,7 @@
             <div class="description">
               <h5>{{ $t('MainSectionBrother.yokohamaTitle') }}</h5>
               <p>{{ $t('MainSectionBrother.yokohamaPaster') }}</p>
-              <a href="http://yhgloria.com/xe/" class="text-primary icon-move-right">
+              <a href="http://yhgloria.com" class="text-primary icon-move-right" target="_blank" rel="noopener noreferrer">
                 {{ $t('common.moveToPage') }}
                 <i class="fas fa-arrow-right text-sm ms-1"></i>
               </a>
@@ -50,7 +50,7 @@
             <div class="description">
               <h5>{{ $t('MainSectionBrother.chibaTitle') }}</h5>
               <p>{{ $t('MainSectionBrother.chibaPaster') }}</p>
-              <a href="http://www.cgch.net/" class="text-primary icon-move-right">
+              <a href="http://www.cgch.net/" class="text-primary icon-move-right" target="_blank" rel="noopener noreferrer">
                 {{ $t('common.moveToPage') }}
                 <i class="fas fa-arrow-right text-sm ms-1"></i>
               </a>
@@ -62,7 +62,7 @@
             <div class="description">
               <h5>{{ $t('MainSectionBrother.hachioojiTitle') }}</h5>
               <p>{{ $t('MainSectionBrother.hachioojiPaster') }}</p>
-              <a href="https://cafe.daum.net/h-gmc" class="text-primary icon-move-right">
+              <a href="https://cafe.daum.net/h-gmc" class="text-primary icon-move-right" target="_blank" rel="noopener noreferrer">
                 {{ $t('common.moveToPage') }}
                 <i class="fas fa-arrow-right text-sm ms-1"></i>
               </a>
@@ -77,6 +77,8 @@
               <a
                 href="https://www.youtube.com/channel/UC_c_u4h-tfhA8V5zKkkwhqA"
                 class="text-primary icon-move-right"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {{ $t('common.moveToPage') }}
                 <i class="fas fa-arrow-right text-sm ms-1"></i>
