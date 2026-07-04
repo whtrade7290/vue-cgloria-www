@@ -490,8 +490,18 @@ const edit = async () => {
   }
 }
 
-const backPage = () => {
-  router.back()
+const backPage = async () => {
+  const result = await Swal.fire({
+    title: t('photoPage.leaveConfirmTitle'),
+    text: t('photoPage.leaveConfirmText'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: t('photoPage.leaveConfirmYes'),
+    cancelButtonText: t('photoPage.leaveConfirmNo')
+  })
+  if (result.isConfirmed) {
+    router.back()
+  }
 }
 
 const changeImage = async (event) => {

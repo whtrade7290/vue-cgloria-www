@@ -507,8 +507,18 @@ async function write(roomIdList = []) {
   }
 }
 
-function backPage() {
-  router.back()
+async function backPage() {
+  const result = await Swal.fire({
+    title: t('photoPage.leaveConfirmTitle'),
+    text: t('photoPage.leaveConfirmText'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: t('photoPage.leaveConfirmYes'),
+    cancelButtonText: t('photoPage.leaveConfirmNo')
+  })
+  if (result.isConfirmed) {
+    router.back()
+  }
 }
 
 const getCurrentImageCount = () => previewItems.value.filter((item) => item.type === 'image').length

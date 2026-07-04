@@ -398,7 +398,11 @@
     "fileLimit": "アップロードは最大10個まで可能です。",
     "fileSizeLimit": "アップロード可能なファイルサイズは5MBまでです。",
     "fileTypeLimit": "アップロード可能なファイル形式はJPEG、PNG、PDF、HEIFです。",
-    "convertingFiles": "ファイル変換中..."
+    "convertingFiles": "ファイル変換中...",
+    "leaveConfirmTitle": "ページを離れますか？",
+    "leaveConfirmText": "入力中の内容は保存されません。",
+    "leaveConfirmYes": "離れる",
+    "leaveConfirmNo": "キャンセル"
   },
   "alerts": {
     "copySuccess": "コピーしました。",
