@@ -1,11 +1,19 @@
 <template>
   <div class="loading-overlay">
-    <div class="spinner"></div>
+    <div class="loading-content">
+      <p v-if="message" class="loading-message">{{ message }}</p>
+      <div class="spinner"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
-// 특별한 로직 필요 없음 (단순 시각 컴포넌트)
+defineProps({
+  message: {
+    type: String,
+    default: ''
+  }
+})
 </script>
 
 <style scoped>
@@ -20,6 +28,17 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+}
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.loading-message {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
 }
 .spinner {
   width: 48px;

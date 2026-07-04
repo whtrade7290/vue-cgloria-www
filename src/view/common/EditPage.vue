@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <LoadingSpinner v-if="isSubmitting" />
+    <LoadingSpinner v-if="isSubmitting" :message="loadingMessage" />
     <div class="container" style="display: flex; justify-content: center">
       <div
         style="
@@ -246,6 +246,7 @@ const files = ref([])
 const previewItems = ref([])
 const removedExistingFilenames = ref([])
 const isSubmitting = ref(false)
+const loadingMessage = ref('')
 const deriveInitialMemoryVerse = () => {
   const verse = store.state.detail?.memoryVerse
   if (verse) return verse
@@ -501,6 +502,8 @@ const changeImage = async (event) => {
       return
     }
 
+    isSubmitting.value = true
+    loadingMessage.value = t('photoPage.convertingFiles')
     const processedFiles = await compressImageFiles(selectedFiles)
 
     if (VALIDATION_FILES(files.value, processedFiles)) {
@@ -544,6 +547,8 @@ const changeImage = async (event) => {
     }
   } catch (error) {
     console.error('Failed to process selected images', error)
+  } finally {
+    isSubmitting.value = false
   }
 }
 const isDisplay = computed(() => {

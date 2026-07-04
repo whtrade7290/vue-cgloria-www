@@ -1,5 +1,6 @@
 import imageCompression from 'browser-image-compression'
 import type { Options } from 'browser-image-compression'
+import { heicTo } from 'heic-to'
 
 type FileInput = File | File[] | FileList
 
@@ -17,15 +18,24 @@ const isHeifFile = (file: File): boolean => {
   if (type && HEIF_MIME_TYPES.has(type)) {
     return true
   }
-
   const name = file.name?.toLowerCase() || ''
   return HEIF_EXTENSIONS.some((ext) => name.endsWith(ext))
 }
 
-/**
- * Compresses/resizes images in the browser before upload.
- * HEIF/HEIC files are skipped and handled by the backend.
- */
+const convertHeicToJpeg = async (file: File): Promise<File> => {
+  try {
+    const blob = await heicTo({ blob: file, type: 'image/jpeg', quality: 0.9 })
+    const jpegName = file.name.replace(/\.(heic|heif)$/i, '.jpg')
+    console.info(
+      `[heic-to] ${file.name}: ${(file.size / 1024).toFixed(1)}KB -> ${(blob.size / 1024).toFixed(1)}KB`
+    )
+    return new File([blob], jpegName, { type: 'image/jpeg', lastModified: file.lastModified })
+  } catch (error) {
+    console.error(`[heic-to] Failed to convert ${file.name}`, error)
+    return file
+  }
+}
+
 export const compressImageFiles = async (
   input: FileInput,
   overrides: Partial<Options> = {}
@@ -43,31 +53,34 @@ export const compressImageFiles = async (
 
   const compressed = await Promise.all(
     files.map(async (file) => {
-      const isImage = file.type?.startsWith('image/') ?? false
-      if (!isImage || isHeifFile(file)) {
-        if (isHeifFile(file)) {
-          console.info(`[imageCompression] Skipping HEIF file ${file.name}; handled on server`)
-        }
-        return file
+      let target = file
+
+      if (isHeifFile(file)) {
+        target = await convertHeicToJpeg(file)
+      }
+
+      const isImage = target.type?.startsWith('image/') ?? false
+      if (!isImage) {
+        return target
       }
 
       try {
-        const output = await imageCompression(file, {
+        const output = await imageCompression(target, {
           ...options,
-          fileType: file.type || options.fileType
+          fileType: target.type || options.fileType
         })
 
         console.info(
-          `[imageCompression] ${file.name}: ${(file.size / 1024).toFixed(1)}KB -> ${(output.size / 1024).toFixed(1)}KB`
+          `[imageCompression] ${target.name}: ${(target.size / 1024).toFixed(1)}KB -> ${(output.size / 1024).toFixed(1)}KB`
         )
 
-        return new File([output], file.name, {
-          type: output.type || file.type,
+        return new File([output], target.name, {
+          type: output.type || target.type,
           lastModified: file.lastModified
         })
       } catch (error) {
-        console.error(`[imageCompression] Failed to process ${file.name}`, error)
-        return file
+        console.error(`[imageCompression] Failed to process ${target.name}`, error)
+        return target
       }
     })
   )
