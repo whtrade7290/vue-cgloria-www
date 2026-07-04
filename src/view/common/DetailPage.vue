@@ -71,7 +71,7 @@
               :key="item.id"
               class="attachment-wrapper"
             >
-              <a :href="item.url" data-fancybox class="attachment-image">
+              <a :href="item.url" data-fancybox="gallery" class="attachment-image">
                 <img
                   :src="item.url"
                   :alt="item.name"
@@ -458,19 +458,27 @@ const isLogin = computed(() => {
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', {
     Thumbs: {
-      autoStart: true // 썸네일 자동 시작
+      autoStart: true
     },
     Image: {
-      zoom: true, // 이미지 확대 가능
-      click: 'toggleZoom', // 이미지를 클릭하면 확대/축소
-      wheel: 'zoom' // 마우스 휠로 확대/축소
+      zoom: true,
+      click: 'toggleZoom',
+      wheel: 'zoom'
     },
     SlideShow: {
-      autoStart: false, // 자동 슬라이드쇼 시작 여부
-      speed: 3000 // 슬라이드쇼 속도
+      autoStart: false,
+      speed: 3000
     },
     Carousel: {
-      infinite: false
+      infinite: true,
+      transition: 'fade'
+    },
+    Toolbar: {
+      display: {
+        left: ['infobar'],
+        middle: [],
+        right: ['slideshow', 'fullscreen', 'download', 'close']
+      }
     }
   })
 })
