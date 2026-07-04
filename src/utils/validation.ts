@@ -1,4 +1,7 @@
 import Swal from 'sweetalert2'
+import i18n from '../locales/i18n.js'
+
+const { t } = i18n.global
 
 const MAX_TITLE_LENGTH = 48
 
@@ -57,21 +60,21 @@ export const VALIDATION_FILES = (files: File[], newFiles: File[]): boolean => {
   const filesExceedLimit = newFiles.some((file) => file.size > maxSizeInBytes)
   const hasInvalidFileType = newFiles.some((file) => !allowedTypes.includes(file.type))
 
-  if (files.length + newFiles.length > 6) {
+  if (files.length + newFiles.length > 10) {
     Swal.fire({
-      title: '업로드는 최대 6개까지 가능합니다.',
+      title: t('photoPage.fileLimit'),
       icon: 'warning'
     })
     return false
   } else if (filesExceedLimit) {
     Swal.fire({
-      title: '업로드 가능한 파일 사이즈는 5MB까지입니다.',
+      title: t('photoPage.fileSizeLimit'),
       icon: 'warning'
     })
     return false
   } else if (hasInvalidFileType) {
     Swal.fire({
-      title: '업로드 가능한 파일 형식은 JPEG, PNG, PDF, HEIF입니다.',
+      title: t('photoPage.fileTypeLimit'),
       icon: 'warning'
     })
     return false

@@ -327,7 +327,7 @@ const fetchWithDiaryRoomList = async () => {
   }
 }
 
-const MAX_IMAGE_COUNT = 4
+const MAX_IMAGE_COUNT = 10
 const inputTitle = ref('')
 const files = ref([])
 const previewItems = ref([])

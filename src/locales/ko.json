@@ -393,7 +393,10 @@
     "uploadButton": "파일 업로드",
     "removeFile": "파일 삭제",
     "imageRequired": "이미지를 최소 1개 이상 등록해주세요.",
-    "imageLimit": "이미지는 최대 4장까지 등록할 수 있습니다."
+    "imageLimit": "이미지는 최대 10장까지 등록할 수 있습니다.",
+    "fileLimit": "업로드는 최대 10개까지 가능합니다.",
+    "fileSizeLimit": "업로드 가능한 파일 사이즈는 5MB까지입니다.",
+    "fileTypeLimit": "업로드 가능한 파일 형식은 JPEG, PNG, PDF, HEIF입니다."
   },
   "alerts": {
     "copySuccess": "복사되었습니다.",

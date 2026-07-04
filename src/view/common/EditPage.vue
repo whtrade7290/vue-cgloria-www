@@ -211,7 +211,7 @@ const languageOptions = [
 ]
 const normalizedLocale = computed(() => (locale.value === 'jp' ? 'ja' : locale.value))
 const selectedLanguage = ref(store.state.detail?.language || normalizedLocale.value || 'ko')
-const MAX_IMAGE_COUNT = 4
+const MAX_IMAGE_COUNT = 10
 const inputTitle = ref('')
 inputTitle.value = store.state.detail.title
 

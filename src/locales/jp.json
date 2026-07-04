@@ -394,7 +394,10 @@
     "uploadButton": "ファイルアップロード",
     "removeFile": "ファイル削除",
     "imageRequired": "画像を最低1枚以上登録してください。",
-    "imageLimit": "画像は最大4枚まで登録できます。"
+    "imageLimit": "画像は最大10枚まで登録できます。",
+    "fileLimit": "アップロードは最大10個まで可能です。",
+    "fileSizeLimit": "アップロード可能なファイルサイズは5MBまでです。",
+    "fileTypeLimit": "アップロード可能なファイル形式はJPEG、PNG、PDF、HEIFです。"
   },
   "alerts": {
     "copySuccess": "コピーしました。",
