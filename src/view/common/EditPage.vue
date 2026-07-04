@@ -549,6 +549,7 @@ const changeImage = async (event) => {
     console.error('Failed to process selected images', error)
   } finally {
     isSubmitting.value = false
+    loadingMessage.value = ''
   }
 }
 const isDisplay = computed(() => {
