@@ -96,6 +96,32 @@
           </div>
         </div>
       </div>
+
+      <hr class="my-5" />
+
+      <div class="d-flex align-items-baseline flex-wrap mb-4">
+        <h4 class="text-dark mb-0 me-2">{{ $t('webContents.paster.associatesTitle') }}</h4>
+        <span class="text-sm text-secondary">{{
+          $t('webContents.paster.associatesSubtitle')
+        }}</span>
+      </div>
+
+      <div v-for="(associate, idx) in associates" :key="idx" class="associate-card d-flex flex-column flex-md-row mb-4">
+        <div class="associate-photo mb-3 mb-md-0 me-md-4">
+          <img v-if="associate.photo" :src="associate.photo" alt="" class="border-radius-md" />
+          <div v-else class="associate-photo-placeholder">사진</div>
+        </div>
+        <div class="flex-grow-1">
+          <p class="text-sm font-weight-bold text-primary mb-1">{{ associate.title }}</p>
+          <h5 class="text-dark mb-2">{{ associate.name }}</h5>
+          <p class="text-sm text-secondary mb-3">{{ associate.desc }}</p>
+          <ul class="associate-profile-list">
+            <li v-for="(line, lineIdx) in associate.profile" :key="lineIdx" class="text-sm">
+              {{ line }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </CardContainer>
 </template>
@@ -105,7 +131,8 @@ import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
 import { INFO } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const staticPath = `${import.meta.env.VITE_API_URL}`
 const route = useRoute()
@@ -113,6 +140,72 @@ const store = useStore()
 const obj = ref(null)
 store.dispatch('FETCH_SIDEMENU', INFO)
 obj.value = INFO.find((o) => route.name === o.path)
+
+const { tm } = useI18n({ useScope: 'global' })
+const associatePhotos = ['/kong.jpeg', '/lee.jpeg']
+const associates = computed(() =>
+  tm('webContents.paster.associates').map((a, idx) => ({ ...a, photo: associatePhotos[idx] || '' }))
+)
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.associate-card {
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.associate-photo {
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.associate-photo img {
+  width: 100px;
+  height: 130px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.associate-photo-placeholder {
+  width: 100px;
+  height: 130px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #adb5bd;
+  font-size: 0.8rem;
+  background: repeating-linear-gradient(
+    45deg,
+    #f4f4f4,
+    #f4f4f4 10px,
+    #eaeaea 10px,
+    #eaeaea 20px
+  );
+}
+
+.associate-profile-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.associate-profile-list li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.associate-profile-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background-color: var(--bs-primary, #e91e63);
+}
+</style>
