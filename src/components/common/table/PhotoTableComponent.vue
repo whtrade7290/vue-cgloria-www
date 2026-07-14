@@ -72,8 +72,8 @@
     </div>
 
     <!-- ✅ 페이지네이션 -->
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mt-4">
         <li class="page-item">
           <a
             class="page-link"
