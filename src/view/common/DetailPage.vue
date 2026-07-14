@@ -395,12 +395,15 @@ function goToBoardList() {
     if (route.query.roomId) query.roomId = route.query.roomId
     if (route.query.roomName) query.roomName = route.query.roomName
     if (route.query.pageNum) query.pageNum = route.query.pageNum
+    if (route.query.keyword) query.keyword = route.query.keyword
     router.push({
       name: route.params.name,
       query
     })
   } else {
-    router.push({ name: route.params.name, query: { pageNum: route.query.pageNum } })
+    const query = { pageNum: route.query.pageNum }
+    if (route.query.keyword) query.keyword = route.query.keyword
+    router.push({ name: route.params.name, query })
   }
 }
 

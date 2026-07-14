@@ -21,7 +21,7 @@ export function useBoardList(boardName, options = {}) {
   const items = ref([])
   const totalCount = ref(0)
   const pageNum = ref(normalizePage(route.query?.pageNum))
-  const searchWord = ref(options.initialSearch ?? '')
+  const searchWord = ref(route.query?.keyword ?? options.initialSearch ?? '')
   const loading = ref(false)
   const roomIdRef = options.roomIdRef
 
@@ -81,7 +81,13 @@ export function useBoardList(boardName, options = {}) {
   const handleSearch = async (keyword) => {
     searchWord.value = keyword ?? ''
     pageNum.value = 1
-    router.replace({ query: { ...route.query, pageNum: 1 } })
+    const nextQuery = { ...route.query, pageNum: 1 }
+    if (searchWord.value) {
+      nextQuery.keyword = searchWord.value
+    } else {
+      delete nextQuery.keyword
+    }
+    router.replace({ query: nextQuery })
     await fetchList()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

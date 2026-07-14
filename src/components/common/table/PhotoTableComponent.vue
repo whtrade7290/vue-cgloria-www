@@ -3,12 +3,23 @@
     <!-- ✅ 모바일/태블릿(≤991px) 검색창: 위쪽 -->
     <div class="d-lg-none w-100 px-3 pt-3">
       <div class="mobile-search">
-        <input
-          v-model="searchWord"
-          type="text"
-          class="form-control form-control-sm-custom"
-          :placeholder="$t('table.tableComponent.searchPlaceholder')"
-        />
+        <div class="search-input-wrapper">
+          <input
+            v-model="searchWord"
+            type="text"
+            class="form-control form-control-sm-custom"
+            :placeholder="$t('table.tableComponent.searchPlaceholder')"
+          />
+          <button
+            v-if="searchWord"
+            type="button"
+            class="search-clear-btn"
+            aria-label="검색어 지우기"
+            @click="clearSearch"
+          >
+            ×
+          </button>
+        </div>
         <button
           type="button"
           class="btn bg-gradient-primary btn-sm-custom mb-0"
@@ -102,7 +113,7 @@
 
     <!-- ✅ 데스크탑(≥992px) 검색창: 아래쪽 유지 -->
     <div class="d-none d-lg-flex justify-content-center mt-5">
-      <div class="mb-3 w-25">
+      <div class="mb-3 w-25 search-input-wrapper">
         <input
           v-model="searchWord"
           type="text"
@@ -111,6 +122,15 @@
           aria-label="Email"
           aria-describedby="email-addon"
         />
+        <button
+          v-if="searchWord"
+          type="button"
+          class="search-clear-btn"
+          aria-label="검색어 지우기"
+          @click="clearSearch"
+        >
+          ×
+        </button>
       </div>
       <div style="margin-left: 0.5rem">
         <button type="button" class="btn bg-gradient-primary" @click="searchPost">검색</button>
@@ -137,7 +157,7 @@ const props = defineProps({
 })
 
 const staticPath = `${import.meta.env.VITE_API_URL}uploads`
-let searchWord = ref('')
+let searchWord = ref(route.query?.keyword ?? '')
 
 let pageNum = ref(Number(route.query?.pageNum ?? 1))
 const pageSize = 12
@@ -203,13 +223,25 @@ async function intoDetail(id) {
   await router.push({
     name: 'detail',
     params: { name: route.name, id: id },
-    query: { pageNum: pageNum.value }
+    query: { ...route.query, pageNum: pageNum.value }
   })
 }
 
 async function searchPost() {
   pageNum.value = 1
+  const nextQuery = { ...route.query, pageNum: 1 }
+  if (searchWord.value) {
+    nextQuery.keyword = searchWord.value
+  } else {
+    delete nextQuery.keyword
+  }
+  router.replace({ query: nextQuery })
   await fetchList(1)
+}
+
+async function clearSearch() {
+  searchWord.value = ''
+  await searchPost()
 }
 </script>
 
@@ -239,6 +271,32 @@ async function searchPost() {
   width: 25% !important;
   min-width: 220px;
   max-width: 350px; /* PC에서 너무 길지 않게 */
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper input {
+  padding-right: 2.2rem;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 0.2rem 0.3rem;
+}
+
+.search-clear-btn:hover {
+  color: #555;
 }
 
 /* ✅ input 기본 스타일 */
@@ -315,6 +373,10 @@ async function searchPost() {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+.mobile-search .search-input-wrapper {
+  flex: 1;
 }
 
 .form-control-sm-custom {

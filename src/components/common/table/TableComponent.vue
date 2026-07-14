@@ -6,12 +6,23 @@
     <div class="d-lg-none">
       <!-- 검색 -->
       <div class="mobile-search">
-        <input
-          v-model="searchWord"
-          type="text"
-          class="form-control form-control-lg"
-          :placeholder="$t('table.tableComponent.searchPlaceholder')"
-        />
+        <div class="search-input-wrapper">
+          <input
+            v-model="searchWord"
+            type="text"
+            class="form-control form-control-lg"
+            :placeholder="$t('table.tableComponent.searchPlaceholder')"
+          />
+          <button
+            v-if="searchWord"
+            type="button"
+            class="search-clear-btn"
+            aria-label="검색어 지우기"
+            @click="clearSearch"
+          >
+            ×
+          </button>
+        </div>
         <button class="btn bg-gradient-primary mb-0" @click="searchPost">검색</button>
       </div>
 
@@ -169,7 +180,7 @@
 
       <!-- 기존 검색 -->
       <div class="d-flex justify-content-center mt-5">
-        <div class="mb-3 w-25">
+        <div class="mb-3 w-25 search-input-wrapper">
           <input
             v-model="searchWord"
             type="text"
@@ -177,6 +188,15 @@
             :placeholder="$t('table.tableComponent.searchPlaceholder')"
             @keydown.enter.prevent="searchPost"
           />
+          <button
+            v-if="searchWord"
+            type="button"
+            class="search-clear-btn"
+            aria-label="검색어 지우기"
+            @click="clearSearch"
+          >
+            ×
+          </button>
         </div>
         <div style="margin-left: 10px">
           <button class="btn bg-gradient-primary test" @click="searchPost">검색</button>
@@ -292,6 +312,11 @@ const searchPost = () => {
   emit('search', searchWord.value.trim())
 }
 
+const clearSearch = () => {
+  searchWord.value = ''
+  emit('search', '')
+}
+
 const intoDetail = async (id) => {
   await router.push({
     name: 'detail',
@@ -308,6 +333,32 @@ const intoDetail = async (id) => {
 }
 
 /* ✅ 검색 영역 wrapper */
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper input {
+  padding-right: 2.2rem;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 0.2rem 0.3rem;
+}
+
+.search-clear-btn:hover {
+  color: #555;
+}
+
 /* ✅ 기본 (데스크탑 기준) */
 .w-25 {
   width: 25% !important;
@@ -357,7 +408,7 @@ const intoDetail = async (id) => {
   gap: 0.5rem;
 }
 
-.mobile-search input {
+.mobile-search .search-input-wrapper {
   flex: 1;
 }
 
