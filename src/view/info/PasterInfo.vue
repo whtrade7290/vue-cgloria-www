@@ -106,7 +106,11 @@
         }}</span>
       </div>
 
-      <div v-for="(associate, idx) in associates" :key="idx" class="associate-card d-flex flex-column flex-md-row mb-4">
+      <div
+        v-for="(associate, idx) in associates"
+        :key="idx"
+        class="associate-card d-flex flex-column flex-md-row mb-4"
+      >
         <div class="associate-photo mb-3 mb-md-0 me-md-4">
           <img v-if="associate.photo" :src="associate.photo" alt="" class="border-radius-md" />
           <div v-else class="associate-photo-placeholder">사진</div>
@@ -142,7 +146,7 @@ store.dispatch('FETCH_SIDEMENU', INFO)
 obj.value = INFO.find((o) => route.name === o.path)
 
 const { tm } = useI18n({ useScope: 'global' })
-const associatePhotos = ['/kong.jpeg', '/lee.jpeg']
+const associatePhotos = ['/kong.jpeg', '/lee.jpeg', 'moon.jpeg']
 const associates = computed(() =>
   tm('webContents.paster.associates').map((a, idx) => ({ ...a, photo: associatePhotos[idx] || '' }))
 )
@@ -177,13 +181,7 @@ const associates = computed(() =>
   justify-content: center;
   color: #adb5bd;
   font-size: 0.8rem;
-  background: repeating-linear-gradient(
-    45deg,
-    #f4f4f4,
-    #f4f4f4 10px,
-    #eaeaea 10px,
-    #eaeaea 20px
-  );
+  background: repeating-linear-gradient(45deg, #f4f4f4, #f4f4f4 10px, #eaeaea 10px, #eaeaea 20px);
 }
 
 .associate-profile-list {
