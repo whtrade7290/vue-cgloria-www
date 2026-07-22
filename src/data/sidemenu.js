@@ -21,6 +21,7 @@ const SMALLGROUP = [
   }
 ]
 const WORSHIP = [
+  { title: 'nav.worshipTraining.subTitles.worshipGuide', icon: 'church', path: 'worshipGuide' },
   { title: 'nav.worshipTraining.subTitles.jumok', icon: 'book', path: 'jumok' },
   { title: 'nav.worshipTraining.subTitles.training', icon: 'attribution', path: 'training' }
 ]

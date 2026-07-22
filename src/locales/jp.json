@@ -41,6 +41,7 @@
     "worshipTraining": {
       "title": "礼拝/訓練",
       "subTitles": {
+        "worshipGuide": "礼拝案内",
         "jumok": "主目者使役",
         "training": "訓練"
       }
@@ -524,6 +525,33 @@
       "matsudoInfo": "☎ 047-718-5777 https://mg-church.net/",
       "kashiwaName": "柏栄光教会 (主任牧師 : カン・ヨンジュン)",
       "kashiwaInfo": "☎ 04-7170-4692 https://kashiwa-gloria.church/"
+    },
+    "worshipGuide": {
+      "title": "礼拝案内",
+      "subtitle": "中央栄光教会と共にささげる礼拝時間と順序をご案内します",
+      "orderTitle": "礼拝順序 (Order of Worship)",
+      "orderItems": [
+        "主の祈り",
+        "敬拝と賛美",
+        "賛美",
+        "使徒信条",
+        "祈祷",
+        "説教",
+        "献金",
+        "歓迎と広告",
+        "献金お祈り",
+        "祝祷"
+      ],
+      "scheduleTitle": "礼拝時間表",
+      "dawn": "早朝礼拝",
+      "dawnTime": "午前5:40 ~ 06:30",
+      "worship1": "主日1部礼拝(日本語)",
+      "worship1Time": "午前8:50 ~ 10:00",
+      "worship2": "主日2部礼拝(韓国語-日本語通訳対応)",
+      "worship2Time": "午前10:40 ~ 12:00",
+      "liveTitle": "ライブ礼拝映像",
+      "liveButton": "視聴する",
+      "liveNowLabel": "LIVE"
     },
     "jumok": {
       "main": "この使役は、中央栄光教会が力をそそいでいる使役の一つです。2002年7月から始まり、今も続けています。",

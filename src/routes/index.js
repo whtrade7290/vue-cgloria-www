@@ -18,6 +18,7 @@ import FreeBoard from '@/view/socialize/FreeBoard.vue'
 import TestimonyBoard from '@/view/socialize/TestimonyBoard.vue'
 import JumokjaView from '@/view/worship/JumokjaView.vue'
 import TrainingView from '@/view/worship/TrainingView.vue'
+import WorshipGuideView from '@/view/worship/WorshipGuideView.vue'
 import LoginView from '@/view/auth/LoginView.vue'
 import SignUpView from '@/view/auth/SignUpView.vue'
 import EditPassword from '@/view/auth/EditPassword.vue'
@@ -164,6 +165,12 @@ const routes = [
     name: 'training',
     component: TrainingView,
     meta: { titleKey: 'nav.worshipTraining.title' }
+  },
+  {
+    path: '/worshipGuide',
+    name: 'worshipGuide',
+    component: WorshipGuideView,
+    meta: { titleKey: 'nav.worshipTraining.subTitles.worshipGuide' }
   },
   // 주일학교
   {
