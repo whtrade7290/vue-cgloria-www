@@ -332,7 +332,7 @@ const handleRoleChange = async (event, user) => {
   const confirm = await Swal.fire({
     icon: 'question',
     title: t('admin.userApprove.roleLabel'),
-    html: `<p>${user.username} → ${newRole}</p>`,
+    html: `<p>${user.role} → ${newRole}</p>`,
     showCancelButton: true,
     confirmButtonText: t('button.confirm'),
     cancelButtonText: t('button.cancel')
