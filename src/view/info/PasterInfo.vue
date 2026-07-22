@@ -32,6 +32,8 @@
                   }}</span>
                 </div>
               </div>
+            </div>
+            <div class="col-lg-6">
               <div class="p-3 d-flex px-0 py-1">
                 <div><i class="fas fa-check text-primary text-sm" aria-hidden="true"></i></div>
                 <div class="ps-3">
@@ -45,40 +47,6 @@
                 <div class="ps-3">
                   <span class="text-sm font-weight-bold">{{
                     $t('webContents.paster.profile_4')
-                  }}</span>
-                </div>
-              </div>
-              <div class="p-3 d-flex px-0 py-1">
-                <div><i class="fas fa-check text-primary text-sm" aria-hidden="true"></i></div>
-                <div class="ps-3">
-                  <span class="text-sm font-weight-bold">{{
-                    $t('webContents.paster.profile_5')
-                  }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="p-3 d-flex px-0 py-1">
-                <div><i class="fas fa-check text-primary text-sm" aria-hidden="true"></i></div>
-                <div class="ps-3">
-                  <span class="text-sm font-weight-bold">{{
-                    $t('webContents.paster.profile_6')
-                  }}</span>
-                </div>
-              </div>
-              <div class="p-3 d-flex px-0 py-1">
-                <div><i class="fas fa-check text-primary text-sm" aria-hidden="true"></i></div>
-                <div class="ps-3">
-                  <span class="text-sm font-weight-bold">{{
-                    $t('webContents.paster.profile_7')
-                  }}</span>
-                </div>
-              </div>
-              <div class="p-3 d-flex px-0 py-1">
-                <div><i class="fas fa-check text-primary text-sm" aria-hidden="true"></i></div>
-                <div class="ps-3">
-                  <span class="text-sm font-weight-bold">{{
-                    $t('webContents.paster.profile_8')
                   }}</span>
                 </div>
               </div>

@@ -89,6 +89,18 @@
             <span>{{ $t('webContents.churchIntro.kawaguchiName') }}</span>
             <span>{{ $t('webContents.churchIntro.kawaguchiInfo') }}</span>
           </div>
+          <div style="display: grid; padding-bottom: 30px">
+            <span>{{ $t('webContents.churchIntro.fujiName') }}</span>
+            <span>{{ $t('webContents.churchIntro.fujiInfo') }}</span>
+          </div>
+          <div style="display: grid; padding-bottom: 30px">
+            <span>{{ $t('webContents.churchIntro.matsudoName') }}</span>
+            <span>{{ $t('webContents.churchIntro.matsudoInfo') }}</span>
+          </div>
+          <div style="display: grid; padding-bottom: 30px">
+            <span>{{ $t('webContents.churchIntro.kashiwaName') }}</span>
+            <span>{{ $t('webContents.churchIntro.kashiwaInfo') }}</span>
+          </div>
         </div>
       </div>
     </div>

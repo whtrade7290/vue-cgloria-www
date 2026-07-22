@@ -1,6 +1,11 @@
 <template>
   <CardContainer :title="obj.title">
     <div>
+      <div class="container text-center">
+        <h1 class="text-gradient text-primary" style="font-size: 43px; margin-bottom: 45px">
+          {{ $t('webContents.evengelize.verse') }}
+        </h1>
+      </div>
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-7 mb-md-0 mb-4">
@@ -18,89 +23,46 @@
             </p>
           </div>
           <div class="col-md-5">
-            <div class="card p-0 rounded-3">
-              <div class="blur-shadow-image" style="text-align: center">
-                <img
-                  src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/buildings.jpg"
-                  alt="img-blur-shadow"
-                  class="img-fluid shadow rounded-3"
-                />
+            <div class="row g-2">
+              <div class="col-12">
+                <img src="/sumhanmokja.jpeg" alt="전도 사진" class="evangelize-photo evangelize-photo-main" />
               </div>
-              <div
-                class="colored-shadow"
-                style="
-                  background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/buildings.jpg');
-                "
-              ></div>
+              <div class="col-6">
+                <img src="/okubo.jpeg" alt="전도 사진" class="evangelize-photo" />
+              </div>
+              <div class="col-6">
+                <img src="/ueno.jpeg" alt="전도 사진" class="evangelize-photo" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- -------- START Features w/ icons and text on left & gradient title and text on right -------- -->
+
       <div class="card-body p-5">
         <h3 class="text-gradient text-primary mb-0 mt-2">
-          {{ $t('webContents.evengelize.main3') }}
+          {{ $t('webContents.evengelize.prayerTitle') }}
         </h3>
-        <p>{{ $t('webContents.evengelize.content3-1') }}</p>
-        <ul>
-          <li>{{ $t('webContents.evengelize.content3-2-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content3-2-2') }}
+        <p class="text-center text-gradient text-primary font-weight-bold" style="font-size: 1.6rem; margin: 1.5rem 0">
+          {{ $t('webContents.evengelize.prayerSubtitle') }}
+        </p>
+        <p style="line-height: 40px; padding: 0 10px">
+          {{ $t('webContents.evengelize.prayerIntro') }}
+        </p>
+        <div class="prayer-list">
+          <p class="prayer-item">{{ $t('webContents.evengelize.prayer1') }}</p>
+          <p class="prayer-item">{{ $t('webContents.evengelize.prayer2') }}</p>
+          <p class="prayer-item">{{ $t('webContents.evengelize.prayer3') }}</p>
+          <p v-if="$i18n.locale === 'jp'" class="prayer-item">
+            {{ $t('webContents.evengelize.prayer4') }}
           </p>
-          <li>{{ $t('webContents.evengelize.content3-3-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content3-3-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content3-4-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content3-4-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content3-5-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content3-5-2') }}
-          </p>
-        </ul>
-        <h3 class="text-gradient text-primary mb-0 mt-2">
-          {{ $t('webContents.evengelize.main4') }}
-        </h3>
-        <ul>
-          <li>{{ $t('webContents.evengelize.content4-1-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content4-1-2') }}
-          </p>
-          <li>
-            {{ $t('webContents.evengelize.content4-2-1') }}
-          </li>
-          <p>
-            {{ $t('webContents.evengelize.content4-2-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content4-3-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content4-3-2') }}
-          </p>
-        </ul>
+        </div>
 
         <h3 class="text-gradient text-primary mb-0 mt-2">
-          {{ $t('webContents.evengelize.main5') }}
+          {{ $t('webContents.evengelize.fieldTitle') }}
         </h3>
-        <ul>
-          <li>{{ $t('webContents.evengelize.content5-1-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content5-1-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content5-2-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content5-2-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content5-3-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content5-3-2') }}
-          </p>
-          <li>{{ $t('webContents.evengelize.content5-4-1') }}</li>
-          <p>
-            {{ $t('webContents.evengelize.content5-4-2') }}
-          </p>
-        </ul>
+        <div class="text-center mt-4">
+          <img src="/tissue.jpg" alt="현장전도" class="evangelize-tissue" />
+        </div>
       </div>
     </div>
   </CardContainer>
@@ -120,4 +82,40 @@ store.dispatch('FETCH_SIDEMENU', TESTIMONY)
 obj.value = TESTIMONY.find((o) => route.name === o.path)
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.evangelize-photo {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.evangelize-photo:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.22);
+}
+
+.evangelize-photo-main {
+  height: 224px;
+}
+
+.prayer-list {
+  margin-top: 1.5rem;
+}
+
+.prayer-item {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  padding: 0 0 1rem 1rem;
+  border-left: 3px solid var(--gloria-primary);
+}
+
+.evangelize-tissue {
+  max-width: 100%;
+  width: 900px;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+</style>

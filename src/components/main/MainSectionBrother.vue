@@ -32,7 +32,7 @@
     </div>
 
     <div class="container brother-container">
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col-lg-3 px-lg-1 mt-lg-0 mt-3">
           <div class="info-horizontal bg-gray-100 border-radius-xl p-5">
             <div class="description">
@@ -86,6 +86,38 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-3 px-lg-1 mt-lg-3 mt-3">
+          <div class="info-horizontal bg-gray-100 border-radius-xl p-5">
+            <div class="description">
+              <h5>{{ $t('MainSectionBrother.fujiTitle') }}</h5>
+              <p>{{ $t('MainSectionBrother.fujiPaster') }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 px-lg-1 mt-lg-3 mt-3">
+          <div class="info-horizontal bg-gray-100 border-radius-xl p-5">
+            <div class="description">
+              <h5>{{ $t('MainSectionBrother.matsudoTitle') }}</h5>
+              <p>{{ $t('MainSectionBrother.matsudoPaster') }}</p>
+              <a href="https://mg-church.net/" class="text-primary icon-move-right" target="_blank" rel="noopener noreferrer">
+                {{ $t('common.moveToPage') }}
+                <i class="fas fa-arrow-right text-sm ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 px-lg-1 mt-lg-3 mt-3">
+          <div class="info-horizontal bg-gray-100 border-radius-xl p-5">
+            <div class="description">
+              <h5>{{ $t('MainSectionBrother.kashiwaTitle') }}</h5>
+              <p>{{ $t('MainSectionBrother.kashiwaPaster') }}</p>
+              <a href="https://kashiwa-gloria.church/" class="text-primary icon-move-right" target="_blank" rel="noopener noreferrer">
+                {{ $t('common.moveToPage') }}
+                <i class="fas fa-arrow-right text-sm ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -99,6 +131,16 @@ const staticPath = `${import.meta.env.VITE_API_URL}uploads/assets/main/`
 .brother-container {
   margin-top: 3rem;
   margin-bottom: 3rem;
+}
+
+.brother-container .info-horizontal {
+  height: 220px;
+  display: flex;
+  align-items: center;
+}
+
+.brother-container .info-horizontal .description {
+  width: 100%;
 }
 
 .mask {
