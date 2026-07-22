@@ -57,10 +57,10 @@
           </p>
         </div>
 
-        <h3 class="text-gradient text-primary mb-0 mt-2">
+        <h3 class="text-gradient text-primary mb-0 mt-4 pt-1">
           {{ $t('webContents.evengelize.fieldTitle') }}
         </h3>
-        <div class="text-center mt-4">
+        <div class="text-center mt-5 pt-2">
           <img src="/tissue.jpg" alt="현장전도" class="evangelize-tissue" />
         </div>
       </div>
