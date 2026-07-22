@@ -54,7 +54,6 @@
     "sundaySchool": {
       "title": "日曜学校",
       "subTitles": {
-        "eventSchedule": "日程",
         "school_photo_board": "日曜学校フォトギャラリー",
         "sunday_school_resource": "日曜学校資料"
       }
@@ -62,6 +61,7 @@
     "fellowshipArea": {
       "title": "交わりの場",
       "subTitles": {
+        "eventSchedule": "日程",
         "general_forum": "自由掲示板",
         "photo_board": "フォトギャラリー",
         "testimony": "証し"

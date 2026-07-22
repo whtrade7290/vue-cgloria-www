@@ -60,7 +60,7 @@ import jaLocale from '@fullcalendar/core/locales/ja'
 import koLocale from '@fullcalendar/core/locales/ko'
 import CardContainer from '@/components/common/card/CardContainer.vue'
 import { useStore } from 'vuex'
-import { SCHOOL } from '@/data/sidemenu.js'
+import { SOCIALIZE } from '@/data/sidemenu.js'
 import { useRoute } from 'vue-router'
 import Swal from 'sweetalert2'
 import { getUserIdFromCookie } from '@/utils/cookie.ts'
@@ -70,8 +70,8 @@ import { useI18n } from 'vue-i18n'
 const route = useRoute()
 const store = useStore()
 const obj = ref(null)
-store.dispatch('FETCH_SIDEMENU', SCHOOL)
-obj.value = SCHOOL.find((o) => route.name === o.path)
+store.dispatch('FETCH_SIDEMENU', SOCIALIZE)
+obj.value = SOCIALIZE.find((o) => route.name === o.path)
 
 const { t, locale } = useI18n()
 const calendarLocales = { jp: jaLocale, ko: koLocale }

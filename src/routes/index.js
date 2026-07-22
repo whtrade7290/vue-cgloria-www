@@ -170,7 +170,7 @@ const routes = [
     path: '/eventSchedule',
     name: 'eventSchedule',
     component: EventSchedule,
-    meta: { titleKey: 'nav.sundaySchool.subTitles.eventSchedule' }
+    meta: { titleKey: 'nav.fellowshipArea.subTitles.eventSchedule' }
     // beforeEnter: async (from, next) => {
     //   await Swal.fire({
     //     title: '준비중입니다.',

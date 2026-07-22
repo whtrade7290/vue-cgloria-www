@@ -33,7 +33,6 @@ const TESTIMONY = [
   // { title: 'nav.subTitle3.readBible', icon: 'book', path: 'readBible' }
 ]
 const SCHOOL = [
-  { title: 'nav.sundaySchool.subTitles.eventSchedule', icon: 'church', path: 'eventSchedule' },
   {
     title: 'nav.sundaySchool.subTitles.school_photo_board',
     icon: 'book',
@@ -46,6 +45,7 @@ const SCHOOL = [
   }
 ]
 const SOCIALIZE = [
+  { title: 'nav.fellowshipArea.subTitles.eventSchedule', icon: 'church', path: 'eventSchedule' },
   { title: 'nav.fellowshipArea.subTitles.general_forum', icon: 'church', path: 'general_forum' },
   { title: 'nav.fellowshipArea.subTitles.photo_board', icon: 'book', path: 'photo_board' },
   { title: 'nav.fellowshipArea.subTitles.testimony', icon: 'attribution', path: 'testimony' }

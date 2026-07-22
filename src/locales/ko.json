@@ -54,7 +54,6 @@
     "sundaySchool": {
       "title": "주일학교",
       "subTitles": {
-        "eventSchedule": "행사일정",
         "school_photo_board": "주일학교 사진갤러리",
         "sunday_school_resource": "주일학교자료실"
       }
@@ -62,6 +61,7 @@
     "fellowshipArea": {
       "title": "교제마당",
       "subTitles": {
+        "eventSchedule": "행사일정",
         "general_forum": "자유게시판",
         "photo_board": "사진갤러리",
         "testimony": "간증게시판"
